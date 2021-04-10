@@ -1,0 +1,11 @@
+4.2.0:
+
+4.1.7:
+marked Inanimate entity as non-living;
+fixed corruption;
+
+4.1.6:
+fixed one function crashing;
+
+4.1.0:
+added command "summon2";
