@@ -46,24 +46,24 @@ public class ItemHandlerDisplaySlot extends SlotItemHandler implements Scrollabl
     }
 
     @Override
-    public boolean canTakeStack(PlayerEntity playerIn)
+    public boolean mayPickup(PlayerEntity playerIn)
     {
         return false;
     }
 
     @Override
-    public boolean isItemValid(ItemStack stack)
+    public boolean mayPlace(ItemStack stack)
     {
         return false;
     }
 
     @Override
-    public void putStack(ItemStack stack)
+    public void set(ItemStack stack)
     {
         IItemHandler itemHandler = getItemHandler();
         if (itemHandler instanceof IItemHandlerModifiable)
         {
-            super.putStack(stack);
+            super.set(stack);
         }
     }
 

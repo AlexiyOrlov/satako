@@ -45,17 +45,19 @@
                     this.renderBg(mStack, mc, mouseX, mouseY);
 
                     ITextComponent buttonText = this.getMessage();
-                    int strWidth = mc.fontRenderer.getStringPropertyWidth(buttonText);
-                    int ellipsisWidth = mc.fontRenderer.getStringWidth("...");
+                    int strWidth = mc.font.width(buttonText);
+                    int ellipsisWidth = mc.font.width("...");
 
                     if (strWidth > width - 6 && strWidth > ellipsisWidth)
-                        buttonText = new StringTextComponent(mc.fontRenderer.func_238417_a_(buttonText, width - 6 - ellipsisWidth).getString() + "...");
+                    {
+                        buttonText = new StringTextComponent(mc.font.substrByWidth(buttonText, width - 6 - ellipsisWidth).getString() + "...");
+                    }
                     int color;
                     if (selected)
                         color = 16777120;
                     else
                         color = 16777215;
-                    drawCenteredString(mStack, mc.fontRenderer, buttonText, this.x + this.width / 2, this.y + (this.height - 8) / 2, color);
+                    drawCenteredString(mStack, mc.font, buttonText, this.x + this.width / 2, this.y + (this.height - 8) / 2, color);
                 }
             }
         }

@@ -46,7 +46,7 @@ public class Page
             if (o instanceof TextField)
             {
                 ((TextField) o).setVisible(false);
-                ((TextField) o).setEnabled(false);
+                ((TextField) o).setEnabled();
             }
             else if (o instanceof Button)
             {
@@ -72,7 +72,7 @@ public class Page
             if (o instanceof TextField)
             {
                 ((TextField) o).setVisible(true);
-                ((TextField) o).setEnabled(true);
+                ((TextField) o).setDisabled();
             }
             else if (o instanceof Button)
             {

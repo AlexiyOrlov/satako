@@ -90,23 +90,6 @@ public class TextField extends TextFieldWidget implements Scrollable, Positionab
         enabled = false;
     }
 
-
-    @Override
-    public boolean charTyped(char typedChar, int keyCode)
-    {
-//        if (allowedChars != null)
-//        {
-//			if (allowedChars.contains(typedChar) || keyCode == GLFW.GLFW_KEY_BACKSPACE ||
-//					keyCode == GLFW.GLFW_KEY_ESCAPE || keyCode == GLFW.GLFW_KEY_LEFT || keyCode == GLFW.GLFW_KEY_RIGHT)
-//			{
-//				return super.charTyped(typedChar, keyCode);
-//			}
-//        }
-
-//        return allowedChars == null && super.charTyped(typedChar, keyCode);
-        return super.charTyped(typedChar, keyCode);
-    }
-
     @Override
     public int getHeight()
     {

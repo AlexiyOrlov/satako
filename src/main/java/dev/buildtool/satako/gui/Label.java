@@ -13,7 +13,7 @@ public class Label extends Button
 {
     @SuppressWarnings("ConstantConditions")
     public Label(int x, int y, ITextComponent text) {
-        super(x,y,Minecraft.getInstance().fontRenderer.getStringWidth(text.getString())+8, 18, text,null);
+        super(x,y,Minecraft.getInstance().font.width(text.getString())+8, 18, text,null);
     }
 
     @Override
@@ -24,6 +24,6 @@ public class Label extends Button
 
     @Override
     public void renderButton(MatrixStack matrixStack,int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
-        drawString(matrixStack,Minecraft.getInstance().fontRenderer,this.getMessage(), this.x, this.y + (this.height - 8) / 2, 16777215 | MathHelper.ceil(this.alpha * 255.0F) << 24);
+        drawString(matrixStack,Minecraft.getInstance().font,this.getMessage(), this.x, this.y + (this.height - 8) / 2, 16777215 | MathHelper.ceil(this.alpha * 255.0F) << 24);
     }
 }

@@ -29,7 +29,7 @@ public class RadioButton extends BetterButton
 
     public RadioButton(int x, int y, ITextComponent text)
     {
-        this(x, y, Minecraft.getInstance().fontRenderer.getStringWidth(text.getString()) + 8, Constants.BUTTONHEIGHT, text);
+        this(x, y, Minecraft.getInstance().font.width(text.getString()) + 8, Constants.BUTTONHEIGHT, text);
     }
 
     public RadioButton(int x, int y, ITextComponent text, IPressable consumer)
@@ -64,38 +64,16 @@ public class RadioButton extends BetterButton
                 color = 0xFFFFA0; // Slightly Yellow
 
             ITextComponent buttonText = this.getMessage();
-            int strWidth = mc.fontRenderer.getStringWidth(buttonText.getUnformattedComponentText());
-            int ellipsisWidth = mc.fontRenderer.getStringWidth("...");
+            int strWidth = mc.font.width(buttonText.getString());
+            int ellipsisWidth = mc.font.width("...");
 
             //TODO
 //            if (strWidth > width - 6 && strWidth > ellipsisWidth)
 //                buttonText = mc.fontRenderer.trimStringToWidth(buttonText, width - 6 - ellipsisWidth).trim() + "...";
 
-            drawCenteredString(matrixStack,mc.fontRenderer, buttonText, this.x + this.width / 2, this.y + (this.height - 8) / 2, color);
+            drawCenteredString(matrixStack,mc.font, buttonText, this.x + this.width / 2, this.y + (this.height - 8) / 2, color);
         }
     }
-
-    //	@Override
-//	public void drawButton(Minecraft mc, int mousex, int mousey, float partial) {
-//		if(visible) {
-//			if (texture != null)
-//				mc.getTextureManager().bindTexture(texture);
-//			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-//			GL11.glEnable(GL11.GL_BLEND);
-//			OpenGlHelper.glBlendFunc(770, 771, 1, 0);
-//			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-//			int texture;
-//			if (selected) texture = 2;
-//			else texture = 1;
-//			this.drawTexturedModalRect(this.x, this.y, 0, 46 + texture * 20, this.width / 2, this.height);
-//			this.drawTexturedModalRect(this.x + this.width / 2, this.y, 200 - this.width / 2, 46 + texture * 20, this.width / 2, this.height);
-//			this.mouseDragged(mc, mousex, mousey);
-//			int color;
-//			if (selected) color = 16777120;
-//			else color = 10526880;
-//			this.drawCenteredString(fontRenderer, this.displayString, this.x + this.width / 2, this.y + (this.height - 8) / 2, color);
-//		}
-//	}
 
 
     @Override

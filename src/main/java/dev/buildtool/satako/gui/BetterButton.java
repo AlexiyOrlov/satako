@@ -20,7 +20,7 @@ public class BetterButton extends ExtendedButton implements Scrollable, Position
     protected FontRenderer fontRenderer;
 
     {
-        fontRenderer = Minecraft.getInstance().fontRenderer;
+        fontRenderer = Minecraft.getInstance().font;
         scrollingAmount = height;
     }
 
@@ -42,14 +42,14 @@ public class BetterButton extends ExtendedButton implements Scrollable, Position
      */
     public BetterButton(int x, int y, ITextComponent text)
     {
-        this(x, y, Minecraft.getInstance().fontRenderer.getStringWidth(text.getString()) + 8, 20, text,
+        this(x, y, Minecraft.getInstance().font.width(text.getString()) + 8, 20, text,
                 p_onPress_1_ -> {});
         string = text.getString();
     }
 
     public BetterButton(int x, int y, ITextComponent text, IPressable onPress)
     {
-        this(x, y, Minecraft.getInstance().fontRenderer.getStringWidth(text.getString()) + 8, 20, text, onPress);
+            this(x, y, Minecraft.getInstance().font.width(text.getString()) + 8, 20, text, onPress);
     }
 
     public BetterButton(int x, int y, ITextComponent text, boolean verticalScroll_, boolean horizontalScroll_)
@@ -119,39 +119,6 @@ public class BetterButton extends ExtendedButton implements Scrollable, Position
     {
         active = false;
     }
-
-//	@Override
-//	public void renderButton(int mouseX, int mouseY, float partial)
-//	{
-//		if(texture==null)
-//			super.renderButton(mouseX, mouseY, partial);
-//		else{
-//			if(visible)
-//			{
-//				Minecraft minecraft = Minecraft.getInstance();
-//				minecraft.getTextureManager().bindTexture(texture);
-//				renderBg(minecraft,x,y);
-//			}
-//		}
-//	}
-
-//	@Override
-//	public void drawButton(Minecraft m, int mx, int my, float partial) {
-//		if(texture ==null)
-//		{
-//			super.drawButton(m, mx, my,partial);
-//		}
-//		else
-//		{
-//			if(visible)
-//			{
-//				m.getTextureManager().bindTexture(texture);
-//				drawTexturedModalRect(x, y, textureIndex, 0, width, height);
-//				if(mx>=x && mx<=x+width && my>=y && my<=y+height)mouseDragged(m, mx, my);
-//			}
-//
-//		}
-//	}
 
     @Override
     public int getWidth()

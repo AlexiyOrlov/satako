@@ -31,9 +31,9 @@ public class ContainerScreen2<T extends net.minecraft.inventory.container.Contai
     public ContainerScreen2(T container, PlayerInventory playerInventory, ITextComponent name, boolean drawBorders_)
     {
         super(container, playerInventory, name);
-        if (Minecraft.getInstance().currentScreen != null)
+        if (Minecraft.getInstance().screen != null)
         {
-            Minecraft.getInstance().currentScreen = null;
+            Minecraft.getInstance().screen = null;
         }
         drawBorders = drawBorders_;
     }
@@ -46,20 +46,20 @@ public class ContainerScreen2<T extends net.minecraft.inventory.container.Contai
     public void init()
     {
         lists.clear();
-        int maxX = 0, minX = xSize, maxY = 0;
+        int maxX = 0, minX = getXSize(), maxY = 0;
         for (Slot slot : getSlots())
         {
-            int x = slot.xPos;
+            int x = slot.x;
             if (x > maxX)
                 maxX = x;
             if (minX > x)
                 minX = x;
-            int y = slot.yPos;
+            int y = slot.y;
             if (y > maxY)
                 maxY = y;
         }
-        xSize = maxX + Constants.SLOTWITHBORDERSIZE;
-        ySize = maxY + Constants.SLOTWITHBORDERSIZE;
+        imageWidth = maxX + Constants.SLOTWITHBORDERSIZE;
+        imageHeight = maxY + Constants.SLOTWITHBORDERSIZE;
         super.init();
         centerX = width / 2;
         centerY = height / 2;
@@ -68,7 +68,7 @@ public class ContainerScreen2<T extends net.minecraft.inventory.container.Contai
 
     protected List<Slot> getSlots()
     {
-        return container.inventorySlots;
+        return menu.slots;
     }
 
     @Override
@@ -76,55 +76,50 @@ public class ContainerScreen2<T extends net.minecraft.inventory.container.Contai
     {
         renderBackground(matrixStack);
         super.render(matrixStack,p_render_1_, p_render_2_, p_render_3_);
-        renderHoveredTooltip(matrixStack,p_render_1_, p_render_2_);
-    }
-
-    @Override
-    protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int x, int y) {
-
+        renderTooltip(matrixStack,p_render_1_, p_render_2_);
     }
 
     /**
      * Draws its elements and borders
      */
     @Override
-    protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack,float partialTicks, int mouseX, int mouseY)
+    protected void renderBg(MatrixStack matrixStack,float partialTicks, int mouseX, int mouseY)
     {
         List<Slot> slots = getSlots();
-        GlStateManager.clearColor(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager._clearColor(1.0F, 1.0F, 1.0F, 1.0F);
         for (Slot s : slots)
         {
-            if (s.isEnabled())
+            if (s.isActive())
             {
-                int sx = s.xPos;
-                int sy = s.yPos;
+                int sx = s.x;
+                int sy = s.y;
                 if(s instanceof ItemHandlerSlot)
                 {
                     ItemHandlerSlot itemHandlerSlot= (ItemHandlerSlot) s;
                     if(itemHandlerSlot.getTexture()==null)
                     {
                         //color
-                        fill(matrixStack,sx+guiLeft,sy+guiTop,sx+guiLeft+16,sy+guiTop+16,itemHandlerSlot.getColor().getIntColor());
+                        fill(matrixStack,sx+leftPos,sy+topPos,sx+leftPos+16,sy+topPos+16,itemHandlerSlot.getColor().getIntColor());
                     }
                     else
                     {
-                        minecraft.getTextureManager().bindTexture(itemHandlerSlot.getTexture());
-                        blit(matrixStack,sx+guiLeft,sy+guiTop,0,0,16,16);
+                        minecraft.getTextureManager().getTexture(itemHandlerSlot.getTexture());
+                        blit(matrixStack,sx+leftPos,sy+topPos,0,0,16,16);
                     }
                 }
                 else {
-                    Pair<ResourceLocation, ResourceLocation> atlasAndSprite = s.getBackground();
+                    Pair<ResourceLocation, ResourceLocation> atlasAndSprite = s.getNoItemIcon();
                     if (atlasAndSprite != null) {
                         ResourceLocation background = atlasAndSprite.getSecond();
                         if (background.getNamespace().equals("minecraft")) {
-                            minecraft.getTextureManager().bindTexture(Constants.GREY_SLOT_TEXTURE);
+                            minecraft.getTextureManager().getTexture(Constants.GREY_SLOT_TEXTURE);
                         } else {
-                            minecraft.getTextureManager().bindTexture(background);
+                            minecraft.getTextureManager().getTexture(background);
                         }
                     } else {
-                        minecraft.getTextureManager().bindTexture(Constants.GREY_SLOT_TEXTURE);
+                        minecraft.getTextureManager().getTexture(Constants.GREY_SLOT_TEXTURE);
                     }
-                    blit(matrixStack,sx + guiLeft, sy + guiTop, 0, 0, 16, 16);
+                    blit(matrixStack,sx + leftPos, sy + topPos, 0, 0, 16, 16);
                 }
             }
         }
@@ -135,10 +130,10 @@ public class ContainerScreen2<T extends net.minecraft.inventory.container.Contai
         //lines have to be drawn after everything else
         if (drawBorders)
         {
-            Methods.drawHorizontalLine(this.guiLeft, this.xSize+guiLeft, this.guiTop, color, 2);
-            Methods.drawHorizontalLine(this.guiLeft,  this.xSize+guiLeft, this.ySize+guiTop, color, 2);
-            Methods.drawVerticalLine(this.guiLeft, this.guiTop, ySize+this.guiTop, color, 2);
-            Methods.drawVerticalLine(xSize+this.guiLeft , this.guiTop, ySize+this.guiTop, color, 2);
+            Methods.drawHorizontalLine(this.leftPos, this.getXSize()+leftPos, this.topPos, color, 2);
+            Methods.drawHorizontalLine(this.leftPos,  this.getXSize()+leftPos, this.getYSize()+topPos, color, 2);
+            Methods.drawVerticalLine(this.leftPos, this.topPos, getYSize()+this.topPos, color, 2);
+            Methods.drawVerticalLine(getXSize()+this.leftPos , this.topPos, getYSize()+this.topPos, color, 2);
 
         }
     }

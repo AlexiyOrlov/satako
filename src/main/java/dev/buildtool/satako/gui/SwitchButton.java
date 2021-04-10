@@ -21,11 +21,11 @@ public class SwitchButton extends BetterButton
         int l2 = whenFalse_.getString().length();
         if (l1 > l2)
         {
-            this.width = fontRenderer.getStringWidth(whenTrue_.getString()) + 8;
+            this.width = fontRenderer.width(whenTrue_.getString()) + 8;
         }
         else
         {
-            width = fontRenderer.getStringWidth(whenFalse_.getString()) + 8;
+            width = fontRenderer.width(whenFalse_.getString()) + 8;
         }
         state = startState;
         if (state)
