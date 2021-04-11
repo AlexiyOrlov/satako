@@ -112,12 +112,12 @@ public class ContainerScreen2<T extends net.minecraft.inventory.container.Contai
                     if (atlasAndSprite != null) {
                         ResourceLocation background = atlasAndSprite.getSecond();
                         if (background.getNamespace().equals("minecraft")) {
-                            minecraft.getTextureManager().getTexture(Constants.GREY_SLOT_TEXTURE);
+                            minecraft.getTextureManager().bind(Constants.GREY_SLOT_TEXTURE);
                         } else {
-                            minecraft.getTextureManager().getTexture(background);
+                            minecraft.getTextureManager().bind(background);
                         }
                     } else {
-                        minecraft.getTextureManager().getTexture(Constants.GREY_SLOT_TEXTURE);
+                        minecraft.getTextureManager().bind(Constants.GREY_SLOT_TEXTURE);
                     }
                     blit(matrixStack,sx + leftPos, sy + topPos, 0, 0, 16, 16);
                 }
