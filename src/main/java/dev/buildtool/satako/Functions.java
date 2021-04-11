@@ -24,6 +24,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Rotation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -1056,8 +1057,29 @@ public final class Functions
         return null;
     }
 
-    public static boolean removeBlock(BlockPos position, IWorld world)
-    {
-        return world.removeBlock(position,false);
+    public static boolean removeBlock(BlockPos position, IWorld world) {
+        return world.removeBlock(position, false);
+    }
+
+    public static Rotation directionToRotation(Direction direction) {
+        assert direction.getAxis().isHorizontal();
+        Rotation rotation;
+        switch (direction) {
+            case NORTH:
+                rotation = Rotation.NONE;
+                break;
+            case SOUTH:
+                rotation = Rotation.CLOCKWISE_180;
+                break;
+            case EAST:
+                rotation = Rotation.CLOCKWISE_90;
+                break;
+            case WEST:
+                rotation = Rotation.COUNTERCLOCKWISE_90;
+                break;
+            default:
+                return null;
+        }
+        return rotation.getRotated(Rotation.COUNTERCLOCKWISE_90);
     }
 }
