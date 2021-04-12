@@ -87,20 +87,20 @@ public class Commands {
             return p_198471_0_.hasPermission(2);
         }).then(net.minecraft.command.Commands.argument("from", BlockPosArgument.blockPos()).then(net.minecraft.command.Commands.argument("to", BlockPosArgument.blockPos()).then(net.minecraft.command.Commands.argument("block", BlockStateArgument.block()).executes((commandContext) -> {
             return fillBlocks(commandContext.getSource(), new MutableBoundingBox(BlockPosArgument.getLoadedBlockPos(commandContext, "from"), BlockPosArgument.getLoadedBlockPos(commandContext, "to")), BlockStateArgument.getBlock(commandContext, "block"), Mode.REPLACE, null);
-        }).then(net.minecraft.command.Commands.literal("replace").executes((p_198464_0_) -> {
-            return fillBlocks(p_198464_0_.getSource(), new MutableBoundingBox(BlockPosArgument.getLoadedBlockPos(p_198464_0_, "from"), BlockPosArgument.getLoadedBlockPos(p_198464_0_, "to")), BlockStateArgument.getBlock(p_198464_0_, "block"), Mode.REPLACE, null);
-        }).then(net.minecraft.command.Commands.argument("filter", BlockPredicateArgument.blockPredicate()).executes((p_198466_0_) -> {
-            return fillBlocks(p_198466_0_.getSource(), new MutableBoundingBox(BlockPosArgument.getLoadedBlockPos(p_198466_0_, "from"), BlockPosArgument.getLoadedBlockPos(p_198466_0_, "to")), BlockStateArgument.getBlock(p_198466_0_, "block"), Mode.REPLACE, BlockPredicateArgument.getBlockPredicate(p_198466_0_, "filter"));
-        }))).then(net.minecraft.command.Commands.literal("keep").executes((p_198462_0_) -> {
-            return fillBlocks(p_198462_0_.getSource(), new MutableBoundingBox(BlockPosArgument.getLoadedBlockPos(p_198462_0_, "from"), BlockPosArgument.getLoadedBlockPos(p_198462_0_, "to")), BlockStateArgument.getBlock(p_198462_0_, "block"), Mode.REPLACE, (p_198469_0_) -> {
+        }).then(net.minecraft.command.Commands.literal("replace").executes((commandContext) -> {
+            return fillBlocks(commandContext.getSource(), new MutableBoundingBox(BlockPosArgument.getLoadedBlockPos(commandContext, "from"), BlockPosArgument.getLoadedBlockPos(commandContext, "to")), BlockStateArgument.getBlock(commandContext, "block"), Mode.REPLACE, null);
+        }).then(net.minecraft.command.Commands.argument("filter", BlockPredicateArgument.blockPredicate()).executes((commandContext) -> {
+            return fillBlocks(commandContext.getSource(), new MutableBoundingBox(BlockPosArgument.getLoadedBlockPos(commandContext, "from"), BlockPosArgument.getLoadedBlockPos(commandContext, "to")), BlockStateArgument.getBlock(commandContext, "block"), Mode.REPLACE, BlockPredicateArgument.getBlockPredicate(commandContext, "filter"));
+        }))).then(net.minecraft.command.Commands.literal("keep").executes((commandContext) -> {
+            return fillBlocks(commandContext.getSource(), new MutableBoundingBox(BlockPosArgument.getLoadedBlockPos(commandContext, "from"), BlockPosArgument.getLoadedBlockPos(commandContext, "to")), BlockStateArgument.getBlock(commandContext, "block"), Mode.REPLACE, (p_198469_0_) -> {
                 return p_198469_0_.getLevel().isEmptyBlock(p_198469_0_.getPos());
             });
-        })).then(net.minecraft.command.Commands.literal("outline").executes((p_198467_0_) -> {
-            return fillBlocks(p_198467_0_.getSource(), new MutableBoundingBox(BlockPosArgument.getLoadedBlockPos(p_198467_0_, "from"), BlockPosArgument.getLoadedBlockPos(p_198467_0_, "to")), BlockStateArgument.getBlock(p_198467_0_, "block"), Mode.OUTLINE, null);
-        })).then(net.minecraft.command.Commands.literal("hollow").executes((p_198461_0_) -> {
-            return fillBlocks(p_198461_0_.getSource(), new MutableBoundingBox(BlockPosArgument.getLoadedBlockPos(p_198461_0_, "from"), BlockPosArgument.getLoadedBlockPos(p_198461_0_, "to")), BlockStateArgument.getBlock(p_198461_0_, "block"), Mode.HOLLOW, null);
-        })).then(net.minecraft.command.Commands.literal("destroy").executes((p_198468_0_) -> {
-            return fillBlocks(p_198468_0_.getSource(), new MutableBoundingBox(BlockPosArgument.getLoadedBlockPos(p_198468_0_, "from"), BlockPosArgument.getLoadedBlockPos(p_198468_0_, "to")), BlockStateArgument.getBlock(p_198468_0_, "block"), Mode.DESTROY, null);
+        })).then(net.minecraft.command.Commands.literal("outline").executes((commandContext) -> {
+            return fillBlocks(commandContext.getSource(), new MutableBoundingBox(BlockPosArgument.getLoadedBlockPos(commandContext, "from"), BlockPosArgument.getLoadedBlockPos(commandContext, "to")), BlockStateArgument.getBlock(commandContext, "block"), Mode.OUTLINE, null);
+        })).then(net.minecraft.command.Commands.literal("hollow").executes((commandContext) -> {
+            return fillBlocks(commandContext.getSource(), new MutableBoundingBox(BlockPosArgument.getLoadedBlockPos(commandContext, "from"), BlockPosArgument.getLoadedBlockPos(commandContext, "to")), BlockStateArgument.getBlock(commandContext, "block"), Mode.HOLLOW, null);
+        })).then(net.minecraft.command.Commands.literal("destroy").executes((commandContext) -> {
+            return fillBlocks(commandContext.getSource(), new MutableBoundingBox(BlockPosArgument.getLoadedBlockPos(commandContext, "from"), BlockPosArgument.getLoadedBlockPos(commandContext, "to")), BlockStateArgument.getBlock(commandContext, "block"), Mode.DESTROY, null);
         }))))));
     }
 
