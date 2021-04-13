@@ -1,6 +1,7 @@
 4.2.:
 full internal update to 1.16.5;
 added command 'fill2';
+added command 'give2';
 
 4.1.7:
 marked Inanimate entity as non-living;

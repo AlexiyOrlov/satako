@@ -2,9 +2,11 @@ package dev.buildtool.satako;
 
 import com.google.common.collect.Lists;
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.builder.RequiredArgumentBuilder;
+import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.Dynamic2CommandExceptionType;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
@@ -16,18 +18,21 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.ISuggestionProvider;
-import net.minecraft.command.arguments.BlockPosArgument;
-import net.minecraft.command.arguments.BlockStateInput;
-import net.minecraft.command.arguments.ILocationArgument;
-import net.minecraft.command.arguments.Vec3Argument;
+import net.minecraft.command.arguments.*;
 import net.minecraft.command.impl.SetBlockCommand;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.IClearable;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.CachedBlockInfo;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MutableBoundingBox;
 import net.minecraft.util.math.vector.Vector3d;
@@ -40,9 +45,11 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.server.command.EnumArgument;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import static net.minecraft.command.Commands.argument;
 import static net.minecraft.command.Commands.literal;
@@ -122,6 +129,29 @@ public class Commands {
         block.addChild(mode.build());
         rootCommandNode.addChild(fill);
 
+        //give 2
+        SuggestionProvider<CommandSource> mods = (context, builder) -> ISuggestionProvider.suggest(() -> ForgeRegistries.ITEMS.getKeys().stream().map(ResourceLocation::getNamespace).collect(Collectors.toSet()).iterator(), builder);
+        SuggestionProvider<CommandSource> items = (context, builder) -> ISuggestionProvider.suggest(() -> ForgeRegistries.ITEMS.getKeys().stream().filter(resourceLocation -> resourceLocation.getNamespace().equals(context.getArgument("mod", String.class))).map(ResourceLocation::getPath).collect(Collectors.toSet()).iterator(), builder);
+
+        LiteralArgumentBuilder<CommandSource> give2 = literal("give2").requires(commandSource -> commandSource.hasPermission(2));
+        RequiredArgumentBuilder<CommandSource, EntitySelector> targets = argument("targets", EntityArgument.players());
+        RequiredArgumentBuilder<CommandSource, String> itemmod = argument("mod", StringArgumentType.string()).suggests(mods);
+        RequiredArgumentBuilder<CommandSource, String> itemPath = argument("item", StringArgumentType.string()).suggests(items);
+        itemPath.executes(context -> giveItems(context, 1));
+        RequiredArgumentBuilder<CommandSource, Integer> count = argument("count", IntegerArgumentType.integer(1));
+        count.executes(context -> giveItems(context, IntegerArgumentType.getInteger(context, "count")));
+
+        LiteralCommandNode<CommandSource> giveNode = give2.build();
+        ArgumentCommandNode<CommandSource, EntitySelector> players = targets.build();
+        ArgumentCommandNode<CommandSource, String> itemDomain = itemmod.build();
+        ArgumentCommandNode<CommandSource, String> item = itemPath.build();
+        ArgumentCommandNode<CommandSource, Integer> countNode = count.build();
+        giveNode.addChild(players);
+        players.addChild(itemDomain);
+        itemDomain.addChild(item);
+        item.addChild(countNode);
+        rootCommandNode.addChild(giveNode);
+
 //        commandDispatcher.register(net.minecraft.command.Commands.literal("f").requires((p_198471_0_) -> {
 //            return p_198471_0_.hasPermission(2);
 //        }).then(net.minecraft.command.Commands.argument("from", BlockPosArgument.blockPos()).then(net.minecraft.command.Commands.argument("to", BlockPosArgument.blockPos()).then(net.minecraft.command.Commands.argument("block", BlockStateArgument.block()).executes((commandContext) -> {
@@ -141,6 +171,43 @@ public class Commands {
 //        })).then(net.minecraft.command.Commands.literal("destroy").executes((commandContext) -> {
 //            return fillBlocks(commandContext.getSource(), new MutableBoundingBox(BlockPosArgument.getLoadedBlockPos(commandContext, "from"), BlockPosArgument.getLoadedBlockPos(commandContext, "to")), BlockStateArgument.getBlock(commandContext, "block"), Mode.DESTROY, null);
 //        }))))));
+    }
+
+    private static int giveItems(CommandContext<CommandSource> context, int amount) throws CommandSyntaxException {
+        String modName = context.getArgument("mod", String.class);
+        String itemName = context.getArgument("item", String.class);
+        ResourceLocation resourceLocation = new ResourceLocation(modName, itemName);
+        Item item = ForgeRegistries.ITEMS.getValue(resourceLocation);
+        if (item != null) {
+            Collection<ServerPlayerEntity> serverPlayerEntities = EntityArgument.getPlayers(context, "targets");
+            for (ServerPlayerEntity serverplayerentity : serverPlayerEntities) {
+                int i = amount;
+
+                while (i > 0) {
+                    int j = Math.min(item.getMaxStackSize(), i);
+                    i -= j;
+                    ItemStack itemstack = new ItemStack(item, j);
+                    boolean flag = serverplayerentity.inventory.add(itemstack);
+                    if (flag && itemstack.isEmpty()) {
+                        itemstack.setCount(1);
+                        ItemEntity itementity1 = serverplayerentity.drop(itemstack, false);
+                        if (itementity1 != null) {
+                            itementity1.makeFakeItem();
+                        }
+
+                        serverplayerentity.level.playSound(null, serverplayerentity.getX(), serverplayerentity.getY(), serverplayerentity.getZ(), SoundEvents.ITEM_PICKUP, SoundCategory.PLAYERS, 0.2F, ((serverplayerentity.getRandom().nextFloat() - serverplayerentity.getRandom().nextFloat()) * 0.7F + 1.0F) * 2.0F);
+                        serverplayerentity.inventoryMenu.broadcastChanges();
+                    } else {
+                        ItemEntity itementity = serverplayerentity.drop(itemstack, false);
+                        if (itementity != null) {
+                            itementity.setNoPickUpDelay();
+                            itementity.setOwner(serverplayerentity.getUUID());
+                        }
+                    }
+                }
+            }
+        }
+        return 1;
     }
 
     private static int fillBlocks(CommandSource source, MutableBoundingBox mutableBoundingBox, String mod, String block, Mode mode, Predicate<CachedBlockInfo> o) throws CommandSyntaxException {
@@ -165,15 +232,7 @@ public class Commands {
                 }
             }
         }
-//                BlockStateInput blockstateinput = mode.filter.filter(mutableBoundingBox, blockpos,, serverworld);
-//                if (blockstateinput != null) {
-//                    TileEntity tileentity = serverworld.getBlockEntity(blockpos);
-//                    IClearable.tryClear(tileentity);
-//                    if (blockstateinput.place(serverworld, blockpos, 2)) {
-//                        list.add(blockpos.immutable());
-//                        ++j;
-//                    }
-//                }
+
         for (BlockPos blockpos1 : list) {
             Block b = serverworld.getBlockState(blockpos1).getBlock();
             serverworld.blockUpdated(blockpos1, b);
@@ -188,7 +247,7 @@ public class Commands {
     }
 
 
-    static int summonEntity(CommandSource commandSource, Vector3d position, ResourceLocation resourceLocation) {
+    private static int summonEntity(CommandSource commandSource, Vector3d position, ResourceLocation resourceLocation) {
         ServerWorld serverWorld = commandSource.getLevel().getWorldServer();
         Entity entity = ForgeRegistries.ENTITIES.getValue(resourceLocation).create(serverWorld);
         if (entity == null) {
@@ -206,43 +265,6 @@ public class Commands {
     private static final Dynamic2CommandExceptionType ERROR_AREA_TOO_LARGE = new Dynamic2CommandExceptionType((p_208897_0_, p_208897_1_) -> {
         return new TranslationTextComponent("commands.fill.toobig", p_208897_0_, p_208897_1_);
     });
-
-//    private static int fillBlocks(CommandSource source, MutableBoundingBox mutableBoundingBox, BlockStateInput blockStateInput, Mode p_198463_3_, @Nullable Predicate<CachedBlockInfo> p_198463_4_) throws CommandSyntaxException {
-//        int i = mutableBoundingBox.getXSpan() * mutableBoundingBox.getYSpan() * mutableBoundingBox.getZSpan();
-//        if (i > 32768) {
-//            throw ERROR_AREA_TOO_LARGE.create(32768, i);
-//        } else {
-//            List<BlockPos> list = Lists.newArrayList();
-//            ServerWorld serverworld = source.getLevel();
-//            int j = 0;
-//
-//            for (BlockPos blockpos : BlockPos.betweenClosed(mutableBoundingBox.x0, mutableBoundingBox.y0, mutableBoundingBox.z0, mutableBoundingBox.x1, mutableBoundingBox.y1, mutableBoundingBox.z1)) {
-//                if (p_198463_4_ == null || p_198463_4_.test(new CachedBlockInfo(serverworld, blockpos, true))) {
-//                    BlockStateInput blockstateinput = p_198463_3_.filter.filter(mutableBoundingBox, blockpos, blockStateInput, serverworld);
-//                    if (blockstateinput != null) {
-//                        TileEntity tileentity = serverworld.getBlockEntity(blockpos);
-//                        IClearable.tryClear(tileentity);
-//                        if (blockstateinput.place(serverworld, blockpos, 2)) {
-//                            list.add(blockpos.immutable());
-//                            ++j;
-//                        }
-//                    }
-//                }
-//            }
-//
-//            for (BlockPos blockpos1 : list) {
-//                Block block = serverworld.getBlockState(blockpos1).getBlock();
-//                serverworld.blockUpdated(blockpos1, block);
-//            }
-//
-//            if (j == 0) {
-//                throw ERROR_FAILED.create();
-//            } else {
-//                source.sendSuccess(new TranslationTextComponent("commands.fill.success", j), true);
-//                return j;
-//            }
-//        }
-//    }
 
     private static final BlockStateInput HOLLOW_CORE = new BlockStateInput(Blocks.AIR.defaultBlockState(), Collections.emptySet(), null);
     private static final SimpleCommandExceptionType ERROR_FAILED = new SimpleCommandExceptionType(new TranslationTextComponent("commands.fill.failed"));
