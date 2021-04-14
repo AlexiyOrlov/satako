@@ -20,8 +20,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 public class BlockDirectional extends net.minecraft.block.DirectionalBlock implements SCSync
 {
 
-    public BlockDirectional(Properties properties)
-    {
+    public BlockDirectional(Properties properties) {
         super(properties);
     }
 
@@ -30,15 +29,17 @@ public class BlockDirectional extends net.minecraft.block.DirectionalBlock imple
         p_206840_1_.add(FACING);
     }
 
+    /**
+     * Correct if {@link net.minecraftforge.common.extensions.IForgeBlockState#rotate(IWorld, BlockPos, Rotation)} is used
+     */
     @Override
-    public BlockState rotate(BlockState state, IWorld world, BlockPos pos, Rotation direction)
-    {
-        return state.setValue(FACING,direction.rotate(state.getValue(FACING)));
+    public BlockState rotate(BlockState state, IWorld world, BlockPos pos, Rotation direction) {
+        return state.setValue(FACING, direction.rotate(state.getValue(FACING)));
     }
 
     @Override
     public BlockState getStateForPlacement(BlockItemUseContext context) {
-        return defaultBlockState().setValue(FACING,context.getClickedFace());
+        return defaultBlockState().setValue(FACING, context.getClickedFace());
     }
 
     @Override
