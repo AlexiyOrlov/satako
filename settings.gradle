@@ -3,5 +3,6 @@
 //include('ElementalCreepers2')
 //include('Minecraft3')
 include('SCPRestoration')
+include('Secured')
 //include('SimplerCommands')
 //include('KillerTable')
