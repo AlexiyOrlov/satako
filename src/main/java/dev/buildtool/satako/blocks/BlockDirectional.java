@@ -33,8 +33,13 @@ public class BlockDirectional extends net.minecraft.block.DirectionalBlock imple
      * Correct if {@link net.minecraftforge.common.extensions.IForgeBlockState#rotate(IWorld, BlockPos, Rotation)} is used
      */
     @Override
-    public BlockState rotate(BlockState state, IWorld world, BlockPos pos, Rotation direction) {
-        return state.setValue(FACING, direction.rotate(state.getValue(FACING)));
+    public BlockState rotate(BlockState state, IWorld world, BlockPos pos, Rotation rotation) {
+        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
+    }
+
+    @Override
+    public BlockState rotate(BlockState state, Rotation rotation) {
+        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
     }
 
     @Override
@@ -44,9 +49,8 @@ public class BlockDirectional extends net.minecraft.block.DirectionalBlock imple
 
     @Override
     public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-        if(hasTileEntity(state))
-        {
-            TileEntity tileEntity=worldIn.getBlockEntity(pos);
+        if (hasTileEntity(state)) {
+            TileEntity tileEntity = worldIn.getBlockEntity(pos);
             tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(iItemHandler -> {
                 for (int i = 0; i < iItemHandler.getSlots(); i++) {
                     ItemStack stack=iItemHandler.getStackInSlot(i);
