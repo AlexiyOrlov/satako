@@ -271,7 +271,7 @@ public class Commands {
 
     enum Mode {
         REPLACE((p_198450_0_, p_198450_1_, p_198450_2_, p_198450_3_) -> p_198450_2_),
-        OUTLINE((p_198454_0_, p_198454_1_, p_198454_2_, p_198454_3_) -> p_198454_1_.getX() != p_198454_0_.x0 && p_198454_1_.getX() != p_198454_0_.x1 && p_198454_1_.getY() != p_198454_0_.y0 && p_198454_1_.getY() != p_198454_0_.y1 && p_198454_1_.getZ() != p_198454_0_.z0 && p_198454_1_.getZ() != p_198454_0_.z1 ? null : p_198454_2_),
+        OUTLINE((mutableBoundingBox, blockPos, blockStateInput, p_198454_3_) -> blockPos.getX() != mutableBoundingBox.x0 && blockPos.getX() != mutableBoundingBox.x1 && blockPos.getY() != mutableBoundingBox.y0 && blockPos.getY() != mutableBoundingBox.y1 && blockPos.getZ() != mutableBoundingBox.z0 && blockPos.getZ() != mutableBoundingBox.z1 ? null : blockStateInput),
         HOLLOW((p_198453_0_, p_198453_1_, p_198453_2_, p_198453_3_) -> p_198453_1_.getX() != p_198453_0_.x0 && p_198453_1_.getX() != p_198453_0_.x1 && p_198453_1_.getY() != p_198453_0_.y0 && p_198453_1_.getY() != p_198453_0_.y1 && p_198453_1_.getZ() != p_198453_0_.z0 && p_198453_1_.getZ() != p_198453_0_.z1 ? HOLLOW_CORE : p_198453_2_),
         DESTROY((p_198452_0_, p_198452_1_, p_198452_2_, p_198452_3_) -> {
             p_198452_3_.destroyBlock(p_198452_1_, true);
