@@ -41,4 +41,9 @@ public class InanimateEntity extends LivingEntity {
     public boolean attackable() {
         return false;
     }
+
+    @Override
+    public boolean isAttackable() {
+        return false;
+    }
 }
