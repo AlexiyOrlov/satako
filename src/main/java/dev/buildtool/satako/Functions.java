@@ -951,8 +951,7 @@ public final class Functions
             if (next.isEmpty() && into.isItemValid(i,stack))
             {
                 ItemStack rem = into.insertItem(i, stack, true);
-                if (rem.isEmpty())
-                {
+                if (rem.isEmpty()) {
                     return true;
                 }
 
@@ -961,13 +960,15 @@ public final class Functions
         return false;
     }
 
-    public static boolean isHolding(Predicate<Item> itemPredicate,LivingEntity entity)
-    {
+    /**
+     * Use {@link LivingEntity#isHolding(Predicate)}
+     */
+    @Deprecated
+    public static boolean isHolding(Predicate<Item> itemPredicate, LivingEntity entity) {
         return itemPredicate.test(entity.getMainHandItem().getItem()) || itemPredicate.test(entity.getOffhandItem().getItem());
     }
 
-    public static int ticksToSeconds(int ticks)
-    {
+    public static int ticksToSeconds(int ticks) {
         return ticks / 20;
     }
 
