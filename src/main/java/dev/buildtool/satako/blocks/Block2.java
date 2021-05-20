@@ -35,18 +35,26 @@ public class Block2 extends Block implements SCSync
             TileEntity tileEntity=worldIn.getBlockEntity(pos);
             tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(iItemHandler -> {
                 for (int i = 0; i < iItemHandler.getSlots(); i++) {
-                    ItemStack stack=iItemHandler.getStackInSlot(i);
-                    if(!stack.isEmpty())
-                        InventoryHelper.dropItemStack(worldIn,pos.getX()+0.5,pos.getY(),pos.getZ()+0.5,stack);
+                    ItemStack stack = iItemHandler.getStackInSlot(i);
+                    if (!stack.isEmpty())
+                        InventoryHelper.dropItemStack(worldIn, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, stack);
                 }
             });
         }
         super.onRemove(state, worldIn, pos, newState, isMoving);
     }
 
+    /**
+     * Sends and event with type and value limited to {@link Byte#MAX_VALUE} to server, and to client if
+     * required
+     *
+     * @param id    type
+     * @param param value
+     * @return whether the event should be sent to a client
+     */
     @Override
     public boolean triggerEvent(BlockState state, World worldIn, BlockPos pos, int id, int param) {
-        return onDataReceived(state,worldIn,pos,(byte) id, (byte) param);
+        return onDataReceived(state, worldIn, pos, (byte) id, (byte) param);
     }
 
     @Override
