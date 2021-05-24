@@ -13,6 +13,7 @@ import javax.annotation.Nullable;
 public abstract class BlockConnectable extends SixWayBlock {
     public BlockConnectable(float thickness, Properties properties) {
         super(thickness, properties);
+        assert thickness < 1;
         registerDefaultState(defaultBlockState().setValue(NORTH, false).setValue(SOUTH, false).setValue(UP, false).setValue(DOWN, false).setValue(EAST, false).setValue(WEST, false));
     }
 
