@@ -1,5 +1,6 @@
 4.2.5:
 fixed rotation on directional blocks;
+added connectable block base;
 
 4.2.4:
 full internal update to 1.16.5;
