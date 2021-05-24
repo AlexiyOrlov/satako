@@ -133,14 +133,17 @@ public class ContainerScreen2<T extends net.minecraft.inventory.container.Contai
             Methods.drawHorizontalLine(this.leftPos, this.getXSize()+leftPos, this.topPos, color, 2);
             Methods.drawHorizontalLine(this.leftPos,  this.getXSize()+leftPos, this.getYSize()+topPos, color, 2);
             Methods.drawVerticalLine(this.leftPos, this.topPos, getYSize()+this.topPos, color, 2);
-            Methods.drawVerticalLine(getXSize()+this.leftPos , this.topPos, getYSize()+this.topPos, color, 2);
+            Methods.drawVerticalLine(getXSize() + this.leftPos, this.topPos, getYSize() + this.topPos, color, 2);
 
         }
     }
 
-    public void addScrollList(ScrollList list)
-    {
+    public void addScrollList(ScrollList list) {
         lists.add(list);
     }
 
+    @Override
+    protected void renderLabels(MatrixStack p_230451_1_, int p_230451_2_, int p_230451_3_) {
+
+    }
 }
