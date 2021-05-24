@@ -49,6 +49,9 @@ public abstract class BlockConnectable extends SixWayBlock {
         return blockState.setValue(PROPERTY_BY_DIRECTION.get(on), doConnectTo(world, blockState, state, blockPos, pos, on));
     }
 
+    /**
+     * @return list of directions connected to
+     */
     public List<Direction> getConnections(BlockState blockState) {
         ArrayList<Direction> directions = new ArrayList<>(6);
         if (blockState.getValue(UP))
