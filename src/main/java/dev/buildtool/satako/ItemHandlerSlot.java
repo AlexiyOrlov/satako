@@ -9,21 +9,22 @@ import net.minecraftforge.items.SlotItemHandler;
 /**
  * Default item handler slot
  */
-public class ItemHandlerSlot extends SlotItemHandler
-{
-    private IntegerColor color=Constants.BLUE;
+public class ItemHandlerSlot extends SlotItemHandler {
+    /**
+     * Visible
+     */
+    protected boolean active = true;
+    private IntegerColor color = Constants.BLUE;
     private ResourceLocation texture;
-    public ItemHandlerSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition)
-    {
+
+    public ItemHandlerSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition) {
         super(itemHandler, index, xPosition, yPosition);
     }
 
     @Override
-    public boolean mayPlace(ItemStack stack)
-    {
+    public boolean mayPlace(ItemStack stack) {
         return !stack.isEmpty();
     }
-
 
     @Override
     public boolean mayPickup(PlayerEntity playerIn)
@@ -47,5 +48,14 @@ public class ItemHandlerSlot extends SlotItemHandler
 
     public ResourceLocation getTexture() {
         return texture;
+    }
+
+    @Override
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }
