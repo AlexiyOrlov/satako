@@ -1,23 +1,20 @@
 package dev.buildtool.satako.gui;
 
 import dev.buildtool.satako.Constants;
+import dev.buildtool.satako.ItemHandlerSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
-import net.minecraftforge.items.SlotItemHandler;
 
 /**
  * Slot for displaying the item only
  */
-public class ItemHandlerDisplaySlot extends SlotItemHandler implements Scrollable, Hideable
-{
-    public boolean verticalScroll, horizontalScroll;
-    public boolean isVisible = true, enabled = true;
+public class ItemHandlerDisplaySlot extends ItemHandlerSlot {
     public int scrollAmount;
+    private boolean active;
 
-    public ItemHandlerDisplaySlot(IItemHandler itemHandler, int index, int xPosition, int yPosition)
-    {
+    public ItemHandlerDisplaySlot(IItemHandler itemHandler, int index, int xPosition, int yPosition) {
         this(itemHandler, index, xPosition, yPosition, Constants.SLOTWITHBORDERSIZE);
     }
 
@@ -25,24 +22,6 @@ public class ItemHandlerDisplaySlot extends SlotItemHandler implements Scrollabl
     {
         super(itemHandler, index, xPos, yPos);
         this.scrollAmount = scrollAmount;
-    }
-
-    @Override
-    public boolean isEnabled()
-    {
-        return enabled;
-    }
-
-    @Override
-    public void setEnabled()
-    {
-        enabled = true;
-    }
-
-    @Override
-    public void setDisabled()
-    {
-        enabled = false;
     }
 
     @Override
@@ -61,71 +40,17 @@ public class ItemHandlerDisplaySlot extends SlotItemHandler implements Scrollabl
     public void set(ItemStack stack)
     {
         IItemHandler itemHandler = getItemHandler();
-        if (itemHandler instanceof IItemHandlerModifiable)
-        {
+        if (itemHandler instanceof IItemHandlerModifiable) {
             super.set(stack);
         }
     }
 
-    /**
-     * Scrolls object for specified amount
-     *
-     * @param amount
-     * @param vertical whether scroll is vertical
-     */
     @Override
-    public void scroll(int amount, boolean vertical)
-    {
-        if (enabled)
-        {
-
-            if (vertical && verticalScroll)
-            {
-//                yPos += scrollAmount * Math.signum(amount);
-            }
-            else if (horizontalScroll)
-            {
-//                xPos += scrollAmount * Math.signum(amount);
-            }
-        }
+    public boolean isActive() {
+        return active;
     }
 
-    @Override
-    public void setScrollable(boolean vertical, boolean b)
-    {
-        if (b)
-        {
-            if (vertical)
-            {
-                verticalScroll = true;
-            }
-            else
-            {
-                horizontalScroll = true;
-            }
-        }
-        else
-        {
-            if (vertical)
-            {
-                verticalScroll = false;
-            }
-            else
-            {
-                horizontalScroll = false;
-            }
-        }
-    }
-
-    @Override
-    public void setHidden()
-    {
-        isVisible = false;
-    }
-
-    @Override
-    public void setVisible()
-    {
-        isVisible = true;
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

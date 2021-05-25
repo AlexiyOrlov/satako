@@ -52,10 +52,6 @@ public class Page
             {
                 ((Button) o).visible = false;
             }
-            if (o instanceof ItemHandlerDisplaySlot)
-            {
-                ((ItemHandlerDisplaySlot) o).setDisabled();
-            }
 
         });
         hidden = true;
@@ -77,10 +73,6 @@ public class Page
             else if (o instanceof Button)
             {
                 ((Button) o).visible = true;
-            }
-            if (o instanceof ItemHandlerDisplaySlot)
-            {
-                ((ItemHandlerDisplaySlot) o).setEnabled();
             }
 
         });
