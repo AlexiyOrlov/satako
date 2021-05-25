@@ -93,16 +93,13 @@ public class ContainerScreen2<T extends net.minecraft.inventory.container.Contai
             {
                 int sx = s.x;
                 int sy = s.y;
-                if(s instanceof ItemHandlerSlot)
-                {
-                    ItemHandlerSlot itemHandlerSlot= (ItemHandlerSlot) s;
-                    if(itemHandlerSlot.getTexture()==null)
-                    {
+                ;
+                if (s instanceof ItemHandlerSlot) {
+                    ItemHandlerSlot itemHandlerSlot = (ItemHandlerSlot) s;
+                    if (itemHandlerSlot.getTexture() == null) {
                         //color
-                        fill(matrixStack,sx+leftPos,sy+topPos,sx+leftPos+16,sy+topPos+16,itemHandlerSlot.getColor().getIntColor());
-                    }
-                    else
-                    {
+                        fill(matrixStack, sx + leftPos, sy + topPos, sx + leftPos + 16, sy + topPos + 16, itemHandlerSlot.getColor().getIntColor());
+                    } else {
                         minecraft.getTextureManager().getTexture(itemHandlerSlot.getTexture());
                         blit(matrixStack,sx+leftPos,sy+topPos,0,0,16,16);
                     }
