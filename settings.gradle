@@ -4,7 +4,7 @@
 //include('Minecraft3')
 include('SCPRestoration')
 include('Secured')
-//include('SimplerCommands')
+include('k-turrets')
 include('KillerTable')
 include('EII')
 //include('TheFactory')
