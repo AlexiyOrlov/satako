@@ -1,5 +1,6 @@
 package dev.buildtool.satako;
 
+import io.netty.buffer.Unpooled;
 import net.minecraft.block.AirBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -20,6 +21,7 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
@@ -1083,4 +1085,9 @@ public final class Functions
         }
         return rotation.getRotated(Rotation.COUNTERCLOCKWISE_90);
     }
+
+    public static PacketBuffer emptyBuffer() {
+        return new PacketBuffer(Unpooled.buffer());
+    }
+
 }
