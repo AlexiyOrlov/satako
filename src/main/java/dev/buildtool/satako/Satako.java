@@ -1,13 +1,19 @@
 package dev.buildtool.satako;
 
+import dev.buildtool.satako.debugging.BlockListener;
+import dev.buildtool.satako.debugging.EntityListener;
+import dev.buildtool.satako.debugging.ItemListener;
 import dev.buildtool.satako.packets.SendItemNBT;
 import dev.buildtool.satako.packets.SendSound;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraftforge.fml.network.NetworkRegistry;
@@ -22,7 +28,7 @@ public class Satako
 {
     public static final String ID = "satako";
     public static SimpleChannel CHANNEL;
-
+    public static ForgeConfigSpec.BooleanValue DO_DEBUG;
     public Satako()
     {
         CHANNEL = NetworkRegistry.newSimpleChannel(new ResourceLocation(ID, "first"), () -> "1.0", s -> true, s -> true);
@@ -40,21 +46,30 @@ public class Satako
                             final ItemStack heldItem = minecraft.player.getItemInHand(sendItemNBT.toHand);
                             heldItem.setTag(sendItemNBT.compoundNBT);
                         });
-
                     }
+                    context.setPacketHandled(true);
                 }).add();
 
         CHANNEL.messageBuilder(SendSound.class, 1, NetworkDirection.PLAY_TO_CLIENT).encoder((sendSound, buffer) -> {
             buffer.writeFloat(sendSound.pitch);
-            buffer.writeFloat(sendSound.volume);
-            buffer.writeUtf(sendSound.soundEvent.getRegistryName().toString());
-        }).decoder(buffer -> new SendSound(buffer.readFloat(), buffer.readFloat(),
-                ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(buffer.readUtf()))))
+                    buffer.writeFloat(sendSound.volume);
+                    buffer.writeUtf(sendSound.soundEvent.getRegistryName().toString());
+                }).decoder(buffer -> new SendSound(buffer.readFloat(), buffer.readFloat(),
+                        ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(buffer.readUtf()))))
                 .consumer((sendSound, contextSupplier) -> {
                     contextSupplier.get().enqueueWork(() ->
                             Minecraft.getInstance().player.playSound(sendSound.soundEvent, sendSound.volume, sendSound.pitch));
-//                    contextSupplier.get().setPacketHandled(true);
+                    contextSupplier.get().setPacketHandled(true);
                 }).add();
         MinecraftForge.EVENT_BUS.register(this);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, new ForgeConfigSpec.Builder().configure(builder -> {
+            DO_DEBUG = builder.define("Enable extra debugging info", true);
+            return builder.build();
+        }).getRight());
+        if (DO_DEBUG.get()) {
+            MinecraftForge.EVENT_BUS.register(EntityListener.class);
+            MinecraftForge.EVENT_BUS.register(BlockListener.class);
+            MinecraftForge.EVENT_BUS.register(ItemListener.class);
+        }
     }
 }
