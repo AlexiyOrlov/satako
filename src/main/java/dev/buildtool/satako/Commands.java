@@ -152,25 +152,6 @@ public class Commands {
         item.addChild(countNode);
         rootCommandNode.addChild(giveNode);
 
-//        commandDispatcher.register(net.minecraft.command.Commands.literal("f").requires((p_198471_0_) -> {
-//            return p_198471_0_.hasPermission(2);
-//        }).then(net.minecraft.command.Commands.argument("from", BlockPosArgument.blockPos()).then(net.minecraft.command.Commands.argument("to", BlockPosArgument.blockPos()).then(net.minecraft.command.Commands.argument("block", BlockStateArgument.block()).executes((commandContext) -> {
-//            return fillBlocks(commandContext.getSource(), new MutableBoundingBox(BlockPosArgument.getLoadedBlockPos(commandContext, "from"), BlockPosArgument.getLoadedBlockPos(commandContext, "to")), BlockStateArgument.getBlock(commandContext, "block"), Mode.REPLACE, null);
-//        }).then(net.minecraft.command.Commands.literal("replace").executes((commandContext) -> {
-//            return fillBlocks(commandContext.getSource(), new MutableBoundingBox(BlockPosArgument.getLoadedBlockPos(commandContext, "from"), BlockPosArgument.getLoadedBlockPos(commandContext, "to")), BlockStateArgument.getBlock(commandContext, "block"), Mode.REPLACE, null);
-//        }).then(net.minecraft.command.Commands.argument("filter", BlockPredicateArgument.blockPredicate()).executes((commandContext) -> {
-//            return fillBlocks(commandContext.getSource(), new MutableBoundingBox(BlockPosArgument.getLoadedBlockPos(commandContext, "from"), BlockPosArgument.getLoadedBlockPos(commandContext, "to")), BlockStateArgument.getBlock(commandContext, "block"), Mode.REPLACE, BlockPredicateArgument.getBlockPredicate(commandContext, "filter"));
-//        }))).then(net.minecraft.command.Commands.literal("keep").executes((commandContext) -> {
-//            return fillBlocks(commandContext.getSource(), new MutableBoundingBox(BlockPosArgument.getLoadedBlockPos(commandContext, "from"), BlockPosArgument.getLoadedBlockPos(commandContext, "to")), BlockStateArgument.getBlock(commandContext, "block"), Mode.REPLACE, (p_198469_0_) -> {
-//                return p_198469_0_.getLevel().isEmptyBlock(p_198469_0_.getPos());
-//            });
-//        })).then(net.minecraft.command.Commands.literal("outline").executes((commandContext) -> {
-//            return fillBlocks(commandContext.getSource(), new MutableBoundingBox(BlockPosArgument.getLoadedBlockPos(commandContext, "from"), BlockPosArgument.getLoadedBlockPos(commandContext, "to")), BlockStateArgument.getBlock(commandContext, "block"), Mode.OUTLINE, null);
-//        })).then(net.minecraft.command.Commands.literal("hollow").executes((commandContext) -> {
-//            return fillBlocks(commandContext.getSource(), new MutableBoundingBox(BlockPosArgument.getLoadedBlockPos(commandContext, "from"), BlockPosArgument.getLoadedBlockPos(commandContext, "to")), BlockStateArgument.getBlock(commandContext, "block"), Mode.HOLLOW, null);
-//        })).then(net.minecraft.command.Commands.literal("destroy").executes((commandContext) -> {
-//            return fillBlocks(commandContext.getSource(), new MutableBoundingBox(BlockPosArgument.getLoadedBlockPos(commandContext, "from"), BlockPosArgument.getLoadedBlockPos(commandContext, "to")), BlockStateArgument.getBlock(commandContext, "block"), Mode.DESTROY, null);
-//        }))))));
     }
 
     private static int giveItems(CommandContext<CommandSource> context, int amount) throws CommandSyntaxException {
