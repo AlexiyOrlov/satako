@@ -1,7 +1,7 @@
 //include('TrajectoryPreview')
 //include('Timer')
 //include('ElementalCreepers2')
-//include('Minecraft3')
+include('TradingTable')
 include('SCPRestoration')
 include('Secured')
 include('k-turrets')
