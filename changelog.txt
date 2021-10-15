@@ -1,3 +1,6 @@
+4.2.11:
+made labels scrollable;
+
 4.2.10:
 fixed rotation on directional blocks;
 added connectable block base;
