@@ -83,14 +83,16 @@ public class Screen2 extends Screen
     public boolean mouseScrolled(double p_mouseScrolled_1_, double p_mouseScrolled_3_, double amount)
     {
         int mousewheeld = (int) Math.signum(amount) * Constants.BUTTONHEIGHT;
-        boolean verticalscroll = !Screen.hasAltDown();
+        boolean verticalscroll = Screen.hasAltDown();
         if (mousewheeld != 0)
         {
-            for (Widget button : buttons)
-            {
-                if (button instanceof BetterButton)
-                {
-                    ((BetterButton) button).scroll(mousewheeld, !verticalscroll);
+            for (Widget button : buttons) {
+//                if (button instanceof BetterButton)
+//                {
+//                    ((BetterButton) button).scroll(mousewheeld, !verticalscroll);
+//                }
+                if (button instanceof Scrollable) {
+                    ((Scrollable) button).scroll(mousewheeld, verticalscroll);
                 }
             }
             for (ScrollList scrollList : scrollLists)
