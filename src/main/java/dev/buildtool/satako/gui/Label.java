@@ -16,7 +16,7 @@ public class Label extends Button implements Scrollable {
     @SuppressWarnings("ConstantConditions")
     public Label(int x, int y, ITextComponent text) {
         super(x, y, Minecraft.getInstance().font.width(text.getString()) + 8, 18, text, null);
-        scrollAmount = height;
+        scrollAmount = 20;
     }
 
     @Override
@@ -60,5 +60,10 @@ public class Label extends Button implements Scrollable {
     @Override
     public void setDisabled() {
         enabled = false;
+    }
+
+    @Override
+    public void setScrollAmount(int pixels) {
+        this.scrollAmount = pixels;
     }
 }

@@ -15,7 +15,7 @@ public class TextField extends TextFieldWidget implements Scrollable, Positionab
     public static final Predicate<String> POSITIVE_NUMBER=s -> s.isEmpty() || StringUtils.isNumeric(s);
     public boolean scrollable;
     private boolean enabled = true;
-
+    protected int scrollAmount;
     /**
      * Creates a string field fitted to text
      */
@@ -34,13 +34,15 @@ public class TextField extends TextFieldWidget implements Scrollable, Positionab
     /**
      * Main constructor
      */
-    public TextField(int X, int Y, int width)
-    {
+    public TextField(int X, int Y, int width) {
         super(Minecraft.getInstance().font, X, Y, width, 15, new StringTextComponent(""));
     }
 
-    public static TextField createWithMaxStringLength(int x_, int y_, int width, int maxStringLength, String string)
     {
+        scrollAmount = height;
+    }
+
+    public static TextField createWithMaxStringLength(int x_, int y_, int width, int maxStringLength, String string) {
         TextField textField = new TextField(x_, y_, width);
         textField.setMaxLength(maxStringLength);
         textField.insertText(string);
@@ -76,29 +78,27 @@ public class TextField extends TextFieldWidget implements Scrollable, Positionab
     }
 
     @Override
-    public void setEnabled()
-    {
-        setEnabled();
+    public void setEnabled() {
         enabled = true;
-
     }
 
     @Override
-    public void setDisabled()
-    {
-        setDisabled();
+    public void setDisabled() {
         enabled = false;
     }
 
     @Override
-    public int getHeight()
-    {
+    public void setScrollAmount(int pixels) {
+        scrollAmount = pixels;
+    }
+
+    @Override
+    public int getHeight() {
         return height;
     }
 
     @Override
-    public int getX()
-    {
+    public int getX() {
         return x;
     }
 

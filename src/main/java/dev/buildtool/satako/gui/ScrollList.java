@@ -13,7 +13,7 @@ public class ScrollList implements Clickable, Scrollable, Hideable
     public UniqueList<Object> items = new UniqueList<>(2);
     public int x, y, width, height;
     public boolean visible = true;
-
+    protected int scrollAmount;
     /**
      *
      */
@@ -105,23 +105,25 @@ public class ScrollList implements Clickable, Scrollable, Hideable
     }
 
     @Override
-    public void setEnabled()
-    {
+    public void setEnabled() {
 
     }
 
     @Override
-    public void setDisabled()
-    {
+    public void setDisabled() {
 
     }
 
     @Override
-    public void setHidden()
-    {
+    public void setScrollAmount(int pixels) {
+        scrollAmount = pixels;
+    }
+
+    @Override
+    public void setHidden() {
         visible = false;
         for (Object item : items) {
-            if(item instanceof Hideable)
+            if (item instanceof Hideable)
                 ((Hideable) item).setHidden();
         }
     }

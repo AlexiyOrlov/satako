@@ -19,4 +19,6 @@ public interface Scrollable
     void setEnabled();
 
     void setDisabled();
+
+    void setScrollAmount(int pixels);
 }
