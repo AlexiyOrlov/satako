@@ -1,4 +1,4 @@
-4.2.11:
+4.2.12:
 made labels scrollable;
 
 4.2.10:
