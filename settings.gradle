@@ -1,5 +1,5 @@
 //include('TrajectoryPreview')
-//include('Timer')
+include('peculiar-mobs')
 include('PlayerEmulator')
 include('TradingTable')
 include('SCPRestoration')
