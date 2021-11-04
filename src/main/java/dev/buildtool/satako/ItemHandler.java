@@ -13,7 +13,6 @@ import javax.annotation.Nullable;
  */
 public class ItemHandler extends ItemStackHandler
 {
-
     private TileEntity owner;
 
     public ItemHandler(int size)
@@ -155,7 +154,6 @@ public class ItemHandler extends ItemStackHandler
         }
         return true;
     }
-
 
     @Override
     protected void onContentsChanged(int slot)

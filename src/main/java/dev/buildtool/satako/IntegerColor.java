@@ -6,7 +6,6 @@ package dev.buildtool.satako;
 public class IntegerColor
 {
     private final int color;
-    private final int argbColor;
     private final int red;
     private final int green;
     private final int blue;
@@ -21,7 +20,6 @@ public class IntegerColor
         green = color >> 16 & 255;
         blue = color >> 8 & 255;
         alpha = color & 255;
-        argbColor = (red << 16) + (green << 8) + (blue) + (alpha << 24);
     }
 
     public int getIntColor()

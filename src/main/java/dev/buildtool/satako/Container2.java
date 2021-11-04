@@ -21,7 +21,6 @@ import javax.annotation.Nullable;
  */
 public class Container2 extends Container
 {
-
     public Container2(@Nullable ContainerType<?> type, int i)
     {
         super(type, i);
@@ -216,5 +215,4 @@ public class Container2 extends Container
     {
         return true;
     }
-
 }

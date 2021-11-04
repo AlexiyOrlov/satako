@@ -12,7 +12,6 @@ import javax.annotation.Nullable;
  */
 public class BlockData
 {
-
     public Block block;
     public BlockPos position;
     public TileEntity tile;
