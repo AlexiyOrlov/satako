@@ -9,6 +9,7 @@ import dev.buildtool.satako.ItemHandlerSlot;
 import dev.buildtool.satako.Methods;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
+import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.util.ResourceLocation;
@@ -94,14 +95,15 @@ public class ContainerScreen2<T extends net.minecraft.inventory.container.Contai
                 int sx = s.x;
                 int sy = s.y;
                 ;
+                TextureManager textureManager = minecraft.getTextureManager();
                 if (s instanceof ItemHandlerSlot) {
                     ItemHandlerSlot itemHandlerSlot = (ItemHandlerSlot) s;
                     if (itemHandlerSlot.getTexture() == null) {
                         //color
                         fill(matrixStack, sx + leftPos, sy + topPos, sx + leftPos + 16, sy + topPos + 16, itemHandlerSlot.getColor().getIntColor());
                     } else {
-                        minecraft.getTextureManager().getTexture(itemHandlerSlot.getTexture());
-                        blit(matrixStack,sx+leftPos,sy+topPos,0,0,16,16);
+                        textureManager.getTexture(itemHandlerSlot.getTexture());
+                        blit(matrixStack, sx + leftPos, sy + topPos, 0, 0, 16, 16);
                     }
                 }
                 else {
@@ -109,12 +111,12 @@ public class ContainerScreen2<T extends net.minecraft.inventory.container.Contai
                     if (atlasAndSprite != null) {
                         ResourceLocation background = atlasAndSprite.getSecond();
                         if (background.getNamespace().equals("minecraft")) {
-                            minecraft.getTextureManager().bind(Constants.GREY_SLOT_TEXTURE);
+                            textureManager.bind(Constants.GREY_SLOT_TEXTURE);
                         } else {
-                            minecraft.getTextureManager().bind(background);
+                            textureManager.bind(background);
                         }
                     } else {
-                        minecraft.getTextureManager().bind(Constants.GREY_SLOT_TEXTURE);
+                        textureManager.bind(Constants.GREY_SLOT_TEXTURE);
                     }
                     blit(matrixStack,sx + leftPos, sy + topPos, 0, 0, 16, 16);
                 }

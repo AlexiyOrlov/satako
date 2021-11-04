@@ -1,13 +1,9 @@
 package dev.buildtool.satako.gui;
 
-import dev.buildtool.satako.Functions;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.fml.client.gui.widget.ExtendedButton;
-
-import java.lang.reflect.Field;
 
 public class BetterButton extends ExtendedButton implements Scrollable, Positionable, Hideable
 {
@@ -25,11 +21,7 @@ public class BetterButton extends ExtendedButton implements Scrollable, Position
     }
 
     /**
-     * @param x
-     * @param y
-     * @param width
      * @param height optimal height is 20
-     * @param text
      */
     public BetterButton(int x, int y, int width, int height, ITextComponent text, IPressable pressable)
     {
@@ -167,19 +159,4 @@ public class BetterButton extends ExtendedButton implements Scrollable, Position
         visible = true;
     }
 
-    public void setClickHandler(IPressable handler)
-    {
-        Field field= Functions.getSecureField(Button.class,0);
-        if(field!=null && field.getType()==IPressable.class)
-        {
-            try
-            {
-                field.set(this,handler);
-            }
-            catch (IllegalAccessException e)
-            {
-                e.printStackTrace();
-            }
-        }
-    }
 }

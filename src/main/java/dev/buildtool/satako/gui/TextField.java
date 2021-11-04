@@ -11,7 +11,6 @@ import java.util.function.Predicate;
 
 public class TextField extends TextFieldWidget implements Scrollable, Positionable, Hideable
 {
-
     public static final Predicate<String> POSITIVE_NUMBER=s -> s.isEmpty() || StringUtils.isNumeric(s);
     public boolean scrollable;
     private boolean enabled = true;

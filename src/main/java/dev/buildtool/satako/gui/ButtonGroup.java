@@ -10,7 +10,7 @@ import java.util.Arrays;
 public class ButtonGroup
 {
 
-    private ArrayList<RadioButton> buttons = new ArrayList<>();
+    private final ArrayList<RadioButton> buttons = new ArrayList<>();
 
     /**
      * Adds and connects buttons

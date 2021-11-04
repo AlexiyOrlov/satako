@@ -20,7 +20,6 @@ public class Screen2 extends Screen
     protected int centerX, centerY;
     private final ArrayList<ScrollList> scrollLists = new ArrayList<>(1);
 
-
     public Screen2(ITextComponent title)
     {
         super(title);
@@ -87,10 +86,6 @@ public class Screen2 extends Screen
         if (mousewheeld != 0)
         {
             for (Widget button : buttons) {
-//                if (button instanceof BetterButton)
-//                {
-//                    ((BetterButton) button).scroll(mousewheeld, !verticalscroll);
-//                }
                 if (button instanceof Scrollable) {
                     ((Scrollable) button).scroll(mousewheeld, verticalscroll);
                 }
