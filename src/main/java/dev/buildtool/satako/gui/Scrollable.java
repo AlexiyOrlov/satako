@@ -11,11 +11,6 @@ public interface Scrollable
 
     void setScrollable(boolean vertical, boolean b);
 
-    /**
-     * Only enabled element should be able to scroll. Ability doesn't mean visibility and disability doesn't mean invisibility
-     */
-    boolean isEnabled();
-
     void setEnabled();
 
     void setDisabled();

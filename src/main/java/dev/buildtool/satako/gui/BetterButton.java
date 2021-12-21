@@ -93,12 +93,6 @@ public class BetterButton extends ExtendedButton implements Scrollable, Position
     }
 
     @Override
-    public boolean isEnabled()
-    {
-        return this.active;
-    }
-
-    @Override
     public void setEnabled() {
         active = true;
     }

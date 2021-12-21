@@ -47,11 +47,6 @@ public class Label extends Button implements Scrollable {
     }
 
     @Override
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    @Override
     public void setEnabled() {
         enabled = true;
     }

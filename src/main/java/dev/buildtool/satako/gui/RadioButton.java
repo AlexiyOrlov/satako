@@ -8,7 +8,6 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -18,7 +17,7 @@ import java.util.List;
 public class RadioButton extends BetterButton
 {
     public boolean selected;
-    private List<RadioButton> neighbours = new ArrayList<>();
+    private final List<RadioButton> neighbours = new ArrayList<>();
 
     public RadioButton(int x, int y, int width, int height, ITextComponent text)
     {
@@ -37,12 +36,6 @@ public class RadioButton extends BetterButton
         super(x, y, text, consumer);
     }
 
-    public void setNeighbours(RadioButton... neighbours_)
-    {
-        neighbours.addAll(Arrays.asList(neighbours_));
-    }
-
-
     public void addNeighbour(RadioButton r)
     {
         neighbours.add(r);
@@ -54,7 +47,7 @@ public class RadioButton extends BetterButton
         if (this.visible)
         {
             Minecraft mc = Minecraft.getInstance();
-            this.isHovered = selected;// mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
+            this.isHovered = selected;
             int k = this.getYImage(this.isHovered);
             GuiUtils.drawContinuousTexturedBox(WIDGETS_LOCATION, this.x, this.y, 0, 46 + k * 20, this.width, this.height, 200, 20, 2, 3, 2, 2, this.getBlitOffset());
             this.renderBg(matrixStack,mc, mouseX, mouseY);
@@ -64,12 +57,6 @@ public class RadioButton extends BetterButton
                 color = 0xFFFFA0; // Slightly Yellow
 
             ITextComponent buttonText = this.getMessage();
-            int strWidth = mc.font.width(buttonText.getString());
-            int ellipsisWidth = mc.font.width("...");
-
-            //TODO
-//            if (strWidth > width - 6 && strWidth > ellipsisWidth)
-//                buttonText = mc.fontRenderer.trimStringToWidth(buttonText, width - 6 - ellipsisWidth).trim() + "...";
 
             drawCenteredString(matrixStack,mc.font, buttonText, this.x + this.width / 2, this.y + (this.height - 8) / 2, color);
         }
@@ -86,10 +73,5 @@ public class RadioButton extends BetterButton
             neighbours.forEach(b -> b.selected = false);
         }
         return pressed;
-    }
-
-    public boolean isSelected()
-    {
-        return selected;
     }
 }

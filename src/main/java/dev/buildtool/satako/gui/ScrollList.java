@@ -5,8 +5,7 @@ import dev.buildtool.satako.Constants;
 import dev.buildtool.satako.Methods;
 import dev.buildtool.satako.UniqueList;
 
-public class ScrollList implements Clickable, Scrollable, Hideable
-{
+public class ScrollList implements Scrollable, Hideable {
     /**
      * Objects contained in this scrollist
      */
@@ -14,6 +13,7 @@ public class ScrollList implements Clickable, Scrollable, Hideable
     public int x, y, width, height;
     public boolean visible = true;
     protected int scrollAmount;
+
     /**
      *
      */
@@ -96,12 +96,6 @@ public class ScrollList implements Clickable, Scrollable, Hideable
     public void setScrollable(boolean vertical, boolean b)
     {
 
-    }
-
-    @Override
-    public boolean isEnabled()
-    {
-        return true;
     }
 
     @Override

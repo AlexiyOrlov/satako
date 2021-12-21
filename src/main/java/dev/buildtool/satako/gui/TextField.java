@@ -13,7 +13,7 @@ public class TextField extends TextFieldWidget implements Scrollable, Positionab
 {
     public static final Predicate<String> POSITIVE_NUMBER=s -> s.isEmpty() || StringUtils.isNumeric(s);
     public boolean scrollable;
-    private boolean enabled = true;
+    private boolean enabled;
     protected int scrollAmount;
     /**
      * Creates a string field fitted to text
@@ -68,12 +68,6 @@ public class TextField extends TextFieldWidget implements Scrollable, Positionab
     public void setScrollable(boolean vertical, boolean b)
     {
         scrollable = b;
-    }
-
-    @Override
-    public boolean isEnabled()
-    {
-        return enabled;
     }
 
     @Override
