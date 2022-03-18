@@ -143,6 +143,6 @@ public class ContainerScreen2<T extends net.minecraft.inventory.container.Contai
 
     @Override
     protected void renderLabels(MatrixStack p_230451_1_, int p_230451_2_, int p_230451_3_) {
-
+        //don't render labels
     }
 }
