@@ -70,7 +70,7 @@ public class Satako
                 }).add();
         MinecraftForge.EVENT_BUS.register(this);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, new ForgeConfigSpec.Builder().configure(builder -> {
-            DO_DEBUG = builder.define("Enable extra debugging info", true);
+            DO_DEBUG = builder.define("Enable extra debugging info", false);
             return builder.build();
         }).getRight());
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
