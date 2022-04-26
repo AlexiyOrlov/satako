@@ -19,7 +19,7 @@ modId = "satako" #mandatory
 # The version number of the mod - there's a few well known ${} variables useable here or just hardcode it
 # ${file.jarVersion} will substitute the value of the Implementation-Version as read from the mod's JAR file metadata
 # see the associated build.gradle script for how to populate this completely automatically during a build
-version = "4.2.13-1.18.2"
+version = "5.0.0-1.18.2"
 # A display name for the mod
 displayName = "Satako" #mandatory
 # A URL to query for updates for this mod. See the JSON update specification https://mcforge.readthedocs.io/en/latest/gettingstarted/autoupdate/
@@ -33,9 +33,9 @@ displayName = "Satako" #mandatory
 # A text field displayed in the mod UI
 authors="Alexiy" #optional
 # The description text for the mod (multi line!) (#mandatory)
-description='''
+description= '''
 Shared library.
-Provides commands "fill2", "summon2", "give2".
+Provides commands "summon2", "give2".
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.satako]] #optional
@@ -54,6 +54,6 @@ side = "BOTH"
 modId = "minecraft"
 mandatory = true
 # This version range declares a minimum of the current minecraft version up to but not including the next major version
-versionRange = "[1.18,1.18.2)"
+versionRange = "[1.18,1.19)"
 ordering = "NONE"
 side = "BOTH"

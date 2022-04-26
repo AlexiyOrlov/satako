@@ -50,14 +50,13 @@ public class Satako {
     public static ForgeConfigSpec.BooleanValue DO_DEBUG;
 
     private static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ID);
-    private static final Block TEST_BLOCK = new TestBlock(Block.Properties.of(Material.HEAVY_METAL, MaterialColor.COLOR_ORANGE));
+    private static final RegistryObject<Block> TEST_BLOCK = BLOCKS.register("test_block", () -> new TestBlock(Block.Properties.of(Material.HEAVY_METAL, MaterialColor.COLOR_ORANGE)));
+
     private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ID);
 
     static {
-        BLOCKS.register("test_block", () -> TEST_BLOCK);
-        ITEMS.register("test_block", () -> new BlockItem(TEST_BLOCK, new Item.Properties().stacksTo(1)));
+        ITEMS.register("test_block", () -> new BlockItem(TEST_BLOCK.get(), new Item.Properties().stacksTo(1)));
     }
-
 
     private static final DeferredRegister<MenuType<?>> CONTAINER_TYPES = DeferredRegister.create(ForgeRegistries.CONTAINERS, ID);
     public static final RegistryObject<MenuType<TestContainer>> TEST_CONTAINER = CONTAINER_TYPES.register("test_block", () -> IForgeMenuType.create((windowId, inv, data) -> new TestContainer(windowId, inv)));
