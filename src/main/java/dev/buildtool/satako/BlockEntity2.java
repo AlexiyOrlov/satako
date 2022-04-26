@@ -1,62 +1,54 @@
 package dev.buildtool.satako;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
 
 /**
  * Main Tile class. Override
- * {@link TileEntity#save(CompoundNBT)}, {@link TileEntity#load(BlockState, CompoundNBT)}
+ * {@link BlockEntity#saveAdditional(CompoundTag)}, {@link BlockEntity#load(CompoundTag)}
  * to store data
  */
-public abstract class BlockEntity2 extends TileEntity
-{
-    protected final static String ITEMS = "Items";
-
-    public BlockEntity2(TileEntityType<?> tileEntityType)
-    {
-        super(tileEntityType);
+public abstract class BlockEntity2 extends BlockEntity {
+    public BlockEntity2(BlockEntityType<?> tileEntityType, BlockPos position, BlockState blockState) {
+        super(tileEntityType, position, blockState);
     }
 
     @Nullable
     @Override
-    public SUpdateTileEntityPacket getUpdatePacket()
-    {
+    public Packet<ClientGamePacketListener> getUpdatePacket() {
         //server side
-        BlockPos blockPos = getBlockPos();
-        return new SUpdateTileEntityPacket(blockPos, 0, getUpdateTag());
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
 
     @Override
-    public CompoundNBT getUpdateTag()
-    {
+    public CompoundTag getUpdateTag() {
         //server side
-        CompoundNBT supertag = super.getUpdateTag();
-        save(supertag);
+        CompoundTag supertag = super.getUpdateTag();
+        saveAdditional(supertag);
         return supertag;
     }
 
-    @Override
-    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt)
-    {
-        CompoundNBT nbtTagCompound = pkt.getTag();
-        load(getBlockState(),nbtTagCompound);
-    }
+//    @Override
+//    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt)
+//    {
+//        CompoundNBT nbtTagCompound = pkt.getTag();
+//        load(getBlockState(),nbtTagCompound);
+//    }
 
-    public int getX()
-    {
+    public int getX() {
         return getBlockPos().getX();
     }
 
-    public int getY()
-    {
+    public int getY() {
         return getBlockPos().getY();
     }
 

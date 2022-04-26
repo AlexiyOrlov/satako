@@ -1,30 +1,25 @@
 package dev.buildtool.satako.gui;
 
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.network.chat.Component;
 
 /**
  * This button holds "true" or "false" state.
  */
-public class SwitchButton extends BetterButton
-{
+public class SwitchButton extends BetterButton {
     public boolean state;
-    ITextComponent whenTrue, whenFalse;
+    Component whenTrue, whenFalse;
 
     /**
      * @param whenTrue_  String shown when "true" is active
      * @param whenFalse_ String shown when "false" is active
      */
-    public SwitchButton(int x, int y, ITextComponent whenTrue_, ITextComponent whenFalse_, boolean startState, IPressable pressable)
-    {
+    public SwitchButton(int x, int y, Component whenTrue_, Component whenFalse_, boolean startState, OnPress pressable) {
         super(x, y, startState ? whenTrue_ : whenFalse_, pressable);
         int l1 = whenTrue_.getString().length();
         int l2 = whenFalse_.getString().length();
-        if (l1 > l2)
-        {
+        if (l1 > l2) {
             this.width = fontRenderer.width(whenTrue_.getString()) + 8;
-        }
-        else
-        {
+        } else {
             width = fontRenderer.width(whenFalse_.getString()) + 8;
         }
         state = startState;
@@ -41,8 +36,7 @@ public class SwitchButton extends BetterButton
     }
 
 
-    public static SwitchButton createPositionlessButton(ITextComponent whenTrue, ITextComponent whenFalse, boolean initialState)
-    {
+    public static SwitchButton createPositionlessButton(Component whenTrue, Component whenFalse, boolean initialState) {
         return new SwitchButton(0, 0, whenTrue, whenFalse, initialState, p_onPress_1_ -> {
         });
     }

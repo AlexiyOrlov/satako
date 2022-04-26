@@ -1,18 +1,16 @@
 package dev.buildtool.satako;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.HandSide;
-import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.HumanoidArm;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
 import java.util.Collections;
 
 public class InanimateEntity extends LivingEntity {
-    public InanimateEntity(EntityType<? extends LivingEntity> type, World worldIn) {
+    public InanimateEntity(EntityType<? extends LivingEntity> type, Level worldIn) {
         super(type, worldIn);
     }
 
@@ -22,20 +20,19 @@ public class InanimateEntity extends LivingEntity {
     }
 
     @Override
-    public ItemStack getItemBySlot(EquipmentSlotType slotIn) {
+    public ItemStack getItemBySlot(EquipmentSlot p_21127_) {
         return ItemStack.EMPTY;
     }
 
     @Override
-    public void setItemSlot(EquipmentSlotType slotIn, ItemStack stack) {
+    public void setItemSlot(EquipmentSlot p_21036_, ItemStack p_21037_) {
 
     }
 
     @Override
-    public HandSide getMainArm() {
-        return HandSide.RIGHT;
+    public HumanoidArm getMainArm() {
+        return HumanoidArm.RIGHT;
     }
-
 
     @Override
     public boolean attackable() {

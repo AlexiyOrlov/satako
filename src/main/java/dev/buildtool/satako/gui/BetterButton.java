@@ -1,9 +1,10 @@
 package dev.buildtool.satako.gui;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraftforge.fml.client.gui.widget.ExtendedButton;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.network.chat.Component;
+import net.minecraftforge.client.gui.widget.ExtendedButton;
 
 public class BetterButton extends ExtendedButton implements Scrollable, Positionable, Hideable
 {
@@ -13,7 +14,7 @@ public class BetterButton extends ExtendedButton implements Scrollable, Position
      * By how much the button will be able to scroll
      */
     public int scrollingAmount;
-    protected FontRenderer fontRenderer;
+    protected Font fontRenderer;
 
     {
         fontRenderer = Minecraft.getInstance().font;
@@ -23,8 +24,7 @@ public class BetterButton extends ExtendedButton implements Scrollable, Position
     /**
      * @param height optimal height is 20
      */
-    public BetterButton(int x, int y, int width, int height, ITextComponent text, IPressable pressable)
-    {
+    public BetterButton(int x, int y, int width, int height, Component text, Button.OnPress pressable) {
         super(x, y, width, height, text, pressable);
         string = text.getString();
     }
@@ -32,27 +32,24 @@ public class BetterButton extends ExtendedButton implements Scrollable, Position
     /**
      * Construct a button with optimal height and width fitted to label
      */
-    public BetterButton(int x, int y, ITextComponent text)
-    {
+    public BetterButton(int x, int y, Component text) {
         this(x, y, Minecraft.getInstance().font.width(text.getString()) + 8, 20, text,
-                p_onPress_1_ -> {});
+                p_onPress_1_ -> {
+                });
         string = text.getString();
     }
 
-    public BetterButton(int x, int y, ITextComponent text, IPressable onPress)
-    {
-            this(x, y, Minecraft.getInstance().font.width(text.getString()) + 8, 20, text, onPress);
+    public BetterButton(int x, int y, Component text, OnPress onPress) {
+        this(x, y, Minecraft.getInstance().font.width(text.getString()) + 8, 20, text, onPress);
     }
 
-    public BetterButton(int x, int y, ITextComponent text, boolean verticalScroll_, boolean horizontalScroll_)
-    {
+    public BetterButton(int x, int y, Component text, boolean verticalScroll_, boolean horizontalScroll_) {
         this(x, y, text);
         verticalScroll = verticalScroll_;
         horizontalScroll = horizontalScroll_;
     }
 
-    public static BetterButton createPositionlessButton(ITextComponent caption)
-    {
+    public static BetterButton createPositionlessButton(Component caption) {
         return new BetterButton(0, 0, caption);
     }
 

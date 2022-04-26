@@ -1,11 +1,11 @@
 package dev.buildtool.satako.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import dev.buildtool.satako.Constants;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.widget.Widget;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraftforge.fml.client.gui.GuiUtils;
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.network.chat.Component;
+import net.minecraftforge.client.gui.GuiUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,20 +19,17 @@ public class RadioButton extends BetterButton
     public boolean selected;
     private final List<RadioButton> neighbours = new ArrayList<>();
 
-    public RadioButton(int x, int y, int width, int height, ITextComponent text)
-    {
+    public RadioButton(int x, int y, int width, int height, Component text) {
         super(x, y, text);
         this.width = width;
         this.height = height;
     }
 
-    public RadioButton(int x, int y, ITextComponent text)
-    {
+    public RadioButton(int x, int y, Component text) {
         this(x, y, Minecraft.getInstance().font.width(text.getString()) + 8, Constants.BUTTONHEIGHT, text);
     }
 
-    public RadioButton(int x, int y, ITextComponent text, IPressable consumer)
-    {
+    public RadioButton(int x, int y, Component text, OnPress consumer) {
         super(x, y, text, consumer);
     }
 
@@ -42,23 +39,21 @@ public class RadioButton extends BetterButton
     }
 
     @Override
-    public void renderButton(MatrixStack matrixStack,int mouseX, int mouseY, float partial)
-    {
-        if (this.visible)
-        {
+    public void renderButton(PoseStack matrixStack, int mouseX, int mouseY, float partial) {
+        if (this.visible) {
             Minecraft mc = Minecraft.getInstance();
             this.isHovered = selected;
             int k = this.getYImage(this.isHovered);
-            GuiUtils.drawContinuousTexturedBox(WIDGETS_LOCATION, this.x, this.y, 0, 46 + k * 20, this.width, this.height, 200, 20, 2, 3, 2, 2, this.getBlitOffset());
-            this.renderBg(matrixStack,mc, mouseX, mouseY);
+            GuiUtils.drawContinuousTexturedBox(matrixStack, this.x, this.y, 0, 46 + k * 20, this.width, this.height, 200, 20, 2, 3, 2, 2, this.getBlitOffset());
+            this.renderBg(matrixStack, mc, mouseX, mouseY);
             int color = getFGColor();
 
-            if (this.isHovered && this.packedFGColor == Widget.UNSET_FG_COLOR)
+            if (this.isHovered && this.packedFGColor == AbstractWidget.UNSET_FG_COLOR)
                 color = 0xFFFFA0; // Slightly Yellow
 
-            ITextComponent buttonText = this.getMessage();
+            Component buttonText = this.getMessage();
 
-            drawCenteredString(matrixStack,mc.font, buttonText, this.x + this.width / 2, this.y + (this.height - 8) / 2, color);
+            drawCenteredString(matrixStack, mc.font, buttonText, this.x + this.width / 2, this.y + (this.height - 8) / 2, color);
         }
     }
 

@@ -1,19 +1,17 @@
 package dev.buildtool.satako.packets;
 
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Hand;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.InteractionHand;
 
 /**
  * For setting NBT on a stack in the specified hand.
  * Created on 3/16/20.
  */
-public class SendItemNBT
-{
-    public final CompoundNBT compoundNBT;
-    public final Hand toHand;
+public class SendItemNBT {
+    public final CompoundTag compoundNBT;
+    public final InteractionHand toHand;
 
-    public SendItemNBT(CompoundNBT compoundNBT, Hand toHand_)
-    {
+    public SendItemNBT(CompoundTag compoundNBT, InteractionHand toHand_) {
         this.compoundNBT = compoundNBT;
         toHand = toHand_;
     }

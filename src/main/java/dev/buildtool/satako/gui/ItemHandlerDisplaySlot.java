@@ -2,8 +2,8 @@ package dev.buildtool.satako.gui;
 
 import dev.buildtool.satako.Constants;
 import dev.buildtool.satako.ItemHandlerSlot;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
@@ -24,8 +24,7 @@ public class ItemHandlerDisplaySlot extends ItemHandlerSlot {
     }
 
     @Override
-    public boolean mayPickup(PlayerEntity playerIn)
-    {
+    public boolean mayPickup(Player playerIn) {
         return false;
     }
 

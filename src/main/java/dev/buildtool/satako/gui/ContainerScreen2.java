@@ -1,19 +1,20 @@
 package dev.buildtool.satako.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.datafixers.util.Pair;
 import dev.buildtool.satako.Constants;
 import dev.buildtool.satako.IntegerColor;
 import dev.buildtool.satako.ItemHandlerSlot;
 import dev.buildtool.satako.Methods;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,18 +23,15 @@ import java.util.List;
  * A preset GUI which automatically draws labels, slot textures,
  * GUI borders and sends input events to elements
  */
-public class ContainerScreen2<T extends net.minecraft.inventory.container.Container> extends ContainerScreen<T>
-{
+public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractContainerScreen<T> {
     protected ArrayList<ScrollList> lists = new ArrayList<>(0);
     protected int centerX, centerY;
     protected ArrayList<Page> pages = new ArrayList<>(0);
     protected boolean drawBorders;
 
-    public ContainerScreen2(T container, PlayerInventory playerInventory, ITextComponent name, boolean drawBorders_)
-    {
+    public ContainerScreen2(T container, Inventory playerInventory, Component name, boolean drawBorders_) {
         super(container, playerInventory, name);
-        if (Minecraft.getInstance().screen != null)
-        {
+        if (Minecraft.getInstance().screen != null) {
             Minecraft.getInstance().screen = null;
         }
         drawBorders = drawBorders_;
@@ -73,25 +71,21 @@ public class ContainerScreen2<T extends net.minecraft.inventory.container.Contai
     }
 
     @Override
-    public void render(MatrixStack matrixStack,int p_render_1_, int p_render_2_, float p_render_3_)
-    {
+    public void render(PoseStack matrixStack, int p_render_1_, int p_render_2_, float p_render_3_) {
         renderBackground(matrixStack);
-        super.render(matrixStack,p_render_1_, p_render_2_, p_render_3_);
-        renderTooltip(matrixStack,p_render_1_, p_render_2_);
+        super.render(matrixStack, p_render_1_, p_render_2_, p_render_3_);
+        renderTooltip(matrixStack, p_render_1_, p_render_2_);
     }
 
     /**
      * Draws its elements and borders
      */
     @Override
-    protected void renderBg(MatrixStack matrixStack,float partialTicks, int mouseX, int mouseY)
-    {
+    protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
         List<Slot> slots = getSlots();
         GlStateManager._clearColor(1.0F, 1.0F, 1.0F, 1.0F);
-        for (Slot s : slots)
-        {
-            if (s.isActive())
-            {
+        for (Slot s : slots) {
+            if (s.isActive()) {
                 int sx = s.x;
                 int sy = s.y;
                 ;
@@ -111,12 +105,12 @@ public class ContainerScreen2<T extends net.minecraft.inventory.container.Contai
                     if (atlasAndSprite != null) {
                         ResourceLocation background = atlasAndSprite.getSecond();
                         if (background.getNamespace().equals("minecraft")) {
-                            textureManager.bind(Constants.GREY_SLOT_TEXTURE);
+                            textureManager.bindForSetup(Constants.GREY_SLOT_TEXTURE);
                         } else {
-                            textureManager.bind(background);
+                            textureManager.bindForSetup(background);
                         }
                     } else {
-                        textureManager.bind(Constants.GREY_SLOT_TEXTURE);
+                        textureManager.bindForSetup(Constants.GREY_SLOT_TEXTURE);
                     }
                     blit(matrixStack,sx + leftPos, sy + topPos, 0, 0, 16, 16);
                 }
@@ -142,7 +136,7 @@ public class ContainerScreen2<T extends net.minecraft.inventory.container.Contai
     }
 
     @Override
-    protected void renderLabels(MatrixStack p_230451_1_, int p_230451_2_, int p_230451_3_) {
+    protected void renderLabels(PoseStack p_230451_1_, int p_230451_2_, int p_230451_3_) {
         //don't render labels
     }
 }

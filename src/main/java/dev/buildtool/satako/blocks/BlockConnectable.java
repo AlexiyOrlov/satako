@@ -1,20 +1,20 @@
 package dev.buildtool.satako.blocks;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SixWayBlock;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.StateContainer;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
+
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.PipeBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BlockConnectable extends SixWayBlock {
+public abstract class BlockConnectable extends PipeBlock {
     public BlockConnectable(float thickness, Properties properties) {
         super(thickness, properties);
         assert thickness <= 0.5;
@@ -22,14 +22,14 @@ public abstract class BlockConnectable extends SixWayBlock {
     }
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> blockStateBuilder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> blockStateBuilder) {
         super.createBlockStateDefinition(blockStateBuilder);
         blockStateBuilder.add(NORTH, SOUTH, EAST, WEST, UP, DOWN);
     }
 
     @Nullable
     @Override
-    public BlockState getStateForPlacement(BlockItemUseContext useContext) {
+    public BlockState getStateForPlacement(BlockPlaceContext useContext) {
         return makeConnections(useContext.getLevel(), useContext.getClickedPos());
     }
 
@@ -38,14 +38,14 @@ public abstract class BlockConnectable extends SixWayBlock {
      *
      * @return blockstate with appropriate connections
      */
-    protected abstract BlockState makeConnections(IBlockReader blockReader, BlockPos pos);
+    protected abstract BlockState makeConnections(LevelAccessor blockReader, BlockPos pos);
 
-    protected boolean doConnectTo(IWorld world, BlockState blockState, BlockState to, BlockPos pos, BlockPos toPos, Direction direction) {
+    protected boolean doConnectTo(LevelAccessor world, BlockState blockState, BlockState to, BlockPos pos, BlockPos toPos, Direction direction) {
         return to.getBlock() == this;
     }
 
     @Override
-    public BlockState updateShape(BlockState blockState, Direction on, BlockState state, IWorld world, BlockPos blockPos, BlockPos pos) {
+    public BlockState updateShape(BlockState blockState, Direction on, BlockState state, LevelAccessor world, BlockPos blockPos, BlockPos pos) {
         return blockState.setValue(PROPERTY_BY_DIRECTION.get(on), doConnectTo(world, blockState, state, blockPos, pos, on));
     }
 

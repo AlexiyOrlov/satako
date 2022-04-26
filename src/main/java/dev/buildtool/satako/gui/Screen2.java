@@ -1,11 +1,11 @@
 package dev.buildtool.satako.gui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import dev.buildtool.satako.Constants;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.Widget;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.client.gui.components.Widget;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.TextComponent;
 
 import java.util.ArrayList;
 
@@ -20,8 +20,7 @@ public class Screen2 extends Screen
     protected int centerX, centerY;
     private final ArrayList<ScrollList> scrollLists = new ArrayList<>(1);
 
-    public Screen2(ITextComponent title)
-    {
+    public Screen2(TextComponent title) {
         super(title);
     }
 
@@ -40,12 +39,10 @@ public class Screen2 extends Screen
      * This should be called first
      */
     @Override
-    public void render(MatrixStack matrixStack,int mouseX, int mouseY, float tick)
-    {
+    public void render(PoseStack matrixStack, int mouseX, int mouseY, float tick) {
         renderBackground(matrixStack);
-        super.render(matrixStack,mouseX, mouseY, tick);
-        for (ScrollList scrollList : scrollLists)
-        {
+        super.render(matrixStack, mouseX, mouseY, tick);
+        for (ScrollList scrollList : scrollLists) {
             scrollList.draw();
         }
     }
@@ -85,7 +82,7 @@ public class Screen2 extends Screen
         boolean verticalscroll = Screen.hasAltDown();
         if (mousewheeld != 0)
         {
-            for (Widget button : buttons) {
+            for (Widget button : renderables) {
                 if (button instanceof Scrollable) {
                     ((Scrollable) button).scroll(mousewheeld, verticalscroll);
                 }

@@ -1,9 +1,7 @@
 package dev.buildtool.satako;
 
-import dev.buildtool.satako.test.TestContainer;
 import dev.buildtool.satako.test.TestScreen;
-import net.minecraft.client.gui.ScreenManager;
-import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -15,6 +13,6 @@ public class ClientSetup {
     @SubscribeEvent
     public static void setup(FMLClientSetupEvent clientSetupEvent)
     {
-        ScreenManager.register(Satako.TEST_CONTAINER.get(),(ScreenManager.IScreenFactory<TestContainer, TestScreen>) TestScreen::new);
+        MenuScreens.register(Satako.TEST_CONTAINER.get(), TestScreen::new);
     }
 }

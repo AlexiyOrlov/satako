@@ -1,7 +1,7 @@
 package dev.buildtool.satako.gui;
 
 
-import net.minecraft.client.gui.widget.button.Button;
+import net.minecraft.client.gui.components.Button;
 
 import java.util.ArrayList;
 import java.util.Arrays;

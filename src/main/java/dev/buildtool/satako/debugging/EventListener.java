@@ -1,7 +1,7 @@
 package dev.buildtool.satako.debugging;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
 import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
@@ -25,7 +25,7 @@ public class EventListener {
     private static ResourceLocation lastEntityAddedToChunk;
 
     @SubscribeEvent
-    public static void trackEntityEnteringChunk(EntityEvent.EnteringChunk event) {
+    public static void trackEntityEnteringChunk(EntityEvent.EnteringSection event) {
         Entity entity = event.getEntity();
         lastEntityAddedToChunk = entity.getType().getRegistryName();
     }

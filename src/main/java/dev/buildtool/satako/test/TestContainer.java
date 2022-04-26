@@ -2,11 +2,11 @@ package dev.buildtool.satako.test;
 
 import dev.buildtool.satako.Container2;
 import dev.buildtool.satako.Satako;
-import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.world.entity.player.Inventory;
 
 public class TestContainer extends Container2 {
-    public TestContainer(int i, PlayerInventory playerInventory) {
+    public TestContainer(int i, Inventory playerInventory) {
         super(Satako.TEST_CONTAINER.get(), i);
-        addPlayerInventory(0,0,playerInventory);
+        addPlayerInventory(0, 0, playerInventory);
     }
 }

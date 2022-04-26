@@ -1,8 +1,8 @@
 package dev.buildtool.satako;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.NonNullList;
+import net.minecraft.core.NonNullList;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 
@@ -13,7 +13,7 @@ import javax.annotation.Nullable;
  */
 public class ItemHandler extends ItemStackHandler
 {
-    private TileEntity owner;
+    private BlockEntity owner;
 
     public ItemHandler(int size)
     {
@@ -23,8 +23,7 @@ public class ItemHandler extends ItemStackHandler
     /**
      * @param tileEntity an owner of this ItemHandler
      */
-    public ItemHandler(int size, @Nullable TileEntity tileEntity)
-    {
+    public ItemHandler(int size, @Nullable BlockEntity tileEntity) {
         this(size);
         owner = tileEntity;
         stacks = NonNullList.withSize(size, ItemStack.EMPTY);
@@ -136,8 +135,7 @@ public class ItemHandler extends ItemStackHandler
         }
     }
 
-    public TileEntity getOwner()
-    {
+    public BlockEntity getOwner() {
         return owner;
     }
 

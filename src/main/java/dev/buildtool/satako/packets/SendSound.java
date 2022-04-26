@@ -1,6 +1,6 @@
 package dev.buildtool.satako.packets;
 
-import net.minecraft.util.SoundEvent;
+import net.minecraft.sounds.SoundEvent;
 
 /**
  * Created on 3/20/20.

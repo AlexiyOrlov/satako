@@ -1,9 +1,9 @@
 package dev.buildtool.satako;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.Nullable;
 
@@ -14,19 +14,17 @@ public class BlockData
 {
     public Block block;
     public BlockPos position;
-    public TileEntity tile;
+    public BlockEntity tile;
     public BlockState blockState;
 
-    public BlockData(BlockState iBlockState, int x_, int y_, int z_, @Nullable TileEntity tileEntity)
-    {
+    public BlockData(BlockState iBlockState, int x_, int y_, int z_, @Nullable BlockEntity tileEntity) {
         block = iBlockState.getBlock();
         blockState = iBlockState;
         position = new BlockPos(x_, y_, z_);
         tile = tileEntity;
     }
 
-    public BlockData(BlockState iBlockState, BlockPos blockPos, @Nullable TileEntity tileEntity)
-    {
+    public BlockData(BlockState iBlockState, BlockPos blockPos, @Nullable BlockEntity tileEntity) {
         block = iBlockState.getBlock();
         blockState = iBlockState;
         position = blockPos;

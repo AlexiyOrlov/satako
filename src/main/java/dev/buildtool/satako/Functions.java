@@ -1,43 +1,41 @@
 package dev.buildtool.satako;
 
 import io.netty.buffer.Unpooled;
-import net.minecraft.block.AirBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.AirItem;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.IServerWorld;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
-import net.minecraft.world.chunk.ChunkStatus;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.AirItem;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.AirBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkStatus;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.items.IItemHandler;
@@ -55,47 +53,41 @@ import java.util.function.Predicate;
  * Functions return an object
  */
 @SuppressWarnings("unused")
-public final class Functions
-{
-    public static BlockPos findAirAbove(IServerWorld serverWorld,BlockPos start)
-    {
-        while(!serverWorld.isEmptyBlock(start))
-        {
-            start=start.above();
-            if(start.getY()<2 || start.getY()>serverWorld.getHeight()-2)
+public final class Functions {
+    public static BlockPos findAirAbove(WorldGenLevel serverWorld, BlockPos start) {
+        while (!serverWorld.isEmptyBlock(start)) {
+            start = start.above();
+            if (start.getY() < 2 || start.getY() > serverWorld.getHeight() - 2)
                 break;
         }
         return start;
     }
 
-    public static BlockPos findAirBelow(IServerWorld serverWorld,BlockPos start)
-    {
-        while (!serverWorld.isEmptyBlock(start))
-        {
-            start=start.below();
-            if(start.getY()<2 || start.getY()>serverWorld.getHeight()-2)
+    public static BlockPos findAirBelow(WorldGenLevel serverWorld, BlockPos start) {
+        while (!serverWorld.isEmptyBlock(start)) {
+            start = start.below();
+            if (start.getY() < 2 || start.getY() > serverWorld.getHeight() - 2)
                 break;
         }
         return start;
     }
 
-    public static boolean isPlayerInSurvivalMode(PlayerEntity entityPlayer)
-    {
+    public static boolean isPlayerInSurvivalMode(Player entityPlayer) {
         return !entityPlayer.isSpectator() && !entityPlayer.isCreative();
     }
 
     public static boolean isSurvivalPlayer(Entity entity)
     {
-        return entity instanceof PlayerEntity && isPlayerInSurvival((PlayerEntity) entity);
+        return entity instanceof Player && isPlayerInSurvival((Player) entity);
     }
 
     public static float getDefaultXRightLimbRotation(float limbSwing, float swingAmount)
     {
-        return MathHelper.cos((float) (limbSwing+Math.PI))*swingAmount;
+        return Mth.cos((float) (limbSwing + Math.PI)) * swingAmount;
     }
 
     public static float getDefaultXLeftLimbRotation(float limbSwing, float swingAmount) {
-        return MathHelper.cos(limbSwing) * swingAmount;
+        return Mth.cos(limbSwing) * swingAmount;
     }
 
     /**Angle Y or Z*/
@@ -105,27 +97,26 @@ public final class Functions
     }
 
     /**Angle X */
-    public static float getDefaultHeadPitch(float pitch)
-    {
+    public static float getDefaultHeadPitch(float pitch) {
         return pitch * 0.017453292F;
     }
+
     /**
      * Tests whether a creature is in view of other creature
-     * @param watched creature to be checked
-     * @param watcher creature whose sight is checked
+     *
+     * @param watched    creature to be checked
+     * @param watcher    creature whose sight is checked
      * @param angleRange in degrees
      * @return true if the watched is in view of watcher
      */
-    public static boolean isInSightOf(Entity watched, LivingEntity watcher, float angleRange)
-    {
+    public static boolean isInSightOf(Entity watched, LivingEntity watcher, float angleRange) {
         assert angleRange <= 180;
-        Vector3d vecOne = new Vector3d(watched.getX() - watcher.getX(), (watched.getY() + watched.getEyePosition(1).y - watcher.getY() - watcher.getEyePosition(1).y), watched.getZ() - watcher.getZ()).normalize();
-        Vector3d vecTwo = watcher.getViewVector(1).normalize();
+        Vec3 vecOne = new Vec3(watched.getX() - watcher.getX(), (watched.getY() + watched.getEyePosition(1).y - watcher.getY() - watcher.getEyePosition(1).y), watched.getZ() - watcher.getZ()).normalize();
+        Vec3 vecTwo = watcher.getViewVector(1).normalize();
         double dotproduct = vecTwo.dot(vecOne);
         float threshold = (180 - angleRange) / 180f;
-        if (dotproduct > threshold)
-        {
-            return watcher.canSee(watched);
+        if (dotproduct > threshold) {
+            return watcher.hasLineOfSight(watched);
         }
         return false;
     }
@@ -137,19 +128,16 @@ public final class Functions
      * @param distance max. distance
      * @return reached position
      */
-    public static BlockPos performBlockRayTrace(Entity from, double distance, World world)
-    {
-        Vector3d eyesPosition = from.getEyePosition(1);
-        Vector3d look = from.getLookAngle();
+    public static BlockPos performBlockRayTrace(Entity from, double distance, Level world) {
+        Vec3 eyesPosition = from.getEyePosition(1);
+        Vec3 look = from.getLookAngle();
         BlockPos blockPos = new BlockPos(eyesPosition);
         double dist;
-        while (world.isEmptyBlock(blockPos))
-        {
+        while (world.isEmptyBlock(blockPos)) {
             eyesPosition = eyesPosition.add(look);
             blockPos = new BlockPos(eyesPosition);
             dist = from.distanceToSqr(eyesPosition.x, eyesPosition.y, eyesPosition.z);
-            if (dist >= distance * distance)
-            {
+            if (dist >= distance * distance) {
                 break;
             }
         }
@@ -171,17 +159,14 @@ public final class Functions
     }
 
     /**
-     * Not sure whether to use this function in {@link Block#neighborChanged(BlockState, World, BlockPos, Block, BlockPos, boolean)} or {@link Block#tick(BlockState, ServerWorld, BlockPos, Random)}
+     * Not sure whether to use this function in {@link Block#neighborChanged(BlockState, Level, BlockPos, Block, BlockPos, boolean)} or {@link Block#tick(BlockState, net.minecraft.server.level.ServerLevel, BlockPos, Random)}
      */
-    public static boolean isDirectionalBlockPowered(Direction blockDirection, BlockPos blockPosition, BlockPos pulsePosition, World world)
-    {
+    public static boolean isDirectionalBlockPowered(Direction blockDirection, BlockPos blockPosition, BlockPos pulsePosition, Level world) {
         Direction back = blockDirection.getOpposite();
         BlockPos backPosition = blockPosition.relative(back);
-        if (pulsePosition.equals(backPosition))
-        {
+        if (pulsePosition.equals(backPosition)) {
             BlockState backstate = world.getBlockState(backPosition);
-            if (backstate.isSignalSource())
-            {
+            if (backstate.isSignalSource()) {
                 return world.hasSignal(backPosition, back);
             }
         }
@@ -195,19 +180,14 @@ public final class Functions
      * @param target        signal target
      * @param notifier      signal source
      */
-    public static Direction getPowerIncomingDirection(BlockPos pulsePosition, BlockPos target, Block notifier, World world)
-    {
+    public static Direction getPowerIncomingDirection(BlockPos pulsePosition, BlockPos target, Block notifier, Level world) {
         BlockState source = world.getBlockState(pulsePosition);
-        for (Direction value : Direction.values())
-        {
+        for (Direction value : Direction.values()) {
             BlockPos sidepos = target.relative(value);
-            if (sidepos.equals(pulsePosition))
-            {
+            if (sidepos.equals(pulsePosition)) {
                 BlockState sidestate = world.getBlockState(sidepos);
-                if (sidestate == source && notifier == sidestate.getBlock())
-                {
-                    if (sidestate.getDirectSignal(world, sidepos, value) > 0)
-                    {
+                if (sidestate == source && notifier == sidestate.getBlock()) {
+                    if (sidestate.getDirectSignal(world, sidepos, value) > 0) {
                         return value;
                     }
                 }
@@ -220,18 +200,14 @@ public final class Functions
      * @param source notifier's position
      * @return direct ("weak") power
      */
-    public static int getDirectPower(BlockPos source, BlockPos target, Block notifier, World world)
-    {
+    public static int getDirectPower(BlockPos source, BlockPos target, Block notifier, Level world) {
 
         BlockState sourceState = world.getBlockState(source);
-        for (Direction enumFacing : Direction.values())
-        {
+        for (Direction enumFacing : Direction.values()) {
             BlockPos sidepos = target.relative(enumFacing);
-            if (sidepos.equals(source))
-            {
+            if (sidepos.equals(source)) {
                 BlockState sidestate = world.getBlockState(sidepos);
-                if (sidestate == sourceState && notifier == sidestate.getBlock())
-                {
+                if (sidestate == sourceState && notifier == sidestate.getBlock()) {
                     return sidestate.getDirectSignal(world, sidepos, enumFacing);
                 }
             }
@@ -240,17 +216,13 @@ public final class Functions
         return 0;
     }
 
-    public static boolean isNotifierAdjacent(BlockPos source, BlockPos target, Block notifier, World world)
-    {
+    public static boolean isNotifierAdjacent(BlockPos source, BlockPos target, Block notifier, Level world) {
         BlockState sourceState = world.getBlockState(source);
-        for (Direction enumFacing : Direction.values())
-        {
+        for (Direction enumFacing : Direction.values()) {
             BlockPos sidepos = target.relative(enumFacing);
-            if (sidepos.equals(source))
-            {
+            if (sidepos.equals(source)) {
                 BlockState sidestate = world.getBlockState(sidepos);
-                if (sidestate == sourceState && notifier == sidestate.getBlock())
-                {
+                if (sidestate == sourceState && notifier == sidestate.getBlock()) {
                     return true;
                 }
             }
@@ -281,7 +253,7 @@ public final class Functions
         {
             return -1;
         }
-        return MathHelper.cos(degreesToRadians(degrees));
+        return Mth.cos(degreesToRadians(degrees));
     }
 
     public static float translateToZcoord(float degrees)
@@ -294,14 +266,13 @@ public final class Functions
         {
             return 0;
         }
-        return MathHelper.sin(degreesToRadians(degrees));
+        return Mth.sin(degreesToRadians(degrees));
     }
 
     /**
      * @return true if something can generate without cascading at that position
      */
-    public static boolean canGenerateWithoutCascade(IServerWorld world, BlockPos blockPos)
-    {
+    public static boolean canGenerateWithoutCascade(WorldGenLevel world, BlockPos blockPos) {
         ChunkPos chunkPos = new ChunkPos(blockPos);
         int cx = chunkPos.x;
         int cz = chunkPos.z;
@@ -317,13 +288,11 @@ public final class Functions
      * @param pos any position
      * @return highest position which contains a block
      */
-    public static BlockPos getTopBlockPosition(BlockPos pos, World world)
-    {
+    public static BlockPos getTopBlockPosition(BlockPos pos, Level world) {
         BlockPos blockpos;
         blockpos = new BlockPos(pos.getX(), world.getHeight() - 16, pos.getZ());
         BlockState nextstate = world.getBlockState(blockpos);
-        while (nextstate == Blocks.AIR.defaultBlockState())
-        {
+        while (nextstate == Blocks.AIR.defaultBlockState()) {
             blockpos = blockpos.below();
             nextstate = world.getBlockState(blockpos);
         }
@@ -334,23 +303,19 @@ public final class Functions
      * Searches for any entity
      */
     @Nullable
-    public static Entity findEntityOnPath(World world, Entity watcher)
-    {
+    public static Entity findEntityOnPath(Level world, Entity watcher) {
         Entity entity = null;
-        Vector3d position = watcher.getEyePosition(1);
-        Vector3d look = watcher.getLookAngle();
-        AxisAlignedBB axisAlignedBB = new AxisAlignedBB(new BlockPos(watcher.getX(),watcher.getY(),watcher.getZ())).inflate(7);
+        Vec3 position = watcher.getEyePosition(1);
+        Vec3 look = watcher.getLookAngle();
+        AABB axisAlignedBB = new AABB(new BlockPos(watcher.getX(), watcher.getY(), watcher.getZ())).inflate(7);
         List<Entity> entities = world.getEntities(watcher, axisAlignedBB);
         int counter = 0;
         w:
-        while (true)
-        {
+        while (true) {
 
             position = position.add(look);
-            for (Entity entity1 : entities)
-            {
-                if (entity1.getBoundingBox().contains(position))
-                {
+            for (Entity entity1 : entities) {
+                if (entity1.getBoundingBox().contains(position)) {
                     entity = entity1;
                     break w;
                 }
@@ -367,18 +332,15 @@ public final class Functions
     /**
      * @return whether UUID was valid
      */
-    public static boolean writeUUID(CompoundNBT nbtTagCompound, String key, UUID uuid)
-    {
-        if (uuid != null && !uuid.equals(Constants.NULL_UUID))
-        {
+    public static boolean writeUUID(CompoundTag nbtTagCompound, String key, UUID uuid) {
+        if (uuid != null && !uuid.equals(Constants.NULL_UUID)) {
             nbtTagCompound.putUUID(key, uuid);
             return true;
         }
         return false;
     }
 
-    public static UUID readUUID(CompoundNBT nbtTagCompound, String key)
-    {
+    public static UUID readUUID(CompoundTag nbtTagCompound, String key) {
         UUID uuid = nbtTagCompound.getUUID(key);
         return uuid.equals(Constants.NULL_UUID) ? null : uuid;
     }
@@ -388,59 +350,49 @@ public final class Functions
      *
      * @return byte casted to int
      */
-    public static int readEnum(CompoundNBT compound, String key)
-    {
+    public static int readEnum(CompoundTag compound, String key) {
         return compound.getByte(key);
     }
 
-    public static boolean isLiquid(World world, BlockPos pos)
-    {
+    public static boolean isLiquid(Level world, BlockPos pos) {
         FluidState fluidState = world.getFluidState(pos);
         Fluid fluid = fluidState.getType();
         return fluid != Fluids.EMPTY;
     }
 
-    public static boolean isFlowingLiquid(World world, BlockPos position)
-    {
+    public static boolean isFlowingLiquid(Level world, BlockPos position) {
         FluidState fluidState = world.getFluidState(position);
         Fluid fluid = fluidState.getType();
         return fluid != Fluids.EMPTY && !fluid.isSource(fluidState);
     }
 
-    public static boolean isLiquidSource(World world, BlockPos position)
-    {
+    public static boolean isLiquidSource(Level world, BlockPos position) {
         FluidState fluidState = world.getFluidState(position);
         Fluid fluid = fluidState.getType();
         return fluid != Fluids.EMPTY && fluid.isSource(fluidState);
     }
 
-    public static boolean isLookingAtHead(LivingEntity watcher, Entity target)
-    {
-        Vector3d lookvector = watcher.getViewVector(1.0F).normalize();
-        Vector3d positionvector = new Vector3d(target.getX() - watcher.getX(), watcher.getBoundingBox().minY +  target.getEyeHeight() - (watcher.getY() +  watcher.getEyeHeight()), target.getZ() - watcher.getZ());
+    public static boolean isLookingAtHead(LivingEntity watcher, Entity target) {
+        Vec3 lookvector = watcher.getViewVector(1.0F).normalize();
+        Vec3 positionvector = new Vec3(target.getX() - watcher.getX(), watcher.getBoundingBox().minY + target.getEyeHeight() - (watcher.getY() + watcher.getEyeHeight()), target.getZ() - watcher.getZ());
         double lengthVector = positionvector.length();
         positionvector = positionvector.normalize();
         double dotProduct = lookvector.dot(positionvector);
-        if (dotProduct > 1.0D - 0.025D / lengthVector)
-        {
-            return watcher.canSee(target);
+        if (dotProduct > 1.0D - 0.025D / lengthVector) {
+            return watcher.hasLineOfSight(target);
         }
         return false;
     }
 
-    public static HashSet<BlockPos> getConnectedBlocks(Block of, Direction[] checkedSides, BlockPos pos, World world, HashSet<BlockPos> positions, int limit)
-    {
+    public static HashSet<BlockPos> getConnectedBlocks(Block of, Direction[] checkedSides, BlockPos pos, Level world, HashSet<BlockPos> positions, int limit) {
         assert limit > 1 : "Limit must be >1";
-        if (world.getBlockState(pos).getBlock() == of)
-        {
+        if (world.getBlockState(pos).getBlock() == of) {
             positions.add(pos);
         }
-        if (positions.size() >= limit)
-        {
+        if (positions.size() >= limit) {
             return positions;
         }
-        for (Direction checkedSide : checkedSides)
-        {
+        for (Direction checkedSide : checkedSides) {
             BlockPos side = pos.relative(checkedSide);
             BlockState next = world.getBlockState(side);
             Block block = next.getBlock();
@@ -476,8 +428,7 @@ public final class Functions
         return true;
     }
 
-    public static boolean isPlayerInSurvival(PlayerEntity player)
-    {
+    public static boolean isPlayerInSurvival(Player player) {
         return !player.isCreative() && !player.isSpectator();
     }
 
@@ -498,15 +449,11 @@ public final class Functions
     /**
      * @return list of block positions inside the box
      */
-    public static List<BlockPos> boundingBoxToPositions(AxisAlignedBB axisAlignedBB)
-    {
+    public static List<BlockPos> boundingBoxToPositions(AABB axisAlignedBB) {
         List<BlockPos> positions = new ArrayList<>();
-        for (double X = axisAlignedBB.minX; X <= axisAlignedBB.maxX; X++)
-        {
-            for (double Y = axisAlignedBB.minY; Y <= axisAlignedBB.maxY; Y++)
-            {
-                for (double Z = axisAlignedBB.minZ; Z <= axisAlignedBB.maxZ; Z++)
-                {
+        for (double X = axisAlignedBB.minX; X <= axisAlignedBB.maxX; X++) {
+            for (double Y = axisAlignedBB.minY; Y <= axisAlignedBB.maxY; Y++) {
+                for (double Z = axisAlignedBB.minZ; Z <= axisAlignedBB.maxZ; Z++) {
                     positions.add(new BlockPos(X, Y, Z));
                 }
             }
@@ -532,8 +479,7 @@ public final class Functions
     /**
      * @return true if there is no tile entity or unbreakable block
      */
-    public static boolean canReplaceBlock(BlockPos blockPos, World world)
-    {
+    public static boolean canReplaceBlock(BlockPos blockPos, Level world) {
         BlockState iBlockState = world.getBlockState(blockPos);
         if (world.getBlockEntity(blockPos) != null)
             return false;
@@ -543,8 +489,7 @@ public final class Functions
     /**
      * Spawns an item in a way that it doesn't get any acceleration
      */
-    public static ItemEntity spawnItemInWorld(ItemStack itemStack, World world, BlockPos pos)
-    {
+    public static ItemEntity spawnItemInWorld(ItemStack itemStack, Level world, BlockPos pos) {
         if (world.isClientSide) throw new IllegalArgumentException("Don't spawn items in client world");
         ItemEntity entityItem = new ItemEntity(world, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, itemStack);
         world.addFreshEntity(entityItem);
@@ -555,11 +500,9 @@ public final class Functions
     /**
      * Searches for a position above solid block, starting from world height. Skips replaceable blocks and leaves
      */
-    public static BlockPos getPosAboveSolidBlock(World world, BlockPos blockPos)
-    {
+    public static BlockPos getPosAboveSolidBlock(Level world, BlockPos blockPos) {
         BlockState blockState = world.getBlockState(blockPos = blockPos.above(world.getHeight()));
-        while (blockState.getMaterial().isReplaceable() || blockState.getMaterial() == Material.LEAVES)
-        {
+        while (blockState.getMaterial().isReplaceable() || blockState.getMaterial() == Material.LEAVES) {
             blockState = world.getBlockState(blockPos = blockPos.below());
         }
         blockPos = blockPos.above();
@@ -605,10 +548,8 @@ public final class Functions
      *
      * @return false if not equal or any is empty
      */
-    public static boolean areItemTypesEqual(ItemStack one, ItemStack two)
-    {
-        if (!one.isEmpty() && !two.isEmpty())
-        {
+    public static boolean areItemTypesEqual(ItemStack one, ItemStack two) {
+        if (!one.isEmpty() && !two.isEmpty()) {
             final Item oneItem = one.getItem();
             final Item secondItem = two.getItem();
             return oneItem == secondItem && one.getDamageValue() == two.getDamageValue() &&
@@ -618,27 +559,26 @@ public final class Functions
         return false;
     }
 
-    public static boolean areItemsEqualInDictionary(ItemStack one, ItemStack two)
-    {
-        if (!one.isEmpty() && !two.isEmpty())
-        {
-            Collection<ResourceLocation> identifiers = ItemTags.getAllTags().getMatchingTags(one.getItem());
-            Collection<ResourceLocation> identifiers2 = ItemTags.getAllTags().getMatchingTags(two.getItem());
-            for (ResourceLocation identifier : identifiers)
-            {
-                if (identifiers2.contains(identifier))
-                {
-                    return true;
-                }
+//    public static boolean areItemsEqualInDictionary(ItemStack one, ItemStack two)
+//    {
+//        if (!one.isEmpty() && !two.isEmpty())
+//        {
+//            Collection<ResourceLocation> identifiers = ItemTags.getAllTags().getMatchingTags(one.getItem());
+//            Collection<ResourceLocation> identifiers2 = ItemTags.getAllTags().getMatchingTags(two.getItem());
+//            for (ResourceLocation identifier : identifiers)
+//            {
+//                if (identifiers2.contains(identifier))
+//                {
+//                    return true;
+//                }
+//
+//            }
+//        }
+//        return false;
+//    }
 
-            }
-        }
-        return false;
-    }
-
-    public static int getFuelValue(@Nonnull ItemStack stack)
-    {
-        return ForgeHooks.getBurnTime(stack);
+    public static int getFuelValue(@Nonnull ItemStack stack) {
+        return ForgeHooks.getBurnTime(stack, null);
     }
 
     /**
@@ -647,18 +587,14 @@ public final class Functions
      * @param pos target position
      * @return direction from where the power is incoming
      */
-    public static Direction isBlockDirectlyPowered(World worldIn, BlockPos pos)
-    {
-        for (Direction from : Direction.values())
-        {
+    public static Direction isBlockDirectlyPowered(Level worldIn, BlockPos pos) {
+        for (Direction from : Direction.values()) {
             BlockPos sidepos = pos.relative(from);
             BlockState sidestate = worldIn.getBlockState(sidepos);
             Block sideblock = sidestate.getBlock();
-            if (sideblock.isSignalSource(sidestate))
-            {
+            if (sideblock.isSignalSource(sidestate)) {
                 int p = sidestate.getDirectSignal(worldIn, sidepos, from);
-                if (p > 0)
-                {
+                if (p > 0) {
                     return from;
                 }
             }
@@ -667,25 +603,20 @@ public final class Functions
     }
 
     /**
-     * Same as {@link #isBlockDirectlyPowered(World, BlockPos)} with excluded position
+     * Same as {@link #isBlockDirectlyPowered(Level, BlockPos)} with excluded position
      *
      * @param side exception
      * @return side which recieves power
      */
-    public static Direction isPoweredExceptSide(Direction side, World world, BlockPos position)
-    {
-        for (Direction facing : Direction.values())
-        {
-            if (side != facing)
-            {
+    public static Direction isPoweredExceptSide(Direction side, Level world, BlockPos position) {
+        for (Direction facing : Direction.values()) {
+            if (side != facing) {
                 BlockPos sidepos = position.relative(facing);
                 BlockState sidestate = world.getBlockState(sidepos);
                 Block sideblock = sidestate.getBlock();
-                if (sideblock.isSignalSource(sidestate))
-                {
+                if (sideblock.isSignalSource(sidestate)) {
                     int p = sidestate.getDirectSignal(world, sidepos, facing);
-                    if (p > 0)
-                    {
+                    if (p > 0) {
                         return facing;
                     }
                 }
@@ -694,10 +625,8 @@ public final class Functions
         return null;
     }
 
-    public static int calculateStringWidth(ITextComponent string)
-    {
-        if (string != null)
-        {
+    public static int calculateStringWidth(Component string) {
+        if (string != null) {
             return Minecraft.getInstance().font.width(string.getString());
         }
         return 0;
@@ -706,11 +635,9 @@ public final class Functions
     /**
      * Returns the length of longest string
      */
-    public static int calculateLongestStringWidth(Collection<ITextComponent> objects)
-    {
+    public static int calculateLongestStringWidth(Collection<TextComponent> objects) {
         int width = 0;
-        for (ITextComponent s : objects)
-        {
+        for (TextComponent s : objects) {
             int nextwidth = calculateStringWidth(s);
             if (nextwidth > width) width = nextwidth;
         }
@@ -746,17 +673,13 @@ public final class Functions
     /**
      * @return whether the stack was deleted
      */
-    public static boolean removeHeldItem(PlayerEntity player, Item item)
-    {
+    public static boolean removeHeldItem(Player player, Item item) {
 
-        if (!player.getMainHandItem().isEmpty() && player.getMainHandItem().getItem() == item)
-        {
-            player.setItemInHand(Hand.MAIN_HAND, ItemStack.EMPTY);
+        if (!player.getMainHandItem().isEmpty() && player.getMainHandItem().getItem() == item) {
+            player.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
             return true;
-        }
-        else if (!player.getOffhandItem().isEmpty() && player.getOffhandItem().getItem() == item)
-        {
-            player.setItemInHand(Hand.OFF_HAND, ItemStack.EMPTY);
+        } else if (!player.getOffhandItem().isEmpty() && player.getOffhandItem().getItem() == item) {
+            player.setItemInHand(InteractionHand.OFF_HAND, ItemStack.EMPTY);
             return true;
         }
 
@@ -791,20 +714,15 @@ public final class Functions
     /**
      * Retrieves specified field from class. Searches superclasses if not found.
      */
-    public static Field getSecureField(Class owner, int number)
-    {
+    public static Field getSecureField(Class<?> owner, int number) {
         Field f;
         Field[] fields = owner.getDeclaredFields();
-        if (number < fields.length)
-        {
+        if (number < fields.length) {
             f = fields[number];
-            if (f.getType() != owner.getEnclosingClass())
-            {
+            if (f.getType() != owner.getEnclosingClass()) {
                 f.setAccessible(true);
                 return f;
-            }
-            else
-            {
+            } else {
                 return getSecureField(owner.getSuperclass(), number);
             }
         }
@@ -989,43 +907,32 @@ public final class Functions
         return seconds * 20;
     }
 
-    public static int minutesToTicks(int minutes)
-    {
-        return secondsToTicks(minutes)*60;
+    public static int minutesToTicks(int minutes) {
+        return secondsToTicks(minutes) * 60;
     }
 
-    public static int hoursToTicks(int hours)
-    {
-        return minutesToTicks(hours)*60;
+    public static int hoursToTicks(int hours) {
+        return minutesToTicks(hours) * 60;
     }
 
-    public static ItemStack getHeldItem(PlayerEntity playerEntity, Item item)
-    {
-        if (playerEntity.getMainHandItem().getItem() == item)
-        {
+    public static ItemStack getHeldItem(Player playerEntity, Item item) {
+        if (playerEntity.getMainHandItem().getItem() == item) {
             return playerEntity.getMainHandItem();
-        }
-        else if (playerEntity.getOffhandItem().getItem() == item)
-        {
+        } else if (playerEntity.getOffhandItem().getItem() == item) {
             return playerEntity.getOffhandItem();
         }
         return null;
     }
 
-    public static ItemStack getHeldItem(PlayerInventory playerInventory, Item item)
-    {
+    public static ItemStack getHeldItem(Inventory playerInventory, Item item) {
         return getHeldItem(playerInventory.player, item);
     }
 
-    public static Hand getHandHoldingItem(PlayerEntity playerEntity, Item item)
-    {
-        if (playerEntity.getMainHandItem().getItem() == item)
-        {
-            return Hand.MAIN_HAND;
-        }
-        else if (playerEntity.getOffhandItem().getItem() == item)
-        {
-            return Hand.OFF_HAND;
+    public static InteractionHand getHandHoldingItem(Player playerEntity, Item item) {
+        if (playerEntity.getMainHandItem().getItem() == item) {
+            return InteractionHand.MAIN_HAND;
+        } else if (playerEntity.getOffhandItem().getItem() == item) {
+            return InteractionHand.OFF_HAND;
         }
         return null;
     }
@@ -1033,8 +940,7 @@ public final class Functions
     /**
      * @return slot number or -1 if not found
      */
-    public static int findItemIn(IItemHandler itemHandler, ItemStack stack)
-    {
+    public static int findItemIn(IItemHandler itemHandler, ItemStack stack) {
         int size = itemHandler.getSlots();
         for (int slot = 0; slot < size; slot++)
         {
@@ -1060,7 +966,7 @@ public final class Functions
         return null;
     }
 
-    public static boolean removeBlock(BlockPos position, IWorld world) {
+    public static boolean removeBlock(BlockPos position, LevelAccessor world) {
         return world.removeBlock(position, false);
     }
 
@@ -1086,8 +992,8 @@ public final class Functions
         return rotation.getRotated(Rotation.COUNTERCLOCKWISE_90);
     }
 
-    public static PacketBuffer emptyBuffer() {
-        return new PacketBuffer(Unpooled.buffer());
+    public static FriendlyByteBuf emptyBuffer() {
+        return new FriendlyByteBuf(Unpooled.buffer());
     }
 
 }

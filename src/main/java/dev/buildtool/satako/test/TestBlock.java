@@ -1,45 +1,44 @@
 package dev.buildtool.satako.test;
 
 import dev.buildtool.satako.blocks.Block2;
-import io.netty.buffer.Unpooled;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 
-public class TestBlock extends Block2 implements INamedContainerProvider {
-    public TestBlock(Properties properties) {
+public class TestBlock extends Block2 implements MenuProvider {
+    public TestBlock(BlockBehaviour.Properties properties) {
         super(properties, false);
     }
 
     @Override
-    public ActionResultType use(BlockState p_225533_1_, World world, BlockPos p_225533_3_, PlayerEntity playerEntity, Hand p_225533_5_, BlockRayTraceResult p_225533_6_) {
-        if(playerEntity instanceof ServerPlayerEntity)
-            NetworkHooks.openGui((ServerPlayerEntity) playerEntity,this);
-        return ActionResultType.SUCCESS;
+    public InteractionResult use(BlockState p_225533_1_, Level world, BlockPos p_225533_3_, Player playerEntity, InteractionHand p_225533_5_, BlockHitResult p_225533_6_) {
+        if (playerEntity instanceof ServerPlayer)
+            NetworkHooks.openGui((ServerPlayer) playerEntity, this);
+        return InteractionResult.SUCCESS;
     }
 
     @Override
-    public ITextComponent getDisplayName() {
-        return new StringTextComponent("Test block");
+    public Component getDisplayName() {
+        return new TextComponent("Test block");
     }
 
     @Nullable
     @Override
-    public Container createMenu(int p_createMenu_1_, PlayerInventory playerInventory, PlayerEntity playerEntity) {
-        return new TestContainer(p_createMenu_1_,playerInventory);
+    public AbstractContainerMenu createMenu(int p_createMenu_1_, Inventory playerInventory, Player playerEntity) {
+        return new TestContainer(p_createMenu_1_, playerInventory);
     }
 }

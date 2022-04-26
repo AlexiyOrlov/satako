@@ -2,30 +2,28 @@ package dev.buildtool.satako.gui;
 
 import dev.buildtool.satako.Functions;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.function.Predicate;
 
-public class TextField extends TextFieldWidget implements Scrollable, Positionable, Hideable
-{
-    public static final Predicate<String> POSITIVE_NUMBER=s -> s.isEmpty() || StringUtils.isNumeric(s);
+public class TextField extends EditBox implements Scrollable, Positionable, Hideable {
+    public static final Predicate<String> POSITIVE_NUMBER = s -> s.isEmpty() || StringUtils.isNumeric(s);
     public boolean scrollable;
     private boolean enabled;
     protected int scrollAmount;
+
     /**
      * Creates a string field fitted to text
      */
-    public TextField(int X, int Y, ITextComponent text)
-    {
+    public TextField(int X, int Y, Component text) {
         super(Minecraft.getInstance().font, X, Y, Functions.calculateStringWidth(text) + 10, 15, text);
         insertText(text.getString());
     }
 
-    public TextField(int x, int y, ITextComponent string, int width)
-    {
+    public TextField(int x, int y, Component string, int width) {
         this(x, y, string);
         setWidth(width);
     }
@@ -34,7 +32,7 @@ public class TextField extends TextFieldWidget implements Scrollable, Positionab
      * Main constructor
      */
     public TextField(int X, int Y, int width) {
-        super(Minecraft.getInstance().font, X, Y, width, 15, new StringTextComponent(""));
+        super(Minecraft.getInstance().font, X, Y, width, 15, new TextComponent(""));
     }
 
     {

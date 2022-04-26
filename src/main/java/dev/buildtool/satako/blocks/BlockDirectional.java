@@ -1,39 +1,39 @@
 package dev.buildtool.satako.blocks;
 
-import dev.buildtool.satako.SCSync;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.StateContainer;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.Containers;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.DirectionalBlock;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraftforge.items.CapabilityItemHandler;
 
 /**
  * Created on 5/29/18.
  */
-public class BlockDirectional extends net.minecraft.block.DirectionalBlock implements SCSync
-{
+public class BlockDirectional extends DirectionalBlock {
 
-    public BlockDirectional(Properties properties) {
+    public BlockDirectional(BlockBehaviour.Properties properties) {
         super(properties);
     }
 
     @Override
-    protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> p_206840_1_) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> p_206840_1_) {
         p_206840_1_.add(FACING);
     }
 
     /**
-     * Correct if {@link net.minecraftforge.common.extensions.IForgeBlockState#rotate(IWorld, BlockPos, Rotation)} is used
+     * Correct if {@link net.minecraftforge.common.extensions.IForgeBlockState#rotate(LevelAccessor, BlockPos, Rotation)} is used
      */
     @Override
-    public BlockState rotate(BlockState state, IWorld world, BlockPos pos, Rotation rotation) {
+    public BlockState rotate(BlockState state, LevelAccessor world, BlockPos pos, Rotation rotation) {
         return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
     }
 
@@ -43,19 +43,19 @@ public class BlockDirectional extends net.minecraft.block.DirectionalBlock imple
     }
 
     @Override
-    public BlockState getStateForPlacement(BlockItemUseContext context) {
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
         return defaultBlockState().setValue(FACING, context.getClickedFace());
     }
 
     @Override
-    public void onRemove(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (hasTileEntity(state)) {
-            TileEntity tileEntity = worldIn.getBlockEntity(pos);
+    public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (state.hasBlockEntity()) {
+            BlockEntity tileEntity = worldIn.getBlockEntity(pos);
             tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(iItemHandler -> {
                 for (int i = 0; i < iItemHandler.getSlots(); i++) {
-                    ItemStack stack=iItemHandler.getStackInSlot(i);
-                    if(!stack.isEmpty())
-                        InventoryHelper.dropItemStack(worldIn,pos.getX()+0.5,pos.getY(),pos.getZ()+0.5,stack);
+                    ItemStack stack = iItemHandler.getStackInSlot(i);
+                    if (!stack.isEmpty())
+                        Containers.dropItemStack(worldIn, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, stack);
                 }
             });
         }
@@ -63,12 +63,12 @@ public class BlockDirectional extends net.minecraft.block.DirectionalBlock imple
     }
 
     @Override
-    public boolean triggerEvent(BlockState state, World worldIn, BlockPos pos, int id, int param) {
-        return onDataReceived(state,worldIn,pos,(byte) id, (byte) param);
+    public boolean triggerEvent(BlockState state, Level worldIn, BlockPos pos, int id, int param) {
+        return state.hasBlockEntity() && worldIn.getBlockEntity(pos).triggerEvent(id, param);
     }
 
-    @Override
-    public boolean onDataReceived(BlockState state, World worldIn, BlockPos pos, byte id, byte value) {
-        return hasTileEntity(state) && worldIn.getBlockEntity(pos).triggerEvent(id, value);
-    }
+//    @Override
+//    public boolean onDataReceived(BlockState state, Level worldIn, BlockPos pos, byte id, byte value) {
+//        return (
+//    }
 }
