@@ -1,5 +1,6 @@
 5.0.0:
-update for 1.18
+update for 1.18;
+removed 'fill2' command
 
 4.2.12:
 made labels scrollable;
