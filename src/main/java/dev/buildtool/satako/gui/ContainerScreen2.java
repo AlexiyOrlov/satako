@@ -1,14 +1,15 @@
 package dev.buildtool.satako.gui;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.datafixers.util.Pair;
 import dev.buildtool.satako.Constants;
 import dev.buildtool.satako.IntegerColor;
 import dev.buildtool.satako.ItemHandlerSlot;
-import dev.buildtool.satako.Methods;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -96,7 +97,7 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
                         //color
                         fill(matrixStack, sx + leftPos, sy + topPos, sx + leftPos + 16, sy + topPos + 16, itemHandlerSlot.getColor().getIntColor());
                     } else {
-                        textureManager.getTexture(itemHandlerSlot.getTexture());
+                        textureManager.bindForSetup(itemHandlerSlot.getTexture());
                         blit(matrixStack, sx + leftPos, sy + topPos, 0, 0, 16, 16);
                     }
                 }
@@ -110,7 +111,10 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
                             textureManager.bindForSetup(background);
                         }
                     } else {
-                        textureManager.bindForSetup(Constants.GREY_SLOT_TEXTURE);
+                        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+                        RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+                        RenderSystem.setShaderTexture(0, Constants.GREY_SLOT_TEXTURE);
+
                     }
                     blit(matrixStack,sx + leftPos, sy + topPos, 0, 0, 16, 16);
                 }
@@ -121,13 +125,12 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
         lists.forEach(ScrollList::draw);
 
         //lines have to be drawn after everything else
-        if (drawBorders)
-        {
-            Methods.drawHorizontalLine(this.leftPos, this.getXSize()+leftPos, this.topPos, color, 2);
-            Methods.drawHorizontalLine(this.leftPos,  this.getXSize()+leftPos, this.getYSize()+topPos, color, 2);
-            Methods.drawVerticalLine(this.leftPos, this.topPos, getYSize()+this.topPos, color, 2);
-            Methods.drawVerticalLine(getXSize() + this.leftPos, this.topPos, getYSize() + this.topPos, color, 2);
-
+        if (drawBorders) {
+            int intColor = color.getIntColor();
+            hLine(matrixStack, this.leftPos - 1, this.getXSize() + leftPos - 2, this.topPos - 1, intColor);
+            hLine(matrixStack, this.leftPos, this.getXSize() + leftPos - 2, this.getYSize() + topPos - 2, intColor);
+            vLine(matrixStack, this.leftPos - 1, this.topPos - 1, getYSize() + this.topPos - 1, intColor);
+            vLine(matrixStack, getXSize() + this.leftPos - 2, this.topPos - 1, getYSize() + this.topPos - 2, intColor);
         }
     }
 

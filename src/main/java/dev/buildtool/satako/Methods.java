@@ -18,7 +18,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 import java.lang.reflect.Field;
@@ -360,36 +359,36 @@ public final class Methods {
     public static void playSound(Level world, BlockPos blockPos, SoundEvent sound, float volume, float pitch) {
         world.playLocalSound(blockPos.getX(), blockPos.getY(), blockPos.getZ(), sound, null, volume, pitch, false);
     }
-
-    public static void drawVerticalLine(int x, int startY, int endY, IntegerColor color, int thickness)
-    {
-        int red = color.getRed();
-        int green = color.getGreen();
-        int blue = color.getBlue();
-        int alpha = color.getAlpha();
-        Tesselator tessellator = Tesselator.getInstance();
-        BufferBuilder bufferBuilder = tessellator.getBuilder();
-        bufferBuilder.begin(VertexFormat.Mode.LINES, DefaultVertexFormat.POSITION_COLOR);
-        GL11.glLineWidth(thickness);
-        bufferBuilder.vertex(x, startY, 0).color(red, green, blue, alpha).endVertex();
-        bufferBuilder.vertex(x, endY, 0).color(red, green, blue, alpha).endVertex();
-        tessellator.end();
-    }
-
-    public static void drawHorizontalLine(int startX, int endX, int y, IntegerColor color, int thickness)
-    {
-        int red = color.getRed();
-        int green = color.getGreen();
-        int blue = color.getBlue();
-        int alpha = color.getAlpha();
-        Tesselator tessellator = Tesselator.getInstance();
-        BufferBuilder bufferBuilder = tessellator.getBuilder();
-        bufferBuilder.begin(VertexFormat.Mode.LINES, DefaultVertexFormat.POSITION_COLOR);
-        GL11.glLineWidth(thickness);
-        bufferBuilder.vertex(startX, y, 0).color(red, green, blue, alpha).endVertex();
-        bufferBuilder.vertex(endX, y, 0).color(red, green, blue, alpha).endVertex();
-        tessellator.end();
-    }
+    //FIXME
+//    public static void drawVerticalLine(int x, int startY, int endY, IntegerColor color, int thickness)
+//    {
+//        int red = color.getRed();
+//        int green = color.getGreen();
+//        int blue = color.getBlue();
+//        int alpha = color.getAlpha();
+//        Tesselator tessellator = Tesselator.getInstance();
+//        BufferBuilder bufferBuilder = tessellator.getBuilder();
+//        bufferBuilder.begin(VertexFormat.Mode.LINES, DefaultVertexFormat.POSITION_COLOR);
+//        GL11.glLineWidth(thickness);
+//        bufferBuilder.vertex(x, startY, 0).color(red, green, blue, alpha).endVertex();
+//        bufferBuilder.vertex(x, endY, 0).color(red, green, blue, alpha).endVertex();
+//        tessellator.end();
+//    }
+//    FIXME
+//    public static void drawHorizontalLine(int startX, int endX, int y, IntegerColor color, int thickness)
+//    {
+//        int red = color.getRed();
+//        int green = color.getGreen();
+//        int blue = color.getBlue();
+//        int alpha = color.getAlpha();
+//        Tesselator tessellator = Tesselator.getInstance();
+//        BufferBuilder bufferBuilder = tessellator.getBuilder();
+//        bufferBuilder.begin(VertexFormat.Mode.LINES, DefaultVertexFormat.POSITION_COLOR);
+//        GL11.glLineWidth(thickness);
+//        bufferBuilder.vertex(startX, y, 0).color(red, green, blue, alpha).endVertex();
+//        bufferBuilder.vertex(endX, y, 0).color(red, green, blue, alpha).endVertex();
+//        tessellator.end();
+//    }
 
     public static void sendMessageToPlayer(Player player, String message) {
         player.sendMessage(new net.minecraft.network.chat.TextComponent(message), player.getUUID());
