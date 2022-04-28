@@ -5,7 +5,7 @@ import dev.buildtool.satako.Constants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 
 import java.util.ArrayList;
 
@@ -20,7 +20,7 @@ public class Screen2 extends Screen
     protected int centerX, centerY;
     private final ArrayList<ScrollList> scrollLists = new ArrayList<>(1);
 
-    public Screen2(TextComponent title) {
+    public Screen2(TranslatableComponent title) {
         super(title);
     }
 
