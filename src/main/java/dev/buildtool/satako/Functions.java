@@ -9,6 +9,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
@@ -40,6 +41,7 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.commons.lang3.ArrayUtils;
 
 import javax.annotation.Nonnull;
@@ -996,4 +998,11 @@ public final class Functions {
         return new FriendlyByteBuf(Unpooled.buffer());
     }
 
+    public static boolean isBlockIn(Block block, TagKey<Block> tagKey) {
+        return ForgeRegistries.BLOCKS.tags().getTag(tagKey).contains(block);
+    }
+
+    public static boolean isItemIn(Item item, TagKey<Item> tagKey) {
+        return ForgeRegistries.ITEMS.tags().getTag(tagKey).contains(item);
+    }
 }

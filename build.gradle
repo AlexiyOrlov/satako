@@ -12,7 +12,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-project.version = '5.0.0-1.18.2' //don't forget to set in mods.toml
+project.version = '5.0.1-1.18.2' //don't forget to set in mods.toml
 group = project.property('maven_group') // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'Satako'
 
