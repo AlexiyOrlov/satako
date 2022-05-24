@@ -561,24 +561,6 @@ public final class Functions {
         return false;
     }
 
-//    public static boolean areItemsEqualInDictionary(ItemStack one, ItemStack two)
-//    {
-//        if (!one.isEmpty() && !two.isEmpty())
-//        {
-//            Collection<ResourceLocation> identifiers = ItemTags.getAllTags().getMatchingTags(one.getItem());
-//            Collection<ResourceLocation> identifiers2 = ItemTags.getAllTags().getMatchingTags(two.getItem());
-//            for (ResourceLocation identifier : identifiers)
-//            {
-//                if (identifiers2.contains(identifier))
-//                {
-//                    return true;
-//                }
-//
-//            }
-//        }
-//        return false;
-//    }
-
     public static int getFuelValue(@Nonnull ItemStack stack) {
         return ForgeHooks.getBurnTime(stack, null);
     }
