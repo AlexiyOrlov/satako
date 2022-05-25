@@ -1018,6 +1018,44 @@ public final class Functions {
     }
 
     /**
+     * Removes specified amount of item from item handler
+     *
+     * @param item        type
+     * @param amount      to remove
+     * @param itemHandler handler
+     * @return false if the handler has fewer items than specified, true on success
+     */
+    public static boolean removeItems(Item item, int amount, IItemHandler itemHandler) {
+        int present = 0;
+        for (int slot = 0; slot < itemHandler.getSlots(); slot++) {
+            ItemStack itemStack = itemHandler.getStackInSlot(slot);
+            if (itemStack.getItem() == item) {
+                present += itemStack.getCount();
+            }
+            if (present >= amount)
+                break;
+        }
+
+        if (present < amount)
+            return false;
+
+        for (int slot = 0; slot < itemHandler.getSlots(); slot++) {
+            ItemStack itemStack = itemHandler.getStackInSlot(slot);
+            if (itemStack.getItem() == item) {
+                while (amount > 0) {
+                    itemStack.shrink(1);
+                    amount--;
+                    if (itemStack.isEmpty())
+                        break;
+                }
+                if (amount == 0)
+                    return true;
+            }
+        }
+        return true;
+    }
+
+    /**
      * For usage in entity type registration
      */
     @SuppressWarnings("rawtypes")
