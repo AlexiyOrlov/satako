@@ -11,6 +11,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
+import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -986,5 +987,32 @@ public final class Functions {
 
     public static boolean isItemIn(Item item, TagKey<Item> tagKey) {
         return ForgeRegistries.ITEMS.tags().getTag(tagKey).contains(item);
+    }
+
+    /**
+     * Removes specified amount of item from inventory
+     *
+     * @param type      item
+     * @param amount    to remove
+     * @param container inventory
+     * @return false if the container has fewer items than specified, true on success
+     */
+    public static boolean removeItems(Item type, int amount, Container container) {
+        if (container.countItem(type) < amount)
+            return false;
+        for (int i = 0; i < container.getContainerSize(); i++) {
+            ItemStack next = container.getItem(i);
+            if (next.getItem() == type) {
+                while (amount > 0) {
+                    next.shrink(1);
+                    amount--;
+                    if (next.isEmpty())
+                        break;
+                }
+                if (amount == 0)
+                    return true;
+            }
+        }
+        return true;
     }
 }
