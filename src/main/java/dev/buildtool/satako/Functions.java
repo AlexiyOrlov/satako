@@ -14,6 +14,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;
@@ -1014,5 +1015,13 @@ public final class Functions {
             }
         }
         return true;
+    }
+
+    /**
+     * For usage in entity type registration
+     */
+    @SuppressWarnings("rawtypes")
+    public static EntityType cast(EntityType<Entity> entityType) {
+        return entityType;
     }
 }
