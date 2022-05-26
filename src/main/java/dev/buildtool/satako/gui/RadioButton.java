@@ -44,7 +44,7 @@ public class RadioButton extends BetterButton
             Minecraft mc = Minecraft.getInstance();
             this.isHovered = selected;
             int k = this.getYImage(this.isHovered);
-            GuiUtils.drawContinuousTexturedBox(matrixStack, this.x, this.y, 0, 46 + k * 20, this.width, this.height, 200, 20, 2, 3, 2, 2, this.getBlitOffset());
+            GuiUtils.drawContinuousTexturedBox(matrixStack, WIDGETS_LOCATION, this.x, this.y, 0, 46 + k * 20, this.width, this.height, 200, 20, 2, 3, 2, 2, this.getBlitOffset());
             this.renderBg(matrixStack, mc, mouseX, mouseY);
             int color = getFGColor();
 
