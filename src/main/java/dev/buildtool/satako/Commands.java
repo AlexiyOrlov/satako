@@ -79,43 +79,6 @@ public class Commands {
         name.addChild(position.build());
         rootCommandNode.addChild(built);
 
-        //fill 2
-        SuggestionProvider<CommandSourceStack> blockMods = (context, builder) -> SharedSuggestionProvider.suggest(ForgeRegistries.BLOCKS.getKeys().stream().map(ResourceLocation::getNamespace), builder);
-        SuggestionProvider<CommandSourceStack> blockNames = (context, builder) -> SharedSuggestionProvider.suggest(ForgeRegistries.BLOCKS.getKeys().stream().filter(resourceLocation -> resourceLocation.getNamespace().equals(context.getArgument("mod", String.class))).map(ResourceLocation::getPath), builder);
-
-//        LiteralArgumentBuilder<CommandSourceStack> fill2 = literal("fill2").requires(commandSource -> commandSource.hasPermission(2));
-//        RequiredArgumentBuilder<CommandSourceStack, Coordinates> from = argument("from", BlockPosArgument.blockPos());
-//        RequiredArgumentBuilder<CommandSourceStack, Coordinates> to = argument("to", BlockPosArgument.blockPos());
-//        RequiredArgumentBuilder<CommandSourceStack, String> nameSpace = argument("mod", StringArgumentType.string()).suggests(blockMods);
-//        RequiredArgumentBuilder<CommandSourceStack, String> path = argument("block", StringArgumentType.string()).suggests(blockNames);
-
-//        path.executes(context -> fillBlocks(context.getSource(),
-//                new MutableBoundingBox(BlockPosArgument.getLoadedBlockPos(context, "from"),
-//                        BlockPosArgument.getLoadedBlockPos(context, "to")),
-//                context.getArgument("mod", String.class),
-//                context.getArgument("block", String.class), Mode.REPLACE, null));
-//
-//        RequiredArgumentBuilder<CommandSourceStack, Mode> mode = argument("filter", EnumArgument.enumArgument(Mode.class));
-//        mode.executes(context -> {
-//            Mode mode1 = context.getArgument("filter", Mode.class);
-//            return fillBlocks(context.getSource(), new MutableBoundingBox(BlockPosArgument.getLoadedBlockPos(context, "from"),
-//                            BlockPosArgument.getLoadedBlockPos(context, "to")),
-//                    context.getArgument("mod", String.class),
-//                    context.getArgument("block", String.class), mode1, null);
-//        });
-
-//        LiteralCommandNode<CommandSourceStack> fill = fill2.build();
-//        ArgumentCommandNode<CommandSourceStack, ILocationArgument> start = from.build();
-//        ArgumentCommandNode<CommandSourceStack, ILocationArgument> end = to.build();
-//        ArgumentCommandNode<CommandSourceStack, String> mod = nameSpace.build();
-//        ArgumentCommandNode<CommandSourceStack, String> block = path.build();
-
-//        fill.addChild(start);
-//        start.addChild(end);
-//        end.addChild(mod);
-//        mod.addChild(block);
-//        block.addChild(mode.build());
-//        rootCommandNode.addChild(fill);
 
         //give 2
         SuggestionProvider<CommandSourceStack> mods = (context, builder) -> SharedSuggestionProvider.suggest(() -> ForgeRegistries.ITEMS.getKeys().stream().map(ResourceLocation::getNamespace).collect(Collectors.toSet()).iterator(), builder);
@@ -179,43 +142,6 @@ public class Commands {
         return 1;
     }
 
-//    private static int fillBlocks(CommandSource source, MutableBoundingBox mutableBoundingBox, String mod, String block, Mode mode, Predicate<CachedBlockInfo> o) throws CommandSyntaxException {
-//        int i = mutableBoundingBox.getXSpan() * mutableBoundingBox.getYSpan() * mutableBoundingBox.getZSpan();
-//        if (i > 32768) {
-//            throw ERROR_AREA_TOO_LARGE.create(32768, i);
-//        }
-//        List<BlockPos> list = Lists.newArrayList();
-//        ServerWorld serverworld = source.getLevel();
-//        int j = 0;
-//        Block block1 = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(mod, block));
-//        for (BlockPos blockpos : BlockPos.betweenClosed(mutableBoundingBox.x0, mutableBoundingBox.y0, mutableBoundingBox.z0, mutableBoundingBox.x1, mutableBoundingBox.y1, mutableBoundingBox.z1)) {
-//            if (o == null || o.test(new CachedBlockInfo(serverworld, blockpos, true))) {
-//                BlockStateInput stateInput = mode.filter.filter(mutableBoundingBox, blockpos, new BlockStateInput(block1.defaultBlockState(), Collections.emptySet(), null), serverworld);
-//                if (stateInput != null) {
-//                    TileEntity tileEntity = serverworld.getBlockEntity(blockpos);
-//                    IClearable.tryClear(tileEntity);
-//                    if (serverworld.setBlockAndUpdate(blockpos, block1.defaultBlockState())) {
-//                        list.add(blockpos.immutable());
-//                        ++j;
-//                    }
-//                }
-//            }
-//        }
-//
-//        for (BlockPos blockpos1 : list) {
-//            Block b = serverworld.getBlockState(blockpos1).getBlock();
-//            serverworld.blockUpdated(blockpos1, b);
-//        }
-//
-//        if (j == 0) {
-//            throw ERROR_FAILED.create();
-//        } else {
-//            source.sendSuccess(new TranslationTextComponent("commands.fill.success", j), true);
-//            return j;
-//        }
-//    }
-
-
     private static int summonEntity(CommandSourceStack commandSource, Vec3 position, ResourceLocation resourceLocation) {
         ServerLevel serverWorld = commandSource.getLevel();
         Entity entity = ForgeRegistries.ENTITIES.getValue(resourceLocation).create(serverWorld);
@@ -231,26 +157,4 @@ public class Commands {
         return 1;
     }
 
-//    private static final Dynamic2CommandExceptionType ERROR_AREA_TOO_LARGE = new Dynamic2CommandExceptionType((p_208897_0_, p_208897_1_) -> {
-//        return new TranslationTextComponent("commands.fill.toobig", p_208897_0_, p_208897_1_);
-//    });
-
-//    private static final BlockStateInput HOLLOW_CORE = new BlockStateInput(Blocks.AIR.defaultBlockState(), Collections.emptySet(), null);
-//    private static final SimpleCommandExceptionType ERROR_FAILED = new SimpleCommandExceptionType(new TranslationTextComponent("commands.fill.failed"));
-
-//    enum Mode {
-//        REPLACE((p_198450_0_, p_198450_1_, p_198450_2_, p_198450_3_) -> p_198450_2_),
-//        OUTLINE((mutableBoundingBox, blockPos, blockStateInput, p_198454_3_) -> blockPos.getX() != mutableBoundingBox.x0 && blockPos.getX() != mutableBoundingBox.x1 && blockPos.getY() != mutableBoundingBox.y0 && blockPos.getY() != mutableBoundingBox.y1 && blockPos.getZ() != mutableBoundingBox.z0 && blockPos.getZ() != mutableBoundingBox.z1 ? null : blockStateInput),
-//        HOLLOW((p_198453_0_, p_198453_1_, p_198453_2_, p_198453_3_) -> p_198453_1_.getX() != p_198453_0_.x0 && p_198453_1_.getX() != p_198453_0_.x1 && p_198453_1_.getY() != p_198453_0_.y0 && p_198453_1_.getY() != p_198453_0_.y1 && p_198453_1_.getZ() != p_198453_0_.z0 && p_198453_1_.getZ() != p_198453_0_.z1 ? HOLLOW_CORE : p_198453_2_),
-//        DESTROY((p_198452_0_, p_198452_1_, p_198452_2_, p_198452_3_) -> {
-//            p_198452_3_.destroyBlock(p_198452_1_, true);
-//            return p_198452_2_;
-//        });
-//
-//        public final SetBlockCommand.IFilter filter;
-//
-//        Mode(SetBlockCommand.IFilter p_i47985_3_) {
-//            this.filter = p_i47985_3_;
-//        }
-//    }
 }
