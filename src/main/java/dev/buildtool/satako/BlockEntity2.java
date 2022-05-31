@@ -28,7 +28,6 @@ public abstract class BlockEntity2 extends BlockEntity {
         return ClientboundBlockEntityDataPacket.create(this);
     }
 
-
     @Override
     public CompoundTag getUpdateTag() {
         //server side
@@ -36,13 +35,6 @@ public abstract class BlockEntity2 extends BlockEntity {
         saveAdditional(supertag);
         return supertag;
     }
-
-//    @Override
-//    public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt)
-//    {
-//        CompoundNBT nbtTagCompound = pkt.getTag();
-//        load(getBlockState(),nbtTagCompound);
-//    }
 
     public int getX() {
         return getBlockPos().getX();
