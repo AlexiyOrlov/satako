@@ -1,6 +1,5 @@
 package dev.buildtool.satako.blocks;
 
-import dev.buildtool.satako.SCSync;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.Containers;
@@ -16,7 +15,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 
 import javax.annotation.Nullable;
 
-public class BlockHorizontal extends HorizontalDirectionalBlock implements SCSync {
+public class BlockHorizontal extends HorizontalDirectionalBlock {
     public BlockHorizontal(Properties properties) {
         super(properties);
     }
@@ -51,11 +50,6 @@ public class BlockHorizontal extends HorizontalDirectionalBlock implements SCSyn
 
     @Override
     public boolean triggerEvent(BlockState state, Level worldIn, BlockPos pos, int id, int param) {
-        return onDataReceived(state, worldIn, pos, (byte) id, (byte) param);
-    }
-
-    @Override
-    public boolean onDataReceived(BlockState state, Level worldIn, BlockPos pos, byte id, byte value) {
-        return (state.hasBlockEntity()) && worldIn.getBlockEntity(pos).triggerEvent(id, value);
+        return state.hasBlockEntity() && worldIn.getBlockEntity(pos).triggerEvent(id, param);
     }
 }
