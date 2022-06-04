@@ -1,3 +1,6 @@
+5.0.4-1.18.2:
+added back title to container screens;
+
 5.0.3-1.18.2:
 added some functions;
 added interface for cross-mod ally identification;
