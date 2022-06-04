@@ -139,7 +139,7 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
     }
 
     @Override
-    protected void renderLabels(PoseStack p_230451_1_, int p_230451_2_, int p_230451_3_) {
-        //don't render labels
+    protected void renderLabels(PoseStack poseStack, int p1, int p2) {
+        font.draw(poseStack, title, imageWidth / 2f - font.width(title.getString()) / 2f, -14, 0xE35F3B);
     }
 }
