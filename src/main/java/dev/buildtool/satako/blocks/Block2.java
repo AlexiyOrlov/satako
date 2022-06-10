@@ -7,7 +7,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.BuiltInLootTables;
+import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraftforge.items.CapabilityItemHandler;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Forwards block events to its tile entity.
@@ -52,5 +57,15 @@ public class Block2 extends Block {
     @Override
     public boolean triggerEvent(BlockState state, Level worldIn, BlockPos pos, int id, int param) {
         return state.hasBlockEntity() && worldIn.getBlockEntity(pos).triggerEvent(id, param);
+    }
+
+    /**
+     * Drop itself by default
+     */
+    @Override
+    public List<ItemStack> getDrops(BlockState p_60537_, LootContext.Builder p_60538_) {
+        if (getLootTable() != BuiltInLootTables.EMPTY)
+            return super.getDrops(p_60537_, p_60538_);
+        return Collections.singletonList(new ItemStack(this));
     }
 }
