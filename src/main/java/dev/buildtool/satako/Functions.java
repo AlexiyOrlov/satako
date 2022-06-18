@@ -1062,4 +1062,13 @@ public final class Functions {
     public static EntityType cast(EntityType<Entity> entityType) {
         return entityType;
     }
+
+    public static Direction getLookDirectionOf(LivingEntity livingEntity) {
+        if (livingEntity.getXRot() > 45)
+            return Direction.DOWN;
+        else if (livingEntity.getXRot() < -45) {
+            return Direction.UP;
+        }
+        return livingEntity.getDirection();
+    }
 }
