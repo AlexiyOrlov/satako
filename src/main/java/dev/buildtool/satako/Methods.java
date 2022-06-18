@@ -12,12 +12,14 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.items.IItemHandler;
 
 import java.awt.*;
 import java.lang.reflect.Field;
@@ -428,5 +430,40 @@ public final class Methods {
 
     public static void addPotionEffectNoParticles(LivingEntity entityLivingBase, MobEffect potion, int duration, int strength) {
         entityLivingBase.addEffect(new MobEffectInstance(potion, duration, strength, false, false));
+    }
+
+
+    /**
+     * @param inputHandler  from
+     * @param outputHandler to
+     * @param byAmount      how many per operation
+     */
+    @Promote
+    private static void transferItems(IItemHandler inputHandler, IItemHandler outputHandler, int byAmount) {
+        both:
+        for (int i = 0; i < inputHandler.getSlots(); i++) {
+            ItemStack itemStack = inputHandler.getStackInSlot(i);
+            if (!itemStack.isEmpty()) {
+                for (int i1 = 0; i1 < outputHandler.getSlots(); i1++) {
+                    if (outputHandler.isItemValid(i1, itemStack)) {
+                        ItemStack stack2 = outputHandler.getStackInSlot(i1);
+                        int min = Math.min(byAmount, itemStack.getCount());
+                        if (Functions.areItemTypesEqual(itemStack, stack2) && stack2.getCount() + min <= itemStack.getMaxStackSize()) {
+                            itemStack.shrink(min);
+                            stack2.grow(min);
+                            break both;
+                        }
+                    }
+                }
+                for (int i1 = 0; i1 < outputHandler.getSlots(); i1++) {
+                    if (outputHandler.isItemValid(i1, itemStack) && outputHandler.getStackInSlot(i1).isEmpty()) {
+                        int min = Math.min(byAmount, itemStack.getCount());
+                        outputHandler.insertItem(i1, new ItemStack(itemStack.getItem(), min), false);
+                        itemStack.shrink(min);
+                        break both;
+                    }
+                }
+            }
+        }
     }
 }
