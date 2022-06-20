@@ -41,7 +41,7 @@ public abstract class BlockConnectable extends PipeBlock {
     protected abstract BlockState makeConnections(LevelAccessor blockReader, BlockPos pos);
 
     protected boolean doConnectTo(LevelAccessor world, BlockState blockState, BlockState to, BlockPos pos, BlockPos toPos, Direction direction) {
-        return to.getBlock() == this;
+        return to.is(this);
     }
 
     @Override
