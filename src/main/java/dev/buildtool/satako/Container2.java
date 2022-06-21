@@ -47,7 +47,7 @@ public class Container2 extends AbstractContainerMenu {
         int index = 0;
         for (int i = 4; i > 0; i--) {
             for (int j = 0; j < 9; j++) {
-                addSlot(new ItemHandlerSlot(inventory, index++, 3 + 18 * j + horizontalMargin, 3 + 18 * i + verticalMargin));
+                addSlot(new ItemHandlerSlot(inventory, index++, 18 * j + horizontalMargin, 18 * i + verticalMargin));
             }
         }
     }
@@ -73,9 +73,9 @@ public class Container2 extends AbstractContainerMenu {
             for (int j = 0; j < 9; j++) {
                 ItemStack stack = inventory.getStackInSlot(index);
                 if (stack.getItem() == locked) {
-                    addSlot(new ItemHandlerDisplaySlot(inventory, index, 3 + 18 * j + horizontalMargin, 3 + 18 * i + verticalMargin));
+                    addSlot(new ItemHandlerDisplaySlot(inventory, index, 18 * j + horizontalMargin, 18 * i + verticalMargin));
                 } else {
-                    addSlot(new ItemHandlerSlot(inventory, index, 3 + 18 * j + horizontalMargin, 3 + 18 * i + verticalMargin));
+                    addSlot(new ItemHandlerSlot(inventory, index, 18 * j + horizontalMargin, 18 * i + verticalMargin));
                 }
                 index++;
             }
