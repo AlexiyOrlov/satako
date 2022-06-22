@@ -66,9 +66,4 @@ public class BlockDirectional extends DirectionalBlock {
     public boolean triggerEvent(BlockState state, Level worldIn, BlockPos pos, int id, int param) {
         return state.hasBlockEntity() && worldIn.getBlockEntity(pos).triggerEvent(id, param);
     }
-
-//    @Override
-//    public boolean onDataReceived(BlockState state, Level worldIn, BlockPos pos, byte id, byte value) {
-//        return (
-//    }
 }
