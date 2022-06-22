@@ -35,7 +35,7 @@ public class BlockHorizontal extends HorizontalDirectionalBlock {
 
     @Override
     public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (state.hasBlockEntity()) {
+        if (!state.is(newState.getBlock()) && state.hasBlockEntity()) {
             BlockEntity tileEntity = worldIn.getBlockEntity(pos);
             tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(iItemHandler -> {
                 for (int i = 0; i < iItemHandler.getSlots(); i++) {
