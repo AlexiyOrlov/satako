@@ -1,3 +1,6 @@
+5.0.6-1.18.2:
+fixed blocks with items dropping their items when their blockstate changes;
+
 5.0.4-1.18.2:
 added back title to container screens;
 
