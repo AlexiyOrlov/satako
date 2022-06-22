@@ -7,7 +7,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraftforge.items.CapabilityItemHandler;
 
@@ -62,10 +61,12 @@ public class Block2 extends Block {
     /**
      * Drop itself by default
      */
+    @SuppressWarnings("ConstantConditions")
     @Override
-    public List<ItemStack> getDrops(BlockState p_60537_, LootContext.Builder p_60538_) {
-        if (getLootTable() != BuiltInLootTables.EMPTY)
-            return super.getDrops(p_60537_, p_60538_);
-        return Collections.singletonList(new ItemStack(this));
+    public List<ItemStack> getDrops(BlockState p_60537_, LootContext.Builder builder) {
+        if (builder.getLevel().getServer().getLootTables().get(getLootTable()).getLootTableId() == null) {
+            return Collections.singletonList(new ItemStack(this));
+        }
+        return super.getDrops(p_60537_, builder);
     }
 }
