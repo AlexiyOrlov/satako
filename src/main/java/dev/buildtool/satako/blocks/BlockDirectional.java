@@ -13,7 +13,11 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraftforge.items.CapabilityItemHandler;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created on 5/29/18.
@@ -65,5 +69,17 @@ public class BlockDirectional extends DirectionalBlock {
     @Override
     public boolean triggerEvent(BlockState state, Level worldIn, BlockPos pos, int id, int param) {
         return state.hasBlockEntity() && worldIn.getBlockEntity(pos).triggerEvent(id, param);
+    }
+
+    /**
+     * Drop itself by default
+     */
+    @SuppressWarnings("ConstantConditions")
+    @Override
+    public List<ItemStack> getDrops(BlockState p_60537_, LootContext.Builder builder) {
+        if (builder.getLevel().getServer().getLootTables().get(getLootTable()).getLootTableId() == null) {
+            return Collections.singletonList(new ItemStack(this));
+        }
+        return super.getDrops(p_60537_, builder);
     }
 }

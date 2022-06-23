@@ -11,9 +11,12 @@ import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraftforge.items.CapabilityItemHandler;
 
 import javax.annotation.Nullable;
+import java.util.Collections;
+import java.util.List;
 
 public class BlockHorizontal extends HorizontalDirectionalBlock {
     public BlockHorizontal(Properties properties) {
@@ -51,5 +54,17 @@ public class BlockHorizontal extends HorizontalDirectionalBlock {
     @Override
     public boolean triggerEvent(BlockState state, Level worldIn, BlockPos pos, int id, int param) {
         return state.hasBlockEntity() && worldIn.getBlockEntity(pos).triggerEvent(id, param);
+    }
+
+    /**
+     * Drop itself by default
+     */
+    @SuppressWarnings("ConstantConditions")
+    @Override
+    public List<ItemStack> getDrops(BlockState p_60537_, LootContext.Builder builder) {
+        if (builder.getLevel().getServer().getLootTables().get(getLootTable()).getLootTableId() == null) {
+            return Collections.singletonList(new ItemStack(this));
+        }
+        return super.getDrops(p_60537_, builder);
     }
 }
