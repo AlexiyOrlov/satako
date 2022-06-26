@@ -1,4 +1,4 @@
-5.0.6-1.18.2:
+5.0.7-1.18.2:
 fixed blocks with items dropping their items when their blockstate changes;
 
 5.0.4-1.18.2:
