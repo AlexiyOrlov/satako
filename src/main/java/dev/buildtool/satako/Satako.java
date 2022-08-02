@@ -1,7 +1,5 @@
 package dev.buildtool.satako;
 
-import dev.buildtool.satako.debugging.Analyzer;
-import dev.buildtool.satako.debugging.EventListener;
 import dev.buildtool.satako.test.TestBlock;
 import dev.buildtool.satako.test.TestContainer;
 import net.minecraft.world.inventory.MenuType;
@@ -14,19 +12,13 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.forgespi.language.IModInfo;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
 
 ;
 
@@ -63,26 +55,26 @@ public class Satako {
         BLOCKS.register(eventBus);
         ITEMS.register(eventBus);
 
-        if (DO_DEBUG.get()) {
-            MinecraftForge.EVENT_BUS.register(EventListener.class);
-            eventBus.register(Analyzer.class);
-            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-                try {
-                    PrintWriter printWriter = new PrintWriter(new File("logs", "general.log"));
-                    ModList.get().forEachModContainer((s, modContainer) -> {
-                        if (!s.equals("minecraft") && !s.equals("forge")) {
-                            printWriter.println("Next mod: " + s);
-                            IModInfo iModInfo = modContainer.getModInfo();
-                            iModInfo.getDependencies().forEach(modVersion -> {
-                                printWriter.println("depends " + (modVersion.isMandatory() ? "obligatory" : "optionally") + " on " + modVersion.getModId());
-                            });
-                        }
-                    });
-                    printWriter.close();
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-            }));
-        }
+//        if (DO_DEBUG.get()) {
+//            MinecraftForge.EVENT_BUS.register(EventListener.class);
+//            eventBus.register(Analyzer.class);
+//            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+//                try {
+//                    PrintWriter printWriter = new PrintWriter(new File("logs", "general.log"));
+//                    ModList.get().forEachModContainer((s, modContainer) -> {
+//                        if (!s.equals("minecraft") && !s.equals("forge")) {
+//                            printWriter.println("Next mod: " + s);
+//                            IModInfo iModInfo = modContainer.getModInfo();
+//                            iModInfo.getDependencies().forEach(modVersion -> {
+//                                printWriter.println("depends " + (modVersion.isMandatory() ? "obligatory" : "optionally") + " on " + modVersion.getModId());
+//                            });
+//                        }
+//                    });
+//                    printWriter.close();
+//                } catch (FileNotFoundException e) {
+//                    e.printStackTrace();
+//                }
+//            }));
+//        }
     }
 }
