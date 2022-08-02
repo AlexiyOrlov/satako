@@ -53,7 +53,7 @@ public class Commands {
         LiteralArgumentBuilder<CommandSourceStack> summon2 = literal("summon2").requires(commandSource -> commandSource.hasPermission(2));
 
         SuggestionProvider<CommandSourceStack> namespaces = (context, builder) -> SharedSuggestionProvider.suggest(ForgeRegistries.ENTITY_TYPES.getValues().stream().map(entityType -> ForgeRegistries.ENTITY_TYPES.getKey(entityType).getNamespace()), builder);
-        SuggestionProvider<CommandSourceStack> entities = (context, builder) -> SharedSuggestionProvider.suggest(ForgeRegistries.ENTITY_TYPES.getValues().stream().filter(entityType -> context.getArgument("namespace", String.class).equals(ForgeRegistries.ENTITY_TYPES.getKey(entityType).getNamespace())).map(entityType -> ForgeRegistries.ENTITY_TYPES.getKey(entityType).getNamespace()), builder);
+        SuggestionProvider<CommandSourceStack> entities = (context, builder) -> SharedSuggestionProvider.suggest(ForgeRegistries.ENTITY_TYPES.getValues().stream().filter(entityType -> context.getArgument("namespace", String.class).equals(ForgeRegistries.ENTITY_TYPES.getKey(entityType).getNamespace())).map(entityType -> ForgeRegistries.ENTITY_TYPES.getKey(entityType).getPath()), builder);
         RequiredArgumentBuilder<CommandSourceStack, String> namespace = argument("namespace", StringArgumentType.string()).suggests(namespaces);
         RequiredArgumentBuilder<CommandSourceStack, String> entityName = argument("entity", StringArgumentType.string()).suggests(entities);
         entityName.executes(context -> {
