@@ -2,17 +2,11 @@ package dev.buildtool.satako;
 
 import dev.buildtool.satako.debugging.Analyzer;
 import dev.buildtool.satako.debugging.EventListener;
-import dev.buildtool.satako.packets.SendItemNBT;
-import dev.buildtool.satako.packets.SendSound;
 import dev.buildtool.satako.test.TestBlock;
 import dev.buildtool.satako.test.TestContainer;
-import net.minecraft.client.Minecraft;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
@@ -26,10 +20,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.forgespi.language.IModInfo;
-import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkEvent;
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.simple.SimpleChannel;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -46,7 +36,6 @@ import java.io.PrintWriter;
 @Mod(Satako.ID)
 public class Satako {
     public static final String ID = "satako";
-    public static SimpleChannel CHANNEL;
     public static ForgeConfigSpec.BooleanValue DO_DEBUG;
 
     private static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ID);
@@ -58,40 +47,11 @@ public class Satako {
         ITEMS.register("test_block", () -> new BlockItem(TEST_BLOCK.get(), new Item.Properties().stacksTo(1)));
     }
 
-    private static final DeferredRegister<MenuType<?>> CONTAINER_TYPES = DeferredRegister.create(ForgeRegistries.CONTAINERS, ID);
+    private static final DeferredRegister<MenuType<?>> CONTAINER_TYPES = DeferredRegister.create(ForgeRegistries.MENU_TYPES, ID);
     public static final RegistryObject<MenuType<TestContainer>> TEST_CONTAINER = CONTAINER_TYPES.register("test_block", () -> IForgeMenuType.create((windowId, inv, data) -> new TestContainer(windowId, inv)));
 
     public Satako() {
-        CHANNEL = NetworkRegistry.newSimpleChannel(new ResourceLocation(ID, "first"), () -> "1.0", s -> true, s -> true);
-        CHANNEL.messageBuilder(SendItemNBT.class, 0).encoder((sendItemNBT, packetBuffer) -> {
-                    packetBuffer.writeNbt(sendItemNBT.compoundNBT);
-                    packetBuffer.writeEnum(sendItemNBT.toHand);
-                }).decoder(packetBuffer -> new SendItemNBT(packetBuffer.readNbt(), packetBuffer.readEnum(InteractionHand.class)))
-                .consumer((sendItemNBT, contextSupplier) -> {
-                    NetworkEvent.Context context = contextSupplier.get();
-                    if (context.getDirection() == NetworkDirection.PLAY_TO_SERVER)
-                        context.enqueueWork(() -> context.getSender().getItemInHand(sendItemNBT.toHand).setTag(sendItemNBT.compoundNBT));
-                    else {
-                        context.enqueueWork(() -> {
-                            Minecraft minecraft = Minecraft.getInstance();
-                            final ItemStack heldItem = minecraft.player.getItemInHand(sendItemNBT.toHand);
-                            heldItem.setTag(sendItemNBT.compoundNBT);
-                        });
-                    }
-                    context.setPacketHandled(true);
-                }).add();
 
-        CHANNEL.messageBuilder(SendSound.class, 1, NetworkDirection.PLAY_TO_CLIENT).encoder((sendSound, buffer) -> {
-            buffer.writeFloat(sendSound.pitch);
-                    buffer.writeFloat(sendSound.volume);
-                    buffer.writeUtf(sendSound.soundEvent.getRegistryName().toString());
-                }).decoder(buffer -> new SendSound(buffer.readFloat(), buffer.readFloat(),
-                        ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(buffer.readUtf()))))
-                .consumer((sendSound, contextSupplier) -> {
-                    contextSupplier.get().enqueueWork(() ->
-                            Minecraft.getInstance().player.playSound(sendSound.soundEvent, sendSound.volume, sendSound.pitch));
-                    contextSupplier.get().setPacketHandled(true);
-                }).add();
         MinecraftForge.EVENT_BUS.register(this);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, new ForgeConfigSpec.Builder().configure(builder -> {
             DO_DEBUG = builder.define("Enable extra debugging info", false);
