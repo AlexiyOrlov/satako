@@ -8,9 +8,10 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
@@ -20,7 +21,6 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.AirItem;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ChunkPos;
@@ -40,7 +40,6 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -163,7 +162,7 @@ public final class Functions {
     }
 
     /**
-     * Not sure whether to use this function in {@link Block#neighborChanged(BlockState, Level, BlockPos, Block, BlockPos, boolean)} or {@link Block#tick(BlockState, net.minecraft.server.level.ServerLevel, BlockPos, Random)}
+     * Not sure whether to use this function in {@link Block#neighborChanged(BlockState, Level, BlockPos, Block, BlockPos, boolean)} or {@link Block#tick(BlockState, ServerLevel, BlockPos, RandomSource)}
      */
     public static boolean isDirectionalBlockPowered(Direction blockDirection, BlockPos blockPosition, BlockPos pulsePosition, Level world) {
         Direction back = blockDirection.getOpposite();
@@ -471,16 +470,6 @@ public final class Functions {
     }
 
     /**
-     * @return registered block item
-     */
-    public static Item registerBlockItem(Block block, String ID, String identifier, RegistryEvent.Register<Item> registryEvent, Item.Properties properties)
-    {
-        Item b1 = new BlockItem(block, properties).setRegistryName(ID, identifier);
-        registryEvent.getRegistry().register(b1);
-        return b1;
-    }
-
-    /**
      * @return true if there is no tile entity or unbreakable block
      */
     public static boolean canReplaceBlock(BlockPos blockPos, Level world) {
@@ -511,13 +500,6 @@ public final class Functions {
         }
         blockPos = blockPos.above();
         return blockPos;
-    }
-
-    public static Item registerItem(Item item, String mod, String ID, RegistryEvent.Register<Item> registryEvent)
-    {
-        item.setRegistryName(mod, ID);
-        registryEvent.getRegistry().register(item);
-        return item;
     }
 
     public static ArrayList<Direction> getSideDirections(Direction of)
@@ -557,7 +539,7 @@ public final class Functions {
             final Item oneItem = one.getItem();
             final Item secondItem = two.getItem();
             return oneItem == secondItem && one.getDamageValue() == two.getDamageValue() &&
-                    oneItem.getRegistryName().equals(secondItem.getRegistryName())
+                    ForgeRegistries.ITEMS.getKey(oneItem).equals(ForgeRegistries.ITEMS.getKey(secondItem))
                     && (ItemStack.tagMatches(one, two));
         }
         return false;
@@ -621,9 +603,9 @@ public final class Functions {
     /**
      * Returns the length of longest string
      */
-    public static int calculateLongestStringWidth(Collection<TextComponent> objects) {
+    public static int calculateLongestStringWidth(Collection<Component> objects) {
         int width = 0;
-        for (TextComponent s : objects) {
+        for (Component s : objects) {
             int nextwidth = calculateStringWidth(s);
             if (nextwidth > width) width = nextwidth;
         }

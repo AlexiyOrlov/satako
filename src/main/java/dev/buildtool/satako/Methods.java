@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
@@ -21,7 +21,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.items.IItemHandler;
 
-import java.awt.*;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
@@ -140,7 +139,7 @@ public final class Methods {
         tessellator.end();
     }
 
-    private static void drawFilledCircle(Tesselator tessellator, float radius, Color color) {
+    private static void drawFilledCircle(Tesselator tessellator, float radius, IntegerColor color) {
         int circle_points = 50;
         float angle = 2.0f * 3.1416f / circle_points;
         BufferBuilder bufferBuilder = tessellator.getBuilder();
@@ -212,20 +211,20 @@ public final class Methods {
 //    }
 
     public static void sendMessageToPlayer(Player player, String message) {
-        player.sendMessage(new net.minecraft.network.chat.TextComponent(message), player.getUUID());
+        player.displayClientMessage(Component.literal(message), false);
     }
 
     /**
      * @param X position to be centered on
      */
-    public static void drawCenteredString(PoseStack matrixStack, net.minecraft.network.chat.TextComponent o, int X, int Y, IntegerColor color) {
+    public static void drawCenteredString(PoseStack matrixStack, net.minecraft.network.chat.Component o, int X, int Y, IntegerColor color) {
         drawString(matrixStack, o, X - Functions.calculateStringWidth(o) / 2, Y, color);
     }
 
     /**
      * @param X position to be centered on
      */
-    public static void drawCenteredStringWithShadow(PoseStack matrixStack, TextComponent o, int X, int Y, IntegerColor color) {
+    public static void drawCenteredStringWithShadow(PoseStack matrixStack, Component o, int X, int Y, IntegerColor color) {
         drawStringWithShadow(matrixStack, o, X - Functions.calculateStringWidth(o) / 2, Y, color);
     }
 

@@ -17,7 +17,7 @@ import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.commands.arguments.coordinates.Coordinates;
 import net.minecraft.commands.arguments.coordinates.Vec3Argument;
 import net.minecraft.commands.arguments.selector.EntitySelector;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -52,8 +52,8 @@ public class Commands {
         RootCommandNode<CommandSourceStack> rootCommandNode = commandDispatcher.getRoot();
         LiteralArgumentBuilder<CommandSourceStack> summon2 = literal("summon2").requires(commandSource -> commandSource.hasPermission(2));
 
-        SuggestionProvider<CommandSourceStack> namespaces = (context, builder) -> SharedSuggestionProvider.suggest(ForgeRegistries.ENTITIES.getValues().stream().map(entityType -> entityType.getRegistryName().getNamespace()), builder);
-        SuggestionProvider<CommandSourceStack> entities = (context, builder) -> SharedSuggestionProvider.suggest(ForgeRegistries.ENTITIES.getValues().stream().filter(entityType -> context.getArgument("namespace", String.class).equals(entityType.getRegistryName().getNamespace())).map(entityType -> entityType.getRegistryName().getPath()), builder);
+        SuggestionProvider<CommandSourceStack> namespaces = (context, builder) -> SharedSuggestionProvider.suggest(ForgeRegistries.ENTITY_TYPES.getValues().stream().map(entityType -> ForgeRegistries.ENTITY_TYPES.getKey(entityType).getNamespace()), builder);
+        SuggestionProvider<CommandSourceStack> entities = (context, builder) -> SharedSuggestionProvider.suggest(ForgeRegistries.ENTITY_TYPES.getValues().stream().filter(entityType -> context.getArgument("namespace", String.class).equals(ForgeRegistries.ENTITY_TYPES.getKey(entityType).getNamespace())).map(entityType -> ForgeRegistries.ENTITY_TYPES.getKey(entityType).getNamespace()), builder);
         RequiredArgumentBuilder<CommandSourceStack, String> namespace = argument("namespace", StringArgumentType.string()).suggests(namespaces);
         RequiredArgumentBuilder<CommandSourceStack, String> entityName = argument("entity", StringArgumentType.string()).suggests(entities);
         entityName.executes(context -> {
@@ -144,16 +144,16 @@ public class Commands {
 
     private static int summonEntity(CommandSourceStack commandSource, Vec3 position, ResourceLocation resourceLocation) {
         ServerLevel serverWorld = commandSource.getLevel();
-        Entity entity = ForgeRegistries.ENTITIES.getValue(resourceLocation).create(serverWorld);
+        Entity entity = ForgeRegistries.ENTITY_TYPES.getValue(resourceLocation).create(serverWorld);
         if (entity == null) {
-            commandSource.sendSuccess(new TextComponent("No entity " + resourceLocation.toString()), false);
+            commandSource.sendSuccess(Component.literal("No entity " + resourceLocation.toString()), false);
             return -1;
         }
         entity.setPos(position.x, position.y, position.z);
         if (entity instanceof Mob)
             ((Mob) entity).finalizeSpawn(serverWorld, serverWorld.getCurrentDifficultyAt(entity.blockPosition()), MobSpawnType.COMMAND, null, null);
         serverWorld.addFreshEntity(entity);
-        commandSource.sendSuccess(new TextComponent("Summoned " + entity.getName().getString() + " at " + (int) position.x + " " + (int) position.y + " " + (int) position.z), true);
+        commandSource.sendSuccess(Component.literal("Summoned " + entity.getName().getString() + " at " + (int) position.x + " " + (int) position.y + " " + (int) position.z), true);
         return 1;
     }
 

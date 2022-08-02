@@ -4,7 +4,6 @@ import dev.buildtool.satako.Functions;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.function.Predicate;
@@ -32,7 +31,7 @@ public class TextField extends EditBox implements Scrollable, Positionable, Hide
      * Main constructor
      */
     public TextField(int X, int Y, int width) {
-        super(Minecraft.getInstance().font, X, Y, width, 15, new TextComponent(""));
+        super(Minecraft.getInstance().font, X, Y, width, 15, Component.literal(""));
     }
 
     {

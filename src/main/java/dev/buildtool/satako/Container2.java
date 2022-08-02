@@ -158,7 +158,7 @@ public class Container2 extends AbstractContainerMenu {
     @Override
     public ItemStack quickMoveStack(Player playerIn, int index) {
         Slot clickedSlot = this.slots.get(index);
-        ItemStack stack;
+        ItemStack stack = ItemStack.EMPTY;
         if (clickedSlot.hasItem()) {
             ItemStack clickedStack = clickedSlot.getItem();
             stack = clickedStack.copy();
@@ -175,7 +175,7 @@ public class Container2 extends AbstractContainerMenu {
 
             clickedSlot.onTake(playerIn, clickedStack);
         }
-        return super.quickMoveStack(playerIn, index);
+        return stack;
     }
 
     @Override

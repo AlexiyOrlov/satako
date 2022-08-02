@@ -3,7 +3,6 @@ package dev.buildtool.satako.test;
 import dev.buildtool.satako.blocks.Block2;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -27,13 +26,13 @@ public class TestBlock extends Block2 implements MenuProvider {
     @Override
     public InteractionResult use(BlockState p_225533_1_, Level world, BlockPos p_225533_3_, Player playerEntity, InteractionHand p_225533_5_, BlockHitResult p_225533_6_) {
         if (playerEntity instanceof ServerPlayer)
-            NetworkHooks.openGui((ServerPlayer) playerEntity, this);
+            NetworkHooks.openScreen((ServerPlayer) playerEntity, this);
         return InteractionResult.SUCCESS;
     }
 
     @Override
     public Component getDisplayName() {
-        return new TextComponent("Test block");
+        return Component.literal("Test block");
     }
 
     @Nullable

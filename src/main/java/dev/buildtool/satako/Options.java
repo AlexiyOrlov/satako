@@ -6,8 +6,5 @@ package dev.buildtool.satako;
 public class Options
 {
     public static String addedTileEntityList = "addedTileEntityList";
-
-    public static String eventlisteners = "field_73021_x";
-
     public static String processingLoadedTiles = "processingLoadedTiles";
 }
