@@ -44,7 +44,7 @@ public class RadioButton extends BetterButton
             Minecraft mc = Minecraft.getInstance();
             this.isHovered = selected;
             int k = this.getYImage(this.isHovered);
-            ScreenUtils.blitWithBorder(matrixStack, WIDGETS_LOCATION, this.x, this.y, 0, 46 + k * 20, this.width, this.height, 200, 20, 2, 3, 2, 2, this.getBlitOffset());
+            ScreenUtils.blitWithBorder(matrixStack, WIDGETS_LOCATION, this.getX(), this.getY(), 0, 46 + k * 20, this.width, this.height, 200, 20, 2, 3, 2, 2, this.getBlitOffset());
             this.renderBg(matrixStack, mc, mouseX, mouseY);
             int color = getFGColor();
 
@@ -53,7 +53,7 @@ public class RadioButton extends BetterButton
 
             Component buttonText = this.getMessage();
 
-            drawCenteredString(matrixStack, mc.font, buttonText, this.x + this.width / 2, this.y + (this.height - 8) / 2, color);
+            drawCenteredString(matrixStack, mc.font, buttonText, this.getX() + this.width / 2, this.getY() + (this.height - 8) / 2, color);
         }
     }
 

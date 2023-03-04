@@ -3,7 +3,7 @@ package dev.buildtool.satako.gui;
 import com.mojang.blaze3d.vertex.PoseStack;
 import dev.buildtool.satako.Constants;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.components.Widget;
+import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
@@ -82,7 +82,7 @@ public class Screen2 extends Screen
         boolean verticalscroll = Screen.hasAltDown();
         if (mousewheeld != 0)
         {
-            for (Widget button : renderables) {
+            for (Renderable button : renderables) {
                 if (button instanceof Scrollable) {
                     ((Scrollable) button).scroll(mousewheeld, verticalscroll);
                 }

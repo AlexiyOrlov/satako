@@ -57,9 +57,10 @@ public class BetterButton extends ExtendedButton implements Scrollable, Position
     {
 
         if (vertical && verticalScroll) {
-            y += Math.signum(amount) * scrollingAmount;
-        } else if (!vertical && horizontalScroll)
-            x += amount;
+            setY((int) (getY() + Math.signum(amount) * scrollingAmount));
+        } else if (!vertical && horizontalScroll) {
+            setX(getX() + amount);
+        }
     }
 
     @Override
@@ -117,25 +118,25 @@ public class BetterButton extends ExtendedButton implements Scrollable, Position
     @Override
     public int getX()
     {
-        return x;
+        return super.getX();
     }
 
     @Override
     public void setX(int X)
     {
-        x = X;
+        super.setX(X);
     }
 
     @Override
     public int getY()
     {
-        return y;
+        return super.getY();
     }
 
     @Override
     public void setY(int Y)
     {
-        y = Y;
+        super.setY(Y);
     }
 
     @Override

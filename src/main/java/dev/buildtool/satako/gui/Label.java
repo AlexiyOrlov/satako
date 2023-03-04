@@ -15,7 +15,7 @@ public class Label extends Button implements Scrollable {
 
     @SuppressWarnings("ConstantConditions")
     public Label(int x, int y, Component text) {
-        super(x, y, Minecraft.getInstance().font.width(text.getString()) + 8, 18, text, null);
+        super(x, y, Minecraft.getInstance().font.width(text.getString()) + 8, 18, text, null, null);
         scrollAmount = 20;
     }
 
@@ -26,15 +26,15 @@ public class Label extends Button implements Scrollable {
 
     @Override
     public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
-        drawString(matrixStack, Minecraft.getInstance().font, this.getMessage(), this.x, this.y + (this.height - 8) / 2, 16777215 | Mth.ceil(this.alpha * 255.0F) << 24);
+        drawString(matrixStack, Minecraft.getInstance().font, this.getMessage(), this.getX(), this.getY() + (this.height - 8) / 2, 16777215 | Mth.ceil(this.alpha * 255.0F) << 24);
     }
 
     @Override
     public void scroll(int amount, boolean vertical) {
         if (vertical && verticalScroll) {
-            y += Math.signum(amount) * scrollAmount;
+            setY((int) (getY() + Math.signum(amount) * scrollAmount));
         } else if (!vertical && horizontalScroll) {
-            x += amount;
+            setX(getX() + amount);
         }
     }
 
