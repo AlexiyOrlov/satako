@@ -4,7 +4,6 @@ pluginManagement {
         maven { url = 'https://maven.minecraftforge.net/' }
     }
 }
-//include('TrajectoryPreview')
 include('peculiar-mobs')
 include('PlayerEmulator')
 include('TradingTable')
