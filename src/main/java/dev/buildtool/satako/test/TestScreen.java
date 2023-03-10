@@ -31,5 +31,7 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
         addRenderableWidget(five);
         addRenderableWidget(six);
         addRenderableWidget(new ScrollList(2, 2, getGuiLeft() - 2, getGuiTop() - 2, one, two, three, four, five, six));
+        addRenderableWidget(new Label(getGuiLeft() + imageWidth, getGuiTop(), Component.literal("Clickable 1"), this, p_93751_ -> minecraft.player.displayClientMessage(Component.literal("Clicked first label"), false)));
+        addRenderableWidget(new Label(getGuiLeft() + imageWidth, getGuiTop() + 20, Component.literal("Clickable 2"), this, p_93751_ -> minecraft.player.displayClientMessage(Component.literal("Clicked second label"), false)));
     }
 }
