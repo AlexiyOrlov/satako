@@ -42,9 +42,6 @@ public class Screen2 extends Screen
     public void render(PoseStack matrixStack, int mouseX, int mouseY, float tick) {
         renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, tick);
-        for (ScrollList scrollList : scrollLists) {
-            scrollList.draw();
-        }
     }
 
     @Override

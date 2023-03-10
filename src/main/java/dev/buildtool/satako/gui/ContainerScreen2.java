@@ -8,6 +8,7 @@ import dev.buildtool.satako.Constants;
 import dev.buildtool.satako.IntegerColor;
 import dev.buildtool.satako.ItemHandlerSlot;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.texture.TextureManager;
@@ -25,7 +26,6 @@ import java.util.List;
  * GUI borders and sends input events to elements
  */
 public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractContainerScreen<T> {
-    protected ArrayList<ScrollList> lists = new ArrayList<>(0);
     protected int centerX, centerY;
     protected ArrayList<Page> pages = new ArrayList<>(0);
     protected boolean drawBorders;
@@ -45,7 +45,6 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
     @Override
     public void init()
     {
-        lists.clear();
         int maxX = 0, minX = getXSize(), maxY = 0;
         for (Slot slot : getSlots())
         {
@@ -122,7 +121,6 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
         }
 
         IntegerColor color = Constants.BLUE;
-        lists.forEach(ScrollList::draw);
 
         //lines have to be drawn after everything else
         if (drawBorders) {
@@ -134,12 +132,32 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
         }
     }
 
-    public void addScrollList(ScrollList list) {
-        lists.add(list);
-    }
-
     @Override
     protected void renderLabels(PoseStack poseStack, int p1, int p2) {
         font.draw(poseStack, title, imageWidth / 2f - font.width(title.getString()) / 2f, -14, 0xE35F3B);
+    }
+
+    @Override
+    public boolean mouseClicked(double mx, double my, int p_97750_) {
+//        for (GuiEventListener child : children()) {
+//            if(child instanceof ScrollList scrollList)
+//            {
+//                if(mx<scrollList.x && mx>scrollList.x+scrollList.height && my>scrollList.y && my<scrollList.y+scrollList.height){
+//                    scrollList.mouseClicked(mx, my, p_97750_);
+//                    return true;
+//                }
+//            }
+//        }
+        return super.mouseClicked(mx, my, p_97750_);
+    }
+
+    @Override
+    public boolean mouseDragged(double p_97752_, double p_97753_, int p_97754_, double p_97755_, double p_97756_) {
+        for (GuiEventListener child : children()) {
+            if (child instanceof ScrollList scrollList) {
+                scrollList.mouseDragged(p_97752_, p_97753_, p_97754_, p_97755_, p_97756_);
+            }
+        }
+        return super.mouseDragged(p_97752_, p_97753_, p_97754_, p_97755_, p_97756_);
     }
 }
