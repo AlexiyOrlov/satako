@@ -1,5 +1,6 @@
-6.1.1-1.19.3:
+6.1.2-1.19.3:
 fixed crash when clicking labels;
+added clickable labels;
 
 6.1.0-1.19.3:
 updated to 1.19.3;
