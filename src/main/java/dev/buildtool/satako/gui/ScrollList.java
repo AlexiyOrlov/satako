@@ -18,7 +18,7 @@ import net.minecraft.util.Mth;
 import java.util.HashMap;
 
 /**
- *
+ * AbstractWidget check goes after Positionable
  */
 public class ScrollList extends GuiComponent implements Scrollable, Hideable, Renderable, GuiEventListener, NarratableEntry {
     /**
@@ -31,8 +31,6 @@ public class ScrollList extends GuiComponent implements Scrollable, Hideable, Re
     private HashMap<GuiEventListener, Integer> startingPositions;
 
     /**
-     * @param x should be x of the first element
-     * @param y should be y of the first element
      */
     public ScrollList(int x, int y, int width_, int height_, int scrollingAmount, GuiEventListener... entries) {
         this.x = x;
@@ -52,17 +50,17 @@ public class ScrollList extends GuiComponent implements Scrollable, Hideable, Re
         if (g instanceof Scrollable scrollable) {
             scrollable.setScrollable(true, true);
         }
-        if (g instanceof AbstractWidget abstractWidget) {
-            abstractWidget.setPosition(x + abstractWidget.getX(), y + abstractWidget.getY());
-            startingPositions.put(g, abstractWidget.getY());
-        } else if (g instanceof Positionable positionable) {
-            positionable.setX(positionable.getX() + this.x);
-            positionable.setY(positionable.getY() + this.y);
+        if (g instanceof Positionable positionable) {
+            positionable.setX(positionable.getX() + this.x + 1);
+            positionable.setY(positionable.getY() + this.y + 1);
             startingPositions.put(g, positionable.getY());
+        } else if (g instanceof AbstractWidget abstractWidget) {
+            abstractWidget.setPosition(x + abstractWidget.getX() + 1, y + abstractWidget.getY() + 1);
+            startingPositions.put(g, abstractWidget.getY());
         }
-        if (g instanceof Positionable positionable && g instanceof Hideable hideable) {
-            if ((positionable.getY() < y || positionable.getY() + positionable.getHeight() > y + height)) {
-                hideable.setHidden(true);
+        if (g instanceof Positionable positionable) {
+            if (g instanceof Hideable hideable) {
+                hideable.setHidden(!isElementInside(g));
             }
         } else if (g instanceof AbstractWidget abstractWidget) {
             abstractWidget.visible = isElementInside(abstractWidget);
@@ -84,12 +82,11 @@ public class ScrollList extends GuiComponent implements Scrollable, Hideable, Re
                 if (item instanceof Scrollable scrollable) {
                     scrollable.scroll((int) (scrollAmount * Math.signum(amount)), true);
                 }
-                if (item instanceof Positionable p && item instanceof Hideable h) {
-                    h.setHidden(p.getY() + p.getHeight() > y + height || p.getY() < y);
-                }
-                if (item instanceof AbstractWidget abstractWidget) {
+                if (item instanceof Hideable h) {
+                    h.setHidden(!isElementInside(item));
+                } else if (item instanceof AbstractWidget abstractWidget) {
                     abstractWidget.setY((int) (abstractWidget.getY() + scrollAmount * Math.signum(amount)));
-                    abstractWidget.visible = abstractWidget.getY() + abstractWidget.getHeight() <= y + height && abstractWidget.getY() >= y;
+                    abstractWidget.visible = isElementInside(item);
                 }
             }
             return true;
@@ -118,21 +115,24 @@ public class ScrollList extends GuiComponent implements Scrollable, Hideable, Re
 
     @Override
     public void setHidden(boolean hidden) {
-        visible = false;
+        visible = !hidden;
         for (GuiEventListener item : items) {
-            if (item instanceof Hideable)
-                ((Hideable) item).setHidden(hidden);
+            if (item instanceof Hideable hideable)
+                hideable.setHidden(hidden);
             else if (item instanceof AbstractWidget abstractWidget) {
-                abstractWidget.visible = hidden;
+                abstractWidget.visible = !hidden;
             }
         }
     }
 
+    /**
+     *
+     */
     private boolean isElementInside(GuiEventListener g) {
         if (g instanceof Positionable positionable) {
-            return !(positionable.getY() + positionable.getHeight() > y + height || positionable.getY() < y);
+            return positionable.getY() > y && positionable.getY() + positionable.getHeight() < y + height;
         } else if (g instanceof AbstractWidget abstractWidget) {
-            return !(abstractWidget.getY() + abstractWidget.getHeight() > y + height || abstractWidget.getY() < y);
+            return abstractWidget.getY() > y && abstractWidget.getY() + abstractWidget.getHeight() < y + height;
         }
         return false;
     }
@@ -171,10 +171,10 @@ public class ScrollList extends GuiComponent implements Scrollable, Hideable, Re
     protected int getInnerHeight() {
         int height = 0;
         for (GuiEventListener item : items) {
-            if (item instanceof AbstractWidget abstractWidget) {
-                height += abstractWidget.getHeight();
-            } else if (item instanceof Positionable positionable) {
+            if (item instanceof Positionable positionable) {
                 height += positionable.getHeight();
+            } else if (item instanceof AbstractWidget abstractWidget) {
+                height += abstractWidget.getHeight();
             }
         }
         return height;
@@ -228,33 +228,41 @@ public class ScrollList extends GuiComponent implements Scrollable, Hideable, Re
             if (my < y) {
                 setScrollPosition(0);
                 for (GuiEventListener item : items) {
-                    if (item instanceof AbstractWidget abstractWidget) {
-                    } else if (item instanceof Positionable positionable) {
-
-                    }
-                }
-            } else if (my > y + height) {
-                setScrollPosition(getMaxScrollAmount());
-                for (GuiEventListener item : items) {
                     if (item instanceof Positionable positionable) {
-                        positionable.setY(startingPositions.get(item) - getInnerHeight() + height + y);
+                        positionable.setY(startingPositions.get(item));
                         if (item instanceof Hideable hideable) {
                             hideable.setHidden(!isElementInside(item));
                         }
-                    } else if (item instanceof AbstractWidget a) {
+                    } else if (item instanceof AbstractWidget abstractWidget) {
+                        abstractWidget.setY(startingPositions.get(item));
+                        abstractWidget.visible = isElementInside(item);
+                    }
 
+                }
+            } else if (my > y + height) {
+                //delete?
+                setScrollPosition(getMaxScrollAmount());
+                for (GuiEventListener item : items) {
+                    if (item instanceof Positionable positionable) {
+//                        positionable.setY(startingPositions.get(item) - getInnerHeight()+y+height);
+                        if (item instanceof Hideable hideable) {
+//                            hideable.setHidden(isElementInside(item));
+                        }
+                    } else if (item instanceof AbstractWidget a) {
+//                        a.setY(startingPositions.get(item)-getInnerHeight()+y+height);
                     }
                 }
             } else {
                 int scrollBarHeight = getScrollBarHeight();
                 int i = Math.max(1, this.getMaxScrollAmount() / (height - scrollBarHeight));
                 setScrollPosition(Mth.clamp(scrollPosition + drag * Mth.clamp(i, 1, scrollAmount), 0, getInnerHeight()));
-                System.out.println(drag);
                 for (GuiEventListener item : items) {
-                    if (item instanceof Positionable p && item instanceof Hideable h) {
-
-                        h.setHidden(!isElementInside(item));
+                    if (item instanceof Positionable p) {
+                        p.setY(p.getY() - (int) drag);
+                        if (item instanceof Hideable hideable)
+                            hideable.setHidden(!isElementInside(item));
                     } else if (item instanceof AbstractWidget abstractWidget) {
+                        abstractWidget.setY(abstractWidget.getY() - (int) Mth.clamp(drag, -scrollAmount, scrollAmount));
                         abstractWidget.visible = isElementInside(abstractWidget);
                     }
                 }

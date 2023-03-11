@@ -141,7 +141,7 @@ public class BetterButton extends ExtendedButton implements Scrollable, Position
 
     @Override
     public void setHidden(boolean hidden) {
-        visible = false;
+        visible = hidden;
     }
 
 }
