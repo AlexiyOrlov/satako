@@ -89,12 +89,8 @@ public class Label extends Button implements Scrollable, Positionable, Hideable 
     }
 
     @Override
-    public void setHidden() {
-        hidden = true;
+    public void setHidden(boolean hidden) {
+        this.hidden = true;
     }
 
-    @Override
-    public void setVisible() {
-        hidden = false;
-    }
 }

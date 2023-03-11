@@ -62,7 +62,7 @@ public class ScrollList extends GuiComponent implements Scrollable, Hideable, Re
         }
         if (g instanceof Positionable positionable && g instanceof Hideable hideable) {
             if ((positionable.getY() < y || positionable.getY() + positionable.getHeight() > y + height)) {
-                hideable.setHidden();
+                hideable.setHidden(true);
             }
         } else if (g instanceof AbstractWidget abstractWidget) {
             abstractWidget.visible = isElementInside(abstractWidget);
@@ -85,11 +85,7 @@ public class ScrollList extends GuiComponent implements Scrollable, Hideable, Re
                     scrollable.scroll((int) (scrollAmount * Math.signum(amount)), true);
                 }
                 if (item instanceof Positionable p && item instanceof Hideable h) {
-                    if (p.getY() + p.getHeight() > y + height || p.getY() < y) {
-                        h.setHidden();
-                    } else {
-                        h.setVisible();
-                    }
+                    h.setHidden(p.getY() + p.getHeight() > y + height || p.getY() < y);
                 }
                 if (item instanceof AbstractWidget abstractWidget) {
                     abstractWidget.setY((int) (abstractWidget.getY() + scrollAmount * Math.signum(amount)));
@@ -121,26 +117,13 @@ public class ScrollList extends GuiComponent implements Scrollable, Hideable, Re
     }
 
     @Override
-    public void setHidden() {
+    public void setHidden(boolean hidden) {
         visible = false;
         for (GuiEventListener item : items) {
             if (item instanceof Hideable)
-                ((Hideable) item).setHidden();
+                ((Hideable) item).setHidden(hidden);
             else if (item instanceof AbstractWidget abstractWidget) {
-                abstractWidget.visible = false;
-            }
-        }
-    }
-
-    @Override
-    public void setVisible()
-    {
-        visible = true;
-        for (GuiEventListener item : items) {
-            if (item instanceof Hideable) {
-                ((Hideable) item).setHidden();
-            } else if (item instanceof AbstractWidget abstractWidget) {
-                abstractWidget.visible = true;
+                abstractWidget.visible = hidden;
             }
         }
     }
@@ -254,19 +237,23 @@ public class ScrollList extends GuiComponent implements Scrollable, Hideable, Re
                 setScrollPosition(getMaxScrollAmount());
                 for (GuiEventListener item : items) {
                     if (item instanceof Positionable positionable) {
+                        positionable.setY(startingPositions.get(item) - getInnerHeight() + height + y);
+                        if (item instanceof Hideable hideable) {
+                            hideable.setHidden(!isElementInside(item));
+                        }
                     } else if (item instanceof AbstractWidget a) {
+
                     }
                 }
             } else {
                 int scrollBarHeight = getScrollBarHeight();
                 int i = Math.max(1, this.getMaxScrollAmount() / (height - scrollBarHeight));
                 setScrollPosition(Mth.clamp(scrollPosition + drag * Mth.clamp(i, 1, scrollAmount), 0, getInnerHeight()));
-
+                System.out.println(drag);
                 for (GuiEventListener item : items) {
                     if (item instanceof Positionable p && item instanceof Hideable h) {
-                        if (isElementInside(item))
-                            h.setVisible();
-                        else h.setHidden();
+
+                        h.setHidden(!isElementInside(item));
                     } else if (item instanceof AbstractWidget abstractWidget) {
                         abstractWidget.visible = isElementInside(abstractWidget);
                     }

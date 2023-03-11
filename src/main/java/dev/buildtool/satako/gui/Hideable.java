@@ -5,7 +5,6 @@ package dev.buildtool.satako.gui;
  */
 public interface Hideable
 {
-    void setHidden();
+    void setHidden(boolean hidden);
 
-    void setVisible();
 }

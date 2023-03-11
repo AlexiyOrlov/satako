@@ -41,7 +41,7 @@ public class Page
         uiElements.forEach(o -> {
             if (o instanceof Hideable)
             {
-                ((Hideable) o).setHidden();
+                ((Hideable) o).setHidden(true);
             }
             if (o instanceof TextField)
             {
@@ -63,7 +63,7 @@ public class Page
 
             if (o instanceof Hideable && !(o instanceof ScrollList))
             {
-                ((Hideable) o).setVisible();
+                ((Hideable) o).setHidden(false);
             }
             if (o instanceof TextField)
             {
@@ -80,7 +80,7 @@ public class Page
         {
             if (uiElement instanceof ScrollList)
             {
-                ((ScrollList) uiElement).setVisible();
+                ((ScrollList) uiElement).setHidden(false);
             }
         }
         otherPages.forEach(Page::hide);

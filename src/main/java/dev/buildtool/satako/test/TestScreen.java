@@ -33,12 +33,12 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
         addRenderableWidget(six);
         Button button = Button.builder(Component.literal("Vanilla button 1"), p_93751_ -> {
         }).pos(0, 120).size(100, 20).build();
-        addRenderableWidget(button);
+//        addRenderableWidget(button);
         Button button1 = Button.builder(Component.literal("Vanilla button 2"), p_93751_ -> {
         }).pos(0, 140).size(100, 20).build();
-        addRenderableWidget(button1);
+//        addRenderableWidget(button1);
 
-        addRenderableWidget(new ScrollList(one.getX(), one.getY(), getGuiLeft() - 2, getGuiTop() - 2, 20, one, two, three, four, five, six, button, button1));
+        addRenderableWidget(new ScrollList(10, 20, getGuiLeft() - 2, getGuiTop() - 2, 20, one, two, three, four, five, six /*button, button1*/));
         addRenderableWidget(new Label(getGuiLeft() + imageWidth, getGuiTop(), Component.literal("Clickable 1"), this, p_93751_ -> minecraft.player.displayClientMessage(Component.literal("Clicked first label"), false)));
         addRenderableWidget(new Label(getGuiLeft() + imageWidth, getGuiTop() + 20, Component.literal("Clickable 2"), this, p_93751_ -> minecraft.player.displayClientMessage(Component.literal("Clicked second label"), false)));
     }
