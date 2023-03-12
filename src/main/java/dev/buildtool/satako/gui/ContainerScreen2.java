@@ -138,23 +138,9 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
     }
 
     @Override
-    public boolean mouseClicked(double mx, double my, int p_97750_) {
-//        for (GuiEventListener child : children()) {
-//            if(child instanceof ScrollList scrollList)
-//            {
-//                if(mx<scrollList.x && mx>scrollList.x+scrollList.height && my>scrollList.y && my<scrollList.y+scrollList.height){
-//                    scrollList.mouseClicked(mx, my, p_97750_);
-//                    return true;
-//                }
-//            }
-//        }
-        return super.mouseClicked(mx, my, p_97750_);
-    }
-
-    @Override
     public boolean mouseDragged(double p_97752_, double p_97753_, int p_97754_, double p_97755_, double p_97756_) {
         for (GuiEventListener child : children()) {
-            if (child instanceof ScrollList scrollList) {
+            if (child instanceof ScrollPane scrollList) {
                 scrollList.mouseDragged(p_97752_, p_97753_, p_97754_, p_97755_, p_97756_);
             }
         }

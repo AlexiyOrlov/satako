@@ -1,6 +1,7 @@
 package dev.buildtool.satako.test;
 
 import dev.buildtool.satako.gui.*;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
@@ -33,12 +34,13 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
         addRenderableWidget(six);
         Button button = Button.builder(Component.literal("Vanilla button 1"), p_93751_ -> {
         }).pos(0, 120).size(100, 20).build();
-        addRenderableWidget(button);
         Button button1 = Button.builder(Component.literal("Vanilla button 2"), p_93751_ -> {
         }).pos(0, 140).size(100, 20).build();
-        addRenderableWidget(button1);
 
-        addRenderableWidget(new ScrollList(0, 20, getGuiLeft() - 2, getGuiTop() - 2, 20, one, two, three, four, five, six, button, button1));
+        addRenderableWidget(new ScrollPane(Minecraft.getInstance(), getGuiLeft() - 2, getGuiTop() - 2, 20, 0, 3, 10).addItems(one, two, three, four, five, six, button, button1));
+
+        addRenderableWidget(button);
+        addRenderableWidget(button1);
         addRenderableWidget(new Label(getGuiLeft() + imageWidth, getGuiTop(), Component.literal("Clickable 1"), this, p_93751_ -> minecraft.player.displayClientMessage(Component.literal("Clicked first label"), false)));
         addRenderableWidget(new Label(getGuiLeft() + imageWidth, getGuiTop() + 20, Component.literal("Clickable 2"), this, p_93751_ -> minecraft.player.displayClientMessage(Component.literal("Clicked second label"), false)));
     }

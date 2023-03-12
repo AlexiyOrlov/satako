@@ -61,28 +61,17 @@ public class Page
     {
         uiElements.forEach(o -> {
 
-            if (o instanceof Hideable && !(o instanceof ScrollList))
-            {
+            if (o instanceof Hideable) {
                 ((Hideable) o).setHidden(false);
             }
-            if (o instanceof TextField)
-            {
+            if (o instanceof TextField) {
                 ((TextField) o).setVisible(true);
                 ((TextField) o).setDisabled();
-            }
-            else if (o instanceof Button)
-            {
+            } else if (o instanceof Button) {
                 ((Button) o).visible = true;
             }
 
         });
-        for (Object uiElement : uiElements)
-        {
-            if (uiElement instanceof ScrollList)
-            {
-                ((ScrollList) uiElement).setHidden(false);
-            }
-        }
         otherPages.forEach(Page::hide);
         hidden = false;
     }
