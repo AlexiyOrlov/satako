@@ -13,7 +13,7 @@ import java.util.Arrays;
 
 public class ScrollPane extends ScrollPanel {
     protected UniqueList<GuiEventListener> items = new UniqueList<>();
-
+    protected int biggestY;
     public ScrollPane(Minecraft client, int width, int height, int top, int left) {
         super(client, width, height, top, left);
     }
@@ -40,14 +40,8 @@ public class ScrollPane extends ScrollPanel {
 
     @Override
     protected int getContentHeight() {
-        int contentHeight = 0;
-        for (GuiEventListener item : items) {
-            if (item instanceof Positionable positionable)
-                contentHeight += positionable.getHeight();
-            else if (item instanceof AbstractWidget a) {
-                contentHeight += a.getHeight();
-            }
-        }
+        int contentHeight = biggestY;
+
         if (contentHeight < bottom - top - 4)
             contentHeight = bottom - top - 4;
         return contentHeight;
@@ -82,6 +76,15 @@ public class ScrollPane extends ScrollPanel {
             }
         }
         this.items.addAll(Arrays.asList(items));
+        for (GuiEventListener item : this.items) {
+            if (item instanceof Positionable positionable)
+                if (positionable.getY() + positionable.getHeight() > biggestY)
+                    biggestY = positionable.getY() + positionable.getHeight();
+                else if (item instanceof AbstractWidget a) {
+                    if (biggestY < a.getY() + a.getHeight())
+                        biggestY = a.getY() + a.getHeight();
+                }
+        }
         return this;
     }
 
