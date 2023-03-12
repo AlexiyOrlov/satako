@@ -14,14 +14,14 @@ import javax.annotation.Nullable;
  * Label is a string for use in GUIs
  */
 @SuppressWarnings("ConstantValue")
-public class Label extends Button implements Scrollable, Positionable, Hideable {
+public class Label extends BetterButton implements Scrollable, Positionable, Hideable {
     protected boolean enabled, verticalScroll, horizontalScroll, hidden;
     protected int scrollAmount;
     protected Screen parent;
 
     @SuppressWarnings("ConstantConditions")
     public Label(int x, int y, Component text, @Nullable Screen parent, @Nullable Button.OnPress pressHandler) {
-        super(x, y, Minecraft.getInstance().font.width(text.getString()) + 8, 18, text, pressHandler, null);
+        super(x, y, text, pressHandler);
         scrollAmount = 20;
         this.parent = parent;
     }
