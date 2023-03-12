@@ -49,10 +49,6 @@ public class BetterButton extends ExtendedButton implements Scrollable, Position
         horizontalScroll = horizontalScroll_;
     }
 
-    public static BetterButton createPositionlessButton(Component caption) {
-        return new BetterButton(0, 0, caption);
-    }
-
     public void scroll(int amount, boolean vertical)
     {
 
@@ -141,7 +137,7 @@ public class BetterButton extends ExtendedButton implements Scrollable, Position
 
     @Override
     public void setHidden(boolean hidden) {
-        visible = hidden;
+        visible = !hidden;
     }
 
 }

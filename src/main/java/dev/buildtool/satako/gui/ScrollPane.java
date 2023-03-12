@@ -9,6 +9,8 @@ import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraftforge.client.gui.widget.ScrollPanel;
 
+import java.util.Arrays;
+
 public class ScrollPane extends ScrollPanel {
     protected UniqueList<GuiEventListener> items = new UniqueList<>();
 
@@ -67,7 +69,6 @@ public class ScrollPane extends ScrollPanel {
     }
 
     public ScrollPane addItems(GuiEventListener... items) {
-        this.items = new UniqueList<>(items);
         for (GuiEventListener guiEventListener : items) {
             if (guiEventListener instanceof Positionable positionable) {
                 positionable.setY(this.top + positionable.getY());
@@ -80,6 +81,7 @@ public class ScrollPane extends ScrollPanel {
                 a.visible = a.getY() >= top && a.getY() + a.getHeight() <= bottom;
             }
         }
+        this.items.addAll(Arrays.asList(items));
         return this;
     }
 

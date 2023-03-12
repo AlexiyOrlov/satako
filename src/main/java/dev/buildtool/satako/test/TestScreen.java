@@ -37,11 +37,17 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
         Button button1 = Button.builder(Component.literal("Vanilla button 2"), p_93751_ -> {
         }).pos(0, 140).size(100, 20).build();
 
-        addRenderableWidget(new ScrollPane(Minecraft.getInstance(), getGuiLeft() - 2, getGuiTop() - 2, 20, 0, 3, 10).addItems(one, two, three, four, five, six, button, button1));
+        ScrollPane scrollPane = new ScrollPane(Minecraft.getInstance(), getGuiLeft() - 2, getGuiTop() - 2, 20, 0, 3, 10);
+        addRenderableWidget(scrollPane.addItems(one, two, three, four, five, six, button, button1));
 
         addRenderableWidget(button);
         addRenderableWidget(button1);
+        SwitchButton switchButton = new SwitchButton(0, 200, Component.literal("true"), Component.literal("false"), true, p_93751_ -> {
+        });
+        addRenderableWidget(switchButton);
+        scrollPane.addItems(switchButton);
         addRenderableWidget(new Label(getGuiLeft() + imageWidth, getGuiTop(), Component.literal("Clickable 1"), this, p_93751_ -> minecraft.player.displayClientMessage(Component.literal("Clicked first label"), false)));
         addRenderableWidget(new Label(getGuiLeft() + imageWidth, getGuiTop() + 20, Component.literal("Clickable 2"), this, p_93751_ -> minecraft.player.displayClientMessage(Component.literal("Clicked second label"), false)));
+
     }
 }
