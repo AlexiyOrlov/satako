@@ -116,14 +116,7 @@ public class TextField extends EditBox implements Scrollable, Positionable, Hide
     }
 
     @Override
-    public void setHidden()
-    {
-        setVisible(false);
-    }
-
-    @Override
-    public void setVisible()
-    {
-        setVisible(true);
+    public void setHidden(boolean hidden) {
+        setVisible(!hidden);
     }
 }

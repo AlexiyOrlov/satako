@@ -7,8 +7,6 @@ import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
-import java.util.ArrayList;
-
 /**
  * A UI without slots
  */
@@ -18,7 +16,6 @@ public class Screen2 extends Screen
      * GUI's center coordinates
      */
     protected int centerX, centerY;
-    private final ArrayList<ScrollList> scrollLists = new ArrayList<>(1);
 
     public Screen2(Component title) {
         super(title);
@@ -30,7 +27,6 @@ public class Screen2 extends Screen
     @Override
     public void init()
     {
-        scrollLists.clear();
         centerX = width / 2;
         centerY = height / 2;
     }
@@ -42,9 +38,6 @@ public class Screen2 extends Screen
     public void render(PoseStack matrixStack, int mouseX, int mouseY, float tick) {
         renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, tick);
-        for (ScrollList scrollList : scrollLists) {
-            scrollList.draw();
-        }
     }
 
     @Override
@@ -87,8 +80,6 @@ public class Screen2 extends Screen
                     ((Scrollable) button).scroll(mousewheeld, verticalscroll);
                 }
             }
-            for (ScrollList scrollList : scrollLists)
-                scrollList.scroll(mousewheeld, verticalscroll);
         }
         return false;
     }
