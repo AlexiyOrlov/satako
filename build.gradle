@@ -4,7 +4,7 @@ plugins {
     id 'maven-publish'
 }
 
-project.version = '6.1.6-1.19.3'
+project.version = '6.1.9-1.19.3'
 group = project.property('maven_group')
 archivesBaseName = 'Satako'
 

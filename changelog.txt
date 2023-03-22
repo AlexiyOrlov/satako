@@ -1,3 +1,5 @@
+6.1.9-1.19.3: implemented scroll area;
+
 6.1.6-1.19.3:
 fixed crash when clicking labels;
 added clickable labels;
