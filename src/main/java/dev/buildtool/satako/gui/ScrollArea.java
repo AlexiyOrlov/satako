@@ -31,7 +31,9 @@ public class ScrollArea extends AbstractWidget {
             this.y = (y + 20);
         }
         buttonLeft = x + width - 20;
-        bottomButtonTop = y + height / 2;
+        if (p_93633_.getString().isEmpty())
+            bottomButtonTop = this.y + height / 2;
+        else bottomButtonTop = this.y + height / 2 - 20;
         this.color = color;
         this.guiEventListeners = guiEventListeners;
         for (Object guiEventListener : guiEventListeners) {
@@ -39,7 +41,7 @@ public class ScrollArea extends AbstractWidget {
                 positionable.setY(this.y + positionable.getY());
                 positionable.setX(this.x + positionable.getX());
                 if (guiEventListener instanceof Hideable hideable) {
-                    hideable.setHidden(positionable.getY() < y || positionable.getY() + positionable.getHeight() > y + height);
+                    hideable.setHidden(positionable.getY() < this.y || positionable.getY() + positionable.getHeight() > this.y + height);
                 }
                 if (positionable.getY() > highest)
                     highest = positionable.getY();
@@ -49,7 +51,7 @@ public class ScrollArea extends AbstractWidget {
             } else if (guiEventListener instanceof AbstractWidget a) {
                 a.x = x + a.x;
                 a.y = y + a.y;
-                a.visible = a.y >= y && a.y + a.getHeight() <= y + height;
+                a.visible = a.y >= y && a.y + a.getHeight() <= this.y + height;
                 if (a.y > highest)
                     highest = a.y;
                 if (a.y < lowest)
@@ -74,7 +76,7 @@ public class ScrollArea extends AbstractWidget {
 
     @Override
     public boolean mouseClicked(double mx, double my, int p_93643_) {
-        if (mx > buttonLeft && mx < buttonLeft + 20 && my > y && my < y + getHeight() / 2f)
+        if (mx > buttonLeft && mx < buttonLeft + 20 && my > y && my < (y + getHeight()) / 2f)
             scrollDirection = -1;
         else if (mx > buttonLeft && mx < buttonLeft + 20 && my > bottomButtonTop && my < bottomButtonTop + getHeight() / 2f) {
             scrollDirection = 1;
@@ -103,14 +105,15 @@ public class ScrollArea extends AbstractWidget {
         RenderSystem.disableTexture();
         Tesselator tesselator = Tesselator.getInstance();
         BufferBuilder bufferBuilder = tesselator.getBuilder();
+        int offsetY = getMessage().getString().isEmpty() ? 0 : 10;
         bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
         bufferBuilder.vertex(x + width, y, 0).color(color.getRed(), color.getGreen(), 128, 255).endVertex();
         bufferBuilder.vertex(buttonLeft, y, 0).color(color.getRed(), color.getGreen(), 128, 255).endVertex();
-        bufferBuilder.vertex(buttonLeft, bottomButtonTop, 0).color(color.getRed(), color.getGreen(), 128, 255).endVertex();
-        bufferBuilder.vertex(x + width, bottomButtonTop, 0).color(color.getRed(), color.getGreen(), 128, 255).endVertex();
+        bufferBuilder.vertex(buttonLeft, bottomButtonTop + offsetY, 0).color(color.getRed(), color.getGreen(), 128, 255).endVertex();
+        bufferBuilder.vertex(x + width, bottomButtonTop + offsetY, 0).color(color.getRed(), color.getGreen(), 128, 255).endVertex();
 
-        bufferBuilder.vertex(buttonLeft + 20, bottomButtonTop, 0).color(color.getRed(), 129, color.getBlue(), 255).endVertex();
-        bufferBuilder.vertex(buttonLeft, bottomButtonTop, 0).color(color.getRed(), 128, color.getBlue(), 255).endVertex();
+        bufferBuilder.vertex(buttonLeft + 20, bottomButtonTop + offsetY, 0).color(color.getRed(), 129, color.getBlue(), 255).endVertex();
+        bufferBuilder.vertex(buttonLeft, bottomButtonTop + offsetY, 0).color(color.getRed(), 128, color.getBlue(), 255).endVertex();
         bufferBuilder.vertex(buttonLeft, bottomButtonTop + height / 2f, 0).color(color.getRed(), 128, color.getBlue(), 255).endVertex();
         bufferBuilder.vertex(buttonLeft + 20, bottomButtonTop + height / 2f, 0).color(color.getRed(), 128, color.getBlue(), 255).endVertex();
         tesselator.end();
