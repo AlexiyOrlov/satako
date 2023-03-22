@@ -1,3 +1,6 @@
+6.0.2-1.19:
+implemented scroll area;
+
 6.0.1-1.19:
 parity with 1.19.3 branch;
 
