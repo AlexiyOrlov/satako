@@ -5,9 +5,9 @@ package dev.buildtool.satako.gui;
  */
 public interface Positionable
 {
-    int getWidth();
+    int getElementWidth();
 
-    int getHeight();
+    int getElementHeight();
 
     int getX();
 

@@ -41,7 +41,7 @@ public class ScrollArea extends AbstractWidget {
                 positionable.setY(this.y + positionable.getY());
                 positionable.setX(this.x + positionable.getX());
                 if (guiEventListener instanceof Hideable hideable) {
-                    hideable.setHidden(positionable.getY() < this.y || positionable.getY() + positionable.getHeight() > this.y + height);
+                    hideable.setHidden(positionable.getY() < this.y || positionable.getY() + positionable.getElementHeight() > this.y + height);
                 }
                 if (positionable.getY() > highest)
                     highest = positionable.getY();
@@ -67,7 +67,7 @@ public class ScrollArea extends AbstractWidget {
                     bottomElement = abstractWidget;
             }
         }
-        maxScrollDistance = bottomElement instanceof Positionable positionable ? positionable.getY() + positionable.getHeight() : bottomElement instanceof AbstractWidget abstractWidget ? abstractWidget.y + abstractWidget.getHeight() : 0;
+        maxScrollDistance = bottomElement instanceof Positionable positionable ? positionable.getY() + positionable.getElementHeight() : bottomElement instanceof AbstractWidget abstractWidget ? abstractWidget.y + abstractWidget.getHeight() : 0;
     }
 
     public ScrollArea(int x, int y, int width, int height, Component p_93633_, IntegerColor backgroundColor, Object... items) {
@@ -125,7 +125,7 @@ public class ScrollArea extends AbstractWidget {
                     if (guiEventListener instanceof Positionable positionable3) {
                         positionable3.setY(positionable3.getY() + scrollDirection * 20);
                         if (positionable3 instanceof Hideable hideable) {
-                            hideable.setHidden(positionable3.getY() < y || positionable3.getY() + positionable3.getHeight() > y + height);
+                            hideable.setHidden(positionable3.getY() < y || positionable3.getY() + positionable3.getElementHeight() > y + height);
                         }
                     } else if (guiEventListener instanceof AbstractWidget a) {
                         a.y = a.y + scrollDirection * 20;
@@ -143,7 +143,7 @@ public class ScrollArea extends AbstractWidget {
             if (guiEventListener instanceof Positionable positionable3) {
                 positionable3.setY((int) (positionable3.getY() + direction * 20));
                 if (positionable3 instanceof Hideable hideable) {
-                    hideable.setHidden(positionable3.getY() < y || positionable3.getY() + positionable3.getHeight() > y + height);
+                    hideable.setHidden(positionable3.getY() < y || positionable3.getY() + positionable3.getElementHeight() > y + height);
                 }
             } else if (guiEventListener instanceof AbstractWidget a) {
                 a.y = (int) (a.y + direction * 20);
