@@ -23,7 +23,7 @@ public class ScrollArea extends AbstractWidget {
     private int highest;
     private int lowest;
     private final int maxScrollDistance;
-    private Object bottomElement;
+    private Object bottomElement, topElement;
 
     public ScrollArea(int x, int y, int width, int height, Component p_93633_, IntegerColor color, List<?> guiEventListeners) {
         super(x, y, width, height, p_93633_);
@@ -62,9 +62,13 @@ public class ScrollArea extends AbstractWidget {
             if (item instanceof Positionable positionable) {
                 if (positionable.getY() == highest)
                     bottomElement = item;
+                if (positionable.getY() == lowest)
+                    topElement = item;
             } else if (item instanceof AbstractWidget abstractWidget) {
                 if (abstractWidget.y == highest)
                     bottomElement = abstractWidget;
+                if (abstractWidget.y == lowest)
+                    topElement = abstractWidget;
             }
         }
         maxScrollDistance = bottomElement instanceof Positionable positionable ? positionable.getY() + positionable.getElementHeight() : bottomElement instanceof AbstractWidget abstractWidget ? abstractWidget.y + abstractWidget.getHeight() : 0;
@@ -120,7 +124,7 @@ public class ScrollArea extends AbstractWidget {
         drawCenteredString(poseStack, font, Component.literal("-"), buttonLeft + 10, y + height / 4, 0xffffff);
         drawCenteredString(poseStack, font, Component.literal("+"), buttonLeft + 10, (bottomButtonTop + height / 4) - 10, 0xffffff);
         if (scrollDirection != 0) {
-            if (scrolled == 0 || (scrolled > -(maxScrollDistance - height) || (scrolled < -(maxScrollDistance - height) && scrollDirection == 1)) && ((scrolled < height / 2 || (scrolled > height / 2 || scrolled > 0 && scrollDirection == -1)))) {
+            if (scrolled == 0 || (scrolled > -(maxScrollDistance - height) || scrolled < -(maxScrollDistance - height) && scrollDirection == 1) && (scrolled <= 0 || scrollDirection == -1)) {
                 for (Object guiEventListener : guiEventListeners) {
                     if (guiEventListener instanceof Positionable positionable3) {
                         positionable3.setY(positionable3.getY() + scrollDirection * 20);
