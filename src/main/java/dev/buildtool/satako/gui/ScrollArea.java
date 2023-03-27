@@ -21,9 +21,8 @@ public class ScrollArea extends AbstractWidget {
     private int scrollDirection;
     private int scrolled;
     private int highest;
-    private int lowest;
     private final int maxScrollDistance;
-    private Object bottomElement, topElement;
+    private Object bottomElement;
 
     public ScrollArea(int x, int y, int width, int height, Component p_93633_, IntegerColor color, List<?> guiEventListeners) {
         super(x, y, width, height, p_93633_);
@@ -45,30 +44,21 @@ public class ScrollArea extends AbstractWidget {
                 }
                 if (positionable.getY() > highest)
                     highest = positionable.getY();
-                if (positionable.getY() < lowest) {
-                    lowest = positionable.getY();
-                }
             } else if (guiEventListener instanceof AbstractWidget a) {
                 a.x = x + a.x;
                 a.y = y + a.y;
                 a.visible = a.y >= y && a.y + a.getHeight() <= this.y + height;
                 if (a.y > highest)
                     highest = a.y;
-                if (a.y < lowest)
-                    lowest = a.y;
             }
         }
         for (Object item : guiEventListeners) {
             if (item instanceof Positionable positionable) {
                 if (positionable.getY() == highest)
                     bottomElement = item;
-                if (positionable.getY() == lowest)
-                    topElement = item;
             } else if (item instanceof AbstractWidget abstractWidget) {
                 if (abstractWidget.y == highest)
                     bottomElement = abstractWidget;
-                if (abstractWidget.y == lowest)
-                    topElement = abstractWidget;
             }
         }
         maxScrollDistance = bottomElement instanceof Positionable positionable ? positionable.getY() + positionable.getElementHeight() : bottomElement instanceof AbstractWidget abstractWidget ? abstractWidget.y + abstractWidget.getHeight() : 0;
