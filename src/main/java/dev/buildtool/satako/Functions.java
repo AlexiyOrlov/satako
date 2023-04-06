@@ -387,7 +387,7 @@ public final class Functions
     /**
      * Reads enum order
      *
-     * @return byte casted to int
+     * @return byte cast to int
      */
     public static int readEnum(CompoundNBT compound, String key)
     {
@@ -1134,7 +1134,6 @@ public final class Functions
                 }
             }
         }
-
         return returnList;
     }
 }
