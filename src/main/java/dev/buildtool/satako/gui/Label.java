@@ -12,18 +12,17 @@ import javax.annotation.Nullable;
 /**
  * Label is a string for use in GUIs
  */
+@SuppressWarnings("ConstantConditions")
 public class Label extends BetterButton implements Scrollable {
     protected boolean enabled, verticalScroll, horizontalScroll, hidden;
     protected int scrollAmount;
     protected Screen parent;
 
-    @SuppressWarnings("ConstantConditions")
     public Label(int x, int y, Component text) {
         super(x, y, Minecraft.getInstance().font.width(text.getString()) + 8, 18, text, null);
         scrollAmount = 20;
     }
 
-    @SuppressWarnings("ConstantConditions")
     public Label(int x, int y, Component text, @Nullable Screen parent, @Nullable Button.OnPress pressHandler) {
         super(x, y, Minecraft.getInstance().font.width(text.getString()) + 8, 18, text, pressHandler);
         scrollAmount = 20;
@@ -47,7 +46,6 @@ public class Label extends BetterButton implements Scrollable {
 
             } else
                 drawString(matrixStack, Minecraft.getInstance().font, this.getMessage(), this.getX(), this.getY() + (this.height - 8) / 2, 16777215 | Mth.ceil(this.alpha * 255.0F) << 24);
-
         }
     }
 
