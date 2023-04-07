@@ -25,7 +25,6 @@ import java.util.List;
  * GUI borders and sends input events to elements
  */
 public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractContainerScreen<T> {
-    protected ArrayList<ScrollList> lists = new ArrayList<>(0);
     protected int centerX, centerY;
     protected ArrayList<Page> pages = new ArrayList<>(0);
     protected boolean drawBorders;
@@ -45,7 +44,6 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
     @Override
     public void init()
     {
-        lists.clear();
         int maxX = 0, minX = getXSize(), maxY = 0;
         for (Slot slot : getSlots())
         {
@@ -122,7 +120,6 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
         }
 
         IntegerColor color = Constants.BLUE;
-        lists.forEach(ScrollList::draw);
 
         //lines have to be drawn after everything else
         if (drawBorders) {
@@ -132,10 +129,6 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
             vLine(matrixStack, this.leftPos - 1, this.topPos - 1, getYSize() + this.topPos - 1, intColor);
             vLine(matrixStack, getXSize() + this.leftPos - 2, this.topPos - 1, getYSize() + this.topPos - 2, intColor);
         }
-    }
-
-    public void addScrollList(ScrollList list) {
-        lists.add(list);
     }
 
     @Override

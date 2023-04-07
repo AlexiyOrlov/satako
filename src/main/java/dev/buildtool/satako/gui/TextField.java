@@ -84,7 +84,7 @@ public class TextField extends EditBox implements Scrollable, Positionable, Hide
     }
 
     @Override
-    public int getHeight() {
+    public int getElementHeight() {
         return height;
     }
 
@@ -111,20 +111,16 @@ public class TextField extends EditBox implements Scrollable, Positionable, Hide
         y = Y;
     }
 
-    public int getWidth()
-    {
+    public int getElementWidth() {
         return width;
     }
 
     @Override
-    public void setHidden()
-    {
+    public void setHidden(boolean hidden) {
         setVisible(false);
     }
 
-    @Override
-    public void setVisible()
-    {
+    private void setVisible() {
         setVisible(true);
     }
 }
