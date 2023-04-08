@@ -11,9 +11,5 @@ public interface Scrollable
 
     void setScrollable(boolean vertical, boolean b);
 
-    void setEnabled();
-
-    void setDisabled();
-
-    void setScrollAmount(int pixels);
+    void setEnabled(boolean enabled);
 }

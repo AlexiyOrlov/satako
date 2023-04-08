@@ -69,18 +69,12 @@ public class TextField extends EditBox implements Scrollable, Positionable, Hide
     }
 
     @Override
-    public void setEnabled() {
-        enabled = true;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
-    @Override
     public void setDisabled() {
         enabled = false;
-    }
-
-    @Override
-    public void setScrollAmount(int pixels) {
-        scrollAmount = pixels;
     }
 
     @Override

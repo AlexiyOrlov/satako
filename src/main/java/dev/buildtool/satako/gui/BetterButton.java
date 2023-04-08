@@ -90,18 +90,8 @@ public class BetterButton extends ExtendedButton implements Scrollable, Position
     }
 
     @Override
-    public void setEnabled() {
-        active = true;
-    }
-
-    @Override
-    public void setDisabled() {
-        active = false;
-    }
-
-    @Override
-    public void setScrollAmount(int pixels) {
-        scrollingAmount = pixels;
+    public void setEnabled(boolean enabled) {
+        active = enabled;
     }
 
     @Override
@@ -142,9 +132,4 @@ public class BetterButton extends ExtendedButton implements Scrollable, Position
     public void setHidden(boolean hidden) {
         visible = !hidden;
     }
-
-    private void setVisible() {
-        visible = true;
-    }
-
 }

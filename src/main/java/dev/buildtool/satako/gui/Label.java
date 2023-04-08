@@ -65,19 +65,4 @@ public class Label extends BetterButton implements Scrollable {
         else
             horizontalScroll = b;
     }
-
-    @Override
-    public void setEnabled() {
-        enabled = true;
-    }
-
-    @Override
-    public void setDisabled() {
-        enabled = false;
-    }
-
-    @Override
-    public void setScrollAmount(int pixels) {
-        this.scrollAmount = pixels;
-    }
 }
