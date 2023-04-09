@@ -7,6 +7,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 public class TestScreen extends ContainerScreen2<TestContainer> {
     public TestScreen(TestContainer container, Inventory playerInventory, Component name) {
@@ -43,6 +44,27 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
         elements.add(switchButton);
         addRenderableWidget(new Label(getGuiLeft() + imageWidth, getGuiTop(), Component.literal("Clickable 1"), this, p_93751_ -> minecraft.player.displayClientMessage(Component.literal("Clicked first label"), false)));
         addRenderableWidget(new Label(getGuiLeft() + imageWidth, getGuiTop() + 20, Component.literal("Clickable 2"), this, p_93751_ -> minecraft.player.displayClientMessage(Component.literal("Clicked second label"), false)));
+        LinkedHashMap<Component, Button.OnPress> linkedHashMap = new LinkedHashMap<>();
+        DropDownButton dropDownButton = new DropDownButton(getGuiLeft() + imageWidth, getGuiTop() + 40, this, Component.literal("First choice"));
+        linkedHashMap.put(Component.literal("First choice"), p_93751_ -> {
+            minecraft.player.displayClientMessage(Component.literal("Clicked 1st choice"), false);
+            dropDownButton.setMessage(p_93751_.getMessage());
+            dropDownButton.onPress();
+        });
+        linkedHashMap.put(Component.literal("Second choice"), p_93751_ -> {
+            minecraft.player.displayClientMessage(Component.literal("CLicked 2nd choice"), false);
+            dropDownButton.setMessage(p_93751_.getMessage());
+            dropDownButton.onPress();
+        });
+        linkedHashMap.put(Component.literal("Third choice"), p_93751_ -> {
+            minecraft.player.displayClientMessage(Component.literal("Clicked 3d choice"), false);
+            dropDownButton.setMessage(p_93751_.getMessage());
+            dropDownButton.onPress();
+        });
+        dropDownButton.setChoices(linkedHashMap, 1);
+        addRenderableWidget(dropDownButton);
+        addRenderableWidget(new Label(getGuiLeft() + imageWidth, getGuiTop() + 20 * 3, Component.literal("Overlapping label"), this, p_93751_ -> minecraft.player.displayClientMessage(Component.literal("Clicked the label"), false)));
+        addRenderableWidget(new Button(getGuiLeft() + imageWidth, getGuiTop() + 20 * 4, 40, 20, Component.literal("Button"), p_93751_ -> minecraft.player.displayClientMessage(Component.literal("Clicked the button"), false)));
         ScrollArea scrollArea = new ScrollArea(3, 3, getGuiLeft() - 10, height, Component.literal("List"), new IntegerColor(0x22F8A55E), elements);
         addRenderableWidget(scrollArea);
     }
