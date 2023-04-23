@@ -89,7 +89,7 @@ public class Container2 extends AbstractContainerMenu {
      * @param buttonType 0 - primary, 1 - secondary, 2 - middle
      */
     protected ItemStack doPhantomItemBehavior(int slotId, int buttonType, ClickType clickTypeIn, Player player, IItemHandlerModifiable itemHandler) {
-        ItemStack current = player.getInventory().getSelected();
+        ItemStack current = getCarried();
         if (slotId >= 0 && slotId <= itemHandler.getSlots() - 1) {
             ItemStack stackInslot = itemHandler.getStackInSlot(slotId);
             if (current.isEmpty()) {
