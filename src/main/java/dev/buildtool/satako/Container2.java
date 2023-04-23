@@ -14,13 +14,11 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
-import javax.annotation.Nullable;
-
 /**
  * Created on 24/10/16
  */
 public class Container2 extends AbstractContainerMenu {
-    public Container2(@Nullable MenuType<?> type, int i) {
+    public Container2(MenuType<?> type, int i) {
         super(type, i);
     }
 
