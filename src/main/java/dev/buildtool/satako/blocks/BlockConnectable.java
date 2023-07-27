@@ -3,18 +3,15 @@ package dev.buildtool.satako.blocks;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.PipeBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.storage.loot.LootContext;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public abstract class BlockConnectable extends PipeBlock {
@@ -73,17 +70,5 @@ public abstract class BlockConnectable extends PipeBlock {
         if (blockState.getValue(EAST))
             directions.add(Direction.EAST);
         return directions;
-    }
-
-    /**
-     * Drop itself by default
-     */
-    @SuppressWarnings("ConstantConditions")
-    @Override
-    public List<ItemStack> getDrops(BlockState p_60537_, LootContext.Builder builder) {
-        if (builder.getLevel().getServer().getLootTables().get(getLootTable()).getLootTableId() == null) {
-            return Collections.singletonList(new ItemStack(this));
-        }
-        return super.getDrops(p_60537_, builder);
     }
 }

@@ -127,13 +127,13 @@ public class Commands {
                             itementity1.makeFakeItem();
                         }
 
-                        serverplayerentity.level.playSound(null, serverplayerentity.getX(), serverplayerentity.getY(), serverplayerentity.getZ(), SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.2F, ((serverplayerentity.getRandom().nextFloat() - serverplayerentity.getRandom().nextFloat()) * 0.7F + 1.0F) * 2.0F);
+                        serverplayerentity.serverLevel().playSound(null, serverplayerentity.getX(), serverplayerentity.getY(), serverplayerentity.getZ(), SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.2F, ((serverplayerentity.getRandom().nextFloat() - serverplayerentity.getRandom().nextFloat()) * 0.7F + 1.0F) * 2.0F);
                         serverplayerentity.inventoryMenu.broadcastChanges();
                     } else {
                         ItemEntity itementity = serverplayerentity.drop(itemstack, false);
                         if (itementity != null) {
                             itementity.setNoPickUpDelay();
-                            itementity.setOwner(serverplayerentity.getUUID());
+                            itementity.setThrower(serverplayerentity.getUUID());
                         }
                     }
                 }
@@ -146,14 +146,14 @@ public class Commands {
         ServerLevel serverWorld = commandSource.getLevel();
         Entity entity = ForgeRegistries.ENTITY_TYPES.getValue(resourceLocation).create(serverWorld);
         if (entity == null) {
-            commandSource.sendSuccess(Component.literal("No entity " + resourceLocation.toString()), false);
+            commandSource.sendSuccess(() -> Component.literal("No entity " + resourceLocation.toString()), false);
             return -1;
         }
         entity.setPos(position.x, position.y, position.z);
         if (entity instanceof Mob)
             ((Mob) entity).finalizeSpawn(serverWorld, serverWorld.getCurrentDifficultyAt(entity.blockPosition()), MobSpawnType.COMMAND, null, null);
         serverWorld.addFreshEntity(entity);
-        commandSource.sendSuccess(Component.literal("Summoned " + entity.getName().getString() + " at " + (int) position.x + " " + (int) position.y + " " + (int) position.z), true);
+        commandSource.sendSuccess(() -> Component.literal("Summoned " + entity.getName().getString() + " at " + (int) position.x + " " + (int) position.y + " " + (int) position.z), true);
         return 1;
     }
 

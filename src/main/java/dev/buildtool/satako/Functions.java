@@ -27,16 +27,12 @@ import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.block.AirBlock;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkStatus;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeHooks;
@@ -134,11 +130,11 @@ public final class Functions {
     public static BlockPos performBlockRayTrace(Entity from, double distance, Level world) {
         Vec3 eyesPosition = from.getEyePosition(1);
         Vec3 look = from.getLookAngle();
-        BlockPos blockPos = new BlockPos(eyesPosition);
+        BlockPos blockPos = new BlockPos((int) eyesPosition.x, (int) eyesPosition.y, (int) eyesPosition.z);
         double dist;
         while (world.isEmptyBlock(blockPos)) {
             eyesPosition = eyesPosition.add(look);
-            blockPos = new BlockPos(eyesPosition);
+            blockPos = new BlockPos((int) eyesPosition.x, (int) eyesPosition.y, (int) eyesPosition.z);
             dist = from.distanceToSqr(eyesPosition.x, eyesPosition.y, eyesPosition.z);
             if (dist >= distance * distance) {
                 break;
@@ -310,7 +306,7 @@ public final class Functions {
         Entity entity = null;
         Vec3 position = watcher.getEyePosition(1);
         Vec3 look = watcher.getLookAngle();
-        AABB axisAlignedBB = new AABB(new BlockPos(watcher.getX(), watcher.getY(), watcher.getZ())).inflate(7);
+        AABB axisAlignedBB = new AABB(new BlockPos((int) watcher.getX(), (int) watcher.getY(), (int) watcher.getZ())).inflate(7);
         List<Entity> entities = world.getEntities(watcher, axisAlignedBB);
         int counter = 0;
         w:
@@ -457,7 +453,7 @@ public final class Functions {
         for (double X = axisAlignedBB.minX; X <= axisAlignedBB.maxX; X++) {
             for (double Y = axisAlignedBB.minY; Y <= axisAlignedBB.maxY; Y++) {
                 for (double Z = axisAlignedBB.minZ; Z <= axisAlignedBB.maxZ; Z++) {
-                    positions.add(new BlockPos(X, Y, Z));
+                    positions.add(new BlockPos((int) X, (int) Y, (int) Z));
                 }
             }
         }
@@ -495,36 +491,28 @@ public final class Functions {
      */
     public static BlockPos getPosAboveSolidBlock(Level world, BlockPos blockPos) {
         BlockState blockState = world.getBlockState(blockPos = blockPos.above(world.getHeight()));
-        while (blockState.getMaterial().isReplaceable() || blockState.getMaterial() == Material.LEAVES) {
+        while (blockState.canBeReplaced() || blockState.getBlock() instanceof LeavesBlock) {
             blockState = world.getBlockState(blockPos = blockPos.below());
         }
         blockPos = blockPos.above();
         return blockPos;
     }
 
-    public static ArrayList<Direction> getSideDirections(Direction of)
-    {
+    public static ArrayList<Direction> getSideDirections(Direction of) {
         ArrayList<Direction> sidedirections = new ArrayList<>(5);
-        switch (of)
-        {
-            case DOWN:
-                Collections.addAll(sidedirections, Direction.UP, Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH);
-                break;
-            case UP:
-                Collections.addAll(sidedirections, Direction.DOWN, Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH);
-                break;
-            case EAST:
-                Collections.addAll(sidedirections, Direction.WEST, Direction.DOWN, Direction.UP, Direction.SOUTH, Direction.NORTH);
-                break;
-            case WEST:
-                Collections.addAll(sidedirections, Direction.EAST, Direction.DOWN, Direction.UP, Direction.SOUTH, Direction.NORTH);
-                break;
-            case SOUTH:
-                Collections.addAll(sidedirections, Direction.NORTH, Direction.DOWN, Direction.UP, Direction.WEST, Direction.EAST);
-                break;
-            case NORTH:
-                Collections.addAll(sidedirections, Direction.SOUTH, Direction.UP, Direction.DOWN, Direction.EAST, Direction.WEST);
-                break;
+        switch (of) {
+            case DOWN ->
+                    Collections.addAll(sidedirections, Direction.UP, Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH);
+            case UP ->
+                    Collections.addAll(sidedirections, Direction.DOWN, Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH);
+            case EAST ->
+                    Collections.addAll(sidedirections, Direction.WEST, Direction.DOWN, Direction.UP, Direction.SOUTH, Direction.NORTH);
+            case WEST ->
+                    Collections.addAll(sidedirections, Direction.EAST, Direction.DOWN, Direction.UP, Direction.SOUTH, Direction.NORTH);
+            case SOUTH ->
+                    Collections.addAll(sidedirections, Direction.NORTH, Direction.DOWN, Direction.UP, Direction.WEST, Direction.EAST);
+            case NORTH ->
+                    Collections.addAll(sidedirections, Direction.SOUTH, Direction.UP, Direction.DOWN, Direction.EAST, Direction.WEST);
         }
         return sidedirections;
     }
@@ -540,7 +528,7 @@ public final class Functions {
             final Item secondItem = two.getItem();
             return oneItem == secondItem && one.getDamageValue() == two.getDamageValue() &&
                     ForgeRegistries.ITEMS.getKey(oneItem).equals(ForgeRegistries.ITEMS.getKey(secondItem))
-                    && (ItemStack.tagMatches(one, two));
+                    && ItemStack.isSameItemSameTags(one, two);
         }
         return false;
     }

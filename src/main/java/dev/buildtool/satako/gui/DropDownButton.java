@@ -1,6 +1,6 @@
 package dev.buildtool.satako.gui;
 
-import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
@@ -33,7 +33,7 @@ public class DropDownButton extends BetterButton {
                                 if (guiEventListener instanceof Hideable hideable) {
                                     for (int i = 0; i < positionable.getElementWidth(); i++) {
                                         for (int j = 0; j < positionable.getElementHeight(); j++) {
-                                            if (isInsideArea(positionable.getX() + i, positionable.getY() + j, radioButton.x, radioButton.x + radioButton.getElementWidth(), radioButton.y, radioButton.y + radioButton.getElementHeight())) {
+                                            if (isInsideArea(positionable.getX() + i, positionable.getY() + j, radioButton.getX(), radioButton.getX() + radioButton.getElementWidth(), radioButton.getY(), radioButton.getY() + radioButton.getElementHeight())) {
                                                 hideable.setHidden(true);
                                                 overlappingElements.add(guiEventListener);
                                                 break;
@@ -44,7 +44,7 @@ public class DropDownButton extends BetterButton {
                             } else if (guiEventListener instanceof AbstractWidget abstractWidget) {
                                 for (int i = 0; i < abstractWidget.getWidth(); i++) {
                                     for (int j = 0; j < abstractWidget.getHeight(); j++) {
-                                        if (isInsideArea(abstractWidget.x + i, abstractWidget.y + j, radioButton.x, radioButton.x + radioButton.getElementWidth(), radioButton.y, radioButton.y + radioButton.getElementHeight())) {
+                                        if (isInsideArea(abstractWidget.getX() + i, abstractWidget.getY() + j, radioButton.getX(), radioButton.getX() + radioButton.getElementWidth(), radioButton.getY(), radioButton.getY() + radioButton.getElementHeight())) {
                                             abstractWidget.visible = false;
                                             overlappingElements.add(guiEventListener);
                                             break;
@@ -81,12 +81,12 @@ public class DropDownButton extends BetterButton {
     }
 
     @Override
-    public void render(PoseStack poseStack, int mx, int my, float p_93660_) {
+    public void render(GuiGraphics poseStack, int mx, int my, float p_93660_) {
         super.render(poseStack, mx, my, p_93660_);
         if (open)
-            drawString(poseStack, fontRenderer, " :", x + width, y + height / 2 - 4, 0xffffffff);
+            poseStack.drawString(fontRenderer, " :", getX() + width, getY() + height / 2 - 4, 0xffffffff);
         else
-            drawString(poseStack, fontRenderer, " V", x + width, y + height / 2 - 4, 0xffffffff);
+            poseStack.drawString(fontRenderer, " V", getX() + width, getY() + height / 2 - 4, 0xffffffff);
     }
 
     private boolean isInsideArea(int x, int y, int x1, int x2, int y1, int y2) {
@@ -104,7 +104,7 @@ public class DropDownButton extends BetterButton {
         for (Map.Entry<Component, OnPress> entry : map.entrySet()) {
             Component component = entry.getKey();
             OnPress onPress1 = entry.getValue();
-            RadioButton radioButton = new RadioButton(x, y + 20 * offset++, component, onPress1);
+            RadioButton radioButton = new RadioButton(getX(), getY() + 20 * offset++, component, onPress1);
             radioButton.setHidden(true);
             radioButton.selected = selectedButton + 1 - offset == -1;
             if (radioButton.selected)

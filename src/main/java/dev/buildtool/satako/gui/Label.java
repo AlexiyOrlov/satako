@@ -1,7 +1,7 @@
 package dev.buildtool.satako.gui;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -36,17 +36,38 @@ public class Label extends BetterButton implements Scrollable {
             onPress.onPress(this);
     }
 
+    private void updateTooltip() {
+        if (this.getTooltip() != null) {
+            boolean flag = this.isHovered || this.isFocused() && Minecraft.getInstance().getLastInputType().isKeyboard();
+//            if (flag != this.wasHoveredOrFocused) {
+//                if (flag) {
+//                    this.hoverOrFocusedStartTime = Util.getMillis();
+//                }
+//
+//                this.wasHoveredOrFocused = flag;
+//            }
+
+            if (flag /*&& Util.getMillis() - this.hoverOrFocusedStartTime > (long)this.tooltipMsDelay*/) {
+                Screen screen = Minecraft.getInstance().screen;
+                if (screen != null) {
+                    screen.setTooltipForNextRenderPass(this.getTooltip(), this.createTooltipPositioner(), this.isFocused());
+                }
+            }
+        }
+    }
+
     @Override
-    public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void render(GuiGraphics matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         if (!hidden) {
             if (onPress != null) {
                 if (parent != null)
-                    parent.renderTooltip(matrixStack, getMessage(), getX() - 8, getY() + 18);
+                    //parent.renderTooltip(matrixStack, getMessage(), getX() - 8, getY() + 18);
+                    updateTooltip();
                 else
-                    drawString(matrixStack, Minecraft.getInstance().font, this.getMessage(), this.getX(), this.getY() + (this.height - 8) / 2, 16777215 | Mth.ceil(this.alpha * 255.0F) << 24);
+                    matrixStack.drawString(Minecraft.getInstance().font, this.getMessage(), this.getX(), this.getY() + (this.height - 8) / 2, 16777215 | Mth.ceil(this.alpha * 255.0F) << 24);
 
             } else
-                drawString(matrixStack, Minecraft.getInstance().font, this.getMessage(), this.getX(), this.getY() + (this.height - 8) / 2, 16777215 | Mth.ceil(this.alpha * 255.0F) << 24);
+                matrixStack.drawString(Minecraft.getInstance().font, this.getMessage(), this.getX(), this.getY() + (this.height - 8) / 2, 16777215 | Mth.ceil(this.alpha * 255.0F) << 24);
 
         }
     }
@@ -54,9 +75,9 @@ public class Label extends BetterButton implements Scrollable {
     @Override
     public void scroll(int amount, boolean vertical) {
         if (vertical && verticalScroll) {
-            y += Math.signum(amount) * scrollAmount;
+            setY((int) (getY() + Math.signum(amount) * scrollAmount));
         } else if (!vertical && horizontalScroll) {
-            x += amount;
+            setX(getX() + amount);
         }
     }
 

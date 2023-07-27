@@ -50,13 +50,10 @@ public class TextField extends EditBox implements Scrollable, Positionable, Hide
     {
         if (scrollable)
         {
-            if (vertical)
-            {
-                x += amount;
-            }
-            else
-            {
-                y += amount;
+            if (vertical) {
+                setX(getX() + amount);
+            } else {
+                setY(getY() + amount);
             }
         }
     }
@@ -89,25 +86,25 @@ public class TextField extends EditBox implements Scrollable, Positionable, Hide
 
     @Override
     public int getX() {
-        return x;
+        return super.getX();
     }
 
     @Override
     public void setX(int X)
     {
-        x = X;
+        super.setX(X);
     }
 
     @Override
     public int getY()
     {
-        return y;
+        return super.getY();
     }
 
     @Override
     public void setY(int Y)
     {
-        y = Y;
+        setY(Y);
     }
 
     public int getElementWidth() {

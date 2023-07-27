@@ -1,10 +1,14 @@
 package dev.buildtool.satako.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.*;
+import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.Tesselator;
+import com.mojang.blaze3d.vertex.VertexFormat;
 import dev.buildtool.satako.IntegerColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.renderer.GameRenderer;
@@ -27,29 +31,29 @@ public class ScrollArea extends AbstractWidget {
     public ScrollArea(int x, int y, int width, int height, Component p_93633_, IntegerColor color, List<?> guiEventListeners) {
         super(x, y, width, height, p_93633_);
         if (!p_93633_.getString().isEmpty()) {
-            this.y = (y + 20);
+            this.setY(y + 20);
         }
         buttonLeft = x + width - 20;
         if (p_93633_.getString().isEmpty())
-            bottomButtonTop = this.y + height / 2;
-        else bottomButtonTop = this.y + height / 2 - 20;
+            bottomButtonTop = this.getY() + height / 2;
+        else bottomButtonTop = this.getY() + height / 2 - 20;
         this.color = color;
         this.guiEventListeners = guiEventListeners;
         for (Object guiEventListener : guiEventListeners) {
             if (guiEventListener instanceof Positionable positionable) {
-                positionable.setY(this.y + positionable.getY());
-                positionable.setX(this.x + positionable.getX());
+                positionable.setY(this.getY() + positionable.getY());
+                positionable.setX(this.getX() + positionable.getX());
                 if (guiEventListener instanceof Hideable hideable) {
-                    hideable.setHidden(positionable.getY() < this.y || positionable.getY() + positionable.getElementHeight() > this.y + height);
+                    hideable.setHidden(positionable.getY() < this.getY() || positionable.getY() + positionable.getElementHeight() > this.getY() + height);
                 }
                 if (positionable.getY() > highest)
                     highest = positionable.getY();
             } else if (guiEventListener instanceof AbstractWidget a) {
-                a.x = x + a.x;
-                a.y = y + a.y;
-                a.visible = a.y >= y && a.y + a.getHeight() <= this.y + height;
-                if (a.y > highest)
-                    highest = a.y;
+                a.setX(x + a.getX());
+                a.setY(y + a.getY());
+                a.visible = a.getY() >= y && a.getY() + a.getHeight() <= this.getY() + height;
+                if (a.getY() > highest)
+                    highest = a.getY();
             }
         }
         for (Object item : guiEventListeners) {
@@ -57,11 +61,11 @@ public class ScrollArea extends AbstractWidget {
                 if (positionable.getY() == highest)
                     bottomElement = item;
             } else if (item instanceof AbstractWidget abstractWidget) {
-                if (abstractWidget.y == highest)
+                if (abstractWidget.getY() == highest)
                     bottomElement = abstractWidget;
             }
         }
-        maxScrollDistance = bottomElement instanceof Positionable positionable ? positionable.getY() + positionable.getElementHeight() : bottomElement instanceof AbstractWidget abstractWidget ? abstractWidget.y + abstractWidget.getHeight() : 0;
+        maxScrollDistance = bottomElement instanceof Positionable positionable ? positionable.getY() + positionable.getElementHeight() : bottomElement instanceof AbstractWidget abstractWidget ? abstractWidget.getY() + abstractWidget.getHeight() : 0;
     }
 
     public ScrollArea(int x, int y, int width, int height, Component p_93633_, IntegerColor backgroundColor, Object... items) {
@@ -70,7 +74,7 @@ public class ScrollArea extends AbstractWidget {
 
     @Override
     public boolean mouseClicked(double mx, double my, int p_93643_) {
-        if (mx > buttonLeft && mx < buttonLeft + 20 && my > y && my < (y + getHeight()) / 2f)
+        if (mx > buttonLeft && mx < buttonLeft + 20 && my > getY() && my < (getY() + getHeight()) / 2f)
             scrollDirection = -1;
         else if (mx > buttonLeft && mx < buttonLeft + 20 && my > bottomButtonTop && my < bottomButtonTop + getHeight() / 2f) {
             scrollDirection = 1;
@@ -85,45 +89,44 @@ public class ScrollArea extends AbstractWidget {
     }
 
     @Override
-    public void render(PoseStack poseStack, int mx, int my, float p_93660_) {
+    public void renderWidget(GuiGraphics poseStack, int mx, int my, float p_93660_) {
 
-        fill(poseStack, x, y, x + getWidth(), y + getHeight(), color.getIntColor());
+        poseStack.fill(getX(), getY(), getX() + getWidth(), getY() + getHeight(), color.getIntColor());
 
         Font font = Minecraft.getInstance().font;
         if (!getMessage().getString().isEmpty()) {
-            drawCenteredString(poseStack, font, getMessage(), (x + width / 2), y - 15, 0xffffff);
+            poseStack.drawCenteredString(font, getMessage(), (getX() + width / 2), getY() - 15, 0xffffff);
         }
 
-
         RenderSystem.setShader(GameRenderer::getPositionColorShader);
-        RenderSystem.disableTexture();
+        //RenderSystem.disableTexture();
         Tesselator tesselator = Tesselator.getInstance();
         BufferBuilder bufferBuilder = tesselator.getBuilder();
         int offsetY = getMessage().getString().isEmpty() ? 0 : 10;
         bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
-        bufferBuilder.vertex(x + width, y, 0).color(color.getRed(), color.getGreen(), 128, 255).endVertex();
-        bufferBuilder.vertex(buttonLeft, y, 0).color(color.getRed(), color.getGreen(), 128, 255).endVertex();
+        bufferBuilder.vertex(getX() + width, getY(), 0).color(color.getRed(), color.getGreen(), 128, 255).endVertex();
+        bufferBuilder.vertex(buttonLeft, getY(), 0).color(color.getRed(), color.getGreen(), 128, 255).endVertex();
         bufferBuilder.vertex(buttonLeft, bottomButtonTop + offsetY, 0).color(color.getRed(), color.getGreen(), 128, 255).endVertex();
-        bufferBuilder.vertex(x + width, bottomButtonTop + offsetY, 0).color(color.getRed(), color.getGreen(), 128, 255).endVertex();
+        bufferBuilder.vertex(getX() + width, bottomButtonTop + offsetY, 0).color(color.getRed(), color.getGreen(), 128, 255).endVertex();
 
         bufferBuilder.vertex(buttonLeft + 20, bottomButtonTop + offsetY, 0).color(color.getRed(), 129, color.getBlue(), 255).endVertex();
         bufferBuilder.vertex(buttonLeft, bottomButtonTop + offsetY, 0).color(color.getRed(), 128, color.getBlue(), 255).endVertex();
         bufferBuilder.vertex(buttonLeft, bottomButtonTop + height / 2f, 0).color(color.getRed(), 128, color.getBlue(), 255).endVertex();
         bufferBuilder.vertex(buttonLeft + 20, bottomButtonTop + height / 2f, 0).color(color.getRed(), 128, color.getBlue(), 255).endVertex();
         tesselator.end();
-        drawCenteredString(poseStack, font, Component.literal("+"), buttonLeft + 10, y + height / 4, 0xffffff);
-        drawCenteredString(poseStack, font, Component.literal("-"), buttonLeft + 10, (bottomButtonTop + height / 4) - 10, 0xffffff);
+        poseStack.drawCenteredString(font, Component.literal("+"), buttonLeft + 10, getY() + height / 4, 0xffffff);
+        poseStack.drawCenteredString(font, Component.literal("-"), buttonLeft + 10, (bottomButtonTop + height / 4) - 10, 0xffffff);
         if (scrollDirection != 0) {
             if (scrolled == 0 || (scrolled > -(maxScrollDistance - height) || scrolled < -(maxScrollDistance - height) && scrollDirection == 1) && (scrolled <= 0 || scrollDirection == -1)) {
                 for (Object guiEventListener : guiEventListeners) {
                     if (guiEventListener instanceof Positionable positionable3) {
                         positionable3.setY(positionable3.getY() + scrollDirection * 20);
                         if (positionable3 instanceof Hideable hideable) {
-                            hideable.setHidden(positionable3.getY() < y || positionable3.getY() + positionable3.getElementHeight() > y + height);
+                            hideable.setHidden(positionable3.getY() < getY() || positionable3.getY() + positionable3.getElementHeight() > getY() + height);
                         }
                     } else if (guiEventListener instanceof AbstractWidget a) {
-                        a.y = a.y + scrollDirection * 20;
-                        a.visible = a.y > y && a.y + a.getHeight() < y + height;
+                        a.setY(a.getY() + scrollDirection * 20);
+                        a.visible = a.getY() > getY() && a.getY() + a.getHeight() < getY() + height;
                     }
                 }
                 scrolled += scrollDirection * 20;
@@ -137,11 +140,11 @@ public class ScrollArea extends AbstractWidget {
             if (guiEventListener instanceof Positionable positionable3) {
                 positionable3.setY((int) (positionable3.getY() + direction * 20));
                 if (positionable3 instanceof Hideable hideable) {
-                    hideable.setHidden(positionable3.getY() < y || positionable3.getY() + positionable3.getElementHeight() > y + height);
+                    hideable.setHidden(positionable3.getY() < getY() || positionable3.getY() + positionable3.getElementHeight() > getY() + height);
                 }
             } else if (guiEventListener instanceof AbstractWidget a) {
-                a.y = (int) (a.y + direction * 20);
-                a.visible = a.y > y && a.y + a.getHeight() < y + height;
+                a.setY((int) (a.getY() + direction * 20));
+                a.visible = a.getY() > getY() && a.getY() + a.getHeight() < getY() + height;
             }
         }
         return true;
@@ -153,7 +156,7 @@ public class ScrollArea extends AbstractWidget {
     }
 
     @Override
-    public void updateNarration(NarrationElementOutput p_169152_) {
+    protected void updateWidgetNarration(NarrationElementOutput p_259858_) {
 
     }
 }

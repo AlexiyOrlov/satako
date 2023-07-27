@@ -1,18 +1,13 @@
 package dev.buildtool.satako.gui;
 
 import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.datafixers.util.Pair;
 import dev.buildtool.satako.Constants;
 import dev.buildtool.satako.IntegerColor;
 import dev.buildtool.satako.ItemHandlerSlot;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
@@ -70,7 +65,7 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
     }
 
     @Override
-    public void render(PoseStack matrixStack, int p_render_1_, int p_render_2_, float p_render_3_) {
+    public void render(GuiGraphics matrixStack, int p_render_1_, int p_render_2_, float p_render_3_) {
         renderBackground(matrixStack);
         super.render(matrixStack, p_render_1_, p_render_2_, p_render_3_);
         renderTooltip(matrixStack, p_render_1_, p_render_2_);
@@ -80,41 +75,22 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
      * Draws its elements and borders
      */
     @Override
-    protected void renderBg(PoseStack matrixStack, float partialTicks, int mouseX, int mouseY) {
+    protected void renderBg(GuiGraphics matrixStack, float partialTicks, int mouseX, int mouseY) {
         List<Slot> slots = getSlots();
         GlStateManager._clearColor(1.0F, 1.0F, 1.0F, 1.0F);
         for (Slot s : slots) {
             if (s.isActive()) {
                 int sx = s.x;
                 int sy = s.y;
-                ;
-                TextureManager textureManager = minecraft.getTextureManager();
-                if (s instanceof ItemHandlerSlot) {
-                    ItemHandlerSlot itemHandlerSlot = (ItemHandlerSlot) s;
+                if (s instanceof ItemHandlerSlot itemHandlerSlot) {
                     if (itemHandlerSlot.getTexture() == null) {
                         //color
-                        fill(matrixStack, sx + leftPos, sy + topPos, sx + leftPos + 16, sy + topPos + 16, itemHandlerSlot.getColor().getIntColor());
+                        matrixStack.fill(sx + leftPos, sy + topPos, sx + leftPos + 16, sy + topPos + 16, itemHandlerSlot.getColor().getIntColor());
                     } else {
-                        textureManager.bindForSetup(itemHandlerSlot.getTexture());
-                        blit(matrixStack, sx + leftPos, sy + topPos, 0, 0, 16, 16);
+                        matrixStack.fill(sx + leftPos, sy + topPos, sx + leftPos + 16, sy + topPos + 16, 0xff666666);
                     }
-                }
-                else {
-                    Pair<ResourceLocation, ResourceLocation> atlasAndSprite = s.getNoItemIcon();
-                    if (atlasAndSprite != null) {
-                        ResourceLocation background = atlasAndSprite.getSecond();
-                        if (background.getNamespace().equals("minecraft")) {
-                            textureManager.bindForSetup(Constants.GREY_SLOT_TEXTURE);
-                        } else {
-                            textureManager.bindForSetup(background);
-                        }
-                    } else {
-                        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-                        RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
-                        RenderSystem.setShaderTexture(0, Constants.GREY_SLOT_TEXTURE);
-
-                    }
-                    blit(matrixStack,sx + leftPos, sy + topPos, 0, 0, 16, 16);
+                } else {
+                    matrixStack.fill(sx + leftPos, sy + topPos, sx + leftPos + 16, sy + topPos + 16, 0xff666666);
                 }
             }
         }
@@ -124,15 +100,15 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
         //lines have to be drawn after everything else
         if (drawBorders) {
             int intColor = color.getIntColor();
-            hLine(matrixStack, this.leftPos - 1, this.getXSize() + leftPos - 2, this.topPos - 1, intColor);
-            hLine(matrixStack, this.leftPos, this.getXSize() + leftPos - 2, this.getYSize() + topPos - 2, intColor);
-            vLine(matrixStack, this.leftPos - 1, this.topPos - 1, getYSize() + this.topPos - 1, intColor);
-            vLine(matrixStack, getXSize() + this.leftPos - 2, this.topPos - 1, getYSize() + this.topPos - 2, intColor);
+            matrixStack.hLine(this.leftPos - 1, this.getXSize() + leftPos - 2, this.topPos - 1, intColor);
+            matrixStack.hLine(this.leftPos, this.getXSize() + leftPos - 2, this.getYSize() + topPos - 2, intColor);
+            matrixStack.vLine(this.leftPos - 1, this.topPos - 1, getYSize() + this.topPos - 1, intColor);
+            matrixStack.vLine(getXSize() + this.leftPos - 2, this.topPos - 1, getYSize() + this.topPos - 2, intColor);
         }
     }
 
     @Override
-    protected void renderLabels(PoseStack poseStack, int p1, int p2) {
-        font.draw(poseStack, title, imageWidth / 2f - font.width(title.getString()) / 2f, -14, 0xE35F3B);
+    protected void renderLabels(GuiGraphics poseStack, int p1, int p2) {
+        poseStack.drawString(font, title, imageWidth / 2 - font.width(title.getString()) / 2, -14, 0xE35F3B);
     }
 }

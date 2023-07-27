@@ -11,12 +11,9 @@ import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.storage.loot.LootContext;
-import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 
 import javax.annotation.Nullable;
-import java.util.Collections;
-import java.util.List;
 
 public class BlockHorizontal extends HorizontalDirectionalBlock {
     public BlockHorizontal(Properties properties) {
@@ -40,7 +37,7 @@ public class BlockHorizontal extends HorizontalDirectionalBlock {
     public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!state.is(newState.getBlock()) && state.hasBlockEntity()) {
             BlockEntity tileEntity = worldIn.getBlockEntity(pos);
-            tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY).ifPresent(iItemHandler -> {
+            tileEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(iItemHandler -> {
                 for (int i = 0; i < iItemHandler.getSlots(); i++) {
                     ItemStack stack = iItemHandler.getStackInSlot(i);
                     if (!stack.isEmpty())
@@ -54,17 +51,5 @@ public class BlockHorizontal extends HorizontalDirectionalBlock {
     @Override
     public boolean triggerEvent(BlockState state, Level worldIn, BlockPos pos, int id, int param) {
         return state.hasBlockEntity() && worldIn.getBlockEntity(pos).triggerEvent(id, param);
-    }
-
-    /**
-     * Drop itself by default
-     */
-    @SuppressWarnings("ConstantConditions")
-    @Override
-    public List<ItemStack> getDrops(BlockState p_60537_, LootContext.Builder builder) {
-        if (builder.getLevel().getServer().getLootTables().get(getLootTable()).getLootTableId() == null) {
-            return Collections.singletonList(new ItemStack(this));
-        }
-        return super.getDrops(p_60537_, builder);
     }
 }

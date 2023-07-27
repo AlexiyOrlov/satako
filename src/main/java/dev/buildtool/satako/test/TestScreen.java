@@ -29,10 +29,10 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
             elements.add(label);
             addRenderableWidget(label);
         }
-        Button button = new Button(0, 120, 100, 20, Component.literal("Vanilla button 1"), p_93751_ -> {
-        });
-        Button button1 = new Button(0, 140, 100, 20, Component.literal("Vanilla button 2"), p_93751_ -> {
-        });
+        Button button = new Button.Builder(Component.literal("Vanilla button 1"), p_93751_ -> {
+        }).pos(0, 120).size(100, 20).build();
+        Button button1 = new Button.Builder(Component.literal("Vanilla button 2"), p_93751_ -> {
+        }).pos(0, 140).size(100, 20).build();
 
         addRenderableWidget(button);
         addRenderableWidget(button1);
@@ -64,7 +64,7 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
         dropDownButton.setChoices(linkedHashMap, 1);
         addRenderableWidget(dropDownButton);
         addRenderableWidget(new Label(getGuiLeft() + imageWidth, getGuiTop() + 20 * 3, Component.literal("Overlapping label"), this, p_93751_ -> minecraft.player.displayClientMessage(Component.literal("Clicked the label"), false)));
-        addRenderableWidget(new Button(getGuiLeft() + imageWidth, getGuiTop() + 20 * 4, 40, 20, Component.literal("Button"), p_93751_ -> minecraft.player.displayClientMessage(Component.literal("Clicked the button"), false)));
+        addRenderableWidget(new Button.Builder(Component.literal("Button"), p_93751_ -> minecraft.player.displayClientMessage(Component.literal("Clicked the button"), false)).pos(getGuiLeft() + imageWidth, getGuiTop() + 20 * 4).size(40, 20).build());
         ScrollArea scrollArea = new ScrollArea(3, 3, getGuiLeft() - 10, height, Component.literal("List"), new IntegerColor(0x22F8A55E), elements);
         addRenderableWidget(scrollArea);
     }

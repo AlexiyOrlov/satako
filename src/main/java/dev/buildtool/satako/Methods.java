@@ -1,7 +1,11 @@
 package dev.buildtool.satako;
 
-import com.mojang.blaze3d.vertex.*;
+import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.Tesselator;
+import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -157,9 +161,9 @@ public final class Methods {
         tessellator.end();
     }
 
-    public static void drawStringWithBackground(PoseStack matrixStack, Object obj, int x, int y, IntegerColor background) {
+    public static void drawStringWithBackground(GuiGraphics matrixStack, Object obj, int x, int y, IntegerColor background) {
         String string = obj.toString();
-        Minecraft.getInstance().font.draw(matrixStack, string, x + 2, y + 4, background.getIntColor());
+        matrixStack.drawString(Minecraft.getInstance().font, string, x + 2, y + 4, background.getIntColor());
     }
 
     /**
@@ -217,26 +221,26 @@ public final class Methods {
     /**
      * @param X position to be centered on
      */
-    public static void drawCenteredString(PoseStack matrixStack, net.minecraft.network.chat.Component o, int X, int Y, IntegerColor color) {
+    public static void drawCenteredString(GuiGraphics matrixStack, net.minecraft.network.chat.Component o, int X, int Y, IntegerColor color) {
         drawString(matrixStack, o, X - Functions.calculateStringWidth(o) / 2, Y, color);
     }
 
     /**
      * @param X position to be centered on
      */
-    public static void drawCenteredStringWithShadow(PoseStack matrixStack, Component o, int X, int Y, IntegerColor color) {
+    public static void drawCenteredStringWithShadow(GuiGraphics matrixStack, Component o, int X, int Y, IntegerColor color) {
         drawStringWithShadow(matrixStack, o, X - Functions.calculateStringWidth(o) / 2, Y, color);
     }
 
     /**
      * Draws string without shadow
      */
-    public static void drawString(PoseStack matrixStack, Object o, int X, int Y, IntegerColor color) {
-        Minecraft.getInstance().font.draw(matrixStack, o.toString(), X, Y, color.getIntColor());
+    public static void drawString(GuiGraphics matrixStack, Object o, int X, int Y, IntegerColor color) {
+        matrixStack.drawString(Minecraft.getInstance().font, o.toString(), X, Y, color.getIntColor());
     }
 
-    public static void drawStringWithShadow(PoseStack matrixStack, Object o, int X, int Y, IntegerColor color) {
-        Minecraft.getInstance().font.draw(matrixStack, o.toString(), X, Y, color.getIntColor());
+    public static void drawStringWithShadow(GuiGraphics matrixStack, Object o, int X, int Y, IntegerColor color) {
+        matrixStack.drawString(Minecraft.getInstance().font, o.toString(), X, Y, color.getIntColor());
     }
 
     /**

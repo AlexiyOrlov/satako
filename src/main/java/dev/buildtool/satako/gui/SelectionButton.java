@@ -1,10 +1,9 @@
 
 package dev.buildtool.satako.gui;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
-import net.minecraftforge.client.gui.ScreenUtils;
 
 /**
  * This button is used in multiple-selection lists
@@ -29,14 +28,24 @@ public class SelectionButton extends BetterButton {
         return pressed;
     }
 
+    private int getTextureY() {
+        int i = 1;
+        if (!this.active) {
+            i = 0;
+        } else if (this.isHoveredOrFocused()) {
+            i = 2;
+        }
+        return 46 + i * 20;
+    }
+
     @Override
-    public void renderButton(PoseStack mStack, int mouseX, int mouseY, float partial) {
+    public void renderWidget(GuiGraphics mStack, int mouseX, int mouseY, float partial) {
         if (this.visible) {
             Minecraft mc = Minecraft.getInstance();
-            this.isHovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
-            int k = this.getYImage(this.isHovered);
-            ScreenUtils.blitWithBorder(mStack, WIDGETS_LOCATION, this.x, this.y, 0, 46 + k * 20, this.width, this.height, 200, 20, 2, 3, 2, 2, this.getBlitOffset());
-            this.renderBg(mStack, mc, mouseX, mouseY);
+            this.isHovered = mouseX >= this.getX() && mouseY >= this.getY() && mouseX < this.getX() + this.width && mouseY < this.getY() + this.height;
+            int k = getTextureY();  //this.getYImage(this.isHovered);
+            mStack.blitWithBorder(WIDGETS_LOCATION, this.getX(), this.getY(), 0, 46 + k * 20, this.width, this.height, 200, 20, 2, 3, 2, 2);
+            //this.renderBg(mStack, mc, mouseX, mouseY);
 
             Component buttonText = this.getMessage();
             int strWidth = mc.font.width(buttonText);
@@ -50,7 +59,7 @@ public class SelectionButton extends BetterButton {
                 color = 16777120;
             else
                 color = 16777215;
-            drawCenteredString(mStack, mc.font, buttonText, this.x + this.width / 2, this.y + (this.height - 8) / 2, color);
+            mStack.drawCenteredString(mc.font, buttonText, this.getX() + this.width / 2, this.getY() + (this.height - 8) / 2, color);
         }
     }
 }
