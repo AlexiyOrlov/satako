@@ -17,6 +17,8 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 ;
 
@@ -40,6 +42,7 @@ public class Satako {
     private static final DeferredRegister<MenuType<?>> CONTAINER_TYPES = DeferredRegister.create(ForgeRegistries.MENU_TYPES, ID);
     public static final RegistryObject<MenuType<TestContainer>> TEST_CONTAINER = CONTAINER_TYPES.register("test_block", () -> IForgeMenuType.create((windowId, inv, data) -> new TestContainer(windowId, inv)));
 
+    static Logger LOGGER = LogManager.getLogger(ID);
     public Satako() {
 
         MinecraftForge.EVENT_BUS.register(this);
@@ -52,27 +55,6 @@ public class Satako {
         CONTAINER_TYPES.register(eventBus);
         BLOCKS.register(eventBus);
         ITEMS.register(eventBus);
-
-//        if (DO_DEBUG.get()) {
-//            MinecraftForge.EVENT_BUS.register(EventListener.class);
-//            eventBus.register(Analyzer.class);
-//            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-//                try {
-//                    PrintWriter printWriter = new PrintWriter(new File("logs", "general.log"));
-//                    ModList.get().forEachModContainer((s, modContainer) -> {
-//                        if (!s.equals("minecraft") && !s.equals("forge")) {
-//                            printWriter.println("Next mod: " + s);
-//                            IModInfo iModInfo = modContainer.getModInfo();
-//                            iModInfo.getDependencies().forEach(modVersion -> {
-//                                printWriter.println("depends " + (modVersion.isMandatory() ? "obligatory" : "optionally") + " on " + modVersion.getModId());
-//                            });
-//                        }
-//                    });
-//                    printWriter.close();
-//                } catch (FileNotFoundException e) {
-//                    e.printStackTrace();
-//                }
-//            }));
-//        }
+        LOGGER.info("Satako loaded");
     }
 }
