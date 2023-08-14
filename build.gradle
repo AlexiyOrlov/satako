@@ -130,5 +130,9 @@ publishing {
         maven {
             url "file:///${project.projectDir}/mcmodsrepo"
         }
+        maven {
+            name = 'MyMaven'
+            url = property("myMavenUrl")
+        }
     }
 }
