@@ -1,3 +1,9 @@
+7.0.2-1.20.1:
+fixed labels;
+
+7.0.1-1.20.1:
+updated;
+
 6.0.6-1.19:
 implemented dropdown choice button;
 

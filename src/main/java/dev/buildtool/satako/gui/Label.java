@@ -12,7 +12,7 @@ import javax.annotation.Nullable;
 /**
  * Label is a string for use in GUIs
  */
-public class Label extends BetterButton implements Scrollable {
+public class Label extends BetterButton implements Scrollable, Hideable {
     protected boolean enabled, verticalScroll, horizontalScroll, hidden;
     protected int scrollAmount;
     protected Screen parent;
@@ -57,17 +57,19 @@ public class Label extends BetterButton implements Scrollable {
     }
 
     @Override
-    public void render(GuiGraphics matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void render(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         if (!hidden) {
             if (onPress != null) {
                 if (parent != null)
-                    //parent.renderTooltip(matrixStack, getMessage(), getX() - 8, getY() + 18);
-                    updateTooltip();
+                    //parent.renderTooltip(guiGraphics, getMessage(), getX() - 8, getY() + 18);
+                    //updateTooltip();
+                    guiGraphics.drawString(Minecraft.getInstance().font, getMessage(), getX(), getY() + (height - 8) / 2, 16777215 | Mth.ceil(this.alpha * 255.0F) << 24);
                 else
-                    matrixStack.drawString(Minecraft.getInstance().font, this.getMessage(), this.getX(), this.getY() + (this.height - 8) / 2, 16777215 | Mth.ceil(this.alpha * 255.0F) << 24);
+                    guiGraphics.drawString(Minecraft.getInstance().font, this.getMessage(), this.getX(), this.getY() + (this.height - 8) / 2, 16777215 | Mth.ceil(this.alpha * 255.0F) << 24);
 
             } else
-                matrixStack.drawString(Minecraft.getInstance().font, this.getMessage(), this.getX(), this.getY() + (this.height - 8) / 2, 16777215 | Mth.ceil(this.alpha * 255.0F) << 24);
+                guiGraphics.drawString(Minecraft.getInstance().font, getMessage(), getX(), getY() + (height - 8) / 2, 16777215 | Mth.ceil(this.alpha * 255.0F) << 24);
+
 
         }
     }
@@ -102,5 +104,10 @@ public class Label extends BetterButton implements Scrollable {
     @Override
     public void setScrollAmount(int pixels) {
         this.scrollAmount = pixels;
+    }
+
+    @Override
+    public void setHidden(boolean hidden) {
+        this.hidden = hidden;
     }
 }
