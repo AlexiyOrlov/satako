@@ -1,3 +1,6 @@
+4.2.15:
+fixed setting scroll area's element visibility;
+
 4.2.14:
 implemented scroll area;
 
