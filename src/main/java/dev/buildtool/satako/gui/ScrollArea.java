@@ -46,6 +46,7 @@ public class ScrollArea extends AbstractButton {
                     Hideable hideable = (Hideable) guiEventListener;
                     if (positionable.getY() < this.y || positionable.getY() + positionable.getHeight() > this.y + height)
                         hideable.setHidden();
+                    else hideable.setVisible();
                 }
                 if (positionable.getY() > highest)
                     highest = positionable.getY();
@@ -137,6 +138,7 @@ public class ScrollArea extends AbstractButton {
                             Hideable hideable = (Hideable) positionable3;
                             if (positionable3.getY() < y || positionable3.getY() + positionable3.getHeight() > y + height)
                                 hideable.setHidden();
+                            else hideable.setVisible();
                         }
                     } else if (guiEventListener instanceof AbstractButton) {
                         AbstractButton a = (AbstractButton) guiEventListener;
