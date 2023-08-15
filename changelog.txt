@@ -1,3 +1,6 @@
+4.2.14:
+implemented scroll area;
+
 4.2.13:
 added a function to fit strings to specified width;
 
