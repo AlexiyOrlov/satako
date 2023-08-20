@@ -12,6 +12,7 @@ import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class ScrollArea extends AbstractWidget {
@@ -66,7 +67,7 @@ public class ScrollArea extends AbstractWidget {
     }
 
     public ScrollArea(int x, int y, int width, int height, Component p_93633_, IntegerColor backgroundColor, Object... items) {
-        this(x, y, width, height, p_93633_, backgroundColor, List.of(items));
+        this(x, y, width, height, p_93633_, backgroundColor, Arrays.asList(items));
     }
 
     @Override
