@@ -14,7 +14,9 @@ import javax.annotation.Nullable;
  */
 @SuppressWarnings("ConstantConditions")
 public class Label extends BetterButton implements Scrollable {
-    protected boolean enabled, verticalScroll, horizontalScroll, hidden;
+    protected boolean verticalScroll;
+    protected boolean horizontalScroll;
+    protected boolean hidden;
     protected int scrollAmount;
     protected Screen parent;
 
