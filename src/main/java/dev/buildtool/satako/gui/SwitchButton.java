@@ -40,14 +40,6 @@ public class SwitchButton extends BetterButton
         this.whenFalse = whenFalse_;
     }
 
-
-    public static SwitchButton createPositionlessButton(ITextComponent whenTrue, ITextComponent whenFalse, boolean initialState)
-    {
-        return new SwitchButton(0, 0, whenTrue, whenFalse, initialState, p_onPress_1_ -> {
-        });
-    }
-
-
     @Override
     public boolean mouseClicked(double p_mouseClicked_1_, double p_mouseClicked_3_, int p_mouseClicked_5_)
     {
