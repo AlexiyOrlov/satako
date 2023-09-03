@@ -69,9 +69,9 @@ public class GuiElements
                         if (objj instanceof Positionable)
                         {
                             Positionable positionable1 = (Positionable) objj;
-                            if (y < positionable1.getY() + positionable1.getHeight())
+                            if (y < positionable1.getY() + positionable1.getElementHeight())
                             {
-                                y = positionable1.getY() + positionable1.getHeight();
+                                y = positionable1.getY() + positionable1.getElementHeight();
                             }
                         }
                     }

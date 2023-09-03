@@ -103,6 +103,11 @@ public class BetterButton extends ExtendedButton implements Scrollable, Position
     }
 
     @Override
+    public int getElementHeight() {
+        return height;
+    }
+
+    @Override
     public int getX()
     {
         return x;
@@ -137,5 +142,6 @@ public class BetterButton extends ExtendedButton implements Scrollable, Position
     {
         visible = true;
     }
+
 
 }

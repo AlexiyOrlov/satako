@@ -40,7 +40,7 @@ public class ScrollList implements Scrollable, Hideable {
         if (o instanceof Positionable && o instanceof Hideable)
         {
             Positionable positionable = (Positionable) o;
-            if ((positionable.getY() < y || positionable.getY() + positionable.getHeight() > y + height))
+            if ((positionable.getY() < y || positionable.getY() + positionable.getElementHeight() > y + height))
             {
                 ((Hideable) o).setHidden();
             }
@@ -79,7 +79,7 @@ public class ScrollList implements Scrollable, Hideable {
                 {
                     Positionable p = (Positionable) item;
                     Hideable h = (Hideable) item;
-                    if (p.getY() + p.getHeight() > y + height || p.getY() < y)
+                    if (p.getY() + p.getElementHeight() > y + height || p.getY() < y)
                     {
                         h.setHidden();
                     }
@@ -147,7 +147,7 @@ public class ScrollList implements Scrollable, Hideable {
         if (o instanceof Positionable)
         {
             Positionable positionable = (Positionable) o;
-            return !(positionable.getY() + positionable.getHeight() > y + height || positionable.getY() < y);
+            return !(positionable.getY() + positionable.getElementHeight() > y + height || positionable.getY() < y);
         }
         return false;
     }

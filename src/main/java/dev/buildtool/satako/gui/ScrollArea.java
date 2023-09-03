@@ -44,7 +44,7 @@ public class ScrollArea extends AbstractButton {
                 positionable.setX(this.x + positionable.getX());
                 if (guiEventListener instanceof Hideable) {
                     Hideable hideable = (Hideable) guiEventListener;
-                    if (positionable.getY() < this.y || positionable.getY() + positionable.getHeight() > this.y + height)
+                    if (positionable.getY() < this.y || positionable.getY() + positionable.getElementHeight() > this.y + height)
                         hideable.setHidden();
                     else hideable.setVisible();
                 }
@@ -72,7 +72,7 @@ public class ScrollArea extends AbstractButton {
         }
         if (bottomElement instanceof Positionable) {
             Positionable positionable = (Positionable) bottomElement;
-            maxScrollDistance = positionable.getY() + positionable.getHeight();
+            maxScrollDistance = positionable.getY() + positionable.getElementHeight();
         } else if (bottomElement instanceof AbstractButton) {
             AbstractButton abstractButton = (AbstractButton) bottomElement;
             maxScrollDistance = abstractButton.y + abstractButton.getHeight();
@@ -136,7 +136,7 @@ public class ScrollArea extends AbstractButton {
                         positionable3.setY(positionable3.getY() + scrollDirection * 20);
                         if (positionable3 instanceof Hideable) {
                             Hideable hideable = (Hideable) positionable3;
-                            if (positionable3.getY() < y || positionable3.getY() + positionable3.getHeight() > y + height)
+                            if (positionable3.getY() < y || positionable3.getY() + positionable3.getElementHeight() > y + height)
                                 hideable.setHidden();
                             else hideable.setVisible();
                         }

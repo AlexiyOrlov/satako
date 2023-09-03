@@ -7,7 +7,7 @@ public interface Positionable
 {
     int getWidth();
 
-    int getHeight();
+    int getElementHeight();
 
     int getX();
 

@@ -86,7 +86,7 @@ public class TextField extends TextFieldWidget implements Scrollable, Positionab
     }
 
     @Override
-    public int getHeight() {
+    public int getElementHeight() {
         return height;
     }
 
