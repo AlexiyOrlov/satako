@@ -1,3 +1,6 @@
+6.0.10-1.19:
+fixed color component calculation;
+
 6.0.6-1.19:
 implemented dropdown choice button;
 
