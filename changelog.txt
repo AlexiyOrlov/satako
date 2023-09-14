@@ -1,4 +1,4 @@
-7.0.5-1.20.1:
+7.0.6-1.20.1:
 fixed item stack comparison function;
 
 7.0.4-1.20.1:
