@@ -524,11 +524,13 @@ public final class Functions {
      */
     public static boolean areItemTypesEqual(ItemStack one, ItemStack two) {
         if (!one.isEmpty() && !two.isEmpty()) {
-            final Item oneItem = one.getItem();
-            final Item secondItem = two.getItem();
-            return oneItem == secondItem && one.getDamageValue() == two.getDamageValue() &&
-                    ForgeRegistries.ITEMS.getKey(oneItem).equals(ForgeRegistries.ITEMS.getKey(secondItem))
-                    && ItemStack.isSameItemSameTags(one, two);
+            boolean equalNBT = false;
+            if (one.getTag() != null && two.getTag() != null) {
+                if (one.getTag().equals(two.getTag()))
+                    equalNBT = true;
+            } else
+                equalNBT = true;
+            return equalNBT && ItemStack.isSameItemSameTags(one, two);
         }
         return false;
     }
