@@ -1,5 +1,6 @@
-7.0.7-1.20.1:
+7.0.10-1.20.1:
 added graphical rectangular face addition method;
+fixed color component calculation for real;
 
 7.0.6-1.20.1:
 fixed item stack comparison function;
