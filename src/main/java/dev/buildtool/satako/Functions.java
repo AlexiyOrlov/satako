@@ -1,7 +1,12 @@
 package dev.buildtool.satako;
 
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.blaze3d.vertex.VertexFormat;
 import io.netty.buffer.Unpooled;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -1036,5 +1041,9 @@ public final class Functions {
             return Direction.UP;
         }
         return livingEntity.getDirection();
+    }
+
+    public static VertexConsumer createTransclucentStateBuffer(MultiBufferSource bufferSource) {
+        return bufferSource.getBuffer(RenderType.create("opaque", DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.QUADS, 256, false, false, Constants.translucentCompositeState));
     }
 }

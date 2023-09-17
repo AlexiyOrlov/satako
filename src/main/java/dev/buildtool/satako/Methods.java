@@ -4,8 +4,6 @@ import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -364,9 +362,5 @@ public final class Methods {
             target.vertex(matrix4f, 1 + width, 1 + height, 1 + depth).color(red, green, blue, alpha).endVertex();
             target.vertex(matrix4f, 1 + width, 1 + height, 0).color(red, green, blue, alpha).endVertex();
         }
-    }
-
-    public static VertexConsumer createTransclucentStateBuffer(MultiBufferSource bufferSource) {
-        return bufferSource.getBuffer(RenderType.create("opaque", DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.QUADS, 256, false, false, Constants.translucentCompositeState));
     }
 }
