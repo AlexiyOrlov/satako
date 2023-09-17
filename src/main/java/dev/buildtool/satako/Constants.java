@@ -2,11 +2,7 @@ package dev.buildtool.satako;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Direction;
@@ -60,9 +56,5 @@ public class Constants
         RenderSystem.disableBlend();
         RenderSystem.defaultBlendFunc();
     });
-    private static final RenderType.CompositeState translucentCompositeState = RenderType.CompositeState.builder().setTransparencyState(TRANSLUCENT_TRANSPARENCY).setWriteMaskState(new RenderStateShard.WriteMaskStateShard(true, true)).setShaderState(new RenderStateShard.ShaderStateShard(GameRenderer::getRendertypeLightningShader)).createCompositeState(false);
-
-    public static VertexConsumer createTransclucentStateBuffer(MultiBufferSource bufferSource) {
-        return bufferSource.getBuffer(RenderType.create("opaque", DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.QUADS, 256, false, false, translucentCompositeState));
-    }
+    static final RenderType.CompositeState translucentCompositeState = RenderType.CompositeState.builder().setTransparencyState(TRANSLUCENT_TRANSPARENCY).setWriteMaskState(new RenderStateShard.WriteMaskStateShard(true, true)).setShaderState(new RenderStateShard.ShaderStateShard(GameRenderer::getRendertypeLightningShader)).createCompositeState(false);
 }
