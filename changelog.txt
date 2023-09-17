@@ -1,3 +1,6 @@
+7.0.7-1.20.1:
+added graphical rectangular face addition method;
+
 7.0.6-1.20.1:
 fixed item stack comparison function;
 
