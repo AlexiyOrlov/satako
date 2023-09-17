@@ -89,8 +89,7 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
                 int sy = s.y;
                 ;
                 TextureManager textureManager = minecraft.getTextureManager();
-                if (s instanceof ItemHandlerSlot) {
-                    ItemHandlerSlot itemHandlerSlot = (ItemHandlerSlot) s;
+                if (s instanceof ItemHandlerSlot itemHandlerSlot) {
                     if (itemHandlerSlot.getTexture() == null) {
                         //color
                         fill(matrixStack, sx + leftPos, sy + topPos, sx + leftPos + 16, sy + topPos + 16, itemHandlerSlot.getColor().getIntColor());

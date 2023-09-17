@@ -40,53 +40,6 @@ public final class Methods {
         poss.forEach(blockPos -> world.setBlockAndUpdate(blockPos, state));
     }
 
-//    public static void drawSingleBlockSelection(Player player, float partialTicks, BlockState blockState, BlockPos pos)
-//    {
-////        double d0 = player.lastTickPosX + (player.getX() - player.lastTickPosX) * partialTicks;
-////        double d1 = player.lastTickPosY + (player.getY() - player.lastTickPosY) * partialTicks;
-////        double d2 = player.lastTickPosZ + (player.getZ() - player.lastTickPosZ) * partialTicks;
-//        GlStateManager._enableBlend();
-//        GlStateManager._blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA.value, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA.value, GlStateManager.SourceFactor.ONE.value, GlStateManager.DestFactor.ZERO.value);
-//        GlStateManager._lineWidth(2.0F);
-//        GlStateManager._disableTexture();
-//        GlStateManager._depthMask(false);
-////     TODO   RenderGlobal.drawSelectionBoundingBox(blockState.getRaytraceShape(player.world, pos).grow(0.001, 0.001, 0.001).offset(-d0, -d1, -d2), 1f, 0.582156864f, 0.294118f, 1F);
-//        GlStateManager._depthMask(true);
-//        GlStateManager._enableTexture();
-//        GlStateManager._disableBlend();
-//    }
-
-//    public static void drawBlockSelection(Player player, float partialTicks, BlockPos start, BlockPos end)
-//    {
-////        double d0 = player.lastTickPosX + (player.getX() - player.lastTickPosX) * partialTicks;
-////        double d1 = player.lastTickPosY + (player.getY() - player.lastTickPosY) * partialTicks;
-////        double d2 = player.lastTickPosZ + (player.getZ() - player.lastTickPosZ) * partialTicks;
-//        AABB axisAlignedBB = new AABB(start, end);
-//        for (double X = axisAlignedBB.minX; X <= axisAlignedBB.maxX; X++)
-//        {
-//            for (double Y = axisAlignedBB.minY; Y <= axisAlignedBB.maxY; Y++)
-//            {
-//                for (double Z = axisAlignedBB.minZ; Z <= axisAlignedBB.maxZ; Z++)
-//                {
-//                    BlockPos nextpos = new BlockPos(X, Y, Z);
-//                    BlockState blockState = player.level.getBlockState(nextpos);
-//
-//                    GlStateManager._enableBlend();
-//                    GlStateManager._blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA.value, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA.value, GlStateManager.SourceFactor.ONE.value, GlStateManager.DestFactor.ZERO.value);
-//                    GlStateManager._lineWidth(2.0F);
-//                    GlStateManager._disableTexture();
-//                    GlStateManager._depthMask(false);
-////                  TODO  RenderGlobal.drawSelectionBoundingBox(blockState.getSelectedBoundingBox(player.world, nextpos).grow(0.001, 0.001, 0.001).offset(-d0, -d1, -d2), 1f, 0.582156864f, 0.294118f, 1F);
-//                    GlStateManager._depthMask(true);
-//                    GlStateManager._enableTexture();
-//                    GlStateManager._disableBlend();
-//
-//                }
-//            }
-//        }
-//    }
-
-
     public static void removeTileEntitySilently(BlockPos pos, Level world) {
         BlockEntity tileentity = world.getBlockEntity(pos);
         try {
@@ -143,7 +96,7 @@ public final class Methods {
         int circle_points = 50;
         float angle = 2.0f * 3.1416f / circle_points;
         BufferBuilder bufferBuilder = tessellator.getBuilder();
-        //TODO checl format
+        //TODO check format
         bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
         double angle1 = 0.0;
         double xx = radius * Math.cos(0);
@@ -179,36 +132,6 @@ public final class Methods {
     public static void playSound(Level world, BlockPos blockPos, SoundEvent sound, float volume, float pitch) {
         world.playLocalSound(blockPos.getX(), blockPos.getY(), blockPos.getZ(), sound, null, volume, pitch, false);
     }
-    //FIXME
-//    public static void drawVerticalLine(int x, int startY, int endY, IntegerColor color, int thickness)
-//    {
-//        int red = color.getRed();
-//        int green = color.getGreen();
-//        int blue = color.getBlue();
-//        int alpha = color.getAlpha();
-//        Tesselator tessellator = Tesselator.getInstance();
-//        BufferBuilder bufferBuilder = tessellator.getBuilder();
-//        bufferBuilder.begin(VertexFormat.Mode.LINES, DefaultVertexFormat.POSITION_COLOR);
-//        GL11.glLineWidth(thickness);
-//        bufferBuilder.vertex(x, startY, 0).color(red, green, blue, alpha).endVertex();
-//        bufferBuilder.vertex(x, endY, 0).color(red, green, blue, alpha).endVertex();
-//        tessellator.end();
-//    }
-//    FIXME
-//    public static void drawHorizontalLine(int startX, int endX, int y, IntegerColor color, int thickness)
-//    {
-//        int red = color.getRed();
-//        int green = color.getGreen();
-//        int blue = color.getBlue();
-//        int alpha = color.getAlpha();
-//        Tesselator tessellator = Tesselator.getInstance();
-//        BufferBuilder bufferBuilder = tessellator.getBuilder();
-//        bufferBuilder.begin(VertexFormat.Mode.LINES, DefaultVertexFormat.POSITION_COLOR);
-//        GL11.glLineWidth(thickness);
-//        bufferBuilder.vertex(startX, y, 0).color(red, green, blue, alpha).endVertex();
-//        bufferBuilder.vertex(endX, y, 0).color(red, green, blue, alpha).endVertex();
-//        tessellator.end();
-//    }
 
     public static void sendMessageToPlayer(Player player, String message) {
         player.displayClientMessage(Component.literal(message), false);
