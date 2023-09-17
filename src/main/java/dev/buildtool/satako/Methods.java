@@ -1,9 +1,6 @@
 package dev.buildtool.satako;
 
-import com.mojang.blaze3d.vertex.BufferBuilder;
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
-import com.mojang.blaze3d.vertex.Tesselator;
-import com.mojang.blaze3d.vertex.VertexFormat;
+import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
@@ -24,6 +21,7 @@ import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.items.IItemHandler;
+import org.joml.Matrix4f;
 
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -286,6 +284,83 @@ public final class Methods {
                     }
                 }
             }
+        }
+    }
+
+    /**
+     * Adds rectangular faces of specified dimensions and color to the vertex consumer
+     */
+    public static void addRectangularFaces(VertexConsumer target, Matrix4f matrix4f, float width, float height, float depth, float red, float green, float blue, float alpha, boolean addBackFaces) {
+        //Up
+        target.vertex(matrix4f, 0, 1 + height, 0).color(red, green, blue, alpha).endVertex();
+        target.vertex(matrix4f, 0, 1 + height, 1 + depth).color(red, green, blue, alpha).endVertex();
+        target.vertex(matrix4f, 1 + width, 1 + height, 1 + depth).color(red, green, blue, alpha).endVertex();
+        target.vertex(matrix4f, 1 + width, 1 + height, 0).color(red, green, blue, alpha).endVertex();
+        if (addBackFaces) {
+            target.vertex(matrix4f, 1 + width, 1 + height, 0).color(red, green, blue, alpha).endVertex();
+            target.vertex(matrix4f, 1 + width, 1 + height, 1 + depth).color(red, green, blue, alpha).endVertex();
+            target.vertex(matrix4f, 0, 1 + height, 1 + depth).color(red, green, blue, alpha).endVertex();
+            target.vertex(matrix4f, 0, 1 + height, 0).color(red, green, blue, alpha).endVertex();
+        }
+
+        //Down
+        target.vertex(matrix4f, 1 + width, 0, 0).color(red, green, blue, alpha).endVertex();
+        target.vertex(matrix4f, 1 + width, 0, 1 + depth).color(red, green, blue, alpha).endVertex();
+        target.vertex(matrix4f, 0, 0, 1 + depth).color(red, green, blue, alpha).endVertex();
+        target.vertex(matrix4f, 0, 0, 0).color(red, green, blue, alpha).endVertex();
+        if (addBackFaces) {
+            target.vertex(matrix4f, 0, 0, 0).color(red, green, blue, alpha).endVertex();
+            target.vertex(matrix4f, 0, 0, 1 + depth).color(red, green, blue, alpha).endVertex();
+            target.vertex(matrix4f, 1 + width, 0, 1 + depth).color(red, green, blue, alpha).endVertex();
+            target.vertex(matrix4f, 1 + width, 0, 0).color(red, green, blue, alpha).endVertex();
+        }
+
+        //North
+        target.vertex(matrix4f, 0, 0, 0).color(red, green, blue, alpha).endVertex();
+        target.vertex(matrix4f, 0, 1 + height, 0).color(red, green, blue, alpha).endVertex();
+        target.vertex(matrix4f, 1 + width, 1 + height, 0).color(red, green, blue, alpha).endVertex();
+        target.vertex(matrix4f, 1 + width, 0, 0).color(red, green, blue, alpha).endVertex();
+        if (addBackFaces) {
+            target.vertex(matrix4f, 1 + width, 0, 0).color(red, green, blue, alpha).endVertex();
+            target.vertex(matrix4f, 1 + width, 1 + height, 0).color(red, green, blue, alpha).endVertex();
+            target.vertex(matrix4f, 0, 1 + height, 0).color(red, green, blue, alpha).endVertex();
+            target.vertex(matrix4f, 0, 0, 0).color(red, green, blue, alpha).endVertex();
+        }
+
+        //South
+        target.vertex(matrix4f, 1 + width, 0, 1 + depth).color(red, green, blue, alpha).endVertex();
+        target.vertex(matrix4f, 1 + width, 1 + height, 1 + depth).color(red, green, blue, alpha).endVertex();
+        target.vertex(matrix4f, 0, 1 + height, 1 + depth).color(red, green, blue, alpha).endVertex();
+        target.vertex(matrix4f, 0, 0, 1 + depth).color(red, green, blue, alpha).endVertex();
+        if (addBackFaces) {
+            target.vertex(matrix4f, 0, 0, 1 + depth).color(red, green, blue, alpha).endVertex();
+            target.vertex(matrix4f, 0, 1 + height, 1 + depth).color(red, green, blue, alpha).endVertex();
+            target.vertex(matrix4f, 1 + width, 1 + height, 1 + depth).color(red, green, blue, alpha).endVertex();
+            target.vertex(matrix4f, 1 + width, 0, 1 + depth).color(red, green, blue, alpha).endVertex();
+        }
+
+        //West
+        target.vertex(matrix4f, 0, 0, 0).color(red, green, blue, alpha).endVertex();
+        target.vertex(matrix4f, 0, 0, 1 + depth).color(red, green, blue, alpha).endVertex();
+        target.vertex(matrix4f, 0, 1 + height, 1 + depth).color(red, green, blue, alpha).endVertex();
+        target.vertex(matrix4f, 0, 1 + height, 0).color(red, green, blue, alpha).endVertex();
+        if (addBackFaces) {
+            target.vertex(matrix4f, 0, 1 + height, 0).color(red, green, blue, alpha).endVertex();
+            target.vertex(matrix4f, 0, 1 + height, 1 + depth).color(red, green, blue, alpha).endVertex();
+            target.vertex(matrix4f, 0, 0, 1 + depth).color(red, green, blue, alpha).endVertex();
+            target.vertex(matrix4f, 0, 0, 0).color(red, green, blue, alpha).endVertex();
+        }
+
+        //East
+        target.vertex(matrix4f, 1 + width, 1 + height, 0).color(red, green, blue, alpha).endVertex();
+        target.vertex(matrix4f, 1 + width, 1 + height, 1 + depth).color(red, green, blue, alpha).endVertex();
+        target.vertex(matrix4f, 1 + width, 0, 1 + depth).color(red, green, blue, alpha).endVertex();
+        target.vertex(matrix4f, 1 + width, 0, 0).color(red, green, blue, alpha).endVertex();
+        if (addBackFaces) {
+            target.vertex(matrix4f, 1 + width, 0, 0).color(red, green, blue, alpha).endVertex();
+            target.vertex(matrix4f, 1 + width, 0, 1 + depth).color(red, green, blue, alpha).endVertex();
+            target.vertex(matrix4f, 1 + width, 1 + height, 1 + depth).color(red, green, blue, alpha).endVertex();
+            target.vertex(matrix4f, 1 + width, 1 + height, 0).color(red, green, blue, alpha).endVertex();
         }
     }
 }
