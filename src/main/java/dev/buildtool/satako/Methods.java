@@ -367,6 +367,6 @@ public final class Methods {
     }
 
     public static VertexConsumer createTransclucentStateBuffer(MultiBufferSource bufferSource) {
-        return bufferSource.getBuffer(RenderType.create("opaque", DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.QUADS, 256, false, false, translucentCompositeState));
+        return bufferSource.getBuffer(RenderType.create("opaque", DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.QUADS, 256, false, false, Constants.translucentCompositeState));
     }
 }
