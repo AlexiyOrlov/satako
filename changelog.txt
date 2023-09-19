@@ -1,5 +1,6 @@
 5.0.10:
-
+fixed color component calculation;
+added graphical rectangle addition method;
 
 5.0.9:
 implemented scroll area;
