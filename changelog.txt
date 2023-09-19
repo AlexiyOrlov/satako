@@ -1,5 +1,7 @@
 6.0.11-1.19:
 fixed stack comparison function;
+fixed color component calculation;
+added graphical rectangle addition method;
 
 6.0.10-1.19:
 fixed color component calculation;
