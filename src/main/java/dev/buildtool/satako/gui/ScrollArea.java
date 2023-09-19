@@ -79,10 +79,6 @@ public class ScrollArea extends AbstractButton {
         } else maxScrollDistance = 0;
     }
 
-//    public ScrollArea(int x, int y, int width, int height, Component p_93633_, IntegerColor backgroundColor, Object... items) {
-//        this(x, y, width, height, p_93633_, backgroundColor, Arrays.asList(items));
-//    }
-
     @Override
     public boolean mouseClicked(double mx, double my, int p_93643_) {
         if (mx > buttonLeft && mx < buttonLeft + 20 && my > y && my < (y + getHeight()) / 2f)
@@ -109,8 +105,6 @@ public class ScrollArea extends AbstractButton {
             drawCenteredString(poseStack, font, getMessage(), (x + width / 2), y - 15, 0xffffff);
         }
 
-
-        //RenderSystem.setShader(GameRenderer::getPositionColorShader);
         RenderSystem.disableTexture();
         Tessellator tesselator = Tessellator.getInstance();
         BufferBuilder bufferBuilder = tesselator.getBuilder();
@@ -126,8 +120,8 @@ public class ScrollArea extends AbstractButton {
         bufferBuilder.vertex(buttonLeft, bottomButtonTop + height / 2f, 0).color(color.getRed(), 128, color.getBlue(), 255).endVertex();
         bufferBuilder.vertex(buttonLeft + 20, bottomButtonTop + height / 2f, 0).color(color.getRed(), 128, color.getBlue(), 255).endVertex();
         tesselator.end();
-        drawCenteredString(poseStack, font, new StringTextComponent("+"), buttonLeft + 10, y + height / 4, 0xffffff);
-        drawCenteredString(poseStack, font, new StringTextComponent("-"), buttonLeft + 10, (bottomButtonTop + height / 4) - 10, 0xffffff);
+        drawCenteredString(poseStack, font, new StringTextComponent("-"), buttonLeft + 10, y + height / 4, 0xffffff);
+        drawCenteredString(poseStack, font, new StringTextComponent("+"), buttonLeft + 10, (bottomButtonTop + height / 4) - 10, 0xffffff);
         if (scrollDirection != 0) {
             if (scrolled == 0 || (scrolled > -(maxScrollDistance - height) || scrolled < -(maxScrollDistance - height) && scrollDirection == 1) && (scrolled <= 0 || scrollDirection == -1)) {
                 for (Object guiEventListener : guiEventListeners) {
