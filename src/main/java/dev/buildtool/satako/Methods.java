@@ -1,6 +1,7 @@
 package dev.buildtool.satako;
 
 import com.mojang.blaze3d.vertex.*;
+import com.mojang.math.Matrix4f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
@@ -283,6 +284,84 @@ public final class Methods {
                     }
                 }
             }
+        }
+    }
+
+    /**
+     * @param addBackFaces whether to add back faces for the sides
+     * @param extruder     offsets faces
+     */
+    public static void addRectangle(VertexConsumer vertexConsumer, Matrix4f matrix4f, int width, int height, int depth, float red, float green, float blue, float alpha, boolean addBackFaces, float extruder) {
+        //Up
+        vertexConsumer.vertex(matrix4f, 0, height + 1 + extruder, 0).color(red, green, blue, alpha).endVertex();
+        vertexConsumer.vertex(matrix4f, 0, height + 1 + extruder, depth + 1).color(red, green, blue, alpha).endVertex();
+        vertexConsumer.vertex(matrix4f, width + 1, height + 1 + extruder, depth + 1).color(red, green, blue, alpha).endVertex();
+        vertexConsumer.vertex(matrix4f, width + 1, height + 1 + extruder, 0).color(red, green, blue, alpha).endVertex();
+        if (addBackFaces) {
+            vertexConsumer.vertex(matrix4f, 1 + width, height + 1 + extruder, 0).color(red, green, blue, alpha).endVertex();
+            vertexConsumer.vertex(matrix4f, 1 + width, height + 1 + extruder, 1 + depth).color(red, green, blue, alpha).endVertex();
+            vertexConsumer.vertex(matrix4f, 0, height + 1 + extruder, 1 + depth).color(red, green, blue, alpha).endVertex();
+            vertexConsumer.vertex(matrix4f, 0, height + 1 + extruder, 0).color(red, green, blue, alpha).endVertex();
+        }
+
+        //Down
+        vertexConsumer.vertex(matrix4f, 1 + width, -extruder, 0).color(red, green, blue, alpha).endVertex();
+        vertexConsumer.vertex(matrix4f, 1 + width, -extruder, 1 + depth).color(red, green, blue, alpha).endVertex();
+        vertexConsumer.vertex(matrix4f, 0, -extruder, 1 + depth).color(red, green, blue, alpha).endVertex();
+        vertexConsumer.vertex(matrix4f, 0, -extruder, 0).color(red, green, blue, alpha).endVertex();
+        if (addBackFaces) {
+            vertexConsumer.vertex(matrix4f, 0, -extruder, 0).color(red, green, blue, alpha).endVertex();
+            vertexConsumer.vertex(matrix4f, 0, -extruder, 1 + depth).color(red, green, blue, alpha).endVertex();
+            vertexConsumer.vertex(matrix4f, 1 + width, -extruder, 1 + depth).color(red, green, blue, alpha).endVertex();
+            vertexConsumer.vertex(matrix4f, 1 + width, -extruder, 0).color(red, green, blue, alpha).endVertex();
+        }
+
+        //North
+        vertexConsumer.vertex(matrix4f, 0, 0, -extruder).color(red, green, blue, alpha).endVertex();
+        vertexConsumer.vertex(matrix4f, 0, height + 1, -extruder).color(red, green, blue, alpha).endVertex();
+        vertexConsumer.vertex(matrix4f, width + 1, height + 1, -extruder).color(red, green, blue, alpha).endVertex();
+        vertexConsumer.vertex(matrix4f, width + 1, 0, -extruder).color(red, green, blue, alpha).endVertex();
+        if (addBackFaces) {
+            vertexConsumer.vertex(matrix4f, width + 1, 0, -extruder).color(red, green, blue, alpha).endVertex();
+            vertexConsumer.vertex(matrix4f, width + 1, height + 1, -extruder).color(red, green, blue, alpha).endVertex();
+            vertexConsumer.vertex(matrix4f, 0, height + 1, -extruder).color(red, green, blue, alpha).endVertex();
+            vertexConsumer.vertex(matrix4f, 0, 0, -extruder).color(red, green, blue, alpha).endVertex();
+        }
+
+        //South
+        vertexConsumer.vertex(matrix4f, width + 1, 0, depth + 1 + extruder).color(red, green, blue, alpha).endVertex();
+        vertexConsumer.vertex(matrix4f, width + 1, height + 1, depth + 1 + extruder).color(red, green, blue, alpha).endVertex();
+        vertexConsumer.vertex(matrix4f, 0, height + 1, depth + 1 + extruder).color(red, green, blue, alpha).endVertex();
+        vertexConsumer.vertex(matrix4f, 0, 0, depth + 1 + extruder).color(red, green, blue, alpha).endVertex();
+        if (addBackFaces) {
+            vertexConsumer.vertex(matrix4f, 0, 0, depth + 1 + extruder).color(red, green, blue, alpha).endVertex();
+            vertexConsumer.vertex(matrix4f, 0, height + 1, depth + 1 + extruder).color(red, green, blue, alpha).endVertex();
+            vertexConsumer.vertex(matrix4f, width + 1, height + 1, depth + 1 + extruder).color(red, green, blue, alpha).endVertex();
+            vertexConsumer.vertex(matrix4f, width + 1, 0, depth + 1 + extruder).color(red, green, blue, alpha).endVertex();
+        }
+
+        //West
+        vertexConsumer.vertex(matrix4f, -extruder, 0, 0).color(red, green, blue, alpha).endVertex();
+        vertexConsumer.vertex(matrix4f, -extruder, 0, depth + 1).color(red, green, blue, alpha).endVertex();
+        vertexConsumer.vertex(matrix4f, -extruder, height + 1, depth + 1).color(red, green, blue, alpha).endVertex();
+        vertexConsumer.vertex(matrix4f, -extruder, height + 1, 0).color(red, green, blue, alpha).endVertex();
+        if (addBackFaces) {
+            vertexConsumer.vertex(matrix4f, -extruder, height + 1, 0).color(red, green, blue, alpha).endVertex();
+            vertexConsumer.vertex(matrix4f, -extruder, height + 1, depth + 1).color(red, green, blue, alpha).endVertex();
+            vertexConsumer.vertex(matrix4f, -extruder, 0, depth + 1).color(red, green, blue, alpha).endVertex();
+            vertexConsumer.vertex(matrix4f, -extruder, 0, 0).color(red, green, blue, alpha).endVertex();
+        }
+
+        //East
+        vertexConsumer.vertex(matrix4f, width + 1 + extruder, height + 1, 0).color(red, green, blue, alpha).endVertex();
+        vertexConsumer.vertex(matrix4f, width + 1 + extruder, height + 1, depth + 1).color(red, green, blue, alpha).endVertex();
+        vertexConsumer.vertex(matrix4f, width + 1 + extruder, 0, depth + 1).color(red, green, blue, alpha).endVertex();
+        vertexConsumer.vertex(matrix4f, width + 1 + extruder, 0, 0).color(red, green, blue, alpha).endVertex();
+        if (addBackFaces) {
+            vertexConsumer.vertex(matrix4f, width + 1 + extruder, 0, 0).color(red, green, blue, alpha).endVertex();
+            vertexConsumer.vertex(matrix4f, width + 1 + extruder, 0, depth + 1).color(red, green, blue, alpha).endVertex();
+            vertexConsumer.vertex(matrix4f, width + 1 + extruder, height + 1, depth + 1).color(red, green, blue, alpha).endVertex();
+            vertexConsumer.vertex(matrix4f, width + 1 + extruder, height + 1, 0).color(red, green, blue, alpha).endVertex();
         }
     }
 }
