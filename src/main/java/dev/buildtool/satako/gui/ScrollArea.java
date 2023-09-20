@@ -19,6 +19,7 @@ import java.util.List;
 
 public class ScrollArea extends AbstractWidget {
     public final IntegerColor color;
+    static final IntegerColor MINUS_BUTTON_COLOR = new IntegerColor(0x538AA6ff), PLUS_BUTTON_COLOR = new IntegerColor(0xABAB38ff);
     int buttonLeft;
     int bottomButtonTop;
     protected List<?> guiEventListeners;
@@ -104,15 +105,16 @@ public class ScrollArea extends AbstractWidget {
         BufferBuilder bufferBuilder = tesselator.getBuilder();
         int offsetY = getMessage().getString().isEmpty() ? 0 : 10;
         bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
-        bufferBuilder.vertex(getX() + width, getY(), 0).color(color.getRed(), color.getGreen(), 128, 255).endVertex();
-        bufferBuilder.vertex(buttonLeft, getY(), 0).color(color.getRed(), color.getGreen(), 128, 255).endVertex();
-        bufferBuilder.vertex(buttonLeft, bottomButtonTop + offsetY, 0).color(color.getRed(), color.getGreen(), 128, 255).endVertex();
-        bufferBuilder.vertex(getX() + width, bottomButtonTop + offsetY, 0).color(color.getRed(), color.getGreen(), 128, 255).endVertex();
+        bufferBuilder.vertex(getX() + width, getY(), 0).color(MINUS_BUTTON_COLOR.getRed(), MINUS_BUTTON_COLOR.getGreen(), MINUS_BUTTON_COLOR.getBlue(), 255).endVertex();
+        bufferBuilder.vertex(buttonLeft, getY(), 0).color(MINUS_BUTTON_COLOR.getRed(), MINUS_BUTTON_COLOR.getGreen(), MINUS_BUTTON_COLOR.getBlue(), 255).endVertex();
+        bufferBuilder.vertex(buttonLeft, bottomButtonTop + offsetY, 0).color(MINUS_BUTTON_COLOR.getRed(), MINUS_BUTTON_COLOR.getGreen(), MINUS_BUTTON_COLOR.getBlue(), 255).endVertex();
+        bufferBuilder.vertex(getX() + width, bottomButtonTop + offsetY, 0).color(MINUS_BUTTON_COLOR.getRed(), MINUS_BUTTON_COLOR.getGreen(), MINUS_BUTTON_COLOR.getBlue(), 255).endVertex();
 
-        bufferBuilder.vertex(buttonLeft + 20, bottomButtonTop + offsetY, 0).color(color.getRed(), 129, color.getBlue(), 255).endVertex();
-        bufferBuilder.vertex(buttonLeft, bottomButtonTop + offsetY, 0).color(color.getRed(), 128, color.getBlue(), 255).endVertex();
-        bufferBuilder.vertex(buttonLeft, bottomButtonTop + height / 2f, 0).color(color.getRed(), 128, color.getBlue(), 255).endVertex();
-        bufferBuilder.vertex(buttonLeft + 20, bottomButtonTop + height / 2f, 0).color(color.getRed(), 128, color.getBlue(), 255).endVertex();
+        bufferBuilder.vertex(buttonLeft + 20, bottomButtonTop + offsetY, 0).color(PLUS_BUTTON_COLOR.getRed(), PLUS_BUTTON_COLOR.getGreen(), PLUS_BUTTON_COLOR.getBlue(), 255).endVertex();
+        bufferBuilder.vertex(buttonLeft, bottomButtonTop + offsetY, 0).color(PLUS_BUTTON_COLOR.getRed(), PLUS_BUTTON_COLOR.getGreen(), PLUS_BUTTON_COLOR.getBlue(), 255).endVertex();
+        bufferBuilder.vertex(buttonLeft, bottomButtonTop + height / 2f, 0).color(PLUS_BUTTON_COLOR.getRed(), PLUS_BUTTON_COLOR.getGreen(), PLUS_BUTTON_COLOR.getBlue(), 255).endVertex();
+        bufferBuilder.vertex(buttonLeft + 20, bottomButtonTop + height / 2f, 0).color(PLUS_BUTTON_COLOR.getRed(), PLUS_BUTTON_COLOR.getGreen(), PLUS_BUTTON_COLOR.getBlue(), 255).endVertex();
+        tesselator.end();
         tesselator.end();
         poseStack.drawCenteredString(font, Component.literal("-"), buttonLeft + 10, getY() + height / 4, 0xffffff);
         poseStack.drawCenteredString(font, Component.literal("+"), buttonLeft + 10, (bottomButtonTop + height / 4) - 10, 0xffffff);
