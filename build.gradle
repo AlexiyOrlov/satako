@@ -12,7 +12,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-project.version = '6.0.12-1.19'
+project.version = '6.0.13-1.19'
 group = project.property('maven_group')
 archivesBaseName = 'Satako'
 
