@@ -1,4 +1,4 @@
-6.0.13-1.19:
+6.0.14-1.19:
 fixed stack comparison function;
 fixed color component calculation;
 added graphical rectangle addition method;
