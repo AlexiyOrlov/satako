@@ -112,7 +112,6 @@ public class ScrollArea extends AbstractWidget {
         bufferBuilder.vertex(buttonLeft, bottomButtonTop + height / 2f, 0).color(PLUS_BUTTON_COLOR.getRed(), PLUS_BUTTON_COLOR.getGreen(), PLUS_BUTTON_COLOR.getBlue(), 255).endVertex();
         bufferBuilder.vertex(buttonLeft + 20, bottomButtonTop + height / 2f, 0).color(PLUS_BUTTON_COLOR.getRed(), PLUS_BUTTON_COLOR.getGreen(), PLUS_BUTTON_COLOR.getBlue(), 255).endVertex();
         tesselator.end();
-        tesselator.end();
         drawCenteredString(poseStack, font, Component.literal("-"), buttonLeft + 10, y + height / 4, 0xffffff);
         drawCenteredString(poseStack, font, Component.literal("+"), buttonLeft + 10, (bottomButtonTop + height / 4) - 10, 0xffffff);
         if (scrollDirection != 0) {
