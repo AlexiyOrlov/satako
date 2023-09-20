@@ -1,4 +1,4 @@
-5.0.12:
+5.0.13:
 fixed color component calculation;
 added graphical rectangle addition method;
 
