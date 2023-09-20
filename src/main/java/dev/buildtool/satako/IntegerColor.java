@@ -16,9 +16,9 @@ public class IntegerColor
     public IntegerColor(int color)
     {
         this.color = color;
-        red = (color >> 24 & 255) / 255;
-        green = (color >> 16 & 255) / 255;
-        blue = (color >> 8 & 255) / 255;
+        red = (color >> 24 & 255) / 255f;
+        green = (color >> 16 & 255) / 255f;
+        blue = (color >> 8 & 255) / 255f;
         alpha = color & 255;
     }
 
