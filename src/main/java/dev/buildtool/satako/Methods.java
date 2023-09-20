@@ -394,10 +394,10 @@ public final class Methods
 
     public static void drawVerticalLine(int x, int startY, int endY, IntegerColor color, int thickness)
     {
-        int red = color.getRed();
-        int green = color.getGreen();
-        int blue = color.getBlue();
-        int alpha = color.getAlpha();
+        float red = color.getRed();
+        float green = color.getGreen();
+        float blue = color.getBlue();
+        float alpha = color.getAlpha();
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder bufferBuilder = tessellator.getBuilder();
         bufferBuilder.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION_COLOR);
@@ -409,10 +409,10 @@ public final class Methods
 
     public static void drawHorizontalLine(int startX, int endX, int y, IntegerColor color, int thickness)
     {
-        int red = color.getRed();
-        int green = color.getGreen();
-        int blue = color.getBlue();
-        int alpha = color.getAlpha();
+        float red = color.getRed();
+        float green = color.getGreen();
+        float blue = color.getBlue();
+        float alpha = color.getAlpha();
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder bufferBuilder = tessellator.getBuilder();
         bufferBuilder.begin(GL11.GL_LINES, DefaultVertexFormats.POSITION_COLOR);

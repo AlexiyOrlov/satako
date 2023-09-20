@@ -6,10 +6,10 @@ package dev.buildtool.satako;
 public class IntegerColor
 {
     private final int color;
-    private final int red;
-    private final int green;
-    private final int blue;
-    private final int alpha;
+    private final float red;
+    private final float green;
+    private final float blue;
+    private final float alpha;
     /**
      * @param color ARGB
      */
@@ -27,22 +27,22 @@ public class IntegerColor
         return color;
     }
 
-    public int getRed()
+    public float getRed()
     {
         return red;
     }
 
-    public int getBlue()
+    public float getBlue()
     {
         return blue;
     }
 
-    public int getGreen()
+    public float getGreen()
     {
         return green;
     }
 
-    public int getAlpha()
+    public float getAlpha()
     {
         return alpha;
     }
