@@ -21,7 +21,7 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
     public void init() {
         super.init();
         ArrayList<Object> elements = new ArrayList<>();
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 30; i++) {
             Label label = new Label(0, 20 * i + 20, new StringTextComponent("#" + i));
             elements.add(label);
             addButton(label);
