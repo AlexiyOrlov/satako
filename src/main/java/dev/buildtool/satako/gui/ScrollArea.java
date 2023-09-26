@@ -26,7 +26,6 @@ public class ScrollArea extends AbstractButton {
     private int scrolled;
     private int highest;
     private final int maxScrollDistance;
-    private Object bottomElement;
 
     public ScrollArea(int x, int y, int width, int height, TextComponent p_93633_, IntegerColor color, List<?> guiEventListeners) {
         super(x, y, width, height, p_93633_);
@@ -61,6 +60,7 @@ public class ScrollArea extends AbstractButton {
                     highest = a.y;
             }
         }
+        Object bottomElement = null;
         for (Object item : guiEventListeners) {
             if (item instanceof Positionable) {
                 Positionable positionable = (Positionable) item;
@@ -75,7 +75,7 @@ public class ScrollArea extends AbstractButton {
         if (bottomElement instanceof Positionable) {
             Positionable positionable = (Positionable) bottomElement;
             maxScrollDistance = positionable.getY() + positionable.getElementHeight();
-        } else if (bottomElement instanceof AbstractButton) {
+        } else if (bottomElement != null) {
             AbstractButton abstractButton = (AbstractButton) bottomElement;
             maxScrollDistance = abstractButton.y + abstractButton.getHeight();
         } else maxScrollDistance = 0;
