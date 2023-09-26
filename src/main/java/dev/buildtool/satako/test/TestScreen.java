@@ -24,7 +24,7 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
         addRenderableWidget(radioButton2);
         new ButtonGroup(radioButton, radioButton2);
         ArrayList<Object> elements = new ArrayList<>();
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 30; i++) {
             Label label = new Label(0, 20 * i, Component.literal("#" + i));
             elements.add(label);
             addRenderableWidget(label);
