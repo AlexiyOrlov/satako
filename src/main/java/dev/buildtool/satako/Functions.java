@@ -1,13 +1,6 @@
 package dev.buildtool.satako;
 
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.blaze3d.vertex.VertexFormat;
 import io.netty.buffer.Unpooled;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -582,32 +575,16 @@ public final class Functions {
         return null;
     }
 
-    public static int calculateStringWidth(Component string) {
-        if (string != null) {
-            return Minecraft.getInstance().font.width(string.getString());
-        }
-        return 0;
-    }
-
     /**
      * Returns the length of longest string
      */
     public static int calculateLongestStringWidth(Collection<Component> objects) {
         int width = 0;
         for (Component s : objects) {
-            int nextwidth = calculateStringWidth(s);
+            int nextwidth = ClientFunctions.calculateStringWidth(s);
             if (nextwidth > width) width = nextwidth;
         }
         return width;
-    }
-
-    /**
-     * Retrieves translated string
-     */
-    @Deprecated
-    public static String getTranslation(String key)
-    {
-        return I18n.get(key);
     }
 
     /**
@@ -1041,9 +1018,5 @@ public final class Functions {
             return Direction.UP;
         }
         return livingEntity.getDirection();
-    }
-
-    public static VertexConsumer createTransclucentStateBuffer(MultiBufferSource bufferSource) {
-        return bufferSource.getBuffer(RenderType.create("opaque", DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.QUADS, 256, false, false, Constants.translucentCompositeState));
     }
 }
