@@ -6,6 +6,7 @@ import dev.buildtool.satako.IntegerColor;
 import dev.buildtool.satako.ItemHandlerSlot;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
@@ -110,5 +111,13 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
     @Override
     protected void renderLabels(GuiGraphics poseStack, int p1, int p2) {
         poseStack.drawString(font, title, imageWidth / 2 - font.width(title.getString()) / 2, -14, 0xE35F3B);
+    }
+
+    @Override
+    public boolean mouseDragged(double p_97752_, double p_97753_, int p_97754_, double p_97755_, double p_97756_) {
+        for (GuiEventListener child : this.children()) {
+            child.mouseDragged(p_97752_, p_97753_, p_97754_, p_97755_, p_97756_);
+        }
+        return super.mouseDragged(p_97752_, p_97753_, p_97754_, p_97755_, p_97756_);
     }
 }
