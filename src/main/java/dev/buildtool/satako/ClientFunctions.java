@@ -13,7 +13,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class ClientFunctions {
     public static VertexConsumer createTransclucentStateBuffer(MultiBufferSource bufferSource) {
-        return bufferSource.getBuffer(RenderType.create("opaque", DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.QUADS, 256, false, false, Constants.translucentCompositeState));
+        return bufferSource.getBuffer(RenderType.create("opaque", DefaultVertexFormat.POSITION_COLOR, VertexFormat.Mode.QUADS, 256, false, false, ClientConstants.translucentCompositeState));
     }
 
     public static int calculateStringWidth(Component string) {
