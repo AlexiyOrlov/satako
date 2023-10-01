@@ -1,3 +1,6 @@
+5.0.14:
+fixed server crashes;
+
 5.0.13:
 fixed color component calculation;
 added graphical rectangle addition method;
