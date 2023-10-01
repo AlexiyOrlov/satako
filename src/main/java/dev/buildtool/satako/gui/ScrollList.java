@@ -1,8 +1,8 @@
 package dev.buildtool.satako.gui;
 
 
+import dev.buildtool.satako.ClientMethods;
 import dev.buildtool.satako.Constants;
-import dev.buildtool.satako.Methods;
 import dev.buildtool.satako.UniqueList;
 
 public class ScrollList implements Scrollable, Hideable {
@@ -55,10 +55,10 @@ public class ScrollList implements Scrollable, Hideable {
     {
         if (visible)
         {
-            Methods.drawHorizontalLine(x, x + width, y, Constants.GREEN, 2);
-            Methods.drawHorizontalLine(x, x + width, y + height, Constants.GREEN, 2);
-            Methods.drawVerticalLine(x, y, y + height, Constants.GREEN, 2);
-            Methods.drawVerticalLine(x + width, y, y + height, Constants.GREEN, 2);
+            ClientMethods.drawHorizontalLine(x, x + width, y, Constants.GREEN, 2);
+            ClientMethods.drawHorizontalLine(x, x + width, y + height, Constants.GREEN, 2);
+            ClientMethods.drawVerticalLine(x, y, y + height, Constants.GREEN, 2);
+            ClientMethods.drawVerticalLine(x + width, y, y + height, Constants.GREEN, 2);
         }
 
 

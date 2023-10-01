@@ -3,10 +3,10 @@ package dev.buildtool.satako.gui;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.datafixers.util.Pair;
+import dev.buildtool.satako.ClientMethods;
 import dev.buildtool.satako.Constants;
 import dev.buildtool.satako.IntegerColor;
 import dev.buildtool.satako.ItemHandlerSlot;
-import dev.buildtool.satako.Methods;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.renderer.texture.TextureManager;
@@ -129,10 +129,10 @@ public class ContainerScreen2<T extends net.minecraft.inventory.container.Contai
         //lines have to be drawn after everything else
         if (drawBorders)
         {
-            Methods.drawHorizontalLine(this.leftPos, this.getXSize()+leftPos, this.topPos, color, 2);
-            Methods.drawHorizontalLine(this.leftPos,  this.getXSize()+leftPos, this.getYSize()+topPos, color, 2);
-            Methods.drawVerticalLine(this.leftPos, this.topPos, getYSize()+this.topPos, color, 2);
-            Methods.drawVerticalLine(getXSize() + this.leftPos, this.topPos, getYSize() + this.topPos, color, 2);
+            ClientMethods.drawHorizontalLine(this.leftPos, this.getXSize() + leftPos, this.topPos, color, 2);
+            ClientMethods.drawHorizontalLine(this.leftPos, this.getXSize() + leftPos, this.getYSize() + topPos, color, 2);
+            ClientMethods.drawVerticalLine(this.leftPos, this.topPos, getYSize() + this.topPos, color, 2);
+            ClientMethods.drawVerticalLine(getXSize() + this.leftPos, this.topPos, getYSize() + this.topPos, color, 2);
 
         }
     }
