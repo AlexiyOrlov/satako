@@ -1,5 +1,6 @@
 4.2.20:
 draws screen labels now;
+fixed crashes on server;
 
 4.2.19:
 fixed color component calculation;
