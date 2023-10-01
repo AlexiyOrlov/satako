@@ -6,9 +6,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
@@ -695,15 +692,6 @@ public final class Functions
         return null;
     }
 
-    public static int calculateStringWidth(ITextComponent string)
-    {
-        if (string != null)
-        {
-            return Minecraft.getInstance().font.width(string.getString());
-        }
-        return 0;
-    }
-
     /**
      * Returns the length of longest string
      */
@@ -712,19 +700,10 @@ public final class Functions
         int width = 0;
         for (ITextComponent s : objects)
         {
-            int nextwidth = calculateStringWidth(s);
+            int nextwidth = ClientFunctions.calculateStringWidth(s);
             if (nextwidth > width) width = nextwidth;
         }
         return width;
-    }
-
-    /**
-     * Retrieves translated string
-     */
-    @Deprecated
-    public static String getTranslation(String key)
-    {
-        return I18n.get(key);
     }
 
     /**
@@ -1089,51 +1068,5 @@ public final class Functions
 
     public static PacketBuffer emptyBuffer() {
         return new PacketBuffer(Unpooled.buffer());
-    }
-
-    /**
-     * Splits every line so it fits the max width parameter
-     */
-    private List<String> splitString(List<String> strings, List<String> returnList, int nextIndex, FontRenderer font, int maxWidth) {
-        String string = strings.get(nextIndex);
-        if (font.width(string) > maxWidth) {
-            String part = string.substring(0, string.lastIndexOf(' '));
-            while (font.width(part) > maxWidth) {
-                part = part.substring(0, part.length() - 2);
-            }
-            while (!part.endsWith(" ")) {
-                part = part.substring(0, part.length() - 2);
-            }
-            String part2 = string.substring(part.length());
-            returnList.add(part);
-            if (font.width(part2) <= maxWidth) {
-                int next = nextIndex + 1;
-                if (next < strings.size()) {
-                    String nextString = strings.get(next);
-                    if (font.width(part2 + nextString) <= maxWidth) {
-                        returnList.add(part2 + nextString);
-                        if (next + 1 < strings.size())
-                            splitString(strings, returnList, next + 1, font, maxWidth);
-                    } else returnList.add(part2);
-                } else {
-                    returnList.add(part2);
-                }
-            }
-            int indexOfNext = strings.indexOf(string) + 1;
-            if (indexOfNext < strings.size()) {
-                splitString(strings, returnList, indexOfNext, font, maxWidth);
-            }
-        } else {
-            if (string.isEmpty()) {
-                splitString(strings, returnList, nextIndex + 1, font, maxWidth);
-            } else {
-                returnList.add(string);
-                int indexOfNext = strings.indexOf(string) + 1;
-                if (indexOfNext < strings.size()) {
-                    splitString(strings, returnList, indexOfNext, font, maxWidth);
-                }
-            }
-        }
-        return returnList;
     }
 }

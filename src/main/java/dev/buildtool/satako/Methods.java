@@ -432,7 +432,7 @@ public final class Methods
      */
     public static void drawCenteredString(MatrixStack matrixStack, ITextComponent o, int X, int Y, IntegerColor color)
     {
-        drawString(matrixStack,o, X - Functions.calculateStringWidth(o) / 2, Y, color);
+        drawString(matrixStack, o, X - ClientFunctions.calculateStringWidth(o) / 2, Y, color);
     }
 
     /**
@@ -440,7 +440,7 @@ public final class Methods
      */
     public static void drawCenteredStringWithShadow(MatrixStack matrixStack,ITextComponent o, int X, int Y, IntegerColor color)
     {
-        drawStringWithShadow(matrixStack,o, X - Functions.calculateStringWidth(o) / 2, Y, color);
+        drawStringWithShadow(matrixStack, o, X - ClientFunctions.calculateStringWidth(o) / 2, Y, color);
     }
 
     /**
