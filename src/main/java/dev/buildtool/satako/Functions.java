@@ -1,17 +1,13 @@
 package dev.buildtool.satako;
 
 import io.netty.buffer.Unpooled;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
@@ -587,34 +583,6 @@ public final class Functions {
             }
         }
         return null;
-    }
-
-    public static int calculateStringWidth(Component string) {
-        if (string != null) {
-            return Minecraft.getInstance().font.width(string.getString());
-        }
-        return 0;
-    }
-
-    /**
-     * Returns the length of longest string
-     */
-    public static int calculateLongestStringWidth(Collection<Component> objects) {
-        int width = 0;
-        for (Component s : objects) {
-            int nextwidth = calculateStringWidth(s);
-            if (nextwidth > width) width = nextwidth;
-        }
-        return width;
-    }
-
-    /**
-     * Retrieves translated string
-     */
-    @Deprecated
-    public static String getTranslation(String key)
-    {
-        return I18n.get(key);
     }
 
     /**

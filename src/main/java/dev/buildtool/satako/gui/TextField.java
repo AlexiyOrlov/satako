@@ -1,6 +1,6 @@
 package dev.buildtool.satako.gui;
 
-import dev.buildtool.satako.Functions;
+import dev.buildtool.satako.ClientFunctions;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.network.chat.Component;
@@ -18,7 +18,7 @@ public class TextField extends EditBox implements Scrollable, Positionable, Hide
      * Creates a string field fitted to text
      */
     public TextField(int X, int Y, Component text) {
-        super(Minecraft.getInstance().font, X, Y, Functions.calculateStringWidth(text) + 10, 15, text);
+        super(Minecraft.getInstance().font, X, Y, ClientFunctions.calculateStringWidth(text) + 10, 15, text);
         insertText(text.getString());
     }
 

@@ -27,14 +27,14 @@ public class ClientMethods {
      * @param X position to be centered on
      */
     public static void drawCenteredString(PoseStack matrixStack, net.minecraft.network.chat.Component o, int X, int Y, IntegerColor color) {
-        drawString(matrixStack, o, X - Functions.calculateStringWidth(o) / 2, Y, color);
+        drawString(matrixStack, o, X - ClientFunctions.calculateStringWidth(o) / 2, Y, color);
     }
 
     /**
      * @param X position to be centered on
      */
     public static void drawCenteredStringWithShadow(PoseStack matrixStack, Component o, int X, int Y, IntegerColor color) {
-        drawStringWithShadow(matrixStack, o, X - Functions.calculateStringWidth(o) / 2, Y, color);
+        drawStringWithShadow(matrixStack, o, X - ClientFunctions.calculateStringWidth(o) / 2, Y, color);
     }
 
     /**
