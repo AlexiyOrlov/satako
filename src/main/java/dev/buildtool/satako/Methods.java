@@ -1,7 +1,7 @@
 package dev.buildtool.satako;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.effect.MobEffect;
@@ -84,7 +84,7 @@ public final class Methods {
     }
 
     public static void sendMessageToPlayer(Player player, String message) {
-        player.displayClientMessage(new TextComponent(message), false);
+        player.displayClientMessage(Component.literal(message), false);
     }
 
     /**
