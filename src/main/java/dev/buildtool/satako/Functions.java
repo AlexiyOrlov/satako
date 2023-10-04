@@ -616,6 +616,16 @@ public final class Functions
         return false;
     }
 
+    /**
+     * @return true if same items and durability
+     */
+    public static boolean areItemsEqualIngoreNbt(ItemStack one, ItemStack two) {
+        if (!one.isEmpty() && !two.isEmpty()) {
+            return ItemStack.isSame(one, two) && one.getDamageValue() == two.getDamageValue();
+        }
+        return false;
+    }
+
     public static boolean areItemsEqualInDictionary(ItemStack one, ItemStack two)
     {
         if (!one.isEmpty() && !two.isEmpty())
