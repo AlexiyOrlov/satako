@@ -1,3 +1,6 @@
+5.0.15:
+added item comparison method;
+
 5.0.14:
 fixed server crashes;
 
