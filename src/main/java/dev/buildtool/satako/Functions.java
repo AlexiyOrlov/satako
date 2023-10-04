@@ -529,7 +529,7 @@ public final class Functions {
 
     public static boolean areItemsEqualIngoreNbt(ItemStack one, ItemStack two) {
         if (!one.isEmpty() && !two.isEmpty()) {
-            return ItemStack.isSameItem(one, two);
+            return ItemStack.isSameItem(one, two) && one.getDamageValue() == two.getDamageValue();
         }
         return false;
     }
