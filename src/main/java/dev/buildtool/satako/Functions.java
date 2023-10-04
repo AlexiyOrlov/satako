@@ -527,6 +527,13 @@ public final class Functions {
         return false;
     }
 
+    public static boolean areItemsEqualIngoreNbt(ItemStack one, ItemStack two) {
+        if (!one.isEmpty() && !two.isEmpty()) {
+            return ItemStack.isSameItem(one, two);
+        }
+        return false;
+    }
+
     public static int getFuelValue(@Nonnull ItemStack stack) {
         return ForgeHooks.getBurnTime(stack, null);
     }
