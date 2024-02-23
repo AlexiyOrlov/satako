@@ -43,9 +43,8 @@ public class SelectionButton extends BetterButton {
         if (this.visible) {
             Minecraft mc = Minecraft.getInstance();
             this.isHovered = mouseX >= this.getX() && mouseY >= this.getY() && mouseX < this.getX() + this.width && mouseY < this.getY() + this.height;
-            int k = getTextureY();  //this.getYImage(this.isHovered);
-            mStack.blitWithBorder(WIDGETS_LOCATION, this.getX(), this.getY(), 0, 46 + k * 20, this.width, this.height, 200, 20, 2, 3, 2, 2);
-            //this.renderBg(mStack, mc, mouseX, mouseY);
+            int k = getTextureY();
+            mStack.blitWithBorder(WIDGETS_LOCATION, this.getX(), this.getY(), 0, k, this.width, this.height, 200, 20, 2, 3, 2, 2);
 
             Component buttonText = this.getMessage();
             int strWidth = mc.font.width(buttonText);
