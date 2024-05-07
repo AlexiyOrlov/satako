@@ -39,14 +39,6 @@ public class Label extends BetterButton implements Scrollable, Hideable {
     private void updateTooltip() {
         if (this.getTooltip() != null) {
             boolean flag = this.isHovered || this.isFocused() && Minecraft.getInstance().getLastInputType().isKeyboard();
-//            if (flag != this.wasHoveredOrFocused) {
-//                if (flag) {
-//                    this.hoverOrFocusedStartTime = Util.getMillis();
-//                }
-//
-//                this.wasHoveredOrFocused = flag;
-//            }
-
             if (flag /*&& Util.getMillis() - this.hoverOrFocusedStartTime > (long)this.tooltipMsDelay*/) {
                 Screen screen = Minecraft.getInstance().screen;
                 if (screen != null) {
@@ -60,17 +52,10 @@ public class Label extends BetterButton implements Scrollable, Hideable {
     public void render(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         if (!hidden) {
             if (onPress != null) {
-                if (parent != null)
-                    //parent.renderTooltip(guiGraphics, getMessage(), getX() - 8, getY() + 18);
-                    //updateTooltip();
-                    guiGraphics.drawString(Minecraft.getInstance().font, getMessage(), getX(), getY() + (height - 8) / 2, 16777215 | Mth.ceil(this.alpha * 255.0F) << 24);
-                else
-                    guiGraphics.drawString(Minecraft.getInstance().font, this.getMessage(), this.getX(), this.getY() + (this.height - 8) / 2, 16777215 | Mth.ceil(this.alpha * 255.0F) << 24);
+                guiGraphics.drawString(Minecraft.getInstance().font, getMessage(), getX(), getY() + (height - 8) / 2, 16777215 | Mth.ceil(this.alpha * 255.0F) << 24);
 
             } else
                 guiGraphics.drawString(Minecraft.getInstance().font, getMessage(), getX(), getY() + (height - 8) / 2, 16777215 | Mth.ceil(this.alpha * 255.0F) << 24);
-
-
         }
     }
 

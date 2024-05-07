@@ -3,7 +3,6 @@ package dev.buildtool.satako.gui;
 import dev.buildtool.satako.Constants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.network.chat.Component;
 
 import java.util.ArrayList;
@@ -54,14 +53,6 @@ public class RadioButton extends BetterButton
             int k = getTextureY(); //this.getYImage(this.isHovered);
             matrixStack.blitWithBorder(WIDGETS_LOCATION, this.getX(), this.getY(), 0, 46 + k * 20, this.width, this.height, 200, 20, 2, 3, 2, 2);
             this.renderWidget(matrixStack, mouseX, mouseY, partial);
-            int color = getFGColor();
-
-            if (this.isHovered && this.packedFGColor == AbstractWidget.UNSET_FG_COLOR)
-                color = 0xFFFFA0; // Slightly Yellow
-
-            Component buttonText = this.getMessage();
-
-            //drawCenteredString(matrixStack, mc.font, buttonText, this.x + this.width / 2, this.y + (this.height - 8) / 2, color);
         }
     }
 
