@@ -48,9 +48,8 @@ public class RadioButton extends BetterButton
     @Override
     public void render(GuiGraphics matrixStack, int mouseX, int mouseY, float partial) {
         if (this.visible) {
-            Minecraft mc = Minecraft.getInstance();
             this.isHovered = selected;
-            int k = getTextureY(); //this.getYImage(this.isHovered);
+            int k = getTextureY();
             matrixStack.blitWithBorder(WIDGETS_LOCATION, this.getX(), this.getY(), 0, 46 + k * 20, this.width, this.height, 200, 20, 2, 3, 2, 2);
             this.renderWidget(matrixStack, mouseX, mouseY, partial);
         }
