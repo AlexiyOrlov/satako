@@ -1,3 +1,6 @@
+7.0.17:
+added config preloading method;
+
 7.0.16-1.20.1:
 fixed selection button background;
 
