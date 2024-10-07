@@ -1,5 +1,7 @@
 package dev.buildtool.satako;
 
+import com.electronwill.nightconfig.core.file.CommentedFileConfig;
+import com.electronwill.nightconfig.core.io.WritingMode;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -13,8 +15,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
+import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.items.IItemHandler;
+import org.apache.commons.lang3.tuple.Pair;
 
+import java.io.File;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
@@ -33,52 +39,6 @@ public final class Methods {
         Stream<BlockPos> poss = BlockPos.betweenClosedStream(from, to);
         poss.forEach(blockPos -> world.setBlockAndUpdate(blockPos, state));
     }
-
-//    public static void drawSingleBlockSelection(Player player, float partialTicks, BlockState blockState, BlockPos pos)
-//    {
-////        double d0 = player.lastTickPosX + (player.getX() - player.lastTickPosX) * partialTicks;
-////        double d1 = player.lastTickPosY + (player.getY() - player.lastTickPosY) * partialTicks;
-////        double d2 = player.lastTickPosZ + (player.getZ() - player.lastTickPosZ) * partialTicks;
-//        GlStateManager._enableBlend();
-//        GlStateManager._blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA.value, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA.value, GlStateManager.SourceFactor.ONE.value, GlStateManager.DestFactor.ZERO.value);
-//        GlStateManager._lineWidth(2.0F);
-//        GlStateManager._disableTexture();
-//        GlStateManager._depthMask(false);
-////     TODO   RenderGlobal.drawSelectionBoundingBox(blockState.getRaytraceShape(player.world, pos).grow(0.001, 0.001, 0.001).offset(-d0, -d1, -d2), 1f, 0.582156864f, 0.294118f, 1F);
-//        GlStateManager._depthMask(true);
-//        GlStateManager._enableTexture();
-//        GlStateManager._disableBlend();
-//    }
-
-//    public static void drawBlockSelection(Player player, float partialTicks, BlockPos start, BlockPos end)
-//    {
-////        double d0 = player.lastTickPosX + (player.getX() - player.lastTickPosX) * partialTicks;
-////        double d1 = player.lastTickPosY + (player.getY() - player.lastTickPosY) * partialTicks;
-////        double d2 = player.lastTickPosZ + (player.getZ() - player.lastTickPosZ) * partialTicks;
-//        AABB axisAlignedBB = new AABB(start, end);
-//        for (double X = axisAlignedBB.minX; X <= axisAlignedBB.maxX; X++)
-//        {
-//            for (double Y = axisAlignedBB.minY; Y <= axisAlignedBB.maxY; Y++)
-//            {
-//                for (double Z = axisAlignedBB.minZ; Z <= axisAlignedBB.maxZ; Z++)
-//                {
-//                    BlockPos nextpos = new BlockPos(X, Y, Z);
-//                    BlockState blockState = player.level.getBlockState(nextpos);
-//
-//                    GlStateManager._enableBlend();
-//                    GlStateManager._blendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA.value, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA.value, GlStateManager.SourceFactor.ONE.value, GlStateManager.DestFactor.ZERO.value);
-//                    GlStateManager._lineWidth(2.0F);
-//                    GlStateManager._disableTexture();
-//                    GlStateManager._depthMask(false);
-////                  TODO  RenderGlobal.drawSelectionBoundingBox(blockState.getSelectedBoundingBox(player.world, nextpos).grow(0.001, 0.001, 0.001).offset(-d0, -d1, -d2), 1f, 0.582156864f, 0.294118f, 1F);
-//                    GlStateManager._depthMask(true);
-//                    GlStateManager._enableTexture();
-//                    GlStateManager._disableBlend();
-//
-//                }
-//            }
-//        }
-//    }
 
 
     public static void removeTileEntitySilently(BlockPos pos, Level world) {
@@ -208,5 +168,12 @@ public final class Methods {
                 }
             }
         }
+    }
+
+    public static void loadConfig(Pair<ForgeConfigSpec, ForgeConfigSpec> pair, String path) {
+        String s = FMLPaths.CONFIGDIR.get().resolve(path).toString();
+        final CommentedFileConfig file = CommentedFileConfig.builder(new File(s)).sync().autosave().writingMode(WritingMode.REPLACE).build();
+        file.load();
+        pair.getRight().setConfig(file);
     }
 }
