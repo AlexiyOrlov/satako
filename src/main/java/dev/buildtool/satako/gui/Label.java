@@ -36,20 +36,8 @@ public class Label extends BetterButton implements Scrollable, Hideable {
             onPress.onPress(this);
     }
 
-    private void updateTooltip() {
-        if (this.getTooltip() != null) {
-            boolean flag = this.isHovered || this.isFocused() && Minecraft.getInstance().getLastInputType().isKeyboard();
-            if (flag /*&& Util.getMillis() - this.hoverOrFocusedStartTime > (long)this.tooltipMsDelay*/) {
-                Screen screen = Minecraft.getInstance().screen;
-                if (screen != null) {
-                    screen.setTooltipForNextRenderPass(this.getTooltip(), this.createTooltipPositioner(), this.isFocused());
-                }
-            }
-        }
-    }
-
     @Override
-    public void render(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         if (!hidden) {
             if (onPress != null) {
                 guiGraphics.drawString(Minecraft.getInstance().font, getMessage(), getX(), getY() + (height - 8) / 2, 16777215 | Mth.ceil(this.alpha * 255.0F) << 24);
