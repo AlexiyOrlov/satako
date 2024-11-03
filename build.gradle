@@ -181,16 +181,25 @@ tasks.named('jar', Jar).configure {
     }
 }
 
-// Example configuration to allow publishing using the maven-publish plugin
+task("sourceJar", type: Jar, group: "build") {
+    getArchiveClassifier().set("sources")
+    from sourceSets.main.allSource
+}
+
 publishing {
     publications {
-        register('mavenJava', MavenPublication) {
+        mavenJava(MavenPublication) {
             artifact jar
+            artifact sourceJar
         }
     }
     repositories {
         maven {
-            url "file://${project.projectDir}/mcmodsrepo"
+            url "file:///${project.projectDir}/mcmodsrepo"
+        }
+        maven {
+            name = 'MyMaven'
+            url = property("myMavenUrl")
         }
     }
 }
