@@ -1,5 +1,6 @@
 package dev.buildtool.satako.blocks;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Containers;
 import net.minecraft.world.item.ItemStack;
@@ -10,7 +11,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DirectionalBlock;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
@@ -20,8 +20,13 @@ import net.minecraftforge.common.capabilities.ForgeCapabilities;
  */
 public class BlockDirectional extends DirectionalBlock {
 
-    public BlockDirectional(BlockBehaviour.Properties properties) {
+    public BlockDirectional(Properties properties) {
         super(properties);
+    }
+
+    @Override
+    protected MapCodec<? extends DirectionalBlock> codec() {
+        return null;
     }
 
     @Override

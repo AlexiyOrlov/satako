@@ -27,7 +27,6 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkStatus;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
@@ -266,18 +265,18 @@ public final class Functions {
         return Mth.sin(degreesToRadians(degrees));
     }
 
-    /**
-     * @return true if something can generate without cascading at that position
-     */
-    public static boolean canGenerateWithoutCascade(WorldGenLevel world, BlockPos blockPos) {
-        ChunkPos chunkPos = new ChunkPos(blockPos);
-        int cx = chunkPos.x;
-        int cz = chunkPos.z;
-        ChunkStatus empty = ChunkStatus.EMPTY;
-        return world.getChunk(cx, cz).getStatus() != empty && world.getChunk(cx + 1, cz).getStatus() != empty &&
-                world.getChunk(cx - 1, cz).getStatus() != empty
-                && world.getChunk(cx, cz + 1).getStatus() != empty && world.getChunk(cx, cz - 1).getStatus() != empty;
-    }
+//    /**
+//     * @return true if something can generate without cascading at that position
+//     */
+//    public static boolean canGenerateWithoutCascade(WorldGenLevel world, BlockPos blockPos) {
+//        ChunkPos chunkPos = new ChunkPos(blockPos);
+//        int cx = chunkPos.x;
+//        int cz = chunkPos.z;
+//        ChunkStatus empty = ChunkStatus.EMPTY;
+//        return world.getChunk(cx, cz).getStatus() != empty && world.getChunk(cx + 1, cz).getStatus() != empty &&
+//                world.getChunk(cx - 1, cz).getStatus() != empty
+//                && world.getChunk(cx, cz + 1).getStatus() != empty && world.getChunk(cx, cz - 1).getStatus() != empty;
+//    }
 
     /**
      * Searches for a non-air block starting from world height-16
@@ -522,7 +521,7 @@ public final class Functions {
      */
     public static boolean areItemTypesEqual(ItemStack one, ItemStack two) {
         if (!one.isEmpty() && !two.isEmpty()) {
-            return ItemStack.isSameItemSameTags(one, two);
+            return ItemStack.isSameItemSameComponents(one, two);
         }
         return false;
     }
@@ -552,7 +551,7 @@ public final class Functions {
             BlockPos sidepos = pos.relative(from);
             BlockState sidestate = worldIn.getBlockState(sidepos);
             Block sideblock = sidestate.getBlock();
-            if (sideblock.isSignalSource(sidestate)) {
+            if (sideblock.defaultBlockState().isSignalSource()) {
                 int p = sidestate.getDirectSignal(worldIn, sidepos, from);
                 if (p > 0) {
                     return from;
@@ -574,7 +573,7 @@ public final class Functions {
                 BlockPos sidepos = position.relative(facing);
                 BlockState sidestate = world.getBlockState(sidepos);
                 Block sideblock = sidestate.getBlock();
-                if (sideblock.isSignalSource(sidestate)) {
+                if (sideblock.defaultBlockState().isSignalSource()) {
                     int p = sidestate.getDirectSignal(world, sidepos, facing);
                     if (p > 0) {
                         return facing;

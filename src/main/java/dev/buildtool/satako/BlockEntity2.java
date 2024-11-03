@@ -1,6 +1,7 @@
 package dev.buildtool.satako;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
@@ -13,7 +14,7 @@ import javax.annotation.Nullable;
 
 /**
  * Main Tile class. Override
- * {@link BlockEntity#saveAdditional(CompoundTag)}, {@link BlockEntity#load(CompoundTag)}
+ * {@link BlockEntity#saveAdditional(CompoundTag, HolderLookup.Provider)}, {@link BlockEntity#loadAdditional(CompoundTag, HolderLookup.Provider)}
  * to store data
  */
 public abstract class BlockEntity2 extends BlockEntity {
@@ -29,11 +30,10 @@ public abstract class BlockEntity2 extends BlockEntity {
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
-        //server side
-        CompoundTag supertag = super.getUpdateTag();
-        saveAdditional(supertag);
-        return supertag;
+    public CompoundTag getUpdateTag(HolderLookup.Provider p_329179_) {
+        CompoundTag compoundTag = super.getUpdateTag(p_329179_);
+        saveAdditional(compoundTag, p_329179_);
+        return compoundTag;
     }
 
     public int getX() {

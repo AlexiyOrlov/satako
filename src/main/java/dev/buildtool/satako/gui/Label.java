@@ -2,7 +2,6 @@ package dev.buildtool.satako.gui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
@@ -24,7 +23,7 @@ public class Label extends BetterButton implements Scrollable, Hideable {
     }
 
     @SuppressWarnings("ConstantConditions")
-    public Label(int x, int y, Component text, @Nullable Screen parent, @Nullable Button.OnPress pressHandler) {
+    public Label(int x, int y, Component text, @Nullable Screen parent, @Nullable OnPress pressHandler) {
         super(x, y, Minecraft.getInstance().font.width(text.getString()) + 8, 18, text, pressHandler);
         scrollAmount = 20;
         this.parent = parent;

@@ -2,7 +2,6 @@ package dev.buildtool.satako;
 
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.common.ForgeMod;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -31,7 +30,7 @@ public class Constants
     public static final int REDSTONE_TORCH_TICK_RATE = 2;
     public static final double PLAYER_SPRINT_SPEED = 0.43;
     public static final double PLAYER_WALK_SPEED = 0.32;
-    public static final double GRAVITY = ForgeMod.ENTITY_GRAVITY.get().getDefaultValue();
+//    public static final double GRAVITY = ForgeMod.ENTITY_GRAVITY.get().getDefaultValue();
     /**
      * 24000 ticks
      */

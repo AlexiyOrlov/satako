@@ -1,5 +1,6 @@
 package dev.buildtool.satako.blocks;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.Containers;
@@ -18,6 +19,11 @@ import javax.annotation.Nullable;
 public class BlockHorizontal extends HorizontalDirectionalBlock {
     public BlockHorizontal(Properties properties) {
         super(properties);
+    }
+
+    @Override
+    protected MapCodec<? extends HorizontalDirectionalBlock> codec() {
+        return null;
     }
 
     @Nullable

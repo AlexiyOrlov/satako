@@ -136,7 +136,7 @@ public class ScrollArea extends AbstractWidget {
     }
 
     @Override
-    public boolean mouseScrolled(double p_94734_, double p_94735_, double direction) {
+    public boolean mouseScrolled(double p_94734_, double p_94735_, double direction, double d) {
         for (Object guiEventListener : guiEventListeners) {
             if (guiEventListener instanceof Positionable positionable3) {
                 positionable3.setY((int) (positionable3.getY() + direction * 20));

@@ -6,9 +6,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -131,9 +128,9 @@ public final class Methods {
         System.out.println(Arrays.toString(objects));
     }
 
-    public static void addPotionEffectNoParticles(LivingEntity entityLivingBase, MobEffect potion, int duration, int strength) {
-        entityLivingBase.addEffect(new MobEffectInstance(potion, duration, strength, false, false));
-    }
+//    public static void addPotionEffectNoParticles(LivingEntity entityLivingBase, MobEffect potion, int duration, int strength) {
+//        entityLivingBase.addEffect(new MobEffectInstance(potion, duration, strength, false, false));
+//    }
 
 
     /**

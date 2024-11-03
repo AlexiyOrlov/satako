@@ -36,7 +36,8 @@ public class Screen2 extends Screen
      */
     @Override
     public void render(GuiGraphics matrixStack, int mouseX, int mouseY, float tick) {
-        renderBackground(matrixStack);
+        //
+        renderBackground(matrixStack, 0, 0, 0);
         super.render(matrixStack, mouseX, mouseY, tick);
     }
 
@@ -69,7 +70,7 @@ public class Screen2 extends Screen
     }
 
     @Override
-    public boolean mouseScrolled(double p_mouseScrolled_1_, double p_mouseScrolled_3_, double amount)
+    public boolean mouseScrolled(double p_mouseScrolled_1_, double p_mouseScrolled_3_, double amount, double d)
     {
         int mousewheeld = (int) Math.signum(amount) * Constants.BUTTONHEIGHT;
         boolean verticalscroll = Screen.hasAltDown();

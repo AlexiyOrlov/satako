@@ -2,7 +2,6 @@ package dev.buildtool.satako.gui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.client.gui.widget.ExtendedButton;
 
@@ -24,7 +23,7 @@ public class BetterButton extends ExtendedButton implements Scrollable, Position
     /**
      * @param height optimal height is 20
      */
-    public BetterButton(int x, int y, int width, int height, Component text, Button.OnPress pressable) {
+    public BetterButton(int x, int y, int width, int height, Component text, OnPress pressable) {
         super(x, y, width, height, text, pressable);
         string = text.getString();
     }

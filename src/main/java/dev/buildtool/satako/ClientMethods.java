@@ -141,7 +141,7 @@ public class ClientMethods {
     /**
      * @param X position to be centered on
      */
-    public static void drawCenteredString(GuiGraphics matrixStack, net.minecraft.network.chat.Component o, int X, int Y, IntegerColor color) {
+    public static void drawCenteredString(GuiGraphics matrixStack, Component o, int X, int Y, IntegerColor color) {
         drawString(matrixStack, o, X - ClientFunctions.calculateStringWidth(o) / 2, Y, color);
     }
 

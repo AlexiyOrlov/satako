@@ -81,8 +81,8 @@ public class DropDownButton extends BetterButton {
     }
 
     @Override
-    public void render(GuiGraphics poseStack, int mx, int my, float p_93660_) {
-        super.render(poseStack, mx, my, p_93660_);
+    public void renderWidget(GuiGraphics poseStack, int mx, int my, float p_93660_) {
+        super.renderWidget(poseStack, mx, my, p_93660_);
         if (open)
             poseStack.drawString(fontRenderer, " :", getX() + width, getY() + height / 2 - 4, 0xffffffff);
         else

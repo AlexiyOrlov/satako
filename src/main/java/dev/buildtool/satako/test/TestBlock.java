@@ -4,31 +4,29 @@ import dev.buildtool.satako.blocks.Block2;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 
 public class TestBlock extends Block2 implements MenuProvider {
-    public TestBlock(BlockBehaviour.Properties properties) {
+    public TestBlock(Properties properties) {
         super(properties, false);
     }
 
     @Override
-    public InteractionResult use(BlockState p_225533_1_, Level world, BlockPos p_225533_3_, Player playerEntity, InteractionHand p_225533_5_, BlockHitResult p_225533_6_) {
+    protected InteractionResult useWithoutItem(BlockState p_60503_, Level p_60504_, BlockPos p_60505_, Player playerEntity, BlockHitResult p_60508_) {
         if (playerEntity instanceof ServerPlayer)
-            NetworkHooks.openScreen((ServerPlayer) playerEntity, this);
+            playerEntity.openMenu(this);
         return InteractionResult.SUCCESS;
     }
+
 
     @Override
     public Component getDisplayName() {

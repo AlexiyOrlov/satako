@@ -116,7 +116,7 @@ public class Commands {
                 int i = amount;
 
                 while (i > 0) {
-                    int j = Math.min(item.getMaxStackSize(), i);
+                    int j = Math.min(item.getDefaultMaxStackSize(), i);
                     i -= j;
                     ItemStack itemstack = new ItemStack(item, j);
                     boolean flag = serverplayerentity.getInventory().add(itemstack);
@@ -133,7 +133,7 @@ public class Commands {
                         ItemEntity itementity = serverplayerentity.drop(itemstack, false);
                         if (itementity != null) {
                             itementity.setNoPickUpDelay();
-                            itementity.setThrower(serverplayerentity.getUUID());
+                            itementity.setThrower(serverplayerentity);
                         }
                     }
                 }
@@ -151,7 +151,7 @@ public class Commands {
         }
         entity.setPos(position.x, position.y, position.z);
         if (entity instanceof Mob)
-            ((Mob) entity).finalizeSpawn(serverWorld, serverWorld.getCurrentDifficultyAt(entity.blockPosition()), MobSpawnType.COMMAND, null, null);
+            ((Mob) entity).finalizeSpawn(serverWorld, serverWorld.getCurrentDifficultyAt(entity.blockPosition()), MobSpawnType.COMMAND, null);
         serverWorld.addFreshEntity(entity);
         commandSource.sendSuccess(() -> Component.literal("Summoned " + entity.getName().getString() + " at " + (int) position.x + " " + (int) position.y + " " + (int) position.z), true);
         return 1;

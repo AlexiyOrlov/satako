@@ -35,23 +35,13 @@ public class RadioButton extends BetterButton
         neighbours.add(r);
     }
 
-    private int getTextureY() {
-        int i = 1;
-        if (!this.active) {
-            i = 0;
-        } else if (this.isHoveredOrFocused()) {
-            i = 2;
-        }
-        return 46 + i * 20;
-    }
-
     @Override
-    public void render(GuiGraphics matrixStack, int mouseX, int mouseY, float partial) {
+    public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partial) {
         if (this.visible) {
             this.isHovered = selected;
-            int k = getTextureY();
-            matrixStack.blitWithBorder(WIDGETS_LOCATION, this.getX(), this.getY(), 0, 46 + k * 20, this.width, this.height, 200, 20, 2, 3, 2, 2);
-            this.renderWidget(matrixStack, mouseX, mouseY, partial);
+            guiGraphics.blitSprite(SPRITES.get(selected, this.isHoveredOrFocused()), this.getX(), this.getY(), this.getWidth(), this.getHeight());
+            Minecraft mc = Minecraft.getInstance();
+            guiGraphics.drawCenteredString(mc.font, getMessage(), this.getX() + this.width / 2, this.getY() + (this.height - 8) / 2, 16777215);
         }
     }
 

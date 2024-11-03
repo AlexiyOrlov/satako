@@ -1,7 +1,6 @@
 package dev.buildtool.satako.debugging;
 
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
 
 import java.io.File;
@@ -13,7 +12,7 @@ public class Analyzer {
 
     @SubscribeEvent
     public static void trackMods(FMLConstructModEvent constructModEvent) {
-        lastMod = ModLoadingContext.get().getActiveNamespace();
+//        lastMod = ModLoadingContext.get().getActiveNamespace();
     }
 
     static {
