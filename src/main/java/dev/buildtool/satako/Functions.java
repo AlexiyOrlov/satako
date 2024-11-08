@@ -765,7 +765,7 @@ public final class Functions {
             if (!stack.isEmpty())
             {
 
-                if (!tryInsertItem(itemHandler, stack.copy()))
+                if (!tryInsertItem(itemHandler, stack.copy(), ))
                 {
                     System.out.println("Couldn't insert " + stack);
                     return itemHandler;
@@ -779,13 +779,17 @@ public final class Functions {
      * Inserts an item into a handler. Merges present stacks first
      *
      * @param itemStack will be copied
+     * @param slot
      * @return true if fully inserted, false if not
      */
-    public static boolean tryInsertItem(IItemHandler iItemHandler, ItemStack itemStack)
+    public static boolean tryInsertItem(IItemHandler iItemHandler, ItemStack itemStack, int slot)
     {
-        ItemStack out = ItemHandlerHelper.insertItemStacked(iItemHandler, itemStack.copy(), false);
-        itemStack.setCount(out.getCount());
-        return out.isEmpty();
+        if (iItemHandler.isItemValid(slot, itemStack)) {
+            ItemStack out = ItemHandlerHelper.insertItemStacked(iItemHandler, itemStack.copy(), false);
+            itemStack.setCount(out.getCount());
+            return out.isEmpty();
+        }
+        return false;
     }
 
     /**
