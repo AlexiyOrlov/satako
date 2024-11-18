@@ -944,10 +944,6 @@ public final class Functions {
         return ForgeRegistries.BLOCKS.tags().getTag(tagKey).contains(block);
     }
 
-    public static boolean isItemIn(Item item, TagKey<Item> tagKey) {
-        return ForgeRegistries.ITEMS.tags().getTag(tagKey).contains(item);
-    }
-
     /**
      * Removes specified amount of item from inventory
      *
