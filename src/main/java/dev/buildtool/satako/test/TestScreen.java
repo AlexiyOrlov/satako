@@ -65,8 +65,7 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
         addRenderableWidget(dropDownButton);
         addRenderableWidget(new Label(getGuiLeft() + imageWidth, getGuiTop() + 20 * 3, Component.literal("Overlapping label"), this, p_93751_ -> minecraft.player.displayClientMessage(Component.literal("Clicked the label"), false)));
         addRenderableWidget(new Button.Builder(Component.literal("Button"), p_93751_ -> minecraft.player.displayClientMessage(Component.literal("Clicked the button"), false)).pos(getGuiLeft() + imageWidth, getGuiTop() + 20 * 4).size(40, 20).build());
-        ScrollArea scrollArea = new ScrollArea(3, 3, getGuiLeft() - 10, height / 2, Component.literal("List"), new IntegerColor(0x22F8A55E), elements);
-        addRenderableWidget(scrollArea);
+
         addRenderableWidget(new SelectionButton(100, height - 20, Component.literal("Selection button")));
     }
 }
