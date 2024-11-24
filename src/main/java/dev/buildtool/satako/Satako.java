@@ -28,7 +28,6 @@ import org.apache.logging.log4j.Logger;
 @Mod(Satako.ID)
 public class Satako {
     public static final String ID = "satako";
-    public static ForgeConfigSpec.BooleanValue DO_DEBUG;
 
     private static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ID);
     private static final RegistryObject<Block> TEST_BLOCK = BLOCKS.register("test_block", () -> new TestBlock(Block.Properties.of()));
@@ -45,10 +44,6 @@ public class Satako {
     public static Logger LOGGER = LogManager.getLogger(ID);
     public Satako() {
         MinecraftForge.EVENT_BUS.register(this);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, new ForgeConfigSpec.Builder().configure(builder -> {
-            DO_DEBUG = builder.define("Enable extra debugging info", false);
-            return builder.build();
-        }).getRight());
 
         IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
         CONTAINER_TYPES.register(eventBus);
