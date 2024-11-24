@@ -1,5 +1,6 @@
 package dev.buildtool.satako.test;
 
+import dev.buildtool.satako.Constants;
 import dev.buildtool.satako.IntegerColor;
 import dev.buildtool.satako.gui.*;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -27,7 +28,7 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
         new ButtonGroup(radioButton, radioButton2);
         ArrayList<Object> elements = new ArrayList<>();
         for (int i = 0; i < 30; i++) {
-            Label label = new Label(0, 20 * i, Component.literal("#" + i), false);
+            Label label = new Label(0, 20 * i, Component.literal("#" + i), null);
             elements.add(label);
             addRenderableWidget(label);
         }
@@ -44,8 +45,8 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
         });
         addRenderableWidget(switchButton);
         elements.add(switchButton);
-        addRenderableWidget(new Label(getGuiLeft() + imageWidth, getGuiTop(), Component.literal("Clickable"), this, p_93751_ -> minecraft.player.displayClientMessage(Component.literal("Clicked first label"), false), false));
-        addRenderableWidget(new Label(getGuiLeft() + imageWidth, getGuiTop() + 20, Component.literal("Clickable with background"), this, p_93751_ -> minecraft.player.displayClientMessage(Component.literal("Clicked second label"), false), true));
+        addRenderableWidget(new Label(getGuiLeft() + imageWidth, getGuiTop(), Component.literal("Clickable"), this, p_93751_ -> minecraft.player.displayClientMessage(Component.literal("Clicked first label"), false), null));
+        addRenderableWidget(new Label(getGuiLeft() + imageWidth, getGuiTop() + 20, Component.literal("Clickable with background"), this, p_93751_ -> minecraft.player.displayClientMessage(Component.literal("Clicked second label"), false), Constants.ORANGE));
         LinkedHashMap<Component, Button.OnPress> linkedHashMap = new LinkedHashMap<>();
         DropDownButton dropDownButton = new DropDownButton(getGuiLeft() + imageWidth, getGuiTop() + 40, this, Component.literal("First choice"));
         linkedHashMap.put(Component.literal("First choice"), p_93751_ -> {
@@ -65,7 +66,7 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
         });
         dropDownButton.setChoices(linkedHashMap, 1);
         addRenderableWidget(dropDownButton);
-        addRenderableWidget(new Label(getGuiLeft() + imageWidth, getGuiTop() + 20 * 3, Component.literal("Overlapping label"), this, p_93751_ -> minecraft.player.displayClientMessage(Component.literal("Clicked the label"), false), false));
+        addRenderableWidget(new Label(getGuiLeft() + imageWidth, getGuiTop() + 20 * 3, Component.literal("Overlapping label"), this, p_93751_ -> minecraft.player.displayClientMessage(Component.literal("Clicked the label"), false), null));
         addRenderableWidget(new Button.Builder(Component.literal("Button"), p_93751_ -> minecraft.player.displayClientMessage(Component.literal("Clicked the button"), false)).pos(getGuiLeft() + imageWidth, getGuiTop() + 20 * 4).size(40, 20).build());
 
         List<BetterButton> betterButtons=new ArrayList<>(40);

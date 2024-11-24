@@ -1,6 +1,7 @@
 package dev.buildtool.satako.gui;
 
 import dev.buildtool.satako.Constants;
+import dev.buildtool.satako.IntegerColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
@@ -13,23 +14,24 @@ import javax.annotation.Nullable;
  * Label is a string for use in GUIs
  */
 public class Label extends BetterButton implements Scrollable, Hideable {
-    protected boolean enabled, verticalScroll, horizontalScroll, hidden,hasBackground;
+    protected boolean enabled, verticalScroll, horizontalScroll, hidden;
     protected int scrollAmount;
     protected Screen parent;
+    protected IntegerColor backgroundColor;
 
     @SuppressWarnings("ConstantConditions")
-    public Label(int x, int y, Component text, boolean makeBackground) {
+    public Label(int x, int y, Component text, IntegerColor backgroundColor) {
         super(x, y, Minecraft.getInstance().font.width(text.getString()) + 8, 18, text, null);
         scrollAmount = 20;
-        hasBackground=makeBackground;
+        this.backgroundColor=backgroundColor;
     }
 
     @SuppressWarnings("ConstantConditions")
-    public Label(int x, int y, Component text, @Nullable Screen parent, @Nullable OnPress pressHandler, boolean makeBackground) {
+    public Label(int x, int y, Component text, @Nullable Screen parent, @Nullable OnPress pressHandler, IntegerColor backgroundColor) {
         super(x, y, Minecraft.getInstance().font.width(text.getString()) + 8, 18, text, pressHandler);
         scrollAmount = 20;
         this.parent = parent;
-        hasBackground=makeBackground;
+        this.backgroundColor=backgroundColor;
     }
 
     @Override
@@ -41,9 +43,9 @@ public class Label extends BetterButton implements Scrollable, Hideable {
     @Override
     public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         if (!hidden) {
-            if(hasBackground)
+            if(backgroundColor!=null)
             {
-                guiGraphics.fill(getX(),getY(),getX()+width,getY()+height, Constants.ORANGE.getIntColor());
+                guiGraphics.fill(getX(),getY(),getX()+width,getY()+height, backgroundColor.getIntColor());
             }
             if (onPress != null) {
                 guiGraphics.drawString(Minecraft.getInstance().font, getMessage(), getX()+4, getY() + (height - 8) / 2, 16777215 | Mth.ceil(this.alpha * 255.0F) << 24);
