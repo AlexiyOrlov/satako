@@ -42,7 +42,7 @@ public class Satako {
     private static final DeferredRegister<MenuType<?>> CONTAINER_TYPES = DeferredRegister.create(ForgeRegistries.MENU_TYPES, ID);
     public static final RegistryObject<MenuType<TestContainer>> TEST_CONTAINER = CONTAINER_TYPES.register("test_block", () -> IForgeMenuType.create((windowId, inv, data) -> new TestContainer(windowId, inv)));
 
-    static Logger LOGGER = LogManager.getLogger(ID);
+    public static Logger LOGGER = LogManager.getLogger(ID);
     public Satako() {
         MinecraftForge.EVENT_BUS.register(this);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, new ForgeConfigSpec.Builder().configure(builder -> {
