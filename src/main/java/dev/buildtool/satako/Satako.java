@@ -44,7 +44,6 @@ public class Satako {
 
     static Logger LOGGER = LogManager.getLogger(ID);
     public Satako() {
-
         MinecraftForge.EVENT_BUS.register(this);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, new ForgeConfigSpec.Builder().configure(builder -> {
             DO_DEBUG = builder.define("Enable extra debugging info", false);
