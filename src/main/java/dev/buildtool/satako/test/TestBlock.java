@@ -1,6 +1,5 @@
 package dev.buildtool.satako.test;
 
-//import com.github.wintersteve25.tau.renderer.ScreenUIRenderer;
 import dev.buildtool.satako.blocks.Block2;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -32,8 +31,6 @@ public class TestBlock extends Block2 implements MenuProvider {
     public InteractionResult use(BlockState p_225533_1_, Level world, BlockPos p_225533_3_, Player playerEntity, InteractionHand p_225533_5_, BlockHitResult p_225533_6_) {
         if (playerEntity instanceof ServerPlayer)
             NetworkHooks.openScreen((ServerPlayer) playerEntity, this);
-//        if(world.isClientSide)
-//            screen();
         return InteractionResult.SUCCESS;
     }
 
@@ -46,11 +43,5 @@ public class TestBlock extends Block2 implements MenuProvider {
     @Override
     public AbstractContainerMenu createMenu(int p_createMenu_1_, Inventory playerInventory, Player playerEntity) {
         return new TestContainer(p_createMenu_1_, playerInventory);
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    private void screen()
-    {
-//        Minecraft.getInstance().setScreen(new ScreenUIRenderer(new TestTauScreen()));
     }
 }

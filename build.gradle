@@ -10,7 +10,7 @@ project.version = '7.0.17-1.20.1'
 group = project.property('maven_group')
 archivesBaseName = 'Satako'
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
@@ -90,13 +90,8 @@ task('updateVersion'){
 
 processResources.dependsOn(updateVersion)
 
-repositories {
-    maven { url = "https://maven.saps.dev/minecraft" }
-}
-
 dependencies {
     minecraft "net.minecraftforge:forge:${property('forge_version')}"
-    implementation fg.deobf("com.github.wintersteve25.tau:Tau:2.0.1")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
