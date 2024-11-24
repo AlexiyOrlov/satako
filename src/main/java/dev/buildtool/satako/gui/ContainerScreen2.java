@@ -21,6 +21,7 @@ import java.util.List;
  * GUI borders and sends input events to elements
  */
 public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractContainerScreen<T> {
+
     protected int centerX, centerY;
     protected ArrayList<Page> pages = new ArrayList<>(0);
     protected boolean drawBorders;
@@ -110,7 +111,7 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
 
     @Override
     protected void renderLabels(GuiGraphics poseStack, int p1, int p2) {
-        poseStack.drawString(font, title, imageWidth / 2 - font.width(title.getString()) / 2, -14, 0xE35F3B);
+        poseStack.drawString(font, title, imageWidth / 2 - font.width(title.getString()) / 2, -14, Constants.ORANGE.getIntColor());
     }
 
     @Override

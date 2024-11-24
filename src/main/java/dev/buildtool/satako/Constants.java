@@ -26,6 +26,7 @@ public class Constants
     public static final IntegerColor BLUE = new IntegerColor(0xff008AE6);
     public static final IntegerColor GREEN = new IntegerColor(0xff43CD80);
     public static final IntegerColor PASTEL2 = new IntegerColor(0xffFF8E65);
+    public static final IntegerColor ORANGE = new IntegerColor(0xffE35F3B);
     public static final int SLOT_SIZE = 16, SLOTWITHBORDERSIZE = 18, BUTTONHEIGHT = 20;
     public static final int MAXIMUMPLAYERREACH = 7;
     public static final int REDSTONE_TORCH_TICK_RATE = 2;
