@@ -2,12 +2,14 @@ package dev.buildtool.satako.test;
 
 import dev.buildtool.satako.IntegerColor;
 import dev.buildtool.satako.gui.*;
+import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 public class TestScreen extends ContainerScreen2<TestContainer> {
     public TestScreen(TestContainer container, Inventory playerInventory, Component name) {
@@ -66,6 +68,16 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
         addRenderableWidget(new Label(getGuiLeft() + imageWidth, getGuiTop() + 20 * 3, Component.literal("Overlapping label"), this, p_93751_ -> minecraft.player.displayClientMessage(Component.literal("Clicked the label"), false)));
         addRenderableWidget(new Button.Builder(Component.literal("Button"), p_93751_ -> minecraft.player.displayClientMessage(Component.literal("Clicked the button"), false)).pos(getGuiLeft() + imageWidth, getGuiTop() + 20 * 4).size(40, 20).build());
 
-        addRenderableWidget(new SelectionButton(100, height - 20, Component.literal("Selection button")));
+        List<BetterButton> betterButtons=new ArrayList<>(40);
+        for (int i = 0; i < 40; i++) {
+            betterButtons.add(new BetterButton(0,i*20,Component.literal("Button "+i)));
+        }
+        ScrollPane scrollPane=new ScrollPane(3,height/2,getGuiLeft()-10,height/2,Component.literal("List"),this,betterButtons.toArray(AbstractWidget[]::new));
+        addRenderableWidget(scrollPane);
+
+        addRenderableWidget(new SelectionButton(scrollPane.getWidth()+50, height - 20, Component.literal("Selection button")));
+
+        ScrollArea scrollArea = new ScrollArea(3, 3, getGuiLeft() - 10, height / 4, Component.literal("List"), new IntegerColor(0x22F8A55E), elements);
+        addRenderableWidget(scrollArea);
     }
 }
