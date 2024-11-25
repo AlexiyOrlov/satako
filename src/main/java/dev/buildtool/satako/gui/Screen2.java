@@ -69,7 +69,7 @@ public class Screen2 extends Screen
     {
         try
         {
-            super.mouseClicked(mouseX, mouseY, mouseButton);
+            return super.mouseClicked(mouseX, mouseY, mouseButton);
         }
         catch (Exception e)
         {
