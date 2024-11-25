@@ -6,8 +6,8 @@ plugins {
     id 'org.parchmentmc.librarian.forgegradle' version '1.+'
     id 'org.spongepowered.mixin' version '0.7.+'
 }
-
-project.version = '7.0.19-1.20.1'
+//reload after changing
+project.version = '7.0.20-1.20.1'
 group = project.property('maven_group')
 archivesBaseName = 'Satako'
 
