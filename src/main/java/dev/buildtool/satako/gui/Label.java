@@ -47,9 +47,7 @@ public class Label extends BetterButton implements Scrollable, Hideable {
             {
                 guiGraphics.fill(getX(),getY(),getX()+width,getY()+height, backgroundColor.getIntColor());
             }
-            if (onPress != null) {
-                guiGraphics.drawString(Minecraft.getInstance().font, getMessage(), getX()+4, getY() + (height - 8) / 2, 16777215 | Mth.ceil(this.alpha * 255.0F) << 24);
-            }
+            guiGraphics.drawString(Minecraft.getInstance().font, getMessage(), getX() + 4, getY() + (height - 8) / 2, 16777215 | Mth.ceil(this.alpha * 255.0F) << 24);
         }
     }
 
