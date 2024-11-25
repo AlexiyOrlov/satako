@@ -175,7 +175,7 @@ public class TooltipHandler {
                 if (durability > 0) {
                     info.add("Max. durability: " + durability);
                     int durabRemain = durability - itemStack.getDamageValue();
-                    if ((float) durabRemain /durability<0.1f) {
+                    if ((float) durabRemain /durability<=0.1f) {
                         info.add("Durability left: " + durabRemain);
                     }
                 }
@@ -267,8 +267,8 @@ public class TooltipHandler {
                         entityType.getTags().forEach(entityTypeTagKey -> info.add("  " + entityTypeTagKey.location()));
                     }
                 }
-
                 //end of gathering info
+
                 properties=info.stream().map(Component::literal).toList();
 
                 if (Satako.jei && JEI.ingredientListOverlay != null) {
@@ -281,13 +281,15 @@ public class TooltipHandler {
                 }
             }
         }
+
+        renderHoveringTooltip();
     }
 
     public static void renderHoveringTooltip() {
         if(targetStack!=null && Screen.hasAltDown()) {
             Minecraft minecraft = Minecraft.getInstance();
             Screen currentScreen = minecraft.screen;
-            ;
+
             if (!properties.isEmpty()) {
 
                 int theirLongestStringWidth = 0;
@@ -330,6 +332,7 @@ public class TooltipHandler {
                 }
 
                 boolean needsWrap = false;
+                assert currentScreen != null;
                 int screenWidth = currentScreen.width;
                 titleLinesCount = 1;
                 int tooltipX = xOffset + 12;
@@ -360,12 +363,13 @@ public class TooltipHandler {
                         }
 
                         FormattedText line;
-                        for (Iterator<FormattedText> var17 = wrappedLine.iterator(); var17.hasNext(); wrappedTextLines.add(line)) {
-                            line = var17.next();
+                        for (FormattedText formattedText : wrappedLine) {
+                            line = formattedText;
                             int lineWidth = font.width(line);
                             if (lineWidth > tooltipY) {
                                 tooltipY = lineWidth;
                             }
+                            wrappedTextLines.add(line);
                         }
                     }
 
