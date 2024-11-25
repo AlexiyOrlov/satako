@@ -282,10 +282,10 @@ public class TooltipHandler {
             }
         }
 
-        renderHoveringTooltip();
+        renderHoveringTooltip(new GuiGraphics(Minecraft.getInstance(),Minecraft.getInstance().renderBuffers().bufferSource()));
     }
 
-    public static void renderHoveringTooltip() {
+    public static void renderHoveringTooltip(GuiGraphics graphics) {
         if(targetStack!=null && Screen.hasAltDown()) {
             Minecraft minecraft = Minecraft.getInstance();
             Screen currentScreen = minecraft.screen;
@@ -397,11 +397,7 @@ public class TooltipHandler {
                     tooltipY = screenHeight - tooltipHeight - 4;
                 }
 
-                RenderSystem.setShader(GameRenderer::getPositionColorShader);
-                PoseStack textStack = new PoseStack();
-                textStack.translate(0.0D, 0.0D, 300.0D);
-                GuiGraphics guiGraphics = new GuiGraphics(minecraft, minecraft.renderBuffers().bufferSource());
-                guiGraphics.renderTooltip(minecraft.font, properties.stream().map(mutableComponent -> Component.literal(mutableComponent.getString())).collect(Collectors.toList()), targetStack.getTooltipImage(), targetStack, tooltipX, tooltipY);
+                graphics.renderTooltip(minecraft.font, properties.stream().map(mutableComponent -> Component.literal(mutableComponent.getString())).collect(Collectors.toList()), targetStack.getTooltipImage(), targetStack, tooltipX, tooltipY);
             }
         }
     }
