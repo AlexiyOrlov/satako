@@ -33,6 +33,8 @@ public class CombinedScreen extends ScreenWrapper {
         super.init();
         centerX = width / 2;
         centerY = height / 2;
+        popupPositionX=centerX;
+        popupPositionY=height-18;
     }
 
     @Override
