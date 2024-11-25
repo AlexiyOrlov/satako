@@ -2,9 +2,11 @@ package dev.buildtool.satako.gui;
 
 import dev.buildtool.satako.Constants;
 import dev.buildtool.satako.IntegerColor;
-import net.minecraft.client.Minecraft;
+import dev.ftb.mods.ftblibrary.ui.BaseScreen;
+import dev.ftb.mods.ftblibrary.ui.ScreenWrapper;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Renderable;
+import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
@@ -12,11 +14,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-/**
- * A UI without slots
- */
-public class Screen2 extends Screen
-{
+public class CombinedScreen extends ScreenWrapper {
     protected ArrayList<Component> popups=new ArrayList<>();
     protected int showTime=200;
     protected int popupPositionX, popupPositionY;
@@ -26,36 +24,31 @@ public class Screen2 extends Screen
      * GUI's center coordinates
      */
     protected int centerX, centerY;
-
-    public Screen2(Component title) {
-        super(title);
+    public CombinedScreen(BaseScreen g) {
+        super(g);
     }
 
-    /**
-     * Call this first. Provides gui center position
-     */
     @Override
     public void init()
     {
+        super.init();
         centerX = width / 2;
         centerY = height / 2;
     }
 
-    /**
-     * This should be called first
-     */
     @Override
-    public void render(GuiGraphics matrixStack, int mouseX, int mouseY, float tick) {
-        renderBackground(matrixStack);
-        super.render(matrixStack, mouseX, mouseY, tick);
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+        super.render(graphics, mouseX, mouseY, partialTicks);
+        renderables.forEach(renderable -> renderable.render(graphics, mouseX, mouseY, partialTicks));
+
         int popupY = popupPositionY - (showTimes.keySet().size()-1) * 18;
         for (Map.Entry<Component, Integer> entry : showTimes.entrySet()) {
             Component component = entry.getKey();
             Integer integer = entry.getValue();
             if (integer > 0) {
                 int textWidth = font.width(component);
-                matrixStack.fill(popupPositionX - textWidth / 2-5, popupY-5, popupPositionX - textWidth / 2 + textWidth+5, popupY+13, new IntegerColor(0xff565656).getIntColor());
-                matrixStack.drawCenteredString(font, component, popupPositionX, popupY, new IntegerColor(0xffffffff).getIntColor());
+                graphics.fill(popupPositionX - textWidth / 2-5, popupY-5, popupPositionX - textWidth / 2 + textWidth+5, popupY+13, new IntegerColor(0xff565656).getIntColor());
+                graphics.drawCenteredString(font, component, popupPositionX, popupY, new IntegerColor(0xffffffff).getIntColor());
                 popupY+=18;
                 integer--;
                 entry.setValue(integer);
@@ -65,17 +58,38 @@ public class Screen2 extends Screen
     }
 
     @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int mouseButton)
-    {
+    public boolean mouseClicked(double x, double y, int button) {
+        for (GuiEventListener guiEventListener : children()) {
+            if (guiEventListener.mouseClicked(x, y, button)) {
+                if(guiEventListener.isMouseOver(x,y)) {
+                    this.setFocused(guiEventListener);
+                }
+                if (button == 0) {
+                    this.setDragging(true);
+                }
+                return true;
+            }
+        }
+
         try
         {
-            return super.mouseClicked(mouseX, mouseY, mouseButton);
+            return super.mouseClicked(x, y, button);
         }
         catch (Exception e)
         {
             e.printStackTrace();
         }
         return false;
+
+    }
+
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        for (GuiEventListener child : children()) {
+            if(child.keyPressed(keyCode, scanCode, modifiers))
+                return true;
+        }
+        return super.keyPressed(keyCode, scanCode, modifiers);
     }
 
     @Override
@@ -106,12 +120,6 @@ public class Screen2 extends Screen
             }
         }
         return false;
-    }
-
-    @Override
-    public boolean isPauseScreen()
-    {
-        return Minecraft.getInstance().player.getHealth() < 10;
     }
 
     public void addPopup(Component message,int duration)
