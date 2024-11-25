@@ -17,7 +17,6 @@ import java.util.Map;
  */
 public class Screen2 extends Screen
 {
-    protected ArrayList<Component> popups=new ArrayList<>();
     protected int showTime=200;
     protected int popupPositionX, popupPositionY;
     protected LinkedHashMap<Component,Integer> showTimes=new LinkedHashMap<>();
