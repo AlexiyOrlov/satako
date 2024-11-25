@@ -50,19 +50,21 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
         LinkedHashMap<Component, Button.OnPress> linkedHashMap = new LinkedHashMap<>();
         DropDownButton dropDownButton = new DropDownButton(getGuiLeft() + imageWidth, getGuiTop() + 40, this, Component.literal("First choice"));
         linkedHashMap.put(Component.literal("First choice"), p_93751_ -> {
-            minecraft.player.displayClientMessage(Component.literal("Clicked 1st choice"), false);
+
             dropDownButton.setMessage(p_93751_.getMessage());
             dropDownButton.onPress();
+            addPopup(Component.literal("Clicked 1st choice"));
+            addPopup(Component.literal("Notification"));
         });
         linkedHashMap.put(Component.literal("Second choice"), p_93751_ -> {
-            minecraft.player.displayClientMessage(Component.literal("CLicked 2nd choice"), false);
             dropDownButton.setMessage(p_93751_.getMessage());
             dropDownButton.onPress();
+            addPopup(Component.literal("Clicked 2nd choice"));
         });
         linkedHashMap.put(Component.literal("Third choice"), p_93751_ -> {
-            minecraft.player.displayClientMessage(Component.literal("Clicked 3d choice"), false);
             dropDownButton.setMessage(p_93751_.getMessage());
             dropDownButton.onPress();
+            addPopup(Component.literal("Clicked 3d choice"));
         });
         dropDownButton.setChoices(linkedHashMap, 1);
         addRenderableWidget(dropDownButton);

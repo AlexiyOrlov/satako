@@ -1,17 +1,22 @@
 package dev.buildtool.satako.gui;
 
 import dev.buildtool.satako.Constants;
+import dev.buildtool.satako.IntegerColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
+import java.util.ArrayList;
+
 /**
  * A UI without slots
  */
 public class Screen2 extends Screen
 {
+    protected int showTime;
+    protected ArrayList<Component> popups=new ArrayList<>();
     /**
      * GUI's center coordinates
      */
@@ -38,6 +43,17 @@ public class Screen2 extends Screen
     public void render(GuiGraphics matrixStack, int mouseX, int mouseY, float tick) {
         renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, tick);
+        if(showTime>0)
+        {
+            popups.forEach(component -> {
+                int textWidth= font.width(component);
+                matrixStack.fill(centerX-textWidth/2,height-30,centerX-textWidth/2+textWidth,height-15,Constants.BLACK.getIntColor());
+                matrixStack.drawCenteredString(font,component,centerX,height-20,new IntegerColor(0xffffffff).getIntColor());
+            });
+            showTime--;
+        }
+        else
+            popups.clear();
     }
 
     @Override

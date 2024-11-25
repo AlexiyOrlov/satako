@@ -13,8 +13,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * A preset GUI which automatically draws labels, slot textures,
@@ -25,6 +24,9 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
     protected int centerX, centerY;
     protected ArrayList<Page> pages = new ArrayList<>(0);
     protected boolean drawBorders;
+    protected int showTime=200;
+    protected int popupPositionX, popupPositionY;
+    protected LinkedHashMap<Component,Integer> showTimes=new LinkedHashMap<>();
 
     public ContainerScreen2(T container, Inventory playerInventory, Component name, boolean drawBorders_) {
         super(container, playerInventory, name);
@@ -58,7 +60,8 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
         super.init();
         centerX = width / 2;
         centerY = height / 2;
-
+        popupPositionX=centerX;
+        popupPositionY =height-18;
     }
 
     protected List<Slot> getSlots()
@@ -71,6 +74,21 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
         renderBackground(matrixStack);
         super.render(matrixStack, p_render_1_, p_render_2_, p_render_3_);
         renderTooltip(matrixStack, p_render_1_, p_render_2_);
+
+        int popupY = popupPositionY - (showTimes.keySet().size()-1) * 18;
+        for (Map.Entry<Component, Integer> entry : showTimes.entrySet()) {
+            Component component = entry.getKey();
+            Integer integer = entry.getValue();
+            if (integer > 0) {
+                int textWidth = font.width(component);
+                matrixStack.fill(popupPositionX - textWidth / 2-5, popupY-5, popupPositionX - textWidth / 2 + textWidth+5, popupY+13, new IntegerColor(0xff565656).getIntColor());
+                matrixStack.drawCenteredString(font, component, popupPositionX, popupY, new IntegerColor(0xffffffff).getIntColor());
+                popupY+=18;
+                integer--;
+                entry.setValue(integer);
+            }
+        }
+        showTimes.entrySet().removeIf(componentIntegerEntry -> componentIntegerEntry.getValue()==0);
     }
 
     /**
@@ -120,5 +138,15 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
             child.mouseDragged(p_97752_, p_97753_, p_97754_, p_97755_, p_97756_);
         }
         return super.mouseDragged(p_97752_, p_97753_, p_97754_, p_97755_, p_97756_);
+    }
+
+    public void addPopup(Component message,int duration)
+    {
+        showTimes.put(message,duration);
+    }
+
+    public void addPopup(Component message)
+    {
+        addPopup(message,showTime);
     }
 }
