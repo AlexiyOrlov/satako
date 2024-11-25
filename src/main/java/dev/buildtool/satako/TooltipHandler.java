@@ -17,6 +17,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -47,22 +48,27 @@ import java.util.stream.Collectors;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT)
 public class TooltipHandler {
+    static List<Component> originalTooltip;
+    static List<MutableComponent> properties;
+    static ItemStack targetStack;
+    static int xOffset;
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void tooltip(ItemTooltipEvent tooltipEvent)
     {
         if (Screen.hasAltDown()) {
             ItemStack itemStack = tooltipEvent.getItemStack();
+            targetStack=itemStack;
             Item item = itemStack.getItem();
             Minecraft minecraft = Minecraft.getInstance();
             Screen currentScreen = minecraft.screen;
             if (currentScreen != null) {
-                List<Component> originalTooltip = tooltipEvent.getToolTip();
-                ArrayList<String> properties = new ArrayList<>();
-                properties.add(0,ForgeRegistries.ITEMS.getKey(item).toString());
+                originalTooltip = tooltipEvent.getToolTip();
+                ArrayList<String> info = new ArrayList<>();
+                info.add(0,ForgeRegistries.ITEMS.getKey(item).toString());
                 int repairCost = itemStack.getBaseRepairCost();
                 if (repairCost > 0) {
-                    properties.add("Repair cost: " + repairCost);
+                    info.add("Repair cost: " + repairCost);
                 }
 
                 ClientLevel world = minecraft.level;
@@ -73,8 +79,8 @@ public class TooltipHandler {
                     MapItemSavedData mapData = MapItem.getSavedData(itemStack, world);
                     if (mapData != null) {
                         int scale = mapData.scale;
-                        properties.add("Scale: " + scale + "/4");
-                        properties.add("Dimension: " + mapData.dimension.location().toString());
+                        info.add("Scale: " + scale + "/4");
+                        info.add("Dimension: " + mapData.dimension.location().toString());
                     }
                 } else {
                     int harvestlevel;
@@ -83,62 +89,62 @@ public class TooltipHandler {
                         BlockState defstate = block.defaultBlockState();
                         float friction = block.getFriction();
                         if (friction != 0.6F) {
-                            properties.add("Slipperiness: " + friction);
+                            info.add("Slipperiness: " + friction);
                         }
                         if (ForgeRegistries.BLOCKS.tags().getTag(BlockTags.MINEABLE_WITH_PICKAXE).contains(block)) {
-                            properties.add("Harvestable by " + ChatFormatting.YELLOW + "pickaxe");
+                            info.add("Harvestable by " + ChatFormatting.YELLOW + "pickaxe");
                         }
                         if (ForgeRegistries.BLOCKS.tags().getTag(BlockTags.MINEABLE_WITH_AXE).contains(block)) {
-                            properties.add("Harvestable by " + ChatFormatting.YELLOW + "axe");
+                            info.add("Harvestable by " + ChatFormatting.YELLOW + "axe");
                         }
                         if (ForgeRegistries.BLOCKS.tags().getTag(BlockTags.MINEABLE_WITH_SHOVEL).contains(block)) {
-                            properties.add("Harvestable by " + ChatFormatting.YELLOW + "shovel");
+                            info.add("Harvestable by " + ChatFormatting.YELLOW + "shovel");
                         }
                         if (ForgeRegistries.BLOCKS.tags().getTag(BlockTags.MINEABLE_WITH_HOE).contains(block)) {
-                            properties.add("Harvestable by " + ChatFormatting.YELLOW + "hoe");
+                            info.add("Harvestable by " + ChatFormatting.YELLOW + "hoe");
                         }
 
                         assert world != null;
                         float hardness = defstate.getDestroySpeed(world, BlockPos.ZERO);
                         if (hardness > 0.0F) {
-                            properties.add("Hardness: " + hardness);
+                            info.add("Hardness: " + hardness);
                         } else if (hardness == -1.0F) {
-                            properties.add("Unbreakable");
+                            info.add("Unbreakable");
                         }
 
                         float resistance = block.getExplosionResistance();
                         if (resistance > 0.0F) {
                             float compRes = (resistance + 0.3F) * 0.3F;
                             if (compRes > 5.2F) {
-                                properties.add("Blast resistance: " + String.format("%.1f", resistance) + " (TNT)");
+                                info.add("Blast resistance: " + String.format("%.1f", resistance) + " (TNT)");
                             } else if (compRes > 3.9F) {
-                                properties.add("Blast resistance: " + String.format("%.1f", resistance) + " (Creeper)");
+                                info.add("Blast resistance: " + String.format("%.1f", resistance) + " (Creeper)");
                             } else {
-                                properties.add("Blast resistance: " + String.format("%.1f", resistance));
+                                info.add("Blast resistance: " + String.format("%.1f", resistance));
                             }
                         }
 
                         if (ForgeRegistries.BLOCKS.tags().getTag(BlockTags.BEACON_BASE_BLOCKS).contains(defstate.getBlock())) {
-                            properties.add("Can be used for Beacon");
+                            info.add("Can be used for Beacon");
                         }
 
                         if (defstate.isFlammable(world, BlockPos.ZERO, Direction.UP)) {
-                            properties.add("Flammable");
+                            info.add("Flammable");
                         }
 
                         PushReaction pushReaction = defstate.getPistonPushReaction();
-                        properties.add("Push behavior: " + pushReaction);
+                        info.add("Push behavior: " + pushReaction);
                         if (defstate.hasBlockEntity()) {
-                            properties.add("Has block entity");
+                            info.add("Has block entity");
                         }
 
                         int lightEmission = defstate.getLightEmission();
                         if (lightEmission > 0) {
-                            properties.add("Light: " + lightEmission);
+                            info.add("Light: " + lightEmission);
                         }
 
                         if (defstate.isSignalSource()) {
-                            properties.add("Redstone component");
+                            info.add("Redstone component");
                         }
                     } else if (item instanceof DiggerItem toolItem) {
 
@@ -149,9 +155,9 @@ public class TooltipHandler {
                             efficiency += (float) (level * level + 1);
                         }
 
-                        properties.add("Speed: " + efficiency);
+                        info.add("Speed: " + efficiency);
                         harvestlevel = itemTier.getLevel();
-                        properties.add("Harvest level: " + harvestlevel);
+                        info.add("Harvest level: " + harvestlevel);
                     }
                 }
 
@@ -161,24 +167,24 @@ public class TooltipHandler {
                     float smite = EnchantmentHelper.getDamageBonus(itemStack, MobType.UNDEAD);
                     if (bane > 0 || smite > 0) {
                         float damage = swordItem.getDamage();
-                        properties.add("Max. damage: " + ((bane > 0 ? damage + bane : smite + damage) + 1));
+                        info.add("Max. damage: " + ((bane > 0 ? damage + bane : smite + damage) + 1));
                     }
                 }
 
                 int durability = itemStack.getMaxDamage();
                 if (durability > 0) {
-                    properties.add("Max. durability: " + durability);
+                    info.add("Max. durability: " + durability);
                     int durabRemain = durability - itemStack.getDamageValue();
                     if ((float) durabRemain /durability<0.1f) {
-                        properties.add("Durability left: " + durabRemain);
+                        info.add("Durability left: " + durabRemain);
                     }
                 }
 
                 int stacksize = itemStack.getMaxStackSize();
                 if (stacksize == 1) {
-                    properties.add("Non-stackable");
+                    info.add("Non-stackable");
                 } else if (stacksize != 64) {
-                    properties.add("Max. stack size: " + stacksize);
+                    info.add("Max. stack size: " + stacksize);
                 }
 
                 if (item.isEdible()) {
@@ -187,41 +193,41 @@ public class TooltipHandler {
                     assert foodStats != null;
 
                     if (foodStats.canAlwaysEat()) {
-                        properties.add("Always edible");
+                        info.add("Always edible");
                     }
 
                     if (foodStats.isMeat()) {
-                        properties.add("Suitable for wolves");
+                        info.add("Suitable for wolves");
                     }
 
                     float nutrition = (float) foodStats.getNutrition() / 2.0F;
-                    properties.add("Restores " + nutrition + " hunger");
+                    info.add("Restores " + nutrition + " hunger");
                     saturation = foodStats.getSaturationModifier();
-                    properties.add("Saturation: " + saturation);
+                    info.add("Saturation: " + saturation);
                     List<Pair<MobEffectInstance, Float>> effects = foodStats.getEffects();
                     if (!effects.isEmpty()) {
-                        properties.add(ChatFormatting.YELLOW + "Effects:");
+                        info.add(ChatFormatting.YELLOW + "Effects:");
                         for (Pair<MobEffectInstance, Float> pair : effects) {
                             MobEffectInstance effectInstance = pair.getFirst();
-                            properties.add("   " + I18n.get(effectInstance.getDescriptionId()) + ":");
-                            properties.add("      Strength: " + effectInstance.getAmplifier());
-                            properties.add("      Duration: " + effectInstance.getDuration() / 20 + " s.");
+                            info.add("   " + I18n.get(effectInstance.getDescriptionId()) + ":");
+                            info.add("      Strength: " + effectInstance.getAmplifier());
+                            info.add("      Duration: " + effectInstance.getDuration() / 20 + " s.");
                         }
                     }
                 }
 
                 int enchantability = itemStack.getEnchantmentValue();
                 if (enchantability > 0) {
-                    properties.add("Enchantability: " + enchantability);
+                    info.add("Enchantability: " + enchantability);
                 }
 
                 int burnTime = ForgeHooks.getBurnTime(itemStack, null);
                 if (burnTime > 0) {
-                    properties.add("Burn time: " + burnTime + " (" + burnTime / 200f + " items)");
+                    info.add("Burn time: " + burnTime + " (" + burnTime / 200f + " items)");
                 }
 
                 if (PotionBrewing.isIngredient(itemStack)) {
-                    properties.add("Potion component");
+                    info.add("Potion component");
                 }
 
                 Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(itemStack);
@@ -229,7 +235,7 @@ public class TooltipHandler {
 
                     for (Map.Entry<Enchantment, Integer> integerEntry : enchantments.entrySet()) {
                         if (integerEntry.getKey().getMaxLevel() == integerEntry.getValue() && integerEntry.getValue() > 1) {
-                            properties.add(I18n.get(integerEntry.getKey().getDescriptionId()) + " is maxed");
+                            info.add(I18n.get(integerEntry.getKey().getDescriptionId()) + " is maxed");
                         }
                     }
                 }
@@ -240,155 +246,159 @@ public class TooltipHandler {
                     }
                 });
                 if (!tags.isEmpty()) {
-                    properties.add(ChatFormatting.AQUA + "Tags:");
-                    tags.forEach(resourceLocation -> properties.add("   " + resourceLocation.getKey().location()));
+                    info.add(ChatFormatting.AQUA + "Tags:");
+                    tags.forEach(resourceLocation -> info.add("   " + resourceLocation.getKey().location()));
                 }
 
                 if (item instanceof SpawnEggItem spawnEggItem) {
                     EntityType<?> entityType = spawnEggItem.getType(null);
                     if (entityType.fireImmune())
-                        properties.add("Fire-immune");
+                        info.add("Fire-immune");
                     MobCategory category = entityType.getCategory();
-                    properties.add("Category: " + category.getName());
+                    info.add("Category: " + category.getName());
                     if (category.isFriendly())
-                        properties.add("Friendly");
+                        info.add("Friendly");
                     if (category.isPersistent())
-                        properties.add("Persistent");
-                    properties.add("Size: " + entityType.getWidth() + "x" + entityType.getHeight());
-                    properties.add("Id: " + ForgeRegistries.ENTITY_TYPES.getKey(entityType).toString());
+                        info.add("Persistent");
+                    info.add("Size: " + entityType.getWidth() + "x" + entityType.getHeight());
+                    info.add("Id: " + ForgeRegistries.ENTITY_TYPES.getKey(entityType).toString());
                     if (entityType.getTags().count() > 0) {
-                        properties.add(ChatFormatting.AQUA + "Tags:");
-                        entityType.getTags().forEach(entityTypeTagKey -> properties.add("  " + entityTypeTagKey.location()));
+                        info.add(ChatFormatting.AQUA + "Tags:");
+                        entityType.getTags().forEach(entityTypeTagKey -> info.add("  " + entityTypeTagKey.location()));
                     }
                 }
 
-                //end of gathering properties
-                if(!properties.isEmpty()) {
+                //end of gathering info
+                properties=info.stream().map(Component::literal).toList();
 
-                    int theirLongestStringWidth = 0;
-
-                    for (Component iTextComponent : originalTooltip) {
-                        String string = iTextComponent.getString();
-                        int width = minecraft.font.width(string);
-                        if (width > theirLongestStringWidth) {
-                            theirLongestStringWidth = width;
-                        }
-                    }
-
-                    List<Component> copy = new ArrayList<>(originalTooltip.size());
-                    int ourLongestStringWidth = 0;
-
-                    int xOffset;
-                    String property;
-                    for (Iterator<String> var47 = properties.iterator(); var47.hasNext(); copy.add(Component.literal(property))) {
-                        property = var47.next();
-                        xOffset = minecraft.font.width(property);
-                        if (xOffset > ourLongestStringWidth) {
-                            ourLongestStringWidth = xOffset;
-                        }
-                    }
-
-                    double mouseX = minecraft.mouseHandler.xpos() * (double) minecraft.getWindow().getGuiScaledWidth() / (double) minecraft.getWindow().getScreenWidth();
-                    xOffset = (int) (mouseX - (double) ourLongestStringWidth) - 40;
-                    if (xOffset < 0) {
+                if (Satako.jei && JEI.ingredientListOverlay != null) {
+                    Optional<ITypedIngredient<?>> ingredient = JEI.ingredientListOverlay.getIngredientUnderMouse();
+                    if (ingredient.isPresent())
+                    {
                         xOffset = 0;
+                        ingredient.ifPresent(iTypedIngredient -> iTypedIngredient.getItemStack().ifPresent(itemStack1 -> targetStack=itemStack1));
                     }
-
-                    if (Satako.jei && JEI.ingredientListOverlay != null) {
-                        Optional<ITypedIngredient<?>> ingredient = JEI.ingredientListOverlay.getIngredientUnderMouse();
-                        if (ingredient.isPresent())
-                            xOffset = 0;
-                    }
-
-                    double mouseY = minecraft.mouseHandler.ypos() * (double) minecraft.getWindow().getGuiScaledHeight() / (double) minecraft.getWindow().getScreenHeight();
-                    renderHoveringTooltip(minecraft, currentScreen, copy, xOffset, mouseY, itemStack);
                 }
             }
         }
     }
 
-    private static void renderHoveringTooltip(Minecraft minecraft, Screen currentScreen, List<Component> properties, int xOffset, double mouseY, ItemStack itemStack) {
+    public static void renderHoveringTooltip() {
+        if(targetStack!=null && Screen.hasAltDown()) {
+            Minecraft minecraft = Minecraft.getInstance();
+            Screen currentScreen = minecraft.screen;
+            ;
+            if (!properties.isEmpty()) {
 
-        int tooltipTextWidth = 0;
-        Font font = minecraft.font;
+                int theirLongestStringWidth = 0;
 
-        int titleLinesCount;
-        for (Component textComponent : properties) {
-            titleLinesCount = font.width(textComponent);
-            if (titleLinesCount > tooltipTextWidth) {
-                tooltipTextWidth = titleLinesCount;
-            }
-        }
-
-        boolean needsWrap = false;
-        int screenWidth = currentScreen.width;
-        titleLinesCount = 1;
-        int tooltipX = xOffset + 12;
-        if (tooltipX + tooltipTextWidth + 4 > screenWidth) {
-            tooltipX = xOffset - 16 - tooltipTextWidth;
-            if (tooltipX < 4) {
-                if (xOffset > screenWidth / 2) {
-                    tooltipTextWidth = xOffset - 12 - 8;
-                } else {
-                    tooltipTextWidth = screenWidth - 16 - xOffset;
-                }
-
-                needsWrap = true;
-            }
-        }
-
-        int tooltipY;
-        int screenHeight;
-        if (needsWrap) {
-            tooltipY = 0;
-            ArrayList<FormattedText> wrappedTextLines = new ArrayList<>();
-
-            for(screenHeight = 0; screenHeight < properties.size(); ++screenHeight) {
-                Component textLine = properties.get(screenHeight);
-                List<FormattedText> wrappedLine = font.getSplitter().splitLines(textLine, tooltipTextWidth, Style.EMPTY);
-                if (screenHeight == 0) {
-                    titleLinesCount = wrappedLine.size();
-                }
-
-                FormattedText line;
-                for (Iterator<FormattedText> var17 = wrappedLine.iterator(); var17.hasNext(); wrappedTextLines.add(line)) {
-                    line = var17.next();
-                    int lineWidth = font.width(line);
-                    if (lineWidth > tooltipY) {
-                        tooltipY = lineWidth;
+                for (Component iTextComponent : originalTooltip) {
+                    String string = iTextComponent.getString();
+                    int width = minecraft.font.width(string);
+                    if (width > theirLongestStringWidth) {
+                        theirLongestStringWidth = width;
                     }
                 }
-            }
 
-            tooltipTextWidth = tooltipY;
-            properties = wrappedTextLines.stream().map((iTextProperties) -> Component.literal(iTextProperties.getString())).collect(Collectors.toList());
-            if (xOffset > screenWidth / 2) {
-                tooltipX = xOffset - 16 - tooltipY;
-            } else {
-                tooltipX = xOffset + 12;
+                List<Component> copy = new ArrayList<>(originalTooltip.size());
+                int ourLongestStringWidth = 0;
+
+                for (Component property : properties) {
+                    xOffset = minecraft.font.width(property);
+                    if (xOffset > ourLongestStringWidth) {
+                        ourLongestStringWidth = xOffset;
+                    }
+                }
+
+                double mouseX = minecraft.mouseHandler.xpos() * (double) minecraft.getWindow().getGuiScaledWidth() / (double) minecraft.getWindow().getScreenWidth();
+                xOffset = (int) (mouseX - (double) ourLongestStringWidth) - 40;
+                if (xOffset < 0) {
+                    xOffset = 0;
+                }
+
+                double mouseY = minecraft.mouseHandler.ypos() * (double) minecraft.getWindow().getGuiScaledHeight() / (double) minecraft.getWindow().getScreenHeight();
+
+                int tooltipTextWidth = 0;
+                Font font = minecraft.font;
+
+                int titleLinesCount;
+                for (Component textComponent : properties) {
+                    titleLinesCount = font.width(textComponent);
+                    if (titleLinesCount > tooltipTextWidth) {
+                        tooltipTextWidth = titleLinesCount;
+                    }
+                }
+
+                boolean needsWrap = false;
+                int screenWidth = currentScreen.width;
+                titleLinesCount = 1;
+                int tooltipX = xOffset + 12;
+                if (tooltipX + tooltipTextWidth + 4 > screenWidth) {
+                    tooltipX = xOffset - 16 - tooltipTextWidth;
+                    if (tooltipX < 4) {
+                        if (xOffset > screenWidth / 2) {
+                            tooltipTextWidth = xOffset - 12 - 8;
+                        } else {
+                            tooltipTextWidth = screenWidth - 16 - xOffset;
+                        }
+
+                        needsWrap = true;
+                    }
+                }
+
+                int tooltipY;
+                int screenHeight;
+                if (needsWrap) {
+                    tooltipY = 0;
+                    ArrayList<FormattedText> wrappedTextLines = new ArrayList<>();
+
+                    for (screenHeight = 0; screenHeight < properties.size(); ++screenHeight) {
+                        Component textLine = properties.get(screenHeight);
+                        List<FormattedText> wrappedLine = font.getSplitter().splitLines(textLine, tooltipTextWidth, Style.EMPTY);
+                        if (screenHeight == 0) {
+                            titleLinesCount = wrappedLine.size();
+                        }
+
+                        FormattedText line;
+                        for (Iterator<FormattedText> var17 = wrappedLine.iterator(); var17.hasNext(); wrappedTextLines.add(line)) {
+                            line = var17.next();
+                            int lineWidth = font.width(line);
+                            if (lineWidth > tooltipY) {
+                                tooltipY = lineWidth;
+                            }
+                        }
+                    }
+
+                    properties = wrappedTextLines.stream().map((iTextProperties) -> Component.literal(iTextProperties.getString())).collect(Collectors.toList());
+                    if (xOffset > screenWidth / 2) {
+                        tooltipX = xOffset - 16 - tooltipY;
+                    } else {
+                        tooltipX = xOffset + 12;
+                    }
+                }
+
+                tooltipY = (int) (mouseY - 12.0D);
+                int tooltipHeight = 8;
+                if (properties.size() > 1) {
+                    tooltipHeight += (properties.size() - 1) * 10;
+                    if (properties.size() > titleLinesCount) {
+                        tooltipHeight += 2;
+                    }
+                }
+
+                screenHeight = currentScreen.height;
+                if (tooltipY < 4) {
+                    tooltipY = 4;
+                } else if (tooltipY + tooltipHeight + 4 > screenHeight) {
+                    tooltipY = screenHeight - tooltipHeight - 4;
+                }
+
+                RenderSystem.setShader(GameRenderer::getPositionColorShader);
+                PoseStack textStack = new PoseStack();
+                textStack.translate(0.0D, 0.0D, 300.0D);
+                GuiGraphics guiGraphics = new GuiGraphics(minecraft, minecraft.renderBuffers().bufferSource());
+                guiGraphics.renderTooltip(minecraft.font, properties.stream().map(mutableComponent -> Component.literal(mutableComponent.getString())).collect(Collectors.toList()), targetStack.getTooltipImage(), targetStack, tooltipX, tooltipY);
             }
         }
-
-        tooltipY = (int)(mouseY - 12.0D);
-        int tooltipHeight = 8;
-        if (properties.size() > 1) {
-            tooltipHeight += (properties.size() - 1) * 10;
-            if (properties.size() > titleLinesCount) {
-                tooltipHeight += 2;
-            }
-        }
-
-        screenHeight = currentScreen.height;
-        if (tooltipY < 4) {
-            tooltipY = 4;
-        } else if (tooltipY + tooltipHeight + 4 > screenHeight) {
-            tooltipY = screenHeight - tooltipHeight - 4;
-        }
-
-        RenderSystem.setShader(GameRenderer::getPositionColorShader);
-        PoseStack textStack = new PoseStack();
-        textStack.translate(0.0D, 0.0D, 300.0D);
-        GuiGraphics guiGraphics=new GuiGraphics(minecraft,minecraft.renderBuffers().bufferSource());
-        guiGraphics.renderTooltip(minecraft.font,properties,itemStack.getTooltipImage(),itemStack,tooltipX,tooltipY);
     }
 }
