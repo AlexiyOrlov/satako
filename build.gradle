@@ -4,6 +4,7 @@ plugins {
     id 'maven-publish'
     id 'net.minecraftforge.gradle' version '[6.0,6.2)'
     id 'org.parchmentmc.librarian.forgegradle' version '1.+'
+    id 'org.spongepowered.mixin' version '0.7.+'
 }
 
 project.version = '7.0.19-1.20.1'
@@ -90,8 +91,19 @@ task('updateVersion'){
 
 processResources.dependsOn(updateVersion)
 
+repositories {
+    maven{
+        url('https://maven.ftb.dev/releases')
+    }
+    maven {
+        url = "https://maven.architectury.dev/"
+    }
+}
+
 dependencies {
     minecraft "net.minecraftforge:forge:${property('forge_version')}"
+    implementation(fg.deobf('dev.architectury:architectury-forge:9.0.8'))
+    implementation fg.deobf("dev.ftb.mods:ftb-library-forge:2001.2.6")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
