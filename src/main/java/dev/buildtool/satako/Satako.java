@@ -34,7 +34,7 @@ public class Satako {
     private static final RegistryObject<Block> TEST_BLOCK = BLOCKS.register("test_block", () -> new TestBlock(Block.Properties.of()));
 
     private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ID);
-
+    public static ForgeConfigSpec.BooleanValue enableInfoTooltip;
     static {
         ITEMS.register("test_block", () -> new BlockItem(TEST_BLOCK.get(), new Item.Properties().stacksTo(1)));
     }
@@ -55,6 +55,11 @@ public class Satako {
         {
             jei=true;
         }
+
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT,new ForgeConfigSpec.Builder().configure(builder -> {
+            enableInfoTooltip= builder.define("Enable item info tooltip",true);
+            return builder.build();
+        }).getRight());
 
         LOGGER.info("Satako loaded");
     }
