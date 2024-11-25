@@ -57,3 +57,8 @@ mandatory = true
 versionRange = "[1.20,1.21)"
 ordering = "NONE"
 side = "BOTH"
+[[dependencies.satako]]
+modId = "ftblibrary"
+mandatory = true
+versionRange = "[2001.2.6,)"
+side = "BOTH"
