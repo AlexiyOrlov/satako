@@ -9,14 +9,19 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * A UI without slots
  */
 public class Screen2 extends Screen
 {
-    protected int showTime;
     protected ArrayList<Component> popups=new ArrayList<>();
+    protected int showTime=200;
+    protected int popupPositionX, popupPositionY;
+    protected LinkedHashMap<Component,Integer> showTimes=new LinkedHashMap<>();
+
     /**
      * GUI's center coordinates
      */
@@ -43,17 +48,20 @@ public class Screen2 extends Screen
     public void render(GuiGraphics matrixStack, int mouseX, int mouseY, float tick) {
         renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, tick);
-        if(showTime>0)
-        {
-            popups.forEach(component -> {
-                int textWidth= font.width(component);
-                matrixStack.fill(centerX-textWidth/2,height-30,centerX-textWidth/2+textWidth,height-15,Constants.BLACK.getIntColor());
-                matrixStack.drawCenteredString(font,component,centerX,height-20,new IntegerColor(0xffffffff).getIntColor());
-            });
-            showTime--;
+        int popupY = popupPositionY - (showTimes.keySet().size()-1) * 18;
+        for (Map.Entry<Component, Integer> entry : showTimes.entrySet()) {
+            Component component = entry.getKey();
+            Integer integer = entry.getValue();
+            if (integer > 0) {
+                int textWidth = font.width(component);
+                matrixStack.fill(popupPositionX - textWidth / 2-5, popupY-5, popupPositionX - textWidth / 2 + textWidth+5, popupY+13, new IntegerColor(0xff565656).getIntColor());
+                matrixStack.drawCenteredString(font, component, popupPositionX, popupY, new IntegerColor(0xffffffff).getIntColor());
+                popupY+=18;
+                integer--;
+                entry.setValue(integer);
+            }
         }
-        else
-            popups.clear();
+        showTimes.entrySet().removeIf(componentIntegerEntry -> componentIntegerEntry.getValue()==0);
     }
 
     @Override
