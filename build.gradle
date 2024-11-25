@@ -116,6 +116,7 @@ dependencies {
     implementation(fg.deobf('dev.architectury:architectury-forge:9.0.8'))
     implementation fg.deobf("dev.ftb.mods:ftb-library-forge:2001.2.6")
     implementation fg.deobf("mezz.jei:jei-1.20.1-forge:15.2.0.27")
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
@@ -160,4 +161,8 @@ publishing {
             url = property("myMavenUrl")
         }
     }
+}
+
+mixin {
+    config('satako.mixins.json')
 }
