@@ -57,5 +57,5 @@ side = "BOTH"
 [[dependencies.satako]]
 modId = "ftblibrary"
 mandatory = true
-versionRange = "[2001.2.6,)"
+versionRange = "*"
 side = "BOTH"
