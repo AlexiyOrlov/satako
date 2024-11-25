@@ -45,6 +45,4 @@ public class Constants
     public final static int DAY_HALF = DAY_LENGTH / 2;
     public static final ResourceLocation GREY_SLOT_TEXTURE = new ResourceLocation(Satako.ID, "textures/grey_slot.png");
     public static final Direction[] HORIZONTALS = new Direction[]{Direction.WEST, Direction.SOUTH, Direction.NORTH, Direction.EAST};
-    static final Logger SATAKO_LOGGER = LogManager.getLogger("Satako");
-
 }
