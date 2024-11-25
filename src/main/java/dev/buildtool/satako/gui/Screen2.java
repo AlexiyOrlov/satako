@@ -100,8 +100,8 @@ public class Screen2 extends Screen
         if (mousewheeld != 0)
         {
             for (Renderable button : renderables) {
-                if (button instanceof Scrollable) {
-                    ((Scrollable) button).scroll(mousewheeld, verticalscroll);
+                if (button instanceof Scrollable scrollable) {
+                    scrollable.scroll(mousewheeld, verticalscroll);
                 }
             }
         }
