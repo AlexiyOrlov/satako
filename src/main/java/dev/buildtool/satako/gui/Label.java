@@ -1,6 +1,5 @@
 package dev.buildtool.satako.gui;
 
-import dev.buildtool.satako.Constants;
 import dev.buildtool.satako.IntegerColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -45,18 +44,18 @@ public class Label extends BetterButton implements Scrollable, Hideable {
         if (!hidden) {
             if(backgroundColor!=null)
             {
-                guiGraphics.fill(getX(),getY(),getX()+width,getY()+height, backgroundColor.getIntColor());
+                guiGraphics.fill(getXPos(), getYPos(), getXPos()+width, getYPos()+height, backgroundColor.getIntColor());
             }
-            guiGraphics.drawString(Minecraft.getInstance().font, getMessage(), getX() + 4, getY() + (height - 8) / 2, 16777215 | Mth.ceil(this.alpha * 255.0F) << 24);
+            guiGraphics.drawString(Minecraft.getInstance().font, getMessage(), getXPos() + 4, getYPos() + (height - 8) / 2, 16777215 | Mth.ceil(this.alpha * 255.0F) << 24);
         }
     }
 
     @Override
     public void scroll(int amount, boolean vertical) {
         if (vertical && verticalScroll) {
-            setY((int) (getY() + Math.signum(amount) * scrollAmount));
+            setYPos((int) (getYPos() + Math.signum(amount) * scrollAmount));
         } else if (!vertical && horizontalScroll) {
-            setX(getX() + amount);
+            setXPos(getXPos() + amount);
         }
     }
 

@@ -23,7 +23,7 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
         addRenderableWidget(new BetterButton(centerX, 0, Component.literal("Button")));
         RadioButton radioButton = new RadioButton(centerX, 20, Component.literal("Radio button 1"));
         addRenderableWidget(radioButton);
-        RadioButton radioButton2 = new RadioButton(radioButton.getX() + radioButton.getElementWidth(), 20, Component.literal("Radio button2"));
+        RadioButton radioButton2 = new RadioButton(radioButton.getXPos() + radioButton.getElementWidth(), 20, Component.literal("Radio button2"));
         addRenderableWidget(radioButton2);
         new ButtonGroup(radioButton, radioButton2);
         ArrayList<Object> elements = new ArrayList<>();

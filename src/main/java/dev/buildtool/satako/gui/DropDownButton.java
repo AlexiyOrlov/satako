@@ -8,7 +8,6 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
 import java.util.*;
-import java.util.function.BinaryOperator;
 
 public class DropDownButton extends BetterButton {
     private HashMap<Component, RadioButton> choices;
@@ -35,7 +34,7 @@ public class DropDownButton extends BetterButton {
                                 if (guiEventListener instanceof Hideable hideable) {
                                     for (int i = 0; i < positionable.getElementWidth(); i++) {
                                         for (int j = 0; j < positionable.getElementHeight(); j++) {
-                                            if (isInsideArea(positionable.getX() + i, positionable.getY() + j, radioButton.getX(), radioButton.getX() + radioButton.getElementWidth(), radioButton.getY(), radioButton.getY() + radioButton.getElementHeight())) {
+                                            if (isInsideArea(positionable.getXPos() + i, positionable.getYPos() + j, radioButton.getXPos(), radioButton.getXPos() + radioButton.getElementWidth(), radioButton.getYPos(), radioButton.getYPos() + radioButton.getElementHeight())) {
                                                 hideable.setHidden(true);
                                                 overlappingElements.add(guiEventListener);
                                                 break;
@@ -46,7 +45,7 @@ public class DropDownButton extends BetterButton {
                             } else if (guiEventListener instanceof AbstractWidget abstractWidget) {
                                 for (int i = 0; i < abstractWidget.getWidth(); i++) {
                                     for (int j = 0; j < abstractWidget.getHeight(); j++) {
-                                        if (isInsideArea(abstractWidget.getX() + i, abstractWidget.getY() + j, radioButton.getX(), radioButton.getX() + radioButton.getElementWidth(), radioButton.getY(), radioButton.getY() + radioButton.getElementHeight())) {
+                                        if (isInsideArea(abstractWidget.getX() + i, abstractWidget.getY() + j, radioButton.getXPos(), radioButton.getXPos() + radioButton.getElementWidth(), radioButton.getYPos(), radioButton.getYPos() + radioButton.getElementHeight())) {
                                             abstractWidget.visible = false;
                                             overlappingElements.add(guiEventListener);
                                             break;
@@ -88,11 +87,11 @@ public class DropDownButton extends BetterButton {
         if (open)
         {
             int widest=choices.values().stream().reduce((radioButton, radioButton2) -> radioButton.getElementWidth()>radioButton2.getElementWidth() ? radioButton : radioButton2).get().getElementWidth();
-            choices.values().forEach(radioButton -> poseStack.fill(radioButton.getX(),radioButton.getY(),radioButton.getX()+widest,radioButton.getY()+radioButton.getElementHeight(), Constants.BLACK.getIntColor()));
-            poseStack.drawString(fontRenderer, " :", getX() + width, getY() + height / 2 - 4, 0xffffffff);
+            choices.values().forEach(radioButton -> poseStack.fill(radioButton.getXPos(),radioButton.getYPos(),radioButton.getXPos()+widest,radioButton.getYPos()+radioButton.getElementHeight(), Constants.BLACK.getIntColor()));
+            poseStack.drawString(fontRenderer, " :", getXPos() + width, getYPos() + height / 2 - 4, 0xffffffff);
         }
         else
-            poseStack.drawString(fontRenderer, " V", getX() + width, getY() + height / 2 - 4, 0xffffffff);
+            poseStack.drawString(fontRenderer, " V", getXPos() + width, getYPos() + height / 2 - 4, 0xffffffff);
     }
 
     private boolean isInsideArea(int x, int y, int x1, int x2, int y1, int y2) {
@@ -110,7 +109,7 @@ public class DropDownButton extends BetterButton {
         for (Map.Entry<Component, OnPress> entry : map.entrySet()) {
             Component component = entry.getKey();
             OnPress onPress1 = entry.getValue();
-            RadioButton radioButton = new RadioButton(getX(), getY() + 20 * offset++, component, onPress1);
+            RadioButton radioButton = new RadioButton(getXPos(), getYPos() + 20 * offset++, component, onPress1);
             radioButton.setHidden(true);
             radioButton.selected = selectedButton + 1 - offset == -1;
             if (radioButton.selected)

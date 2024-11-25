@@ -9,11 +9,11 @@ public interface Positionable
 
     int getElementHeight();
 
-    int getX();
+    int getXPos();
 
-    void setX(int X);
+    void setXPos(int X);
 
-    int getY();
+    int getYPos();
 
-    void setY(int Y);
+    void setYPos(int Y);
 }
