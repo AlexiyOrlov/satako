@@ -10,6 +10,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -40,7 +41,7 @@ public class Satako {
 
     private static final DeferredRegister<MenuType<?>> CONTAINER_TYPES = DeferredRegister.create(ForgeRegistries.MENU_TYPES, ID);
     public static final RegistryObject<MenuType<TestContainer>> TEST_CONTAINER = CONTAINER_TYPES.register("test_block", () -> IForgeMenuType.create((windowId, inv, data) -> new TestContainer(windowId, inv)));
-
+    public static boolean jei;
     public static Logger LOGGER = LogManager.getLogger(ID);
     public Satako() {
         MinecraftForge.EVENT_BUS.register(this);
@@ -49,6 +50,12 @@ public class Satako {
         CONTAINER_TYPES.register(eventBus);
         BLOCKS.register(eventBus);
         ITEMS.register(eventBus);
+
+        if(ModList.get().isLoaded("jei"))
+        {
+            jei=true;
+        }
+
         LOGGER.info("Satako loaded");
     }
 }
