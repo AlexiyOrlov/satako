@@ -22,7 +22,7 @@ public class ItemHandlerSlot extends SlotItemHandler {
     protected boolean active = true;
     private IntegerColor color = Constants.BLUE;
     private ResourceLocation texture;
-    public ArrayList<Component> tooltip;
+    protected List<Component> tooltip;
 
     public ItemHandlerSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition) {
         super(itemHandler, index, xPosition, yPosition);
@@ -64,9 +64,15 @@ public class ItemHandlerSlot extends SlotItemHandler {
     public void setActive(boolean active) {
         this.active = active;
     }
-    public ItemHandlerSlot setTooltip(ArrayList<Component> tooltip)
+
+    public ItemHandlerSlot setTooltip(List<Component> tooltip)
     {
         this.tooltip=tooltip;
         return this;
+    }
+
+    public List<Component> getTooltip()
+    {
+        return  tooltip;
     }
 }
