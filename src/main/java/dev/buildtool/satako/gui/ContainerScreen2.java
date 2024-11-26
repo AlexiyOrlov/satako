@@ -97,22 +97,20 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
     protected void renderBg(GuiGraphics matrixStack, float partialTicks, int mouseX, int mouseY) {
         List<Slot> slots = getSlots();
         GlStateManager._clearColor(1.0F, 1.0F, 1.0F, 1.0F);
-        for (Slot s : slots) {
-            if (s.isActive()) {
-                int sx = s.x;
-                int sy = s.y;
-                if (s instanceof ItemHandlerSlot itemHandlerSlot) {
-                    if (itemHandlerSlot.getTexture() == null) {
-                        //color
-                        matrixStack.fill(sx + leftPos, sy + topPos, sx + leftPos + 16, sy + topPos + 16, itemHandlerSlot.getColor().getIntColor());
-                    } else {
-                        matrixStack.fill(sx + leftPos, sy + topPos, sx + leftPos + 16, sy + topPos + 16, 0xff666666);
-                    }
+        slots.stream().filter(Slot::isActive).forEach(s -> {
+            int sx = s.x;
+            int sy = s.y;
+            if (s instanceof ItemHandlerSlot itemHandlerSlot) {
+                if (itemHandlerSlot.getTexture() == null) {
+                    //color
+                    matrixStack.fill(sx + leftPos, sy + topPos, sx + leftPos + 16, sy + topPos + 16, itemHandlerSlot.getColor().getIntColor());
                 } else {
                     matrixStack.fill(sx + leftPos, sy + topPos, sx + leftPos + 16, sy + topPos + 16, 0xff666666);
                 }
+            } else {
+                matrixStack.fill(sx + leftPos, sy + topPos, sx + leftPos + 16, sy + topPos + 16, 0xff666666);
             }
-        }
+        });
 
         IntegerColor color = Constants.BLUE;
 
@@ -124,6 +122,13 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
             matrixStack.vLine(this.leftPos - 1, this.topPos - 1, getYSize() + this.topPos - 1, intColor);
             matrixStack.vLine(getXSize() + this.leftPos - 2, this.topPos - 1, getYSize() + this.topPos - 2, intColor);
         }
+
+        slots.stream().filter(Slot::isActive).forEach(slot -> {
+            if(slot instanceof ItemHandlerSlot handlerSlot && handlerSlot.tooltip!=null)
+            {
+                matrixStack.renderComponentTooltip(font,((ItemHandlerSlot) slot).tooltip,mouseX,mouseY);
+            }
+        });
     }
 
     @Override
