@@ -1,6 +1,7 @@
 package dev.buildtool.satako;
 
 import dev.buildtool.satako.gui.ItemHandlerDisplaySlot;
+import dev.buildtool.satako.gui.ItemHandlerSlot;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
