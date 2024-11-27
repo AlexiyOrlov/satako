@@ -158,4 +158,13 @@ public class ItemHandler extends ItemStackHandler
     {
         if (owner != null) owner.setChanged();
     }
+
+    @Override
+    public void setSize(int size) {
+        NonNullList<ItemStack> old=stacks;
+        stacks=NonNullList.withSize(size,ItemStack.EMPTY);
+        for (int i = 0; i < old.size(); i++) {
+            stacks.set(i,old.get(i));
+        }
+    }
 }
