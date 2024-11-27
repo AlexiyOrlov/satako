@@ -163,7 +163,7 @@ public class ItemHandler extends ItemStackHandler
     public void setSize(int size) {
         NonNullList<ItemStack> old=stacks;
         stacks=NonNullList.withSize(size,ItemStack.EMPTY);
-        for (int i = 0; i < old.size(); i++) {
+        for (int i = 0; i < Math.min(stacks.size(),old.size()); i++) {
             stacks.set(i,old.get(i));
         }
     }
