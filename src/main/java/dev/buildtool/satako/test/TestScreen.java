@@ -5,6 +5,7 @@ import dev.buildtool.satako.IntegerColor;
 import dev.buildtool.satako.gui.*;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
@@ -36,7 +37,7 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
         }).pos(0, 120).size(100, 20).build();
         Button button1 = new Button.Builder(Component.literal("Vanilla button 2"), p_93751_ -> {
         }).pos(0, 140).size(100, 20).build();
-
+        button.setTooltip(Tooltip.create(Component.literal("Veeeeeeeeeeeeeryyyyyyyyyyyyyyyy looooooooooooooooooooooooooong tooooooooltiiiiiiiip")));
         addRenderableWidget(button);
         addRenderableWidget(button1);
         elements.add(button);
