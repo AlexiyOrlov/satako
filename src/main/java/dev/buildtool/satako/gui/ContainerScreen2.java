@@ -69,10 +69,18 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
     }
 
     @Override
-    public void render(GuiGraphics matrixStack, int p_render_1_, int p_render_2_, float p_render_3_) {
+    public void render(GuiGraphics matrixStack, int mouseX, int mouseY, float p_render_3_) {
         renderBackground(matrixStack);
-        super.render(matrixStack, p_render_1_, p_render_2_, p_render_3_);
-        renderTooltip(matrixStack, p_render_1_, p_render_2_);
+        super.render(matrixStack, mouseX, mouseY, p_render_3_);
+        renderTooltip(matrixStack, mouseX, mouseY);
+
+        List<Slot> slots=getSlots();
+        slots.stream().filter(Slot::isActive).forEach(slot -> {
+            if(slot instanceof ItemHandlerSlot handlerSlot && slot.getItem().isEmpty() && mouseX>slot.x+leftPos&& mouseX<slot.x+leftPos+18 && mouseY>slot.y+topPos && mouseY<slot.y+topPos+18 && handlerSlot.tooltip!=null)
+            {
+                matrixStack.renderComponentTooltip(font,((ItemHandlerSlot) slot).tooltip,mouseX,mouseY);
+            }
+        });
 
         int popupY = popupPositionY - (showTimes.keySet().size()-1) * 18;
         for (Map.Entry<Component, Integer> entry : showTimes.entrySet()) {
@@ -122,13 +130,6 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
             matrixStack.vLine(this.leftPos - 1, this.topPos - 1, getYSize() + this.topPos - 1, intColor);
             matrixStack.vLine(getXSize() + this.leftPos - 2, this.topPos - 1, getYSize() + this.topPos - 2, intColor);
         }
-
-        slots.stream().filter(Slot::isActive).forEach(slot -> {
-            if(slot instanceof ItemHandlerSlot handlerSlot && slot.getItem().isEmpty() && mouseX>slot.x+leftPos&& mouseX<slot.x+leftPos+18 && mouseY>slot.y+topPos && mouseY<slot.y+topPos+18 && handlerSlot.tooltip!=null)
-            {
-                matrixStack.renderComponentTooltip(font,((ItemHandlerSlot) slot).tooltip,mouseX,mouseY);
-            }
-        });
     }
 
     @Override
