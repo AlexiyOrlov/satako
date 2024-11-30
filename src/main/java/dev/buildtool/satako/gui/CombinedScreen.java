@@ -18,13 +18,19 @@ public class CombinedScreen extends ScreenWrapper {
     protected int showTime=200;
     protected int popupPositionX, popupPositionY;
     protected LinkedHashMap<Component,Integer> showTimes=new LinkedHashMap<>();
-
+    protected InitCallback initCallback;
     /**
      * GUI's center coordinates
      */
     protected int centerX, centerY;
     public CombinedScreen(BaseScreen g) {
         super(g);
+    }
+
+    public CombinedScreen(BaseScreen bs,InitCallback callback)
+    {
+        this(bs);
+        initCallback=callback;
     }
 
     @Override
@@ -35,6 +41,8 @@ public class CombinedScreen extends ScreenWrapper {
         centerY = height / 2;
         popupPositionX=centerX;
         popupPositionY=height-18;
+        if(initCallback!=null)
+            initCallback.initialize();
     }
 
     @Override
