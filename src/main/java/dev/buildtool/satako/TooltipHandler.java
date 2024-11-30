@@ -399,8 +399,7 @@ public class TooltipHandler {
                 } else if (tooltipY + tooltipHeight + 4 > screenHeight) {
                     tooltipY = screenHeight - tooltipHeight - 4;
                 }
-                RenderSystem.disableDepthTest();
-                graphics.fill(tooltipX,tooltipY,tooltipX+screenWidth,tooltipY+screenWidth,0xffffffff);
+
                 graphics.renderTooltip(minecraft.font, properties.stream().map(mutableComponent -> Component.literal(mutableComponent.getString())).collect(Collectors.toList()), targetStack.getTooltipImage(), targetStack, tooltipX, tooltipY);
             }
         }
