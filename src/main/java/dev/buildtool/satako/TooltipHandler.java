@@ -1,7 +1,6 @@
 package dev.buildtool.satako;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.datafixers.util.Pair;
 import dev.buildtool.satako.integration.JEI;
 import mezz.jei.api.ingredients.ITypedIngredient;
@@ -10,8 +9,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -25,6 +24,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.alchemy.PotionBrewing;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -35,6 +35,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -50,21 +51,23 @@ import java.util.stream.Collectors;
 public class TooltipHandler {
     static List<Component> originalTooltip;
     static List<MutableComponent> properties;
-    static ItemStack targetStack;
+    public static ItemStack targetStack;
     static int xOffset;
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void tooltip(ItemTooltipEvent tooltipEvent)
     {
+        originalTooltip = tooltipEvent.getToolTip();
+    }
+
+    public static void handle(ItemStack itemStack, GuiGraphics graphics) {
         if(Satako.enableInfoTooltip.get()) {
             if (Screen.hasAltDown()) {
-                ItemStack itemStack = tooltipEvent.getItemStack();
                 targetStack = itemStack;
                 Item item = itemStack.getItem();
                 Minecraft minecraft = Minecraft.getInstance();
                 Screen currentScreen = minecraft.screen;
                 if (currentScreen != null) {
-                    originalTooltip = tooltipEvent.getToolTip();
                     ArrayList<String> info = new ArrayList<>();
                     info.add(0, ForgeRegistries.ITEMS.getKey(item).toString());
                     int repairCost = itemStack.getBaseRepairCost();
@@ -282,7 +285,7 @@ public class TooltipHandler {
                 }
             }
 
-            renderHoveringTooltip(new GuiGraphics(Minecraft.getInstance(), Minecraft.getInstance().renderBuffers().bufferSource()));
+            renderHoveringTooltip(graphics);
         }
     }
 
@@ -303,7 +306,6 @@ public class TooltipHandler {
                     }
                 }
 
-                List<Component> copy = new ArrayList<>(originalTooltip.size());
                 int ourLongestStringWidth = 0;
 
                 for (Component property : properties) {
@@ -397,8 +399,22 @@ public class TooltipHandler {
                 } else if (tooltipY + tooltipHeight + 4 > screenHeight) {
                     tooltipY = screenHeight - tooltipHeight - 4;
                 }
-
+                RenderSystem.disableDepthTest();
+                graphics.fill(tooltipX,tooltipY,tooltipX+screenWidth,tooltipY+screenWidth,0xffffffff);
                 graphics.renderTooltip(minecraft.font, properties.stream().map(mutableComponent -> Component.literal(mutableComponent.getString())).collect(Collectors.toList()), targetStack.getTooltipImage(), targetStack, tooltipX, tooltipY);
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public static void event(ScreenEvent.Render.Post containerScreenEvent)
+    {
+        Screen containerScreen=containerScreenEvent.getScreen();
+        if(containerScreen instanceof AbstractContainerScreen<?> abstractContainerScreen) {
+            Slot slot = abstractContainerScreen.getSlotUnderMouse();
+            if (slot != null) {
+                targetStack = slot.getItem();
+                handle(targetStack,containerScreenEvent.getGuiGraphics());
             }
         }
     }
