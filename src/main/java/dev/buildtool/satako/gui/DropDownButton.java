@@ -87,7 +87,7 @@ public class DropDownButton extends BetterButton {
         if (open)
         {
             int widest=choices.values().stream().reduce((radioButton, radioButton2) -> radioButton.getElementWidth()>radioButton2.getElementWidth() ? radioButton : radioButton2).get().getElementWidth();
-            choices.values().forEach(radioButton -> poseStack.fill(radioButton.getXPos(),radioButton.getYPos(),radioButton.getXPos()+widest,radioButton.getYPos()+radioButton.getElementHeight(), Constants.BLACK.getIntColor()));
+            choices.values().forEach(radioButton -> poseStack.fill(radioButton.getXPos(),radioButton.getYPos(),radioButton.getXPos()+widest,radioButton.getYPos()+radioButton.getElementHeight(), Constants.GRAY.getIntColor()));
             poseStack.drawString(fontRenderer, " :", getXPos() + width, getYPos() + height / 2 - 4, 0xffffffff);
         }
         else

@@ -88,7 +88,7 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
             Integer integer = entry.getValue();
             if (integer > 0) {
                 int textWidth = font.width(component);
-                matrixStack.fill(popupPositionX - textWidth / 2-5, popupY-5, popupPositionX - textWidth / 2 + textWidth+5, popupY+13, new IntegerColor(0xff565656).getIntColor());
+                matrixStack.fill(popupPositionX - textWidth / 2-5, popupY-5, popupPositionX - textWidth / 2 + textWidth+5, popupY+13, Constants.GRAY.getIntColor());
                 matrixStack.drawCenteredString(font, component, popupPositionX, popupY, new IntegerColor(0xffffffff).getIntColor());
                 popupY+=18;
                 integer--;
