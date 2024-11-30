@@ -57,7 +57,7 @@ public class Satako {
         }
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT,new ForgeConfigSpec.Builder().configure(builder -> {
-            enableInfoTooltip= builder.define("Enable item info tooltip",false);
+            enableInfoTooltip= builder.define("Enable item info tooltip",true);
             return builder.build();
         }).getRight());
 
