@@ -1025,4 +1025,14 @@ public final class Functions {
         }
         return livingEntity.getDirection();
     }
+
+    public static boolean contains(ItemStack item,IItemHandler handler)
+    {
+        for (int i = 0; i < handler.getSlots(); i++) {
+            ItemStack next=handler.getStackInSlot(i);
+            if(next.is(item.getItem()))
+                return true;
+        }
+        return false;
+    }
 }
