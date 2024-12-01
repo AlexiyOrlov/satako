@@ -3,6 +3,7 @@ added optional background to label;
 added dependency on FTB library;
 integrated EII;
 implemented slot tooltips;
+implemented 'killall' command;
 
 7.0.17:
 added config preloading method;
