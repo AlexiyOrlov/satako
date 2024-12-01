@@ -11,6 +11,7 @@ import com.mojang.brigadier.suggestion.SuggestionProvider;
 import com.mojang.brigadier.tree.ArgumentCommandNode;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import com.mojang.brigadier.tree.RootCommandNode;
+import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.commands.arguments.EntityArgument;
@@ -24,11 +25,13 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -36,6 +39,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static net.minecraft.commands.Commands.argument;
@@ -103,6 +107,39 @@ public class Commands {
         item.addChild(countNode);
         rootCommandNode.addChild(giveNode);
 
+        //kill 2
+        SuggestionProvider<CommandSourceStack> mods2=(context, builder) -> SharedSuggestionProvider.suggest(ForgeRegistries.ENTITY_TYPES.getKeys().stream().map(ResourceLocation::getNamespace).collect(Collectors.toSet()), builder);
+        SuggestionProvider<CommandSourceStack> entities2=(context, builder) -> SharedSuggestionProvider.suggest(ForgeRegistries.ENTITY_TYPES.getKeys().stream().filter(resourceLocation -> resourceLocation.getNamespace().equals(context.getArgument("mod",String.class))).map(ResourceLocation::getPath).collect(Collectors.toSet()),builder);
+        LiteralArgumentBuilder<CommandSourceStack> kill2=literal("killall").requires(commandSourceStack -> commandSourceStack.hasPermission(2));
+        RequiredArgumentBuilder<CommandSourceStack,String> entityMod=argument("mod",StringArgumentType.string()).suggests(mods2);
+        RequiredArgumentBuilder<CommandSourceStack,String> entityPath=argument("entity",StringArgumentType.string()).suggests(entities2);
+        entityPath.executes(context -> {
+            ServerLevel serverLevel=context.getSource().getLevel();
+            double d0 = 150;
+            EntityType<?> entityType=ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(context.getArgument("mod",String.class),context.getArgument("entity",String.class)));
+            if(entityType!=null) {
+                AABB aabb = new AABB(-d0, -d0, -d0, d0 + 1.0D, d0 + 1.0D, d0 + 1.0D);
+                List<? extends Entity> entityList = serverLevel.getEntities(entityType, aabb, entity -> true);
+                entityList.forEach(Entity::kill);
+                if (entityList.size() == 1) {
+                    context.getSource().sendSuccess(() -> {
+                        return Component.translatable("commands.kill.success.single", entityList.iterator().next().getDisplayName());
+                    }, true);
+                } else {
+                    context.getSource().sendSuccess(() -> {
+                        return Component.translatable("commands.kill.success.multiple", entityList.size());
+                    }, true);
+                }
+                return entityList.size();
+            }
+            return -1;
+        });
+        LiteralCommandNode<CommandSourceStack> killNode=kill2.build();
+        ArgumentCommandNode<CommandSourceStack,String> modsNode=entityMod.build();
+        ArgumentCommandNode<CommandSourceStack,String> entitiesNode=entityPath.build();
+        killNode.addChild(modsNode);
+        modsNode.addChild(entitiesNode);
+        rootCommandNode.addChild(killNode);
     }
 
     private static int giveItems(CommandContext<CommandSourceStack> context, int amount) throws CommandSyntaxException {
