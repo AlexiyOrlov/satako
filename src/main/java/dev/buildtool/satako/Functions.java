@@ -21,6 +21,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.AirItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -1034,5 +1035,15 @@ public final class Functions {
                 return true;
         }
         return false;
+    }
+
+    public static ItemStack findItem(Item item,IItemHandler handler)
+    {
+        for (int i = 0; i < handler.getSlots(); i++) {
+            ItemStack next=handler.getStackInSlot(i);
+            if(next.is(item))
+                return next;
+        }
+        return ItemStack.EMPTY;
     }
 }
