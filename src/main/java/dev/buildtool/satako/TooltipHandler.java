@@ -303,7 +303,7 @@ public class TooltipHandler {
 
                 int ourLongestStringWidth = 0;
 
-                int xOffset=0;
+                int xOffset;
                 for (Component property : properties) {
                     xOffset = minecraft.font.width(property);
                     if (xOffset > ourLongestStringWidth) {
