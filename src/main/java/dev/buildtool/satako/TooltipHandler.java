@@ -279,7 +279,7 @@ public class TooltipHandler {
                         Optional<ITypedIngredient<?>> ingredient = JEI.ingredientListOverlay.getIngredientUnderMouse();
                         if (ingredient.isPresent()) {
                             xOffset = 0;
-                            ingredient.ifPresent(iTypedIngredient -> iTypedIngredient.getItemStack().ifPresent(itemStack1 -> targetStack = itemStack1));
+                            ingredient.flatMap(ITypedIngredient::getItemStack).ifPresent(itemStack1 -> targetStack = itemStack1);
                         }
                     }
                 }
@@ -414,6 +414,10 @@ public class TooltipHandler {
             if (slot != null) {
                 targetStack = slot.getItem();
                 handle(targetStack,containerScreenEvent.getGuiGraphics());
+            }
+            if(Satako.jei)
+            {
+                JEI.ingredientListOverlay.getIngredientUnderMouse().flatMap(ITypedIngredient::getItemStack).ifPresent(itemStack -> handle(itemStack, containerScreenEvent.getGuiGraphics()));
             }
         }
     }
