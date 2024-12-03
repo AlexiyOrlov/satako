@@ -52,7 +52,6 @@ public class TooltipHandler {
     static List<Component> originalTooltip;
     static List<MutableComponent> properties;
     public static ItemStack targetStack;
-    static int xOffset;
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void tooltip(ItemTooltipEvent tooltipEvent)
@@ -276,11 +275,7 @@ public class TooltipHandler {
                     properties = info.stream().map(Component::literal).toList();
 
                     if (Satako.jei && JEI.ingredientListOverlay != null) {
-                        Optional<ITypedIngredient<?>> ingredient = JEI.ingredientListOverlay.getIngredientUnderMouse();
-                        if (ingredient.isPresent()) {
-                            xOffset = 0;
-                            ingredient.flatMap(ITypedIngredient::getItemStack).ifPresent(itemStack1 -> targetStack = itemStack1);
-                        }
+                        JEI.ingredientListOverlay.getIngredientUnderMouse().flatMap(ITypedIngredient::getItemStack).ifPresent(itemStack1 -> targetStack = itemStack1);
                     }
                 }
             }
@@ -308,6 +303,7 @@ public class TooltipHandler {
 
                 int ourLongestStringWidth = 0;
 
+                int xOffset=0;
                 for (Component property : properties) {
                     xOffset = minecraft.font.width(property);
                     if (xOffset > ourLongestStringWidth) {
