@@ -334,7 +334,7 @@ public class TooltipHandler {
                 assert currentScreen != null;
                 int screenWidth = currentScreen.width;
                 titleLinesCount = 1;
-                int tooltipX = xOffset + 12;
+                int tooltipX = xOffset;
                 if (tooltipX + tooltipTextWidth + 4 > screenWidth) {
                     tooltipX = xOffset - 16 - tooltipTextWidth;
                     if (tooltipX < 4) {
