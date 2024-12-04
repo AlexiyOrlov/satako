@@ -397,6 +397,8 @@ public class TooltipHandler {
                 }
                 if(mouseX+theirLongestStringWidth+12>screenWidth)
                     tooltipX-=theirLongestStringWidth+10;
+                if(tooltipX<0)
+                    tooltipX=0;
                 graphics.renderTooltip(minecraft.font, properties.stream().map(mutableComponent -> Component.literal(mutableComponent.getString())).collect(Collectors.toList()), targetStack.getTooltipImage(), targetStack, tooltipX, tooltipY);
             }
         }
