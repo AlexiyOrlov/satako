@@ -122,13 +122,9 @@ public class Commands {
                 List<? extends Entity> entityList = serverLevel.getEntities(entityType, aabb, entity -> true);
                 entityList.forEach(Entity::kill);
                 if (entityList.size() == 1) {
-                    context.getSource().sendSuccess(() -> {
-                        return Component.translatable("commands.kill.success.single", entityList.iterator().next().getDisplayName());
-                    }, true);
+                    context.getSource().sendSuccess(() -> Component.translatable("commands.kill.success.single", entityList.iterator().next().getDisplayName()), true);
                 } else {
-                    context.getSource().sendSuccess(() -> {
-                        return Component.translatable("commands.kill.success.multiple", entityList.size());
-                    }, true);
+                    context.getSource().sendSuccess(() -> Component.translatable("commands.kill.success.multiple", entityList.size()), true);
                 }
                 return entityList.size();
             }
