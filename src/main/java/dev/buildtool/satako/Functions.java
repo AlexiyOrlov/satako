@@ -795,7 +795,8 @@ public final class Functions {
      */
     public static boolean canInsertItem(IItemHandler into, ItemStack stack)
     {
-        if (stack.isEmpty()) return false;
+        if (stack.isEmpty())
+            return false;
         int slots = into.getSlots();
         for (int i = 0; i < slots; i++)
         {
