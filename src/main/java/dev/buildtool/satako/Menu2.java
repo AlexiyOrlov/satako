@@ -22,7 +22,7 @@ public class Menu2 extends AbstractContainerMenu {
         super(type, i);
     }
 
-    protected void addPlayerInventory(Player player, int horizontalOffset, int verticalOffset) {
+    protected void addPlayerInventory( int horizontalOffset, int verticalOffset,Player player) {
 
         for (int row = 0; row < 3; ++row) {
             for (int column = 0; column < 9; ++column) {
@@ -34,19 +34,6 @@ public class Menu2 extends AbstractContainerMenu {
         for (int i1 = 0; i1 < 9; ++i1) {
             Slot slotIn = new Slot(player.getInventory(), i1, i1 * 18 + horizontalOffset, 3 * 18 + verticalOffset);
             this.addSlot(slotIn);
-        }
-    }
-
-    /**
-     * Uses IItemHandler
-     */
-    protected void addPlayerInventory(int horizontalMargin, int verticalMargin, Player player) {
-        IItemHandler inventory = player.getCapability(Capabilities.ItemHandler.ENTITY);
-        int index = 0;
-        for (int i = 4; i > 0; i--) {
-            for (int j = 0; j < 9; j++) {
-                addSlot(new ItemHandlerSlot(inventory, index++, 18 * j + horizontalMargin, 18 * i + verticalMargin));
-            }
         }
     }
 
