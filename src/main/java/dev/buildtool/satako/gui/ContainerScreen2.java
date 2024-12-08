@@ -35,6 +35,11 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
         drawBorders = drawBorders_;
     }
 
+    public ContainerScreen2(T menu,Inventory playerInventory,Component name)
+    {
+        this(menu,playerInventory,name,true);
+    }
+
     /**
      * Called when GUI is created or resized.
      * Centers window and fits it to slots
