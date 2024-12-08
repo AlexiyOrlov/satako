@@ -2,7 +2,6 @@ package dev.buildtool.satako;
 
 import dev.buildtool.satako.gui.ItemHandlerDisplaySlot;
 import dev.buildtool.satako.gui.ItemHandlerSlot;
-import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -12,15 +11,14 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.capabilities.EntityCapability;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.IItemHandlerModifiable;
 
 /**
  * Created on 24/10/16
  */
-public class Container2 extends AbstractContainerMenu {
-    public Container2(MenuType<?> type, int i) {
+public class Menu2 extends AbstractContainerMenu {
+    public Menu2(MenuType<?> type, int i) {
         super(type, i);
     }
 

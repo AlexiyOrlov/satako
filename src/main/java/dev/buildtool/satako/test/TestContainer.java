@@ -1,6 +1,6 @@
 package dev.buildtool.satako.test;
 
-import dev.buildtool.satako.Container2;
+import dev.buildtool.satako.Menu2;
 import dev.buildtool.satako.IntegerColor;
 import dev.buildtool.satako.ItemHandler;
 import dev.buildtool.satako.Satako;
@@ -11,7 +11,7 @@ import net.minecraft.world.entity.player.Inventory;
 
 import java.util.List;
 
-public class TestContainer extends Container2 {
+public class TestContainer extends Menu2 {
     public TestContainer(int i, Inventory playerInventory) {
         super(Satako.TEST_CONTAINER.get(), i);
         ItemHandler itemHandler = new ItemHandler(2);
