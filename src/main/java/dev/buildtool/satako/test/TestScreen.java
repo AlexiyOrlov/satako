@@ -73,14 +73,7 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
         addRenderableWidget(new Label(getGuiLeft() + imageWidth, getGuiTop() + 20 * 3, Component.literal("Overlapping label"), this, p_93751_ -> minecraft.player.displayClientMessage(Component.literal("Clicked the label"), false), null));
         addRenderableWidget(new Button.Builder(Component.literal("Button"), p_93751_ -> minecraft.player.displayClientMessage(Component.literal("Clicked the button"), false)).pos(getGuiLeft() + imageWidth, getGuiTop() + 20 * 4).size(40, 20).build());
 
-        List<BetterButton> betterButtons=new ArrayList<>(40);
-        for (int i = 0; i < 40; i++) {
-            betterButtons.add(new BetterButton(0,i*20,Component.literal("Button "+i)));
-        }
-        ScrollPane scrollPane=new ScrollPane(3,height/2,getGuiLeft()-10,height/2,Component.literal("List"),this,betterButtons.toArray(AbstractWidget[]::new));
-        addRenderableWidget(scrollPane);
-
-        addRenderableWidget(new SelectionButton(scrollPane.getWidth()+50, height - 20, Component.literal("Selection button")));
+        addRenderableWidget(new SelectionButton(10, height - 20, Component.literal("Selection button")));
 
         addRenderableWidget(new Rectangle(20,getGuiTop(),50,getYSize(),Constants.ORANGE,() -> 0.33f,() -> Component.literal("Time: "+ Minecraft.getInstance().level.getGameTime())));
     }
