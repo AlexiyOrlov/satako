@@ -22,6 +22,7 @@ import net.minecraft.world.item.AirItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -537,9 +538,9 @@ public final class Functions {
         return false;
     }
 
-//    public static int getFuelValue(@Nonnull ItemStack stack) {
-//        return EventHooks.getItemBurnTime(stack,);
-//    }
+    public static int getFuelValue(@Nonnull ItemStack stack) {
+        return stack.getBurnTime(RecipeType.SMELTING);
+    }
 
 //    /**
 //     * Checks the weak power on all sides
