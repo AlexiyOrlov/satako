@@ -109,7 +109,14 @@ public class DropDownButton extends BetterButton {
         for (Map.Entry<Component, OnPress> entry : map.entrySet()) {
             Component component = entry.getKey();
             OnPress onPress1 = entry.getValue();
-            RadioButton radioButton = new RadioButton(getXPos(), getYPos() + 20 * offset++, component, onPress1);
+            RadioButton radioButton = new RadioButton(getXPos(), getYPos() + 20 * offset++, component, onPress1){
+                @Override
+                public void onPress() {
+                    super.onPress();
+                    DropDownButton.this.setMessage(getMessage());
+                    DropDownButton.this.onPress();
+                }
+            };
             radioButton.setHidden(true);
             radioButton.selected = selectedButton + 1 - offset == -1;
             if (radioButton.selected)

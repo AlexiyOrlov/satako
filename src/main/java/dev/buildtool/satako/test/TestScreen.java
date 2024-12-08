@@ -52,22 +52,11 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
         LinkedHashMap<Component, Button.OnPress> linkedHashMap = new LinkedHashMap<>();
         DropDownButton dropDownButton = new DropDownButton(getGuiLeft() + imageWidth, getGuiTop() + 40, this, Component.literal("First choice"));
         linkedHashMap.put(Component.literal("First choice"), p_93751_ -> {
-
-            dropDownButton.setMessage(p_93751_.getMessage());
-            dropDownButton.onPress();
             addPopup(Component.literal("Clicked 1st choice"));
             addPopup(Component.literal("Notification"));
         });
-        linkedHashMap.put(Component.literal("Second choice"), p_93751_ -> {
-            dropDownButton.setMessage(p_93751_.getMessage());
-            dropDownButton.onPress();
-            addPopup(Component.literal("Clicked 2nd choice"));
-        });
-        linkedHashMap.put(Component.literal("Third choice"), p_93751_ -> {
-            dropDownButton.setMessage(p_93751_.getMessage());
-            dropDownButton.onPress();
-            addPopup(Component.literal("Clicked 3d choice"));
-        });
+        linkedHashMap.put(Component.literal("Second choice"), p_93751_ -> addPopup(Component.literal("Clicked 2nd choice")));
+        linkedHashMap.put(Component.literal("Third choice"), p_93751_ -> addPopup(Component.literal("Clicked 3d choice")));
         dropDownButton.setChoices(linkedHashMap, 1);
         addRenderableWidget(dropDownButton);
         addRenderableWidget(new Label(getGuiLeft() + imageWidth, getGuiTop() + 20 * 3, Component.literal("Overlapping label"), this, p_93751_ -> minecraft.player.displayClientMessage(Component.literal("Clicked the label"), false), null));
