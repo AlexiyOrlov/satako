@@ -3,6 +3,7 @@ package dev.buildtool.satako.test;
 import dev.buildtool.satako.Constants;
 import dev.buildtool.satako.IntegerColor;
 import dev.buildtool.satako.gui.*;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
@@ -81,7 +82,6 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
 
         addRenderableWidget(new SelectionButton(scrollPane.getWidth()+50, height - 20, Component.literal("Selection button")));
 
-        ScrollArea scrollArea = new ScrollArea(3, 3, getGuiLeft() - 10, height / 4, Component.literal("List"), new IntegerColor(0x22F8A55E), elements);
-        addRenderableWidget(scrollArea);
+        addRenderableWidget(new Rectangle(20,getGuiTop(),50,getYSize(),Constants.ORANGE,() -> 0.33f,Component.literal("Time: "+ Minecraft.getInstance().level.getGameTime())));
     }
 }
