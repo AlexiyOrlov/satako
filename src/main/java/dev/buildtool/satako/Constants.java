@@ -2,9 +2,7 @@ package dev.buildtool.satako;
 
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.common.ForgeMod;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.neoforged.neoforge.common.NeoForgeMod;
 
 import java.util.UUID;
 
@@ -35,7 +33,7 @@ public class Constants
     public static final int REDSTONE_TORCH_TICK_RATE = 2;
     public static final double PLAYER_SPRINT_SPEED = 0.43;
     public static final double PLAYER_WALK_SPEED = 0.32;
-    public static final double GRAVITY = ForgeMod.ENTITY_GRAVITY.get().getDefaultValue();
+//    public static final double GRAVITY = NeoForgeMod.ENTITY_GRAVITY.get().getDefaultValue();
     /**
      * 24000 ticks
      */
@@ -44,6 +42,6 @@ public class Constants
      * 10 minutes
      */
     public final static int DAY_HALF = DAY_LENGTH / 2;
-    public static final ResourceLocation GREY_SLOT_TEXTURE = new ResourceLocation(Satako.ID, "textures/grey_slot.png");
+    public static final ResourceLocation GREY_SLOT_TEXTURE = ResourceLocation.fromNamespaceAndPath(Satako.ID, "textures/grey_slot.png");
     public static final Direction[] HORIZONTALS = new Direction[]{Direction.WEST, Direction.SOUTH, Direction.NORTH, Direction.EAST};
 }

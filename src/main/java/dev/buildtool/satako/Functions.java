@@ -28,16 +28,15 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkStatus;
+import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemHandlerHelper;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.event.EventHooks;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemHandlerHelper;
 import org.apache.commons.lang3.ArrayUtils;
 
 import javax.annotation.Nonnull;
@@ -156,9 +155,9 @@ public final class Functions {
         return false;
     }
 
-    /**
-     * Not sure whether to use this function in {@link Block#neighborChanged(BlockState, Level, BlockPos, Block, BlockPos, boolean)} or {@link Block#tick(BlockState, ServerLevel, BlockPos, RandomSource)}
-     */
+//    /**
+//     * Not sure whether to use this function in {@link Block#neighborChanged(BlockState, Level, BlockPos, Block, BlockPos, boolean)} or {@link Block#tick(BlockState, ServerLevel, BlockPos, RandomSource)}
+//     */
     public static boolean isDirectionalBlockPowered(Direction blockDirection, BlockPos blockPosition, BlockPos pulsePosition, Level world) {
         Direction back = blockDirection.getOpposite();
         BlockPos backPosition = blockPosition.relative(back);
@@ -267,18 +266,18 @@ public final class Functions {
         return Mth.sin(degreesToRadians(degrees));
     }
 
-    /**
-     * @return true if something can generate without cascading at that position
-     */
-    public static boolean canGenerateWithoutCascade(WorldGenLevel world, BlockPos blockPos) {
-        ChunkPos chunkPos = new ChunkPos(blockPos);
-        int cx = chunkPos.x;
-        int cz = chunkPos.z;
-        ChunkStatus empty = ChunkStatus.EMPTY;
-        return world.getChunk(cx, cz).getStatus() != empty && world.getChunk(cx + 1, cz).getStatus() != empty &&
-                world.getChunk(cx - 1, cz).getStatus() != empty
-                && world.getChunk(cx, cz + 1).getStatus() != empty && world.getChunk(cx, cz - 1).getStatus() != empty;
-    }
+//    /**
+//     * @return true if something can generate without cascading at that position
+//     */
+//    public static boolean canGenerateWithoutCascade(WorldGenLevel world, BlockPos blockPos) {
+//        ChunkPos chunkPos = new ChunkPos(blockPos);
+//        int cx = chunkPos.x;
+//        int cz = chunkPos.z;
+//        ChunkStatus empty = ChunkStatus.EMPTY;
+//        return world.getChunk(cx, cz).getStatus() != empty && world.getChunk(cx + 1, cz).getStatus() != empty &&
+//                world.getChunk(cx - 1, cz).getStatus() != empty
+//                && world.getChunk(cx, cz + 1).getStatus() != empty && world.getChunk(cx, cz - 1).getStatus() != empty;
+//    }
 
     /**
      * Searches for a non-air block starting from world height-16
@@ -523,7 +522,7 @@ public final class Functions {
      */
     public static boolean areItemTypesEqual(ItemStack one, ItemStack two) {
         if (!one.isEmpty() && !two.isEmpty()) {
-            return ItemStack.isSameItemSameTags(one, two);
+            return ItemStack.isSameItemSameComponents(one, two);
         }
         return false;
     }
@@ -538,53 +537,53 @@ public final class Functions {
         return false;
     }
 
-    public static int getFuelValue(@Nonnull ItemStack stack) {
-        return ForgeHooks.getBurnTime(stack, null);
-    }
+//    public static int getFuelValue(@Nonnull ItemStack stack) {
+//        return EventHooks.getItemBurnTime(stack,);
+//    }
 
-    /**
-     * Checks the weak power on all sides
-     *
-     * @param pos target position
-     * @return direction from where the power is incoming
-     */
-    public static Direction isBlockDirectlyPowered(Level worldIn, BlockPos pos) {
-        for (Direction from : Direction.values()) {
-            BlockPos sidepos = pos.relative(from);
-            BlockState sidestate = worldIn.getBlockState(sidepos);
-            Block sideblock = sidestate.getBlock();
-            if (sideblock.isSignalSource(sidestate)) {
-                int p = sidestate.getDirectSignal(worldIn, sidepos, from);
-                if (p > 0) {
-                    return from;
-                }
-            }
-        }
-        return null;
-    }
+//    /**
+//     * Checks the weak power on all sides
+//     *
+//     * @param pos target position
+//     * @return direction from where the power is incoming
+//     */
+//    public static Direction isBlockDirectlyPowered(Level worldIn, BlockPos pos) {
+//        for (Direction from : Direction.values()) {
+//            BlockPos sidepos = pos.relative(from);
+//            BlockState sidestate = worldIn.getBlockState(sidepos);
+//            Block sideblock = sidestate.getBlock();
+//            if (sideblock.is(sidestate)) {
+//                int p = sidestate.getDirectSignal(worldIn, sidepos, from);
+//                if (p > 0) {
+//                    return from;
+//                }
+//            }
+//        }
+//        return null;
+//    }
 
-    /**
-     * Same as {@link #isBlockDirectlyPowered(Level, BlockPos)} with excluded position
-     *
-     * @param side exception
-     * @return side which recieves power
-     */
-    public static Direction isPoweredExceptSide(Direction side, Level world, BlockPos position) {
-        for (Direction facing : Direction.values()) {
-            if (side != facing) {
-                BlockPos sidepos = position.relative(facing);
-                BlockState sidestate = world.getBlockState(sidepos);
-                Block sideblock = sidestate.getBlock();
-                if (sideblock.isSignalSource(sidestate)) {
-                    int p = sidestate.getDirectSignal(world, sidepos, facing);
-                    if (p > 0) {
-                        return facing;
-                    }
-                }
-            }
-        }
-        return null;
-    }
+//    /**
+//     * Same as {@link #isBlockDirectlyPowered(Level, BlockPos)} with excluded position
+//     *
+//     * @param side exception
+//     * @return side which recieves power
+//     */
+//    public static Direction isPoweredExceptSide(Direction side, Level world, BlockPos position) {
+//        for (Direction facing : Direction.values()) {
+//            if (side != facing) {
+//                BlockPos sidepos = position.relative(facing);
+//                BlockState sidestate = world.getBlockState(sidepos);
+//                Block sideblock = sidestate.getBlock();
+//                if (sideblock.isSignalSource(sidestate)) {
+//                    int p = sidestate.getDirectSignal(world, sidepos, facing);
+//                    if (p > 0) {
+//                        return facing;
+//                    }
+//                }
+//            }
+//        }
+//        return null;
+//    }
 
     /**
      * Returns the length of longest string
@@ -754,28 +753,28 @@ public final class Functions {
         return ItemStack.EMPTY;
     }
 
-    /**
-     * Creates an ItemHandler with stacks copied from given IItemHandler
-     */
-    public static ItemHandler copyStacks(IItemHandler from)
-    {
-        ItemHandler itemHandler = new ItemHandler(from.getSlots());
-
-        for (int i = 0; i < from.getSlots(); i++)
-        {
-            ItemStack stack = from.extractItem(i, 64, true);
-            if (!stack.isEmpty())
-            {
-
-                if (!tryInsertItem(itemHandler, stack.copy()))
-                {
-                    System.out.println("Couldn't insert " + stack);
-                    return itemHandler;
-                }
-            }
-        }
-        return itemHandler;
-    }
+//    /**
+//     * Creates an ItemHandler with stacks copied from given IItemHandler
+//     */
+//    public static ItemHandler copyStacks(IItemHandler from)
+//    {
+//        ItemHandler itemHandler = new ItemHandler(from.getSlots());
+//
+//        for (int i = 0; i < from.getSlots(); i++)
+//        {
+//            ItemStack stack = from.extractItem(i, 64, true);
+//            if (!stack.isEmpty())
+//            {
+//
+//                if (!tryInsertItem(itemHandler, stack.copy()))
+//                {
+//                    System.out.println("Couldn't insert " + stack);
+//                    return itemHandler;
+//                }
+//            }
+//        }
+//        return itemHandler;
+//    }
 
     /**
      * Inserts an item into a handler. Merges present stacks first
@@ -940,10 +939,6 @@ public final class Functions {
 
     public static FriendlyByteBuf emptyBuffer() {
         return new FriendlyByteBuf(Unpooled.buffer());
-    }
-
-    public static boolean isBlockIn(Block block, TagKey<Block> tagKey) {
-        return ForgeRegistries.BLOCKS.tags().getTag(tagKey).contains(block);
     }
 
     /**

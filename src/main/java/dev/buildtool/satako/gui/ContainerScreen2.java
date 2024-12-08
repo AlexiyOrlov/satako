@@ -70,7 +70,7 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
 
     @Override
     public void render(GuiGraphics matrixStack, int mouseX, int mouseY, float p_render_3_) {
-        renderBackground(matrixStack);
+        renderBackground(matrixStack,mouseX,mouseY,p_render_3_);
         super.render(matrixStack, mouseX, mouseY, p_render_3_);
         renderTooltip(matrixStack, mouseX, mouseY);
 

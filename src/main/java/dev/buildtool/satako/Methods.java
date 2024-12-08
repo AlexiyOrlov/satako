@@ -1,8 +1,10 @@
 package dev.buildtool.satako;
 
+import com.electronwill.nightconfig.core.ConfigSpec;
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -15,9 +17,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.fml.loading.FMLPaths;
-import net.minecraftforge.items.IItemHandler;
+import net.neoforged.fml.loading.FMLPaths;
+import net.neoforged.neoforge.items.IItemHandler;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.File;
@@ -131,7 +132,7 @@ public final class Methods {
         System.out.println(Arrays.toString(objects));
     }
 
-    public static void addPotionEffectNoParticles(LivingEntity entityLivingBase, MobEffect potion, int duration, int strength) {
+    public static void addPotionEffectNoParticles(LivingEntity entityLivingBase, Holder<MobEffect> potion, int duration, int strength) {
         entityLivingBase.addEffect(new MobEffectInstance(potion, duration, strength, false, false));
     }
 
@@ -170,10 +171,10 @@ public final class Methods {
         }
     }
 
-    public static void loadConfig(Pair<ForgeConfigSpec, ForgeConfigSpec> pair, String path) {
+    public static void loadConfig(Pair<ConfigSpec, ConfigSpec> pair, String path) {
         String s = FMLPaths.CONFIGDIR.get().resolve(path).toString();
         final CommentedFileConfig file = CommentedFileConfig.builder(new File(s)).sync().autosave().writingMode(WritingMode.REPLACE).build();
         file.load();
-        pair.getRight().setConfig(file);
+//        pair.getRight().setConfig(file);
     }
 }

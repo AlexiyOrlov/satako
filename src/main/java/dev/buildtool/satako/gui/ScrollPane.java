@@ -20,7 +20,7 @@ public class ScrollPane extends AbstractWidget {
     public static final int SCROLL_BAR_HEIGHT = 27;
     public static final int SCROLL_BAR_WIDTH = 6;
     protected AbstractContainerMenu menu;
-    private static final ResourceLocation VILLAGER_LOCATION = new ResourceLocation("textures/gui/container/villager2.png");
+//    private static final ResourceLocation VILLAGER_LOCATION = new ResourceLocation("textures/gui/container/villager2.png");
     private static final IntegerColor backgroundColor = new IntegerColor(0x4466FC5e), barColor = new IntegerColor(0xE34063ff);
     int scrollOff;
     protected int topPos;
@@ -36,7 +36,7 @@ public class ScrollPane extends AbstractWidget {
         this.owner=owner;
         guiListeners.forEach(pWidget -> {
             pWidget.setY(pWidget.getY()+getY());
-            owner.addRenderableWidget(pWidget);
+//            owner.addRenderableWidget(pWidget);
         });
     }
 
@@ -80,24 +80,24 @@ public class ScrollPane extends AbstractWidget {
 
     private void renderScroller(GuiGraphics pGuiGraphics, int pPosX, int pPosY) {
         if (!guiListeners.isEmpty()) {
-            pGuiGraphics.blit(VILLAGER_LOCATION, getX()+width, getY() + scrollOff, 0, 0.0F, 199.0F, SCROLL_BAR_WIDTH, SCROLL_BAR_HEIGHT, 512, 256);
+//            pGuiGraphics.blit(VILLAGER_LOCATION, getX()+width, getY() + scrollOff, 0, 0.0F, 199.0F, SCROLL_BAR_WIDTH, SCROLL_BAR_HEIGHT, 512, 256);
         }
     }
 
-    @Override
-    public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
-        pGuiGraphics.drawString(Minecraft.getInstance().font, getMessage(),getX()+width/2-Minecraft.getInstance().font.width(getMessage())/2,getY()-12,0xE35F3B);
-        if (owner.getMinecraft().level != null) {
-            pGuiGraphics.fillGradient(getX(), getY(),getX()+ this.width,getY()+ this.height, Constants.GREEN.getIntColor(), Constants.GREEN.getIntColor());
-        } else {
-            owner.renderDirtBackground(pGuiGraphics);
-        }
-        super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
-        if (!guiListeners.isEmpty()) {
-            int i = this.width;
-            int j = this.height;
-            this.renderScroller(pGuiGraphics, i, j);
-            RenderSystem.enableDepthTest();
-        }
-    }
+//    @Override
+//    public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
+//        pGuiGraphics.drawString(Minecraft.getInstance().font, getMessage(),getX()+width/2-Minecraft.getInstance().font.width(getMessage())/2,getY()-12,0xE35F3B);
+//        if (owner.getMinecraft().level != null) {
+//            pGuiGraphics.fillGradient(getX(), getY(),getX()+ this.width,getY()+ this.height, Constants.GREEN.getIntColor(), Constants.GREEN.getIntColor());
+//        } else {
+//            owner.renderDirtBackground(pGuiGraphics);
+//        }
+//        super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
+//        if (!guiListeners.isEmpty()) {
+//            int i = this.width;
+//            int j = this.height;
+//            this.renderScroller(pGuiGraphics, i, j);
+//            RenderSystem.enableDepthTest();
+//        }
+//    }
 }

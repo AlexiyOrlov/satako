@@ -12,7 +12,7 @@ public class JEI implements IModPlugin {
     public static IIngredientListOverlay ingredientListOverlay;
     @Override
     public ResourceLocation getPluginUid() {
-        return new ResourceLocation(Satako.ID,"jei_compat");
+        return ResourceLocation.fromNamespaceAndPath(Satako.ID,"jei_compat");
     }
 
     @Override

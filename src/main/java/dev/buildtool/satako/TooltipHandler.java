@@ -14,15 +14,17 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.entity.MobType;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.*;
@@ -34,20 +36,17 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.ScreenEvent;
-import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.tags.ITag;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.ScreenEvent;
+import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Mod.EventBusSubscriber(value = Dist.CLIENT)
+@EventBusSubscriber(value = Dist.CLIENT)
 public class TooltipHandler {
     static List<Component> originalTooltip;
     static List<MutableComponent> properties;
@@ -68,11 +67,11 @@ public class TooltipHandler {
                 Screen currentScreen = minecraft.screen;
                 if (currentScreen != null) {
                     ArrayList<String> info = new ArrayList<>();
-                    info.add(0, ForgeRegistries.ITEMS.getKey(item).toString());
-                    int repairCost = itemStack.getBaseRepairCost();
-                    if (repairCost > 0) {
-                        info.add("Repair cost: " + repairCost);
-                    }
+                    info.add(0, BuiltInRegistries.ITEM.getKey(item).toString());
+//                    int repairCost = itemStack.getXpRepairRatio();
+//                    if (repairCost > 0) {
+//                        info.add("Repair cost: " + repairCost);
+//                    }
 
                     ClientLevel world = minecraft.level;
 
@@ -94,16 +93,16 @@ public class TooltipHandler {
                             if (friction != 0.6F) {
                                 info.add("Slipperiness: " + friction);
                             }
-                            if (ForgeRegistries.BLOCKS.tags().getTag(BlockTags.MINEABLE_WITH_PICKAXE).contains(block)) {
+                            if (BuiltInRegistries.BLOCK.getTag(BlockTags.MINEABLE_WITH_PICKAXE).get().contains(BuiltInRegistries.BLOCK.wrapAsHolder(block))) {
                                 info.add("Harvestable by " + ChatFormatting.YELLOW + "pickaxe");
                             }
-                            if (ForgeRegistries.BLOCKS.tags().getTag(BlockTags.MINEABLE_WITH_AXE).contains(block)) {
+                            if (BuiltInRegistries.BLOCK.getTag(BlockTags.MINEABLE_WITH_AXE).get().contains(BuiltInRegistries.BLOCK.wrapAsHolder(block))) {
                                 info.add("Harvestable by " + ChatFormatting.YELLOW + "axe");
                             }
-                            if (ForgeRegistries.BLOCKS.tags().getTag(BlockTags.MINEABLE_WITH_SHOVEL).contains(block)) {
+                            if (BuiltInRegistries.BLOCK.getTag(BlockTags.MINEABLE_WITH_SHOVEL).get().contains(BuiltInRegistries.BLOCK.wrapAsHolder(block))) {
                                 info.add("Harvestable by " + ChatFormatting.YELLOW + "shovel");
                             }
-                            if (ForgeRegistries.BLOCKS.tags().getTag(BlockTags.MINEABLE_WITH_HOE).contains(block)) {
+                            if (BuiltInRegistries.BLOCK.getTag(BlockTags.MINEABLE_WITH_HOE).get().contains(BuiltInRegistries.BLOCK.wrapAsHolder(block))) {
                                 info.add("Harvestable by " + ChatFormatting.YELLOW + "hoe");
                             }
 
@@ -127,7 +126,7 @@ public class TooltipHandler {
                                 }
                             }
 
-                            if (ForgeRegistries.BLOCKS.tags().getTag(BlockTags.BEACON_BASE_BLOCKS).contains(defstate.getBlock())) {
+                            if (BuiltInRegistries.BLOCK.getTag(BlockTags.BEACON_BASE_BLOCKS).get().contains(BuiltInRegistries.BLOCK.wrapAsHolder(defstate.getBlock()))) {
                                 info.add("Can be used for Beacon");
                             }
 
@@ -153,26 +152,26 @@ public class TooltipHandler {
 
                             Tier itemTier = toolItem.getTier();
                             float efficiency = itemTier.getSpeed();
-                            int level = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_EFFICIENCY, itemStack);
-                            if (level > 0) {
-                                efficiency += (float) (level * level + 1);
-                            }
+//                            int level = EnchantmentHelper.getEnchantmentLevel(BuiltInRegistries.ENCH, itemStack);
+//                            if (level > 0) {
+//                                efficiency += (float) (level * level + 1);
+//                            }
 
                             info.add("Speed: " + efficiency);
-                            harvestlevel = itemTier.getLevel();
-                            info.add("Harvest level: " + harvestlevel);
+//                            harvestlevel = itemTier.getLevel();
+//                            info.add("Harvest level: " + harvestlevel);
                         }
                     }
 
                     float saturation;
-                    if (item instanceof SwordItem swordItem) {
-                        float bane = EnchantmentHelper.getDamageBonus(itemStack, MobType.ARTHROPOD);
-                        float smite = EnchantmentHelper.getDamageBonus(itemStack, MobType.UNDEAD);
-                        if (bane > 0 || smite > 0) {
-                            float damage = swordItem.getDamage();
-                            info.add("Max. damage: " + ((bane > 0 ? damage + bane : smite + damage) + 1));
-                        }
-                    }
+//                    if (item instanceof SwordItem swordItem) {
+//                        float bane = EnchantmentHelper.getDamageBonus(itemStack, MobType.ARTHROPOD);
+//                        float smite = EnchantmentHelper.getDamageBonus(itemStack, MobType.UNDEAD);
+//                        if (bane > 0 || smite > 0) {
+//                            float damage = swordItem.getDamage();
+//                            info.add("Max. damage: " + ((bane > 0 ? damage + bane : smite + damage) + 1));
+//                        }
+//                    }
 
                     int durability = itemStack.getMaxDamage();
                     if (durability > 0) {
@@ -190,8 +189,8 @@ public class TooltipHandler {
                         info.add("Max. stack size: " + stacksize);
                     }
 
-                    if (item.isEdible()) {
-                        FoodProperties foodStats = item.getFoodProperties();
+                    if (item.getFoodProperties(itemStack,minecraft.player)!=null) {
+                        FoodProperties foodStats = item.getFoodProperties(itemStack, minecraft.player);
 
                         assert foodStats != null;
 
@@ -199,19 +198,19 @@ public class TooltipHandler {
                             info.add("Always edible");
                         }
 
-                        if (foodStats.isMeat()) {
-                            info.add("Suitable for wolves");
-                        }
+//                        if (foodStats.()) {
+//                            info.add("Suitable for wolves");
+//                        }
 
-                        float nutrition = (float) foodStats.getNutrition() / 2.0F;
+                        float nutrition = (float) foodStats.nutrition() / 2.0F;
                         info.add("Restores " + nutrition + " hunger");
-                        saturation = foodStats.getSaturationModifier();
+                        saturation = foodStats.saturation();
                         info.add("Saturation: " + saturation);
-                        List<Pair<MobEffectInstance, Float>> effects = foodStats.getEffects();
+                        List<FoodProperties.PossibleEffect> effects = foodStats.effects();
                         if (!effects.isEmpty()) {
                             info.add(ChatFormatting.YELLOW + "Effects:");
-                            for (Pair<MobEffectInstance, Float> pair : effects) {
-                                MobEffectInstance effectInstance = pair.getFirst();
+                            for (FoodProperties.PossibleEffect pair : effects) {
+                                MobEffectInstance effectInstance = pair.effectSupplier().get();
                                 info.add("   " + I18n.get(effectInstance.getDescriptionId()) + ":");
                                 info.add("      Strength: " + effectInstance.getAmplifier());
                                 info.add("      Duration: " + effectInstance.getDuration() / 20 + " s.");
@@ -224,37 +223,37 @@ public class TooltipHandler {
                         info.add("Enchantability: " + enchantability);
                     }
 
-                    int burnTime = ForgeHooks.getBurnTime(itemStack, null);
-                    if (burnTime > 0) {
-                        info.add("Burn time: " + burnTime + " (" + burnTime / 200f + " items)");
-                    }
+//                    int burnTime = ForgeHooks.getBurnTime(itemStack, null);
+//                    if (burnTime > 0) {
+//                        info.add("Burn time: " + burnTime + " (" + burnTime / 200f + " items)");
+//                    }
 
-                    if (PotionBrewing.isIngredient(itemStack)) {
-                        info.add("Potion component");
-                    }
+//                    if (PotionBrewing.isIngredient(itemStack)) {
+//                        info.add("Potion component");
+//                    }
 
-                    Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(itemStack);
-                    if (!enchantments.isEmpty()) {
-
-                        for (Map.Entry<Enchantment, Integer> integerEntry : enchantments.entrySet()) {
-                            if (integerEntry.getKey().getMaxLevel() == integerEntry.getValue() && integerEntry.getValue() > 1) {
-                                info.add(I18n.get(integerEntry.getKey().getDescriptionId()) + " is maxed");
-                            }
-                        }
-                    }
-                    Set<ITag<Item>> tags = new HashSet<>();
-                    ForgeRegistries.ITEMS.tags().forEach(items -> {
-                        if (items.contains(item)) {
-                            tags.add(items);
+//                    Map<Enchantment, Integer> enchantments = EnchantmentHelper.getE(itemStack);
+//                    if (!enchantments.isEmpty()) {
+//
+//                        for (Map.Entry<Enchantment, Integer> integerEntry : enchantments.entrySet()) {
+//                            if (integerEntry.getKey().getMaxLevel() == integerEntry.getValue() && integerEntry.getValue() > 1) {
+//                                info.add(I18n.get(integerEntry.getKey().getDescriptionId()) + " is maxed");
+//                            }
+//                        }
+//                    }
+                    Set<ResourceLocation> tags = new HashSet<>();
+                    BuiltInRegistries.ITEM.getTags().forEach(items -> {
+                        if (items.getSecond().contains(BuiltInRegistries.ITEM.wrapAsHolder(item))) {
+                            tags.add(items.getFirst().location());
                         }
                     });
                     if (!tags.isEmpty()) {
                         info.add(ChatFormatting.AQUA + "Tags:");
-                        tags.forEach(resourceLocation -> info.add("   " + resourceLocation.getKey().location()));
+                        tags.forEach(resourceLocation -> info.add("   " + resourceLocation));
                     }
 
                     if (item instanceof SpawnEggItem spawnEggItem) {
-                        EntityType<?> entityType = spawnEggItem.getType(null);
+                        EntityType<?> entityType = spawnEggItem.getType(itemStack);
                         if (entityType.fireImmune())
                             info.add("Fire-immune");
                         MobCategory category = entityType.getCategory();
@@ -264,7 +263,7 @@ public class TooltipHandler {
                         if (category.isPersistent())
                             info.add("Persistent");
                         info.add("Size: " + entityType.getWidth() + "x" + entityType.getHeight());
-                        info.add("Id: " + ForgeRegistries.ENTITY_TYPES.getKey(entityType).toString());
+                        info.add("Id: " + BuiltInRegistries.ENTITY_TYPE.getKey(entityType).toString());
                         if (entityType.getTags().count() > 0) {
                             info.add(ChatFormatting.AQUA + "Tags:");
                             entityType.getTags().forEach(entityTypeTagKey -> info.add("  " + entityTypeTagKey.location()));

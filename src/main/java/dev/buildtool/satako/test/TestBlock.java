@@ -1,7 +1,6 @@
 package dev.buildtool.satako.test;
 
 import dev.buildtool.satako.blocks.Block2;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -15,10 +14,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 
@@ -28,9 +23,9 @@ public class TestBlock extends Block2 implements MenuProvider {
     }
 
     @Override
-    public InteractionResult use(BlockState p_225533_1_, Level world, BlockPos p_225533_3_, Player playerEntity, InteractionHand p_225533_5_, BlockHitResult p_225533_6_) {
-        if (playerEntity instanceof ServerPlayer)
-            NetworkHooks.openScreen((ServerPlayer) playerEntity, this);
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+        if (player instanceof ServerPlayer serverPlayer)
+            serverPlayer.openMenu(this);
         return InteractionResult.SUCCESS;
     }
 

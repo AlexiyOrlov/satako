@@ -102,19 +102,19 @@ public class ScrollArea extends AbstractWidget {
         RenderSystem.setShader(GameRenderer::getPositionColorShader);
         //RenderSystem.disableTexture();
         Tesselator tesselator = Tesselator.getInstance();
-        BufferBuilder bufferBuilder = tesselator.getBuilder();
+//        BufferBuilder bufferBuilder = tesselator.getBuilder();
         int offsetY = getMessage().getString().isEmpty() ? 0 : 10;
-        bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
-        bufferBuilder.vertex(getX() + width, getY(), 0).color(MINUS_BUTTON_COLOR.getRed(), MINUS_BUTTON_COLOR.getGreen(), MINUS_BUTTON_COLOR.getBlue(), 255).endVertex();
-        bufferBuilder.vertex(buttonLeft, getY(), 0).color(MINUS_BUTTON_COLOR.getRed(), MINUS_BUTTON_COLOR.getGreen(), MINUS_BUTTON_COLOR.getBlue(), 255).endVertex();
-        bufferBuilder.vertex(buttonLeft, bottomButtonTop + offsetY, 0).color(MINUS_BUTTON_COLOR.getRed(), MINUS_BUTTON_COLOR.getGreen(), MINUS_BUTTON_COLOR.getBlue(), 255).endVertex();
-        bufferBuilder.vertex(getX() + width, bottomButtonTop + offsetY, 0).color(MINUS_BUTTON_COLOR.getRed(), MINUS_BUTTON_COLOR.getGreen(), MINUS_BUTTON_COLOR.getBlue(), 255).endVertex();
-
-        bufferBuilder.vertex(buttonLeft + 20, bottomButtonTop + offsetY, 0).color(PLUS_BUTTON_COLOR.getRed(), PLUS_BUTTON_COLOR.getGreen(), PLUS_BUTTON_COLOR.getBlue(), 255).endVertex();
-        bufferBuilder.vertex(buttonLeft, bottomButtonTop + offsetY, 0).color(PLUS_BUTTON_COLOR.getRed(), PLUS_BUTTON_COLOR.getGreen(), PLUS_BUTTON_COLOR.getBlue(), 255).endVertex();
-        bufferBuilder.vertex(buttonLeft, bottomButtonTop + height / 2f, 0).color(PLUS_BUTTON_COLOR.getRed(), PLUS_BUTTON_COLOR.getGreen(), PLUS_BUTTON_COLOR.getBlue(), 255).endVertex();
-        bufferBuilder.vertex(buttonLeft + 20, bottomButtonTop + height / 2f, 0).color(PLUS_BUTTON_COLOR.getRed(), PLUS_BUTTON_COLOR.getGreen(), PLUS_BUTTON_COLOR.getBlue(), 255).endVertex();
-        tesselator.end();
+//        bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
+//        bufferBuilder.vertex(getX() + width, getY(), 0).color(MINUS_BUTTON_COLOR.getRed(), MINUS_BUTTON_COLOR.getGreen(), MINUS_BUTTON_COLOR.getBlue(), 255).endVertex();
+//        bufferBuilder.vertex(buttonLeft, getY(), 0).color(MINUS_BUTTON_COLOR.getRed(), MINUS_BUTTON_COLOR.getGreen(), MINUS_BUTTON_COLOR.getBlue(), 255).endVertex();
+//        bufferBuilder.vertex(buttonLeft, bottomButtonTop + offsetY, 0).color(MINUS_BUTTON_COLOR.getRed(), MINUS_BUTTON_COLOR.getGreen(), MINUS_BUTTON_COLOR.getBlue(), 255).endVertex();
+//        bufferBuilder.vertex(getX() + width, bottomButtonTop + offsetY, 0).color(MINUS_BUTTON_COLOR.getRed(), MINUS_BUTTON_COLOR.getGreen(), MINUS_BUTTON_COLOR.getBlue(), 255).endVertex();
+//
+//        bufferBuilder.vertex(buttonLeft + 20, bottomButtonTop + offsetY, 0).color(PLUS_BUTTON_COLOR.getRed(), PLUS_BUTTON_COLOR.getGreen(), PLUS_BUTTON_COLOR.getBlue(), 255).endVertex();
+//        bufferBuilder.vertex(buttonLeft, bottomButtonTop + offsetY, 0).color(PLUS_BUTTON_COLOR.getRed(), PLUS_BUTTON_COLOR.getGreen(), PLUS_BUTTON_COLOR.getBlue(), 255).endVertex();
+//        bufferBuilder.vertex(buttonLeft, bottomButtonTop + height / 2f, 0).color(PLUS_BUTTON_COLOR.getRed(), PLUS_BUTTON_COLOR.getGreen(), PLUS_BUTTON_COLOR.getBlue(), 255).endVertex();
+//        bufferBuilder.vertex(buttonLeft + 20, bottomButtonTop + height / 2f, 0).color(PLUS_BUTTON_COLOR.getRed(), PLUS_BUTTON_COLOR.getGreen(), PLUS_BUTTON_COLOR.getBlue(), 255).endVertex();
+//        tesselator.end();
         poseStack.drawCenteredString(font, Component.literal("-"), buttonLeft + 10, getY() + height / 4, 0xffffff);
         poseStack.drawCenteredString(font, Component.literal("+"), buttonLeft + 10, (bottomButtonTop + height / 4) - 10, 0xffffff);
         if (scrollDirection != 0) {
@@ -135,21 +135,21 @@ public class ScrollArea extends AbstractWidget {
         }
     }
 
-    @Override
-    public boolean mouseScrolled(double p_94734_, double p_94735_, double direction) {
-        for (Object guiEventListener : guiEventListeners) {
-            if (guiEventListener instanceof Positionable positionable3) {
-                positionable3.setYPos((int) (positionable3.getYPos() + direction * 20));
-                if (positionable3 instanceof Hideable hideable) {
-                    hideable.setHidden(positionable3.getYPos() < getY() || positionable3.getYPos() + positionable3.getElementHeight() > getY() + height);
-                }
-            } else if (guiEventListener instanceof AbstractWidget a) {
-                a.setY((int) (a.getY() + direction * 20));
-                a.visible = a.getY() > getY() && a.getY() + a.getHeight() < getY() + height;
-            }
-        }
-        return true;
-    }
+//    @Override
+//    public boolean mouseScrolled(double p_94734_, double p_94735_, double direction) {
+//        for (Object guiEventListener : guiEventListeners) {
+//            if (guiEventListener instanceof Positionable positionable3) {
+//                positionable3.setYPos((int) (positionable3.getYPos() + direction * 20));
+//                if (positionable3 instanceof Hideable hideable) {
+//                    hideable.setHidden(positionable3.getYPos() < getY() || positionable3.getYPos() + positionable3.getElementHeight() > getY() + height);
+//                }
+//            } else if (guiEventListener instanceof AbstractWidget a) {
+//                a.setY((int) (a.getY() + direction * 20));
+//                a.visible = a.getY() > getY() && a.getY() + a.getHeight() < getY() + height;
+//            }
+//        }
+//        return true;
+//    }
 
     @Override
     public void playDownSound(SoundManager p_93665_) {

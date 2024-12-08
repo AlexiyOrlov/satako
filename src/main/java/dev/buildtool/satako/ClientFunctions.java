@@ -7,8 +7,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class ClientFunctions {
@@ -18,7 +18,7 @@ public class ClientFunctions {
 
     public static int calculateStringWidth(Component string) {
         if (string != null) {
-            return Minecraft.getInstance().font.width(string.getString());
+            return Minecraft.getInstance().font.width(string);
         }
         return 0;
     }

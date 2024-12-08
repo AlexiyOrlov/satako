@@ -1,5 +1,6 @@
 package dev.buildtool.satako.blocks;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.Containers;
@@ -11,13 +12,19 @@ import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.items.IItemHandler;
 
 import javax.annotation.Nullable;
 
 public class BlockHorizontal extends HorizontalDirectionalBlock {
     public BlockHorizontal(Properties properties) {
         super(properties);
+    }
+
+    @Override
+    protected MapCodec<? extends HorizontalDirectionalBlock> codec() {
+        return null;
     }
 
     @Nullable
@@ -36,14 +43,12 @@ public class BlockHorizontal extends HorizontalDirectionalBlock {
     @Override
     public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         if (!state.is(newState.getBlock()) && state.hasBlockEntity()) {
-            BlockEntity tileEntity = worldIn.getBlockEntity(pos);
-            tileEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(iItemHandler -> {
-                for (int i = 0; i < iItemHandler.getSlots(); i++) {
-                    ItemStack stack = iItemHandler.getStackInSlot(i);
-                    if (!stack.isEmpty())
-                        Containers.dropItemStack(worldIn, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, stack);
-                }
-            });
+            IItemHandler iItemHandler= worldIn.getCapability(Capabilities.ItemHandler.BLOCK,pos,null);
+            for (int i = 0; i < iItemHandler.getSlots(); i++) {
+                ItemStack stack = iItemHandler.getStackInSlot(i);
+                if (!stack.isEmpty())
+                    Containers.dropItemStack(worldIn, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, stack);
+            }
         }
         super.onRemove(state, worldIn, pos, newState, isMoving);
     }

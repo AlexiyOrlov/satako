@@ -3,8 +3,8 @@ package dev.buildtool.satako;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.items.ItemHandlerHelper;
-import net.minecraftforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.ItemHandlerHelper;
+import net.neoforged.neoforge.items.ItemStackHandler;
 
 import javax.annotation.Nullable;
 
@@ -40,100 +40,100 @@ public class ItemHandler extends ItemStackHandler
         return stacks;
     }
 
-    @Override
-    public ItemStack insertItem(int slot, ItemStack stack, boolean simulate)
-    {
-        if (stack.isEmpty())
-        {
-            return ItemStack.EMPTY;
-        }
-
-        ItemStack stackInSlot = getStackInSlot(slot);
-
-        int m;
-        if (!stackInSlot.isEmpty())
-        {
-            if (stackInSlot.getCount() >= Math.min(stackInSlot.getMaxStackSize(), getSlotLimit(slot)))
-            {
-                return stack;
-            }
-
-            if (!ItemHandlerHelper.canItemStacksStack(stack, stackInSlot))
-            {
-                return stack;
-            }
-
-            if (!isItemValid(slot, stack))
-            {
-                return stack;
-            }
-
-            m = Math.min(stack.getMaxStackSize(), getSlotLimit(slot)) - stackInSlot.getCount();
-
-            if (stack.getCount() <= m)
-            {
-                if (!simulate)
-                {
-                    ItemStack copy = stack.copy();
-                    copy.grow(stackInSlot.getCount());
-                    setStackInSlot(slot, copy);
-                    onContentsChanged(slot);
-                }
-
-                return ItemStack.EMPTY;
-            }
-            else
-            {
-                // copy the stack to not modify the original one
-                stack = stack.copy();
-                if (!simulate)
-                {
-                    ItemStack copy = stack.split(m);
-                    copy.grow(stackInSlot.getCount());
-                    setStackInSlot(slot, copy);
-                    onContentsChanged(slot);
-                }
-                else
-                {
-                    stack.shrink(m);
-                }
-                return stack;
-            }
-        }
-        else
-        {
-            if (!isItemValid(slot, stack))
-            {
-                return stack;
-            }
-
-            m = Math.min(stack.getMaxStackSize(), getSlotLimit(slot));
-            if (m < stack.getCount())
-            {
-                // copy the stack to not modify the original one
-                stack = stack.copy();
-                if (!simulate)
-                {
-                    setStackInSlot(slot, stack.split(m));
-                    onContentsChanged(slot);
-                }
-                else
-                {
-                    stack.shrink(m);
-                }
-                return stack;
-            }
-            else
-            {
-                if (!simulate)
-                {
-                    setStackInSlot(slot, stack);
-                    onContentsChanged(slot);
-                }
-                return ItemStack.EMPTY;
-            }
-        }
-    }
+//    @Override
+//    public ItemStack insertItem(int slot, ItemStack stack, boolean simulate)
+//    {
+//        if (stack.isEmpty())
+//        {
+//            return ItemStack.EMPTY;
+//        }
+//
+//        ItemStack stackInSlot = getStackInSlot(slot);
+//
+//        int m;
+//        if (!stackInSlot.isEmpty())
+//        {
+//            if (stackInSlot.getCount() >= Math.min(stackInSlot.getMaxStackSize(), getSlotLimit(slot)))
+//            {
+//                return stack;
+//            }
+//
+//            if (!ItemHandlerHelper.canItemStacksStack(stack, stackInSlot))
+//            {
+//                return stack;
+//            }
+//
+//            if (!isItemValid(slot, stack))
+//            {
+//                return stack;
+//            }
+//
+//            m = Math.min(stack.getMaxStackSize(), getSlotLimit(slot)) - stackInSlot.getCount();
+//
+//            if (stack.getCount() <= m)
+//            {
+//                if (!simulate)
+//                {
+//                    ItemStack copy = stack.copy();
+//                    copy.grow(stackInSlot.getCount());
+//                    setStackInSlot(slot, copy);
+//                    onContentsChanged(slot);
+//                }
+//
+//                return ItemStack.EMPTY;
+//            }
+//            else
+//            {
+//                // copy the stack to not modify the original one
+//                stack = stack.copy();
+//                if (!simulate)
+//                {
+//                    ItemStack copy = stack.split(m);
+//                    copy.grow(stackInSlot.getCount());
+//                    setStackInSlot(slot, copy);
+//                    onContentsChanged(slot);
+//                }
+//                else
+//                {
+//                    stack.shrink(m);
+//                }
+//                return stack;
+//            }
+//        }
+//        else
+//        {
+//            if (!isItemValid(slot, stack))
+//            {
+//                return stack;
+//            }
+//
+//            m = Math.min(stack.getMaxStackSize(), getSlotLimit(slot));
+//            if (m < stack.getCount())
+//            {
+//                // copy the stack to not modify the original one
+//                stack = stack.copy();
+//                if (!simulate)
+//                {
+//                    setStackInSlot(slot, stack.split(m));
+//                    onContentsChanged(slot);
+//                }
+//                else
+//                {
+//                    stack.shrink(m);
+//                }
+//                return stack;
+//            }
+//            else
+//            {
+//                if (!simulate)
+//                {
+//                    setStackInSlot(slot, stack);
+//                    onContentsChanged(slot);
+//                }
+//                return ItemStack.EMPTY;
+//            }
+//        }
+//    }
 
     public BlockEntity getOwner() {
         return owner;

@@ -13,7 +13,7 @@ public class EntityRenderer2<E extends LivingEntity, M extends EntityModel<E>> e
 
     public EntityRenderer2(EntityRendererProvider.Context rendererManager, M entityModelIn, String mod, String textureName, boolean renderName, float shadowSizeIn) {
         super(rendererManager, entityModelIn, shadowSizeIn);
-        texture = new ResourceLocation(mod, "textures/entity/" + textureName + ".png");
+        texture = ResourceLocation.fromNamespaceAndPath(mod, "textures/entity/" + textureName + ".png");
         this.renderName = renderName;
     }
 

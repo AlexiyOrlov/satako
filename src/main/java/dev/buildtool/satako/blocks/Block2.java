@@ -7,13 +7,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.items.IItemHandler;
 
-/**
- * Forwards block events to its tile entity.
- * Drops items if it has a tile entity with
- * {@link ForgeCapabilities#ITEM_HANDLER}.
- */
 public class Block2 extends Block {
     public Block2(Properties properties, boolean dropsItems) {
         super(properties);
@@ -29,14 +25,15 @@ public class Block2 extends Block {
     @Override
     public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         if (dropsItems && !state.is(newState.getBlock()) && state.hasBlockEntity()) {
-            BlockEntity tileEntity = worldIn.getBlockEntity(pos);
-            tileEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(iItemHandler -> {
-                for (int i = 0; i < iItemHandler.getSlots(); i++) {
-                    ItemStack stack = iItemHandler.getStackInSlot(i);
-                    if (!stack.isEmpty())
-                        Containers.dropItemStack(worldIn, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, stack);
-                }
-            });
+
+            IItemHandler itemHandler= worldIn.getCapability(Capabilities.ItemHandler.BLOCK,pos,null);
+
+            for (int i = 0; i < itemHandler.getSlots(); i++) {
+                ItemStack stack = itemHandler.getStackInSlot(i);
+                if (!stack.isEmpty())
+                    Containers.dropItemStack(worldIn, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, stack);
+            }
+
         }
         super.onRemove(state, worldIn, pos, newState, isMoving);
     }

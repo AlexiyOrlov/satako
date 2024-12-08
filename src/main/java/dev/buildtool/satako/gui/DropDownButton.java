@@ -82,8 +82,8 @@ public class DropDownButton extends BetterButton {
     }
 
     @Override
-    public void render(GuiGraphics poseStack, int mx, int my, float p_93660_) {
-        super.render(poseStack, mx, my, p_93660_);
+    public void renderWidget(GuiGraphics poseStack, int mx, int my, float p_93660_) {
+        super.renderWidget(poseStack, mx, my, p_93660_);
         if (open)
         {
             int widest=choices.values().stream().reduce((radioButton, radioButton2) -> radioButton.getElementWidth()>radioButton2.getElementWidth() ? radioButton : radioButton2).get().getElementWidth();

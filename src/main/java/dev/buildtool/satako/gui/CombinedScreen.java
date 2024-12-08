@@ -116,9 +116,8 @@ public class CombinedScreen extends ScreenWrapper {
     }
 
     @Override
-    public boolean mouseScrolled(double x, double y, double amount)
-    {
-        int mousewheeld = (int) Math.signum(amount) * Constants.BUTTONHEIGHT;
+    public boolean mouseScrolled(double x, double y, double dirX, double dirY) {
+        int mousewheeld = (int) Math.signum(dirY) * Constants.BUTTONHEIGHT;
         boolean verticalscroll = Screen.hasAltDown();
         if (mousewheeld != 0)
         {
@@ -128,7 +127,7 @@ public class CombinedScreen extends ScreenWrapper {
                 }
             }
         }
-        return super.mouseScrolled(x, y, amount);
+        return super.mouseScrolled(x, y, dirX,dirY);
     }
 
     public void addPopup(Component message,int duration)

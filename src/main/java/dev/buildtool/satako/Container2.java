@@ -11,9 +11,10 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.IItemHandlerModifiable;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.EntityCapability;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.IItemHandlerModifiable;
 
 /**
  * Created on 24/10/16
@@ -42,7 +43,7 @@ public class Container2 extends AbstractContainerMenu {
      * Uses IItemHandler
      */
     protected void addPlayerInventory(int horizontalMargin, int verticalMargin, Player player) {
-        IItemHandler inventory = player.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.UP).orElse(null);
+        IItemHandler inventory = player.getCapability(Capabilities.ItemHandler.ENTITY);
         int index = 0;
         for (int i = 4; i > 0; i--) {
             for (int j = 0; j < 9; j++) {
@@ -66,7 +67,7 @@ public class Container2 extends AbstractContainerMenu {
     }
 
     protected void addPlayerInventoryWithLockedItem(int horizontalMargin, int verticalMargin, Player player, Item locked) {
-        IItemHandler inventory = player.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.UP).orElse(null);
+        IItemHandler inventory = player.getCapability(Capabilities.ItemHandler.ENTITY);
         int index = 0;
         for (int i = 4; i > 0; i--) {
             for (int j = 0; j < 9; j++) {
