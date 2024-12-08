@@ -28,7 +28,7 @@ public class Rectangle extends AbstractWidget {
     @Override
     protected void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         if(fillPercent!=null)
-            guiGraphics.fill(getX(), (int) (getY()+height-height*fillPercent.getFillPercent()/100),getX()+width,getY()+height,color.getIntColor());
+            guiGraphics.fill(getX(), (int) (getY()+height-height*fillPercent.getFillPercent()),getX()+width,getY()+height,color.getIntColor());
         else
             guiGraphics.fill(getX(),getY(),getX()+width,getY()+height,color.getIntColor());
         if(mouseX>getX() && mouseX<getX()+width && mouseY>getY() && mouseY<getY()+height)
