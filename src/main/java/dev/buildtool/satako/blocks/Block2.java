@@ -27,13 +27,13 @@ public class Block2 extends Block {
         if (dropsItems && !state.is(newState.getBlock()) && state.hasBlockEntity()) {
 
             IItemHandler itemHandler= worldIn.getCapability(Capabilities.ItemHandler.BLOCK,pos,null);
-
-            for (int i = 0; i < itemHandler.getSlots(); i++) {
-                ItemStack stack = itemHandler.getStackInSlot(i);
-                if (!stack.isEmpty())
-                    Containers.dropItemStack(worldIn, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, stack);
+            if(itemHandler!=null) {
+                for (int i = 0; i < itemHandler.getSlots(); i++) {
+                    ItemStack stack = itemHandler.getStackInSlot(i);
+                    if (!stack.isEmpty())
+                        Containers.dropItemStack(worldIn, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, stack);
+                }
             }
-
         }
         super.onRemove(state, worldIn, pos, newState, isMoving);
     }
