@@ -42,8 +42,6 @@ public class Satako {
     public static boolean jei;
     public static Logger LOGGER = LogManager.getLogger(ID);
     public Satako(IEventBus eventBus, ModContainer modContainer) {
-        NeoForge.EVENT_BUS.register(this);
-
         CONTAINER_TYPES.register(eventBus);
         BLOCKS.register(eventBus);
         ITEMS.register(eventBus);
