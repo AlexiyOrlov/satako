@@ -2,7 +2,6 @@ package dev.buildtool.satako;
 
 import dev.buildtool.satako.test.TestBlock;
 import dev.buildtool.satako.test.TestContainer;
-import dev.buildtool.satako.test.TestScreen;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.MenuType;
