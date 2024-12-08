@@ -82,6 +82,6 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
 
         addRenderableWidget(new SelectionButton(scrollPane.getWidth()+50, height - 20, Component.literal("Selection button")));
 
-        addRenderableWidget(new Rectangle(20,getGuiTop(),50,getYSize(),Constants.ORANGE,() -> 0.33f,Component.literal("Time: "+ Minecraft.getInstance().level.getGameTime())));
+        addRenderableWidget(new Rectangle(20,getGuiTop(),50,getYSize(),Constants.ORANGE,() -> 33,Component.literal("Time: "+ Minecraft.getInstance().level.getGameTime())));
     }
 }
