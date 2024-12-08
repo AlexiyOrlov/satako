@@ -44,17 +44,17 @@ public class Screen2 extends Screen
      * This should be called first
      */
     @Override
-    public void render(GuiGraphics matrixStack, int mouseX, int mouseY, float tick) {
-        renderBackground(matrixStack,mouseX,mouseY,tick);
-        super.render(matrixStack, mouseX, mouseY, tick);
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float tick) {
+        renderBackground(guiGraphics,mouseX,mouseY,tick);
+        super.render(guiGraphics, mouseX, mouseY, tick);
         int popupY = popupPositionY - (showTimes.keySet().size()-1) * 18;
         for (Map.Entry<Component, Integer> entry : showTimes.entrySet()) {
             Component component = entry.getKey();
             Integer integer = entry.getValue();
             if (integer > 0) {
                 int textWidth = font.width(component);
-                matrixStack.fill(popupPositionX - textWidth / 2-5, popupY-5, popupPositionX - textWidth / 2 + textWidth+5, popupY+13, new IntegerColor(0xff565656).getIntColor());
-                matrixStack.drawCenteredString(font, component, popupPositionX, popupY, new IntegerColor(0xffffffff).getIntColor());
+                guiGraphics.fill(popupPositionX - textWidth / 2-5, popupY-5, popupPositionX - textWidth / 2 + textWidth+5, popupY+13, new IntegerColor(0xff565656).getIntColor());
+                guiGraphics.drawCenteredString(font, component, popupPositionX, popupY, new IntegerColor(0xffffffff).getIntColor());
                 popupY+=18;
                 integer--;
                 entry.setValue(integer);

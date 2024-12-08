@@ -74,16 +74,16 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
     }
 
     @Override
-    public void render(GuiGraphics matrixStack, int mouseX, int mouseY, float p_render_3_) {
-        renderBackground(matrixStack,mouseX,mouseY,p_render_3_);
-        super.render(matrixStack, mouseX, mouseY, p_render_3_);
-        renderTooltip(matrixStack, mouseX, mouseY);
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float p_render_3_) {
+        renderBackground(guiGraphics,mouseX,mouseY,p_render_3_);
+        super.render(guiGraphics, mouseX, mouseY, p_render_3_);
+        renderTooltip(guiGraphics, mouseX, mouseY);
 
         List<Slot> slots=getSlots();
         slots.stream().filter(Slot::isActive).forEach(slot -> {
             if(slot instanceof ItemHandlerSlot handlerSlot && slot.getItem().isEmpty() && mouseX>slot.x+leftPos&& mouseX<slot.x+leftPos+18 && mouseY>slot.y+topPos && mouseY<slot.y+topPos+18 && handlerSlot.tooltip!=null)
             {
-                matrixStack.renderComponentTooltip(font,((ItemHandlerSlot) slot).tooltip,mouseX,mouseY);
+                guiGraphics.renderComponentTooltip(font,((ItemHandlerSlot) slot).tooltip,mouseX,mouseY);
             }
         });
 
@@ -93,8 +93,8 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
             Integer integer = entry.getValue();
             if (integer > 0) {
                 int textWidth = font.width(component);
-                matrixStack.fill(popupPositionX - textWidth / 2-5, popupY-5, popupPositionX - textWidth / 2 + textWidth+5, popupY+13, Constants.GRAY.getIntColor());
-                matrixStack.drawCenteredString(font, component, popupPositionX, popupY, new IntegerColor(0xffffffff).getIntColor());
+                guiGraphics.fill(popupPositionX - textWidth / 2-5, popupY-5, popupPositionX - textWidth / 2 + textWidth+5, popupY+13, Constants.GRAY.getIntColor());
+                guiGraphics.drawCenteredString(font, component, popupPositionX, popupY, new IntegerColor(0xffffffff).getIntColor());
                 popupY+=18;
                 integer--;
                 entry.setValue(integer);
@@ -107,7 +107,7 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
      * Draws its elements and borders
      */
     @Override
-    protected void renderBg(GuiGraphics matrixStack, float partialTicks, int mouseX, int mouseY) {
+    protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
         List<Slot> slots = getSlots();
         GlStateManager._clearColor(1.0F, 1.0F, 1.0F, 1.0F);
         slots.stream().filter(Slot::isActive).forEach(s -> {
@@ -116,12 +116,12 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
             if (s instanceof ItemHandlerSlot itemHandlerSlot) {
                 if (itemHandlerSlot.getTexture() == null) {
                     //color
-                    matrixStack.fill(sx + leftPos, sy + topPos, sx + leftPos + 16, sy + topPos + 16, itemHandlerSlot.getColor().getIntColor());
+                    guiGraphics.fill(sx + leftPos, sy + topPos, sx + leftPos + 16, sy + topPos + 16, itemHandlerSlot.getColor().getIntColor());
                 } else {
-                    matrixStack.fill(sx + leftPos, sy + topPos, sx + leftPos + 16, sy + topPos + 16, 0xff666666);
+                    guiGraphics.fill(sx + leftPos, sy + topPos, sx + leftPos + 16, sy + topPos + 16, 0xff666666);
                 }
             } else {
-                matrixStack.fill(sx + leftPos, sy + topPos, sx + leftPos + 16, sy + topPos + 16, 0xff666666);
+                guiGraphics.fill(sx + leftPos, sy + topPos, sx + leftPos + 16, sy + topPos + 16, 0xff666666);
             }
         });
 
@@ -130,16 +130,16 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
         //lines have to be drawn after everything else
         if (drawBorders) {
             int intColor = color.getIntColor();
-            matrixStack.hLine(this.leftPos - 1, this.getXSize() + leftPos - 2, this.topPos - 1, intColor);
-            matrixStack.hLine(this.leftPos, this.getXSize() + leftPos - 2, this.getYSize() + topPos - 2, intColor);
-            matrixStack.vLine(this.leftPos - 1, this.topPos - 1, getYSize() + this.topPos - 1, intColor);
-            matrixStack.vLine(getXSize() + this.leftPos - 2, this.topPos - 1, getYSize() + this.topPos - 2, intColor);
+            guiGraphics.hLine(this.leftPos - 1, this.getXSize() + leftPos - 2, this.topPos - 1, intColor);
+            guiGraphics.hLine(this.leftPos, this.getXSize() + leftPos - 2, this.getYSize() + topPos - 2, intColor);
+            guiGraphics.vLine(this.leftPos - 1, this.topPos - 1, getYSize() + this.topPos - 1, intColor);
+            guiGraphics.vLine(getXSize() + this.leftPos - 2, this.topPos - 1, getYSize() + this.topPos - 2, intColor);
         }
     }
 
     @Override
-    protected void renderLabels(GuiGraphics poseStack, int p1, int p2) {
-        poseStack.drawString(font, title, imageWidth / 2 - font.width(title.getString()) / 2, -14, Constants.ORANGE.getIntColor());
+    protected void renderLabels(GuiGraphics guiGraphics, int p1, int p2) {
+        guiGraphics.drawString(font, title, imageWidth / 2 - font.width(title.getString()) / 2, -14, Constants.ORANGE.getIntColor());
     }
 
     @Override
