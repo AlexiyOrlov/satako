@@ -99,7 +99,7 @@ public class DropDownButton extends BetterButton {
     }
 
     /**
-     * @param map            text to action pairs. Actions must change this button's message and call {@link DropDownButton#onPress()} method
+     * @param map            text to action pairs.
      * @param selectedButton initially selected button index
      */
     public void setChoices(LinkedHashMap<Component, OnPress> map, int selectedButton) {
