@@ -1,3 +1,5 @@
 {
-  "block.satako.test_block": "Test block"
+  "block.satako.test_block": "Test block",
+  "satako.discard.success.single": "Discarded %1$s",
+  "satako.discard.success.multiple": "Discarded %1$s entities"
 }
