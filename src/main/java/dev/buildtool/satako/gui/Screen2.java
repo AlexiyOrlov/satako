@@ -1,5 +1,6 @@
 package dev.buildtool.satako.gui;
 
+import com.mojang.blaze3d.platform.InputConstants;
 import dev.buildtool.satako.Constants;
 import dev.buildtool.satako.IntegerColor;
 import net.minecraft.client.Minecraft;
@@ -136,5 +137,18 @@ public class Screen2 extends Screen
     public void addTooltip(AbstractWidget target,DynamicTooltip tooltip)
     {
         tooltips.put(target,tooltip);
+    }
+
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        boolean consumed=super.keyPressed(keyCode, scanCode, modifiers);
+        if(!consumed) {
+            InputConstants.Key key = InputConstants.getKey(keyCode, scanCode);
+            if (minecraft.options.keyInventory.isActiveAndMatches(key)) {
+                onClose();
+                consumed=true;
+            }
+        }
+        return consumed;
     }
 }

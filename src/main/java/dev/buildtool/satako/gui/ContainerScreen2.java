@@ -173,4 +173,24 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
     {
         tooltips.put(target,tooltip);
     }
+
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        if(getFocused()!=null)
+            return true;
+        return super.keyPressed(keyCode, scanCode, modifiers);
+    }
+
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        for (GuiEventListener child : children()) {
+            if(child.mouseClicked(mouseX, mouseY, button))
+            {
+                setFocused(child);
+                return true;
+            }
+        }
+        setFocused(null);
+        return super.mouseClicked(mouseX, mouseY, button);
+    }
 }

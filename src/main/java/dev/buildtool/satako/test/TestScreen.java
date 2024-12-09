@@ -32,13 +32,11 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
         }
         Button button = new Button.Builder(Component.literal("Vanilla button 1"), p_93751_ -> {
         }).pos(0, 120).size(100, 20).build();
-        Button button1 = new Button.Builder(Component.literal("Vanilla button 2"), p_93751_ -> {
-        }).pos(0, 140).size(100, 20).build();
         button.setTooltip(Tooltip.create(Component.literal("Veeeeeeeeeeeeeryyyyyyyyyyyyyyyy looooooooooooooooooooooooooong tooooooooltiiiiiiiip")));
         addRenderableWidget(button);
-        addRenderableWidget(button1);
         elements.add(button);
-        elements.add(button1);
+        TextField textField=new TextField(button.getX(),button.getY()+button.getHeight(),150);
+        addRenderableWidget(textField);
         SwitchButton switchButton = new SwitchButton(0, 200, Component.literal("true"), Component.literal("false"), true, p_93751_ -> {
         });
         addRenderableWidget(switchButton);
