@@ -109,7 +109,7 @@ repositories {
 }
 
 dependencies {
-    implementation "dev.ftb.mods:ftb-library-neoforge:2101.1.6"
+    implementation ("dev.ftb.mods:ftb-library-neoforge:2101.1.6")
     implementation "mezz.jei:jei-1.21.1-neoforge:19.21.0.247"
 }
 
