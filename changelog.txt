@@ -5,6 +5,7 @@ integrated EII;
 implemented slot tooltips;
 implemented 'killall' command;
 added item presence check method;
+implemented 'discardall' command;
 
 7.0.17:
 added config preloading method;
