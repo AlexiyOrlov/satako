@@ -1,10 +1,7 @@
 package dev.buildtool.satako.test;
 
 import dev.buildtool.satako.Constants;
-import dev.buildtool.satako.IntegerColor;
 import dev.buildtool.satako.gui.*;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.network.chat.Component;
@@ -12,7 +9,6 @@ import net.minecraft.world.entity.player.Inventory;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
 
 public class TestScreen extends ContainerScreen2<TestContainer> {
     public TestScreen(TestContainer container, Inventory playerInventory, Component name) {
@@ -64,6 +60,8 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
 
         addRenderableWidget(new SelectionButton(10, height - 20, Component.literal("Selection button")));
 
-        addRenderableWidget(new Rectangle(20,getGuiTop(),50,getYSize(),Constants.ORANGE,() -> 0.33f,() -> Component.literal("Time: "+ Minecraft.getInstance().level.getGameTime())));
+        Rectangle rectangle = new Rectangle(20, getGuiTop(), 50, getYSize(), Constants.ORANGE, () -> 0.33f);
+        addRenderableWidget(rectangle);
+        addTooltip(rectangle,() -> Component.literal("Tooltip"));
     }
 }
