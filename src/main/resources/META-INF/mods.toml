@@ -32,7 +32,7 @@ displayName = "Satako" #mandatory
 authors="Krosenut" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description= '''
-Shared library. Provides commands "summon2", "give2", "killall", "discardall". Shows extra item info when Alt is held.
+Shared library. Provides commands "summon2", "give2", "killall", "removeall". Shows extra item info when Alt is held.
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.satako]] #optional
