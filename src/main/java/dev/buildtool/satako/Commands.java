@@ -146,7 +146,7 @@ public class Commands {
 
         SuggestionProvider<CommandSourceStack> mods3=(context, builder) -> SharedSuggestionProvider.suggest(ForgeRegistries.ENTITY_TYPES.getKeys().stream().map(ResourceLocation::getNamespace).collect(Collectors.toSet()), builder);
         SuggestionProvider<CommandSourceStack> entities3=(context, builder) -> SharedSuggestionProvider.suggest(ForgeRegistries.ENTITY_TYPES.getKeys().stream().filter(resourceLocation -> resourceLocation.getNamespace().equals(context.getArgument("mod",String.class))).map(ResourceLocation::getPath).collect(Collectors.toSet()),builder);
-        LiteralArgumentBuilder<CommandSourceStack> discard=literal("discardall").requires(commandSourceStack -> commandSourceStack.hasPermission(2));
+        LiteralArgumentBuilder<CommandSourceStack> discard=literal("removeall").requires(commandSourceStack -> commandSourceStack.hasPermission(2));
         RequiredArgumentBuilder<CommandSourceStack,String> entityMod2=argument("mod",StringArgumentType.string()).suggests(mods3);
         RequiredArgumentBuilder<CommandSourceStack,String> entityPath2=argument("entity",StringArgumentType.string()).suggests(entities3);
         discard.executes(commandContext -> {
