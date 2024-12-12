@@ -91,6 +91,7 @@ task('updateVersion'){
 }
 
 processResources.dependsOn(updateVersion)
+publish.dependsOn(updateVersion)
 
 repositories {
     maven{
