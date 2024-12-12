@@ -27,3 +27,7 @@ And this dependency:
 ```
 implementation fg.deobf('dev.buildtool:satako:[version]')
 ```
+
+## Notes to myself
+1. Don't move classes around unless switching major version
+2. Deprecate methods before deleting them

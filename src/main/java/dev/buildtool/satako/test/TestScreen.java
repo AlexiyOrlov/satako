@@ -77,11 +77,11 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
             betterButtons.add(new BetterButton(0,i*20,Component.literal("Button "+i)));
         }
         ScrollPane scrollPane=new ScrollPane(3,height/2,getGuiLeft()-10,height/2,Component.literal("List"),this,betterButtons.toArray(AbstractWidget[]::new));
-        addRenderableWidget(scrollPane);
+//        addRenderableWidget(scrollPane);
 
         addRenderableWidget(new SelectionButton(scrollPane.getWidth()+50, height - 20, Component.literal("Selection button")));
 
         ScrollArea scrollArea = new ScrollArea(3, 3, getGuiLeft() - 10, height / 4, Component.literal("List"), new IntegerColor(0x22F8A55E), elements);
-        addRenderableWidget(scrollArea);
+//        addRenderableWidget(scrollArea);
     }
 }
