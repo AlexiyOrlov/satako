@@ -1,18 +1,17 @@
 package dev.buildtool.satako.gui;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import dev.buildtool.satako.ClientMethods;
 import dev.buildtool.satako.Constants;
 import dev.buildtool.satako.IntegerColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.gui.screens.inventory.tooltip.TooltipRenderUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
-import org.checkerframework.checker.units.qual.C;
 
 import java.util.*;
 
@@ -89,13 +88,7 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
             Component component = entry.getKey();
             Integer integer = entry.getValue();
             if (integer > 0) {
-                int textWidth = font.width(component);
-                int finalPopupY = popupY;
-                guiGraphics.pose().pushPose();
-                guiGraphics.pose().translate(0,0,399);
-                TooltipRenderUtil.renderTooltipBackground(guiGraphics,popupPositionX - textWidth / 2, finalPopupY -4, textWidth, 14, 0,Constants.GRAY.getIntColor(),Constants.GRAY.getIntColor(),Constants.WHITE.getIntColor(), Constants.WHITE.getIntColor());
-                guiGraphics.drawCenteredString(font, component, popupPositionX, popupY, new IntegerColor(0xffffffff).getIntColor());
-                guiGraphics.pose().popPose();
+                ClientMethods.drawTooltipLine(guiGraphics, component,popupPositionX, popupY);
                 popupY+=23;
                 integer--;
                 entry.setValue(integer);

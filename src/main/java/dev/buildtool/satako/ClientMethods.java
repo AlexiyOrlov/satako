@@ -2,8 +2,10 @@ package dev.buildtool.satako;
 
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.inventory.tooltip.TooltipRenderUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
@@ -161,5 +163,20 @@ public class ClientMethods {
 
     public static void drawStringWithShadow(GuiGraphics matrixStack, Object o, int X, int Y, IntegerColor color) {
         matrixStack.drawString(Minecraft.getInstance().font, o.toString(), X, Y, color.getIntColor());
+    }
+
+    public static void drawTooltipLine(GuiGraphics guiGraphics, Component component, int popupX, int popupY, IntegerColor stringColor, IntegerColor backgroundColor, IntegerColor borderColor) {
+        guiGraphics.pose().pushPose();
+        guiGraphics.pose().translate(0,0,399);
+        Font font = Minecraft.getInstance().font;
+        int stringWidth = font.width(component);
+        TooltipRenderUtil.renderTooltipBackground(guiGraphics,popupX - stringWidth / 2, popupY-4, stringWidth, 14, 0,backgroundColor.getIntColor(),backgroundColor.getIntColor(),borderColor.getIntColor(), borderColor.getIntColor());
+        guiGraphics.drawCenteredString(font, component, popupX, popupY, stringColor.getIntColor());
+        guiGraphics.pose().popPose();
+    }
+
+    public static void drawTooltipLine(GuiGraphics guiGraphics,Component component,int x,int y)
+    {
+        drawTooltipLine(guiGraphics,component,x,y,Constants.WHITE,Constants.GRAY, Constants.WHITE);
     }
 }
