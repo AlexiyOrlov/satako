@@ -1,6 +1,7 @@
 package dev.buildtool.satako;
 
 import com.mojang.blaze3d.vertex.*;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -177,13 +178,13 @@ public class ClientMethods {
         Font font = Minecraft.getInstance().font;
         int stringWidth = font.width(component);
         TooltipRenderUtil.renderTooltipBackground(guiGraphics,popupX - stringWidth / 2, popupY-4, stringWidth, 14, 0,backgroundColor.getIntColor(),backgroundColor.getIntColor(),borderColor.getIntColor(), borderColor.getIntColor());
-        guiGraphics.drawCenteredString(font, component, popupX, popupY, stringColor.getIntColor());
+        guiGraphics.drawCenteredString(font, component, popupX, popupY-1, stringColor.getIntColor());
         guiGraphics.pose().popPose();
     }
 
     public static void drawTooltipLine(GuiGraphics guiGraphics,Component component,int x,int y)
     {
-        drawTooltipLine(guiGraphics,component,x,y,Constants.WHITE,Constants.GRAY, Constants.WHITE);
+        drawTooltipLine(guiGraphics,component,x,y,Constants.WHITE,Constants.GRAY, new IntegerColor(0xffF0E43A));
     }
 
     public static void drawTooltipLines(GuiGraphics guiGraphics, List<MutableComponent> components, int x, int y)
