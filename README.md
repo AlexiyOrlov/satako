@@ -10,7 +10,7 @@ Satako is a library for Forge modding, which I use in many mods. It contains:
 + randomized and unique element list implementations
 + other useful functions and methods
 
-It also adds 3 commands to the game: `give2` and `summon2` which let you specify namespace and path of the
+It also adds 4 commands to the game: `killall`, `discardall`, `give2` and `summon2` which let you specify namespace and path of the
 arguments separately.
 
 If you want to develop mods using Satako, you just need
