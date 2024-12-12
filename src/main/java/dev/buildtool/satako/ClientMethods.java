@@ -5,13 +5,19 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.inventory.tooltip.ClientTextTooltip;
+import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.gui.screens.inventory.tooltip.TooltipRenderUtil;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.joml.Matrix4f;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @OnlyIn(Dist.CLIENT)
 public class ClientMethods {
@@ -178,5 +184,26 @@ public class ClientMethods {
     public static void drawTooltipLine(GuiGraphics guiGraphics,Component component,int x,int y)
     {
         drawTooltipLine(guiGraphics,component,x,y,Constants.WHITE,Constants.GRAY, Constants.WHITE);
+    }
+
+    public static void drawTooltipLines(GuiGraphics guiGraphics, List<MutableComponent> components, int x, int y)
+    {
+        List<ClientTooltipComponent> clientTooltipComponents= components.stream().map(component -> new ClientTextTooltip(component.getVisualOrderText())).collect(Collectors.toList());
+        int tooltipWidth=0;
+        int tooltipHeight=0;
+        Font font=Minecraft.getInstance().font;
+        for (ClientTooltipComponent clientTooltipComponent : clientTooltipComponents) {
+            int componentWidth = clientTooltipComponent.getWidth(font);
+            if (componentWidth > tooltipWidth)
+                tooltipWidth = componentWidth;
+            tooltipHeight+=clientTooltipComponent.getHeight();
+        }
+        guiGraphics.pose().translate(0,0,401);
+        TooltipRenderUtil.renderTooltipBackground(guiGraphics,x,y,tooltipWidth,tooltipHeight,0);
+        int stringY=y;
+        for (Component component : components) {
+            guiGraphics.drawString(font, component, x, stringY,Constants.WHITE.getIntColor());
+            stringY+=10;
+        }
     }
 }
