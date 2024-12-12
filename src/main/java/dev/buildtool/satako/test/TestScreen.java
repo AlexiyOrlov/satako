@@ -46,8 +46,8 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
         });
         addRenderableWidget(switchButton);
         elements.add(switchButton);
-        addRenderableWidget(new Label(getGuiLeft() + imageWidth, getGuiTop(), Component.literal("Clickable"), this, p_93751_ -> minecraft.player.displayClientMessage(Component.literal("Clicked first label"), false), null));
-        addRenderableWidget(new Label(getGuiLeft() + imageWidth, getGuiTop() + 20, Component.literal("Clickable with background"), this, p_93751_ -> minecraft.player.displayClientMessage(Component.literal("Clicked second label"), false), Constants.ORANGE));
+        addRenderableWidget(new Label(getGuiLeft() + imageWidth, getGuiTop(), Component.literal("Clickable"), this, p_93751_ -> addPopup(Component.literal("Clicked first label")),null));
+        addRenderableWidget(new Label(getGuiLeft() + imageWidth, getGuiTop() + 20, Component.literal("Clickable with background"), this, p_93751_ -> addPopup(Component.literal("Clicked second label")), Constants.ORANGE));
         LinkedHashMap<Component, Button.OnPress> linkedHashMap = new LinkedHashMap<>();
         DropDownButton dropDownButton = new DropDownButton(getGuiLeft() + imageWidth, getGuiTop() + 40, this, Component.literal("First choice"));
         linkedHashMap.put(Component.literal("First choice"), p_93751_ -> {
@@ -71,17 +71,5 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
         addRenderableWidget(dropDownButton);
         addRenderableWidget(new Label(getGuiLeft() + imageWidth, getGuiTop() + 20 * 3, Component.literal("Overlapping label"), this, p_93751_ -> minecraft.player.displayClientMessage(Component.literal("Clicked the label"), false), null));
         addRenderableWidget(new Button.Builder(Component.literal("Button"), p_93751_ -> minecraft.player.displayClientMessage(Component.literal("Clicked the button"), false)).pos(getGuiLeft() + imageWidth, getGuiTop() + 20 * 4).size(40, 20).build());
-
-        List<BetterButton> betterButtons=new ArrayList<>(40);
-        for (int i = 0; i < 40; i++) {
-            betterButtons.add(new BetterButton(0,i*20,Component.literal("Button "+i)));
-        }
-        ScrollPane scrollPane=new ScrollPane(3,height/2,getGuiLeft()-10,height/2,Component.literal("List"),this,betterButtons.toArray(AbstractWidget[]::new));
-//        addRenderableWidget(scrollPane);
-
-        addRenderableWidget(new SelectionButton(scrollPane.getWidth()+50, height - 20, Component.literal("Selection button")));
-
-        ScrollArea scrollArea = new ScrollArea(3, 3, getGuiLeft() - 10, height / 4, Component.literal("List"), new IntegerColor(0x22F8A55E), elements);
-//        addRenderableWidget(scrollArea);
     }
 }
