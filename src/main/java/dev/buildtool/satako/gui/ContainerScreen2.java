@@ -21,6 +21,7 @@ import java.util.*;
  */
 public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractContainerScreen<T> {
 
+    public static final int POPUP_SPACING = 22;
     protected int centerX, centerY;
     protected ArrayList<Page> pages = new ArrayList<>(0);
     protected boolean drawBorders;
@@ -83,13 +84,13 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
             }
         });
 
-        int popupY = popupPositionY - (showTimes.keySet().size()-1) * 18;
+        int popupY = popupPositionY - (showTimes.keySet().size()-1) * POPUP_SPACING;
         for (Map.Entry<Component, Integer> entry : showTimes.entrySet()) {
             Component component = entry.getKey();
             Integer integer = entry.getValue();
             if (integer > 0) {
                 ClientMethods.drawTooltipLine(guiGraphics, component,popupPositionX, popupY);
-                popupY+=23;
+                popupY+= POPUP_SPACING;
                 integer--;
                 entry.setValue(integer);
             }
