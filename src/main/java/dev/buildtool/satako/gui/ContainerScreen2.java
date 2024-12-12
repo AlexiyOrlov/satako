@@ -7,10 +7,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.gui.screens.inventory.tooltip.TooltipRenderUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
+import org.checkerframework.checker.units.qual.C;
 
 import java.util.*;
 
@@ -69,16 +71,16 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
     }
 
     @Override
-    public void render(GuiGraphics matrixStack, int mouseX, int mouseY, float p_render_3_) {
-        renderBackground(matrixStack);
-        super.render(matrixStack, mouseX, mouseY, p_render_3_);
-        renderTooltip(matrixStack, mouseX, mouseY);
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float p_render_3_) {
+        renderBackground(guiGraphics);
+        super.render(guiGraphics, mouseX, mouseY, p_render_3_);
+        renderTooltip(guiGraphics, mouseX, mouseY);
 
         List<Slot> slots=getSlots();
         slots.stream().filter(Slot::isActive).forEach(slot -> {
             if(slot instanceof ItemHandlerSlot handlerSlot && slot.getItem().isEmpty() && mouseX>slot.x+leftPos&& mouseX<slot.x+leftPos+18 && mouseY>slot.y+topPos && mouseY<slot.y+topPos+18 && handlerSlot.tooltip!=null)
             {
-                matrixStack.renderComponentTooltip(font,((ItemHandlerSlot) slot).tooltip,mouseX,mouseY);
+                guiGraphics.renderComponentTooltip(font,((ItemHandlerSlot) slot).tooltip,mouseX,mouseY);
             }
         });
 
@@ -88,9 +90,13 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
             Integer integer = entry.getValue();
             if (integer > 0) {
                 int textWidth = font.width(component);
-                matrixStack.fill(popupPositionX - textWidth / 2-5, popupY-5, popupPositionX - textWidth / 2 + textWidth+5, popupY+13, Constants.GRAY.getIntColor());
-                matrixStack.drawCenteredString(font, component, popupPositionX, popupY, new IntegerColor(0xffffffff).getIntColor());
-                popupY+=18;
+                int finalPopupY = popupY;
+                guiGraphics.pose().pushPose();
+                guiGraphics.pose().translate(0,0,399);
+                TooltipRenderUtil.renderTooltipBackground(guiGraphics,popupPositionX - textWidth / 2, finalPopupY -4, textWidth, 14, 0,Constants.GRAY.getIntColor(),Constants.GRAY.getIntColor(),Constants.WHITE.getIntColor(), Constants.WHITE.getIntColor());
+                guiGraphics.drawCenteredString(font, component, popupPositionX, popupY, new IntegerColor(0xffffffff).getIntColor());
+                guiGraphics.pose().popPose();
+                popupY+=23;
                 integer--;
                 entry.setValue(integer);
             }
