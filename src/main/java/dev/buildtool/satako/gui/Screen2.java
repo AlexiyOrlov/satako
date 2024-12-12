@@ -1,5 +1,6 @@
 package dev.buildtool.satako.gui;
 
+import dev.buildtool.satako.ClientMethods;
 import dev.buildtool.satako.Constants;
 import dev.buildtool.satako.IntegerColor;
 import net.minecraft.client.Minecraft;
@@ -44,18 +45,16 @@ public class Screen2 extends Screen
      * This should be called first
      */
     @Override
-    public void render(GuiGraphics matrixStack, int mouseX, int mouseY, float tick) {
-        renderBackground(matrixStack);
-        super.render(matrixStack, mouseX, mouseY, tick);
-        int popupY = popupPositionY - (showTimes.keySet().size()-1) * 18;
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float tick) {
+        renderBackground(guiGraphics);
+        super.render(guiGraphics, mouseX, mouseY, tick);
+        int popupY = popupPositionY - (showTimes.keySet().size()-1) * ContainerScreen2.POPUP_SPACING;
         for (Map.Entry<Component, Integer> entry : showTimes.entrySet()) {
             Component component = entry.getKey();
             Integer integer = entry.getValue();
             if (integer > 0) {
-                int textWidth = font.width(component);
-                matrixStack.fill(popupPositionX - textWidth / 2-5, popupY-5, popupPositionX - textWidth / 2 + textWidth+5, popupY+13, new IntegerColor(0xff565656).getIntColor());
-                matrixStack.drawCenteredString(font, component, popupPositionX, popupY, new IntegerColor(0xffffffff).getIntColor());
-                popupY+=18;
+                ClientMethods.drawTooltipLine(guiGraphics, component,popupPositionX, popupY);
+                popupY+= ContainerScreen2.POPUP_SPACING;
                 integer--;
                 entry.setValue(integer);
             }
