@@ -1,5 +1,6 @@
-package dev.buildtool.satako;
+package dev.buildtool.satako.clientside;
 
+import dev.buildtool.satako.Satako;
 import dev.buildtool.satako.test.TestScreen;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraftforge.api.distmarker.Dist;

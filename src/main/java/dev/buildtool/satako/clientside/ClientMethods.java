@@ -1,7 +1,8 @@
-package dev.buildtool.satako;
+package dev.buildtool.satako.clientside;
 
 import com.mojang.blaze3d.vertex.*;
-import net.minecraft.ChatFormatting;
+import dev.buildtool.satako.Constants;
+import dev.buildtool.satako.IntegerColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
@@ -184,7 +185,7 @@ public class ClientMethods {
 
     public static void drawTooltipLine(GuiGraphics guiGraphics,Component component,int x,int y)
     {
-        drawTooltipLine(guiGraphics,component,x,y,Constants.WHITE,Constants.GRAY, new IntegerColor(0xffF0E43A));
+        drawTooltipLine(guiGraphics,component,x,y, Constants.WHITE,Constants.GRAY, new IntegerColor(0xffF0E43A));
     }
 
     public static void drawTooltipLines(GuiGraphics guiGraphics, List<MutableComponent> components, int x, int y)

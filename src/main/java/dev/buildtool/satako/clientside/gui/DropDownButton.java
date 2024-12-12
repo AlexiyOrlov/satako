@@ -1,4 +1,4 @@
-package dev.buildtool.satako.gui;
+package dev.buildtool.satako.clientside.gui;
 
 import dev.buildtool.satako.Constants;
 import net.minecraft.client.gui.GuiGraphics;

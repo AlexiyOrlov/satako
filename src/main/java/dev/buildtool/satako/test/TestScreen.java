@@ -2,7 +2,7 @@ package dev.buildtool.satako.test;
 
 import dev.buildtool.satako.Constants;
 import dev.buildtool.satako.IntegerColor;
-import dev.buildtool.satako.gui.*;
+import dev.buildtool.satako.clientside.gui.*;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;

@@ -1,4 +1,4 @@
-package dev.buildtool.satako;
+package dev.buildtool.satako.clientside;
 
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.VertexConsumer;

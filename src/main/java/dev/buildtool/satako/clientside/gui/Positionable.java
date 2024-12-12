@@ -1,4 +1,4 @@
-package dev.buildtool.satako.gui;
+package dev.buildtool.satako.clientside.gui;
 
 /**
  * Created on 5/21/17.

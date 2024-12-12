@@ -1,7 +1,7 @@
-package dev.buildtool.satako;
+package dev.buildtool.satako.clientside;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.datafixers.util.Pair;
+import dev.buildtool.satako.Satako;
 import dev.buildtool.satako.integration.JEI;
 import mezz.jei.api.ingredients.ITypedIngredient;
 import net.minecraft.ChatFormatting;

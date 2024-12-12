@@ -1,15 +1,13 @@
-package dev.buildtool.satako.gui;
+package dev.buildtool.satako.clientside.gui;
 
-import dev.buildtool.satako.ClientMethods;
+import dev.buildtool.satako.clientside.ClientMethods;
 import dev.buildtool.satako.Constants;
-import dev.buildtool.satako.IntegerColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 

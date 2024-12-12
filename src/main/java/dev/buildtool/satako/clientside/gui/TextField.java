@@ -1,6 +1,6 @@
-package dev.buildtool.satako.gui;
+package dev.buildtool.satako.clientside.gui;
 
-import dev.buildtool.satako.ClientFunctions;
+import dev.buildtool.satako.clientside.ClientFunctions;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.network.chat.Component;

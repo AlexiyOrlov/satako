@@ -1,5 +1,5 @@
 
-package dev.buildtool.satako.gui;
+package dev.buildtool.satako.clientside.gui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;

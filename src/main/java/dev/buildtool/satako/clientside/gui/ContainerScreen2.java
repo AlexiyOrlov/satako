@@ -1,9 +1,10 @@
-package dev.buildtool.satako.gui;
+package dev.buildtool.satako.clientside.gui;
 
 import com.mojang.blaze3d.platform.GlStateManager;
-import dev.buildtool.satako.ClientMethods;
+import dev.buildtool.satako.clientside.ClientMethods;
 import dev.buildtool.satako.Constants;
 import dev.buildtool.satako.IntegerColor;
+import dev.buildtool.satako.ItemHandlerSlot;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.events.GuiEventListener;
