@@ -2,6 +2,7 @@ package dev.buildtool.satako.clientside.gui;
 
 import dev.buildtool.satako.Constants;
 import dev.buildtool.satako.IntegerColor;
+import dev.buildtool.satako.clientside.ClientMethods;
 import dev.ftb.mods.ftblibrary.ui.BaseScreen;
 import dev.ftb.mods.ftblibrary.ui.ScreenWrapper;
 import net.minecraft.client.gui.GuiGraphics;
@@ -49,15 +50,13 @@ public class CombinedScreen extends ScreenWrapper {
         super.render(graphics, mouseX, mouseY, partialTicks);
         renderables.forEach(renderable -> renderable.render(graphics, mouseX, mouseY, partialTicks));
 
-        int popupY = popupPositionY - (showTimes.keySet().size()-1) * 18;
+        int popupY = popupPositionY - (showTimes.keySet().size()-1) * ContainerScreen2.POPUP_SPACING;
         for (Map.Entry<Component, Integer> entry : showTimes.entrySet()) {
             Component component = entry.getKey();
             Integer integer = entry.getValue();
             if (integer > 0) {
-                int textWidth = font.width(component);
-                graphics.fill(popupPositionX - textWidth / 2-5, popupY-5, popupPositionX - textWidth / 2 + textWidth+5, popupY+13, new IntegerColor(0xff565656).getIntColor());
-                graphics.drawCenteredString(font, component, popupPositionX, popupY, new IntegerColor(0xffffffff).getIntColor());
-                popupY+=18;
+                ClientMethods.drawTooltipLine(graphics, component,popupPositionX, popupY);
+                popupY+= ContainerScreen2.POPUP_SPACING;
                 integer--;
                 entry.setValue(integer);
             }
