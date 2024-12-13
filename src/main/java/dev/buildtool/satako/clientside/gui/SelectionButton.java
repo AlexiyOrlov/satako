@@ -39,12 +39,12 @@ public class SelectionButton extends BetterButton {
     }
 
     @Override
-    public void renderWidget(GuiGraphics mStack, int mouseX, int mouseY, float partial) {
+    public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partial) {
         if (this.visible) {
             Minecraft mc = Minecraft.getInstance();
             this.isHovered = mouseX >= this.getXPos() && mouseY >= this.getYPos() && mouseX < this.getXPos() + this.width && mouseY < this.getYPos() + this.height;
             int k = getTextureY();
-            mStack.blitWithBorder(SPRITES.get(isHovered(),isFocused()), this.getXPos(), this.getYPos(), 0, k, this.width, this.height, 200, 20, 2, 3, 2, 2);
+            guiGraphics.blitSprite(SPRITES.get(isHovered(),isFocused()), this.getXPos(), this.getYPos(), 0, k, this.width, this.height, 200, 20);
 
             Component buttonText = this.getMessage();
             int strWidth = mc.font.width(buttonText);
@@ -58,7 +58,7 @@ public class SelectionButton extends BetterButton {
                 color = 16777120;
             else
                 color = 16777215;
-            mStack.drawCenteredString(mc.font, buttonText, this.getXPos() + this.width / 2, this.getYPos() + (this.height - 8) / 2, color);
+            guiGraphics.drawCenteredString(mc.font, buttonText, this.getXPos() + this.width / 2, this.getYPos() + (this.height - 8) / 2, color);
         }
     }
 }

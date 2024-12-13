@@ -5,6 +5,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.inventory.tooltip.TooltipRenderUtil;
 import net.minecraft.network.chat.Component;
 
 import java.util.*;
@@ -82,16 +83,16 @@ public class DropDownButton extends BetterButton {
     }
 
     @Override
-    public void renderWidget(GuiGraphics poseStack, int mx, int my, float p_93660_) {
-        super.renderWidget(poseStack, mx, my, p_93660_);
+    public void renderWidget(GuiGraphics guiGraphics, int mx, int my, float p_93660_) {
+        super.renderWidget(guiGraphics, mx, my, p_93660_);
         if (open)
         {
             int widest=choices.values().stream().reduce((radioButton, radioButton2) -> radioButton.getElementWidth()>radioButton2.getElementWidth() ? radioButton : radioButton2).get().getElementWidth();
-            choices.values().forEach(radioButton -> poseStack.fill(radioButton.getXPos(),radioButton.getYPos(),radioButton.getXPos()+widest,radioButton.getYPos()+radioButton.getElementHeight(), Constants.GRAY.getIntColor()));
-            poseStack.drawString(fontRenderer, " :", getXPos() + width, getYPos() + height / 2 - 4, 0xffffffff);
+            choices.values().forEach(radioButton -> TooltipRenderUtil.renderTooltipBackground(guiGraphics,radioButton.getXPos(),radioButton.getYPos(),radioButton.getXPos()+widest,radioButton.getYPos()+radioButton.getElementHeight(), Constants.GRAY.getIntColor()));
+            guiGraphics.drawString(fontRenderer, " :", getXPos() + width, getYPos() + height / 2 - 4, 0xffffffff);
         }
         else
-            poseStack.drawString(fontRenderer, " V", getXPos() + width, getYPos() + height / 2 - 4, 0xffffffff);
+            guiGraphics.drawString(fontRenderer, " V", getXPos() + width, getYPos() + height / 2 - 4, 0xffffffff);
     }
 
     private boolean isInsideArea(int x, int y, int x1, int x2, int y1, int y2) {
