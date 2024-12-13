@@ -1,6 +1,7 @@
 package dev.buildtool.satako.clientside.gui;
 
 import dev.buildtool.satako.Constants;
+import dev.buildtool.satako.clientside.ClientMethods;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.events.GuiEventListener;
@@ -87,8 +88,8 @@ public class DropDownButton extends BetterButton {
         super.render(guiGraphics, mx, my, p_93660_);
         if (open)
         {
-//            int widest=choices.values().stream().reduce((radioButton, radioButton2) -> radioButton.getElementWidth()>radioButton2.getElementWidth() ? radioButton : radioButton2).get().getElementWidth();
-//            choices.values().forEach(radioButton -> TooltipRenderUtil.renderTooltipBackground(guiGraphics,radioButton.getXPos(),radioButton.getYPos(),widest,radioButton.getElementHeight(), Constants.GRAY.getIntColor()));
+            int widest=choices.values().stream().reduce((radioButton, radioButton2) -> radioButton.getElementWidth()>radioButton2.getElementWidth() ? radioButton : radioButton2).get().getElementWidth();
+            ClientMethods.drawBackground(guiGraphics,getX(),getY()+20,widest,20*choices.size(),Constants.GRAY);
             guiGraphics.drawString(fontRenderer, " :", getXPos() + width, getYPos() + height / 2 - 4, 0xffffffff);
         }
         else

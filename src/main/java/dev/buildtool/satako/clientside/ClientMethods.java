@@ -208,4 +208,9 @@ public class ClientMethods {
             stringY+=10;
         }
     }
+
+    public static void drawBackground(GuiGraphics graphics,int x,int y,int width,int height,IntegerColor color)
+    {
+        TooltipRenderUtil.renderTooltipBackground(graphics,x,y,width,height,-1,color.getIntColor(),color.getIntColor(),color.getIntColor(),color.getIntColor());
+    }
 }
