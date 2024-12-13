@@ -12,6 +12,7 @@ import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent
 import net.minecraft.client.gui.screens.inventory.tooltip.TooltipRenderUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
@@ -103,38 +104,37 @@ public class ClientMethods {
         }
     }
 
-//    private static void drawCircle(Tesselator tessellator) {
-//        BufferBuilder bufferbuilder = tessellator.begin();
-//        bufferbuilder.begin(VertexFormat.Mode.LINES, DefaultVertexFormat.POSITION_COLOR);
-//        int num_segments = 16;
-//        float radius = 0.7f;
-//        for (int ii = 0; ii < num_segments; ii++) {
-//            float theta = 2.0f * 3.1415926f * ii / num_segments;//get the current angle
-//
-//            float xx = radius * Mth.cos(theta);
-//            float yy = radius * Mth.sin(theta);
-//            bufferbuilder.vertex(xx, yy, 0).color(0, 0, 0, 255);
-//        }
-//        tessellator.end();
-//    }
+    private static void drawCircle(Tesselator tessellator) {
+        BufferBuilder bufferbuilder = tessellator.begin(VertexFormat.Mode.LINES,DefaultVertexFormat.POSITION_COLOR);
+        int num_segments = 16;
+        float radius = 0.7f;
+        for (int ii = 0; ii < num_segments; ii++) {
+            float theta = 2.0f * 3.1415926f * ii / num_segments;//get the current angle
 
-//    private static void drawFilledCircle(Tesselator tessellator, float radius, IntegerColor color) {
-//        int circle_points = 50;
-//        float angle = 2.0f * 3.1416f / circle_points;
-//        BufferBuilder bufferBuilder = tessellator.getBuilder();
-//        //TODO checl format
-//        bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
-//        double angle1 = 0.0;
-//        double xx = radius * Math.cos(0);
-//        double yy = radius * Math.sin(0);
-//        bufferBuilder.vertex(xx, yy, 0).color(color.getRed(), color.getGreen(), color.getBlue(), 255);
-//        int i;
-//        for (i = 0; i < circle_points; i++) {
-//            bufferBuilder.vertex(radius * Math.cos(angle1), radius * Math.sin(angle1), 0).color(0, 0, 0, 255);
-//            angle1 += angle;
-//        }
-//        tessellator.end();
-//    }
+            float xx = radius * Mth.cos(theta);
+            float yy = radius * Mth.sin(theta);
+            bufferbuilder.addVertex(xx, yy, 0).setColor(0, 0, 0, 255);
+        }
+        tessellator.clear();
+    }
+
+    private static void drawFilledCircle(Tesselator tessellator, float radius, IntegerColor color) {
+        int circle_points = 50;
+        float angle = 2.0f * 3.1416f / circle_points;
+        //TODO checl format
+        BufferBuilder bufferBuilder = tessellator.begin(VertexFormat.Mode.QUADS,DefaultVertexFormat.POSITION_COLOR);
+
+        float angle1 = 0;
+        float xx = radius * Mth.cos(0);
+        float yy = radius * Mth.sin(0);
+        bufferBuilder.addVertex(xx, yy, 0).setColor(color.getRed(), color.getGreen(), color.getBlue(), 255);
+        int i;
+        for (i = 0; i < circle_points; i++) {
+            bufferBuilder.addVertex(radius * Mth.cos(angle1), radius * Mth.sin(angle1), 0).setColor(0, 0, 0, 255);
+            angle1 += angle;
+        }
+        tessellator.clear();
+    }
 
     public static void drawStringWithBackground(GuiGraphics matrixStack, Object obj, int x, int y, IntegerColor background) {
         String string = obj.toString();
