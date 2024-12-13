@@ -1,7 +1,10 @@
 package dev.buildtool.satako.test;
 
+import com.mojang.blaze3d.vertex.Tesselator;
 import dev.buildtool.satako.Constants;
+import dev.buildtool.satako.clientside.ClientMethods;
 import dev.buildtool.satako.clientside.gui.*;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.network.chat.Component;
@@ -33,8 +36,8 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
         SwitchButton switchButton = new SwitchButton(0, 200, Component.literal("true"), Component.literal("false"), true, p_93751_ -> {
         });
         addRenderableWidget(switchButton);
-        addRenderableWidget(new Label(getGuiLeft() + imageWidth, getGuiTop(), Component.literal("Clickable"), this, p_93751_ -> addPopup(Component.literal("Clicked first label")), null));
-        addRenderableWidget(new Label(getGuiLeft() + imageWidth, getGuiTop() + 20, Component.literal("Clickable with background"), this, p_93751_ -> addPopup(Component.literal("Clicked second label")), Constants.ORANGE));
+//        addRenderableWidget(new Label(getGuiLeft() + imageWidth, getGuiTop(), Component.literal("Clickable"), this, p_93751_ -> addPopup(Component.literal("Clicked first label")), null));
+//        addRenderableWidget(new Label(getGuiLeft() + imageWidth, getGuiTop() + 20, Component.literal("Clickable with background"), this, p_93751_ -> addPopup(Component.literal("Clicked second label")), Constants.ORANGE));
         LinkedHashMap<Component, Button.OnPress> linkedHashMap = new LinkedHashMap<>();
         DropDownButton dropDownButton = new DropDownButton(getGuiLeft() + imageWidth, getGuiTop() + 40, this, Component.literal("First choice"));
         linkedHashMap.put(Component.literal("First choice"), p_93751_ -> {
@@ -53,5 +56,14 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
         Rectangle rectangle = new Rectangle(20, getGuiTop(), 50, getYSize(), Constants.ORANGE, () -> 0.33f);
         addRenderableWidget(rectangle);
         addTooltip(rectangle,() -> Component.literal("Tooltip"));
+    }
+
+    @Override
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float p_render_3_) {
+        super.render(guiGraphics, mouseX, mouseY, p_render_3_);
+        guiGraphics.pose().pushPose();
+        guiGraphics.pose().translate(width/2,height/2,0);
+        ClientMethods.drawCircle(Tesselator.getInstance());
+        guiGraphics.pose().popPose();
     }
 }
