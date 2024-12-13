@@ -41,6 +41,7 @@ public class SwitchButton extends BetterButton {
         boolean clicked = super.mouseClicked(p_mouseClicked_1_, p_mouseClicked_3_, p_mouseClicked_5_);
         if (clicked)
         {
+            state=!state;
             if (state)
             {
                 setMessage(whenTrue);
