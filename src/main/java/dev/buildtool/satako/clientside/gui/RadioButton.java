@@ -50,7 +50,7 @@ public class RadioButton extends BetterButton
         if (this.visible) {
             this.isHovered = selected;
             int k = getTextureY();
-            guiGraphics.blitSprite(SPRITES.get(isHovered,isFocused()), this.getXPos(), this.getYPos(), 0, 46 + k * 20, this.width, this.height, 200, 20);
+            guiGraphics.blitSprite(SPRITES.get(active,isHoveredOrFocused()), this.getXPos(), this.getYPos(), 0, 46 + k * 20, this.width, this.height, 200, 20);
             super.renderWidget(guiGraphics, mouseX, mouseY, partial);
         }
     }
