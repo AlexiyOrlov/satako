@@ -1,5 +1,6 @@
 package dev.buildtool.satako.clientside;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import dev.buildtool.satako.Constants;
 import dev.buildtool.satako.IntegerColor;
@@ -10,6 +11,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTextTooltip;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.gui.screens.inventory.tooltip.TooltipRenderUtil;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.util.Mth;
@@ -104,18 +106,21 @@ public class ClientMethods {
         }
     }
 
-    public static void drawCircle(Tesselator tessellator) {
-        BufferBuilder bufferbuilder = tessellator.begin(VertexFormat.Mode.LINES,DefaultVertexFormat.POSITION_COLOR);
+    public static void drawCircle(GuiGraphics graphics) {
+        RenderSystem.setShader(GameRenderer::getPositionColorShader);
+        RenderSystem.lineWidth(3);
+        BufferBuilder bufferbuilder = Tesselator.getInstance().begin(VertexFormat.Mode.LINES,DefaultVertexFormat.POSITION_COLOR);
         int num_segments = 16;
-        float radius = 0.7f;
+        float radius = 200f;
         for (int ii = 0; ii < num_segments; ii++) {
             float theta = 2.0f * 3.1415926f * ii / num_segments;//get the current angle
 
             float xx = radius * Mth.cos(theta);
             float yy = radius * Mth.sin(theta);
-            bufferbuilder.addVertex(xx, yy, 0).setColor(0, 0, 0, 255);
+            IntegerColor white=Constants.WHITE;
+            bufferbuilder.addVertex(graphics.pose().last().pose(), xx, yy, 0).setColor(white.getRed(), white.getGreen(), white.getBlue(), white.getAlpha());
         }
-        BufferUploader.draw(bufferbuilder.build());
+        BufferUploader.drawWithShader(bufferbuilder.build());
     }
 
     public static void drawFilledCircle(Tesselator tessellator, float radius, IntegerColor color) {

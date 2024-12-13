@@ -27,14 +27,12 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
         addRenderableWidget(radioButton2);
         new ButtonGroup(radioButton, radioButton2);
 
-        Button button = new Button.Builder(Component.literal("Vanilla button 1"), p_93751_ -> {
-        }).pos(0, 120).size(100, 20).build();
+        Button button = new Button.Builder(Component.literal("Vanilla button 1"), p_93751_ -> {}).pos(0, 120).size(100, 20).build();
         button.setTooltip(Tooltip.create(Component.literal("Veeeeeeeeeeeeeryyyyyyyyyyyyyyyy looooooooooooooooooooooooooong tooooooooltiiiiiiiip")));
         addRenderableWidget(button);
         TextField textField=new TextField(button.getX(),button.getY()+button.getHeight(),150);
         addRenderableWidget(textField);
-        SwitchButton switchButton = new SwitchButton(0, 200, Component.literal("true"), Component.literal("false"), true, p_93751_ -> {
-        });
+        SwitchButton switchButton = new SwitchButton(0, 200, Component.literal("true"), Component.literal("false"), true, p_93751_ -> {});
         addRenderableWidget(switchButton);
         addRenderableWidget(new Label(getGuiLeft() + imageWidth, getGuiTop(), Component.literal("Clickable"), this, p_93751_ -> addPopup(Component.literal("Clicked first label")), null));
         addRenderableWidget(new Label(getGuiLeft() + imageWidth, getGuiTop() + 20, Component.literal("Clickable with background"), this, p_93751_ -> addPopup(Component.literal("Clicked second label")), Constants.ORANGE));
@@ -61,9 +59,9 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float p_render_3_) {
         super.render(guiGraphics, mouseX, mouseY, p_render_3_);
-        guiGraphics.pose().pushPose();
-        guiGraphics.pose().translate(width/2,height/2,0);
-        ClientMethods.drawCircle(Tesselator.getInstance());
-        guiGraphics.pose().popPose();
+//        guiGraphics.pose().pushPose();
+//        guiGraphics.pose().translate((float) width /2, (float) height /2,-399);
+//        ClientMethods.drawCircle(guiGraphics);
+//        guiGraphics.pose().popPose();
     }
 }
