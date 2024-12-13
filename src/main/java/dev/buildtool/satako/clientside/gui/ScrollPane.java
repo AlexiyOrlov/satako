@@ -15,7 +15,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 
 import java.util.List;
-
+@Deprecated
 public class ScrollPane extends AbstractWidget {
     public static final int SCROLL_BAR_HEIGHT = 27;
     public static final int SCROLL_BAR_WIDTH = 6;

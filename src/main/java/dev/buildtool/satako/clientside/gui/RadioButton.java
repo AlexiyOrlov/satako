@@ -46,12 +46,12 @@ public class RadioButton extends BetterButton
     }
 
     @Override
-    public void renderWidget(GuiGraphics matrixStack, int mouseX, int mouseY, float partial) {
+    public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partial) {
         if (this.visible) {
             this.isHovered = selected;
             int k = getTextureY();
-            matrixStack.blitWithBorder(SPRITES.get(isHovered,isFocused()), this.getXPos(), this.getYPos(), 0, 46 + k * 20, this.width, this.height, 200, 20, 2, 3, 2, 2);
-            super.renderWidget(matrixStack, mouseX, mouseY, partial);
+            guiGraphics.blitSprite(SPRITES.get(isHovered,isFocused()), this.getXPos(), this.getYPos(), 0, 46 + k * 20, this.width, this.height, 200, 20);
+            super.renderWidget(guiGraphics, mouseX, mouseY, partial);
         }
     }
 

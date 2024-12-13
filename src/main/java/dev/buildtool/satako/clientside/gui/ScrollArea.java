@@ -13,7 +13,7 @@ import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
 
 import java.util.List;
-
+@Deprecated
 public class ScrollArea extends AbstractWidget {
     public final IntegerColor color;
     static final IntegerColor MINUS_BUTTON_COLOR = new IntegerColor(0x538AA6ff), PLUS_BUTTON_COLOR = new IntegerColor(0xABAB38ff);
