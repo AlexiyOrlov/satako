@@ -104,7 +104,7 @@ public class ClientMethods {
         }
     }
 
-    private static void drawCircle(Tesselator tessellator) {
+    public static void drawCircle(Tesselator tessellator) {
         BufferBuilder bufferbuilder = tessellator.begin(VertexFormat.Mode.LINES,DefaultVertexFormat.POSITION_COLOR);
         int num_segments = 16;
         float radius = 0.7f;
@@ -115,13 +115,13 @@ public class ClientMethods {
             float yy = radius * Mth.sin(theta);
             bufferbuilder.addVertex(xx, yy, 0).setColor(0, 0, 0, 255);
         }
-        tessellator.clear();
+        BufferUploader.draw(bufferbuilder.build());
     }
 
-    private static void drawFilledCircle(Tesselator tessellator, float radius, IntegerColor color) {
+    public static void drawFilledCircle(Tesselator tessellator, float radius, IntegerColor color) {
         int circle_points = 50;
         float angle = 2.0f * 3.1416f / circle_points;
-        //TODO checl format
+        //TODO check format
         BufferBuilder bufferBuilder = tessellator.begin(VertexFormat.Mode.QUADS,DefaultVertexFormat.POSITION_COLOR);
 
         float angle1 = 0;
@@ -133,7 +133,7 @@ public class ClientMethods {
             bufferBuilder.addVertex(radius * Mth.cos(angle1), radius * Mth.sin(angle1), 0).setColor(0, 0, 0, 255);
             angle1 += angle;
         }
-        tessellator.clear();
+        BufferUploader.draw(bufferBuilder.build());
     }
 
     public static void drawStringWithBackground(GuiGraphics matrixStack, Object obj, int x, int y, IntegerColor background) {

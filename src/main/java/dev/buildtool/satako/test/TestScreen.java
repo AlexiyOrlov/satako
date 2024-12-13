@@ -7,7 +7,6 @@ import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 public class TestScreen extends ContainerScreen2<TestContainer> {
