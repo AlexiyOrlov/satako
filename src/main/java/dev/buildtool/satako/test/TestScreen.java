@@ -24,23 +24,16 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
         RadioButton radioButton2 = new RadioButton(radioButton.getXPos() + radioButton.getElementWidth(), 20, Component.literal("Radio button2"));
         addRenderableWidget(radioButton2);
         new ButtonGroup(radioButton, radioButton2);
-        ArrayList<Object> elements = new ArrayList<>();
-        for (int i = 0; i < 30; i++) {
-            Label label = new Label(0, 20 * i, Component.literal("#" + i), null);
-            elements.add(label);
-            addRenderableWidget(label);
-        }
+
         Button button = new Button.Builder(Component.literal("Vanilla button 1"), p_93751_ -> {
         }).pos(0, 120).size(100, 20).build();
         button.setTooltip(Tooltip.create(Component.literal("Veeeeeeeeeeeeeryyyyyyyyyyyyyyyy looooooooooooooooooooooooooong tooooooooltiiiiiiiip")));
         addRenderableWidget(button);
-        elements.add(button);
         TextField textField=new TextField(button.getX(),button.getY()+button.getHeight(),150);
         addRenderableWidget(textField);
         SwitchButton switchButton = new SwitchButton(0, 200, Component.literal("true"), Component.literal("false"), true, p_93751_ -> {
         });
         addRenderableWidget(switchButton);
-        elements.add(switchButton);
         addRenderableWidget(new Label(getGuiLeft() + imageWidth, getGuiTop(), Component.literal("Clickable"), this, p_93751_ -> addPopup(Component.literal("Clicked first label")), null));
         addRenderableWidget(new Label(getGuiLeft() + imageWidth, getGuiTop() + 20, Component.literal("Clickable with background"), this, p_93751_ -> addPopup(Component.literal("Clicked second label")), Constants.ORANGE));
         LinkedHashMap<Component, Button.OnPress> linkedHashMap = new LinkedHashMap<>();
@@ -54,7 +47,7 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
         dropDownButton.setChoices(linkedHashMap, 1);
         addRenderableWidget(dropDownButton);
         addRenderableWidget(new Label(getGuiLeft() + imageWidth, getGuiTop() + 20 * 3, Component.literal("Overlapping label"), this, p_93751_ -> minecraft.player.displayClientMessage(Component.literal("Clicked the label"), false), null));
-        addRenderableWidget(new Button.Builder(Component.literal("Button"), p_93751_ -> minecraft.player.displayClientMessage(Component.literal("Clicked the button"), false)).pos(getGuiLeft() + imageWidth, getGuiTop() + 20 * 4).size(40, 20).build());
+        addRenderableWidget(new Button.Builder(Component.literal("Button"), p_93751_ -> addPopup(Component.literal("Clicked the button"))).pos(getGuiLeft() + imageWidth, getGuiTop() + 20 * 4).size(40, 20).build());
 
         addRenderableWidget(new SelectionButton(10, height - 20, Component.literal("Selection button")));
 
