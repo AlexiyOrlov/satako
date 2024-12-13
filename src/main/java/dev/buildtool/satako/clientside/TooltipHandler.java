@@ -392,6 +392,7 @@ public class TooltipHandler {
                     tooltipX-=theirLongestStringWidth+10;
                 if(tooltipX<0)
                     tooltipX=0;
+                graphics.pose().translate(0,0,399);
                 graphics.renderTooltip(minecraft.font, properties.stream().map(mutableComponent -> Component.literal(mutableComponent.getString())).collect(Collectors.toList()), targetStack.getTooltipImage(), targetStack, tooltipX, tooltipY);
             }
         }
