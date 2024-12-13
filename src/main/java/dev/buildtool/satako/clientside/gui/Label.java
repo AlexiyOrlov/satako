@@ -48,7 +48,7 @@ public class Label extends BetterButton implements Scrollable, Hideable {
                 TooltipRenderUtil.renderTooltipBackground(guiGraphics,getX(),getY(),width,height,399,backgroundColor.getIntColor(),backgroundColor.getIntColor(),backgroundColor.getIntColor(),backgroundColor.getIntColor());
             }
             guiGraphics.pose().translate(0,0,400);
-            guiGraphics.drawString(Minecraft.getInstance().font, getMessage(), getXPos() + 4, getYPos() + (height - 8) / 2, 16777215 | Mth.ceil(this.alpha * 255.0F) << 24);
+            guiGraphics.drawString(Minecraft.getInstance().font, getMessage(), getXPos(), getYPos() + (height - 8) / 2, 16777215 | Mth.ceil(this.alpha * 255.0F) << 24);
         }
     }
 
