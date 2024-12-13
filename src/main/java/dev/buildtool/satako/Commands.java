@@ -25,11 +25,9 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
@@ -113,6 +111,14 @@ public class Commands {
         LiteralArgumentBuilder<CommandSourceStack> kill2=literal("killall").requires(commandSourceStack -> commandSourceStack.hasPermission(2));
         RequiredArgumentBuilder<CommandSourceStack,String> entityMod=argument("mod",StringArgumentType.string()).suggests(mods2);
         RequiredArgumentBuilder<CommandSourceStack,String> entityPath=argument("entity",StringArgumentType.string()).suggests(entities2);
+        kill2.executes(commandContext -> {
+            ServerLevel serverLevel=commandContext.getSource().getLevel();
+            double d0 = 150;
+            AABB aabb = new AABB(-d0, -d0, -d0, d0 + 1.0D, d0 + 1.0D, d0 + 1.0D);
+            List<LivingEntity> entityList = serverLevel.getEntitiesOfClass(LivingEntity.class,aabb, living -> !(living instanceof Player));
+            entityList.forEach(Entity::kill);
+            return entityList.size();
+        });
         entityPath.executes(context -> {
             ServerLevel serverLevel=context.getSource().getLevel();
             double d0 = 150;
