@@ -20,10 +20,15 @@ public class Rectangle extends AbstractWidget {
 
     @Override
     protected void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+        guiGraphics.pose().translate(0,0,399);
         if(fillPercent!=null)
+        {
             guiGraphics.fill(getX(), (int) (getY()+height-height*fillPercent.getFillPercent()),getX()+width,getY()+height,color.getIntColor());
+        }
         else
+        {
             guiGraphics.fill(getX(),getY(),getX()+width,getY()+height,color.getIntColor());
+        }
     }
 
     @Override
