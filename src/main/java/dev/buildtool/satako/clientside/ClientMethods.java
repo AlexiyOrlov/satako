@@ -183,7 +183,7 @@ public class ClientMethods {
     }
     public static void drawTooltipLine(GuiGraphics guiGraphics,Component component,int x,int y)
     {
-        drawTooltipLine(guiGraphics,component,x,y, Constants.WHITE,Constants.GRAY, Constants.WHITE);
+        drawTooltipLine(guiGraphics,component,x,y, Constants.WHITE,Constants.GRAY, Constants.YELLOW);
     }
 
     public static void drawTooltipLines(GuiGraphics guiGraphics, List<MutableComponent> components, int x, int y)
