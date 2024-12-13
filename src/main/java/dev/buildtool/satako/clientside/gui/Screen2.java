@@ -8,6 +8,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.inventory.tooltip.TooltipRenderUtil;
 import net.minecraft.network.chat.Component;
 
 import java.util.HashMap;
@@ -62,9 +63,13 @@ public class Screen2 extends Screen
             Integer integer = entry.getValue();
             if (integer > 0) {
                 int textWidth = font.width(component);
-                guiGraphics.fill(popupPositionX - textWidth / 2-5, popupY-5, popupPositionX - textWidth / 2 + textWidth+5, popupY+13, new IntegerColor(0xff565656).getIntColor());
+                int finalPopupY = popupY;
+                guiGraphics.pose().pushPose();
+                guiGraphics.pose().translate(0,0,399);
+                TooltipRenderUtil.renderTooltipBackground(guiGraphics,popupPositionX - textWidth / 2, finalPopupY -4, textWidth, 14, 0,Constants.GRAY.getIntColor(),Constants.GRAY.getIntColor(),Constants.WHITE.getIntColor(), Constants.WHITE.getIntColor());
                 guiGraphics.drawCenteredString(font, component, popupPositionX, popupY, new IntegerColor(0xffffffff).getIntColor());
-                popupY+=18;
+                guiGraphics.pose().popPose();
+                popupY+=23;
                 integer--;
                 entry.setValue(integer);
             }
