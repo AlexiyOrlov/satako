@@ -1,4 +1,4 @@
-Satako is a library for Forge modding, which I use in many mods. It contains:
+Satako is a library for Neoforge modding, which I use in many mods. It contains:
 
 + simple to use class for color
 + custom Slot implementation
