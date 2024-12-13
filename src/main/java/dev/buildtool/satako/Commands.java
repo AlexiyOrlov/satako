@@ -19,6 +19,7 @@ import net.minecraft.commands.arguments.coordinates.Coordinates;
 import net.minecraft.commands.arguments.coordinates.Vec3Argument;
 import net.minecraft.commands.arguments.selector.EntitySelector;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -34,7 +35,9 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.common.NeoForgeConfig;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 import java.util.Collection;
 import java.util.List;
@@ -139,6 +142,41 @@ public class Commands {
         killNode.addChild(modsNode);
         modsNode.addChild(entitiesNode);
         rootCommandNode.addChild(killNode);
+
+        SuggestionProvider<CommandSourceStack> mods3=(context, builder) -> SharedSuggestionProvider.suggest(BuiltInRegistries.ENTITY_TYPE.keySet().stream().map(ResourceLocation::getNamespace).collect(Collectors.toSet()), builder);
+        SuggestionProvider<CommandSourceStack> entities3=(context, builder) -> SharedSuggestionProvider.suggest(BuiltInRegistries.ENTITY_TYPE.keySet().stream().filter(resourceLocation -> resourceLocation.getNamespace().equals(context.getArgument("mod",String.class))).map(ResourceLocation::getPath).collect(Collectors.toSet()),builder);
+        LiteralArgumentBuilder<CommandSourceStack> discard=literal("removeall").requires(commandSourceStack -> commandSourceStack.hasPermission(2));
+        RequiredArgumentBuilder<CommandSourceStack,String> entityMod2=argument("mod",StringArgumentType.string()).suggests(mods3);
+        RequiredArgumentBuilder<CommandSourceStack,String> entityPath2=argument("entity",StringArgumentType.string()).suggests(entities3);
+        discard.executes(commandContext -> {
+            ServerLevel serverLevel=commandContext.getSource().getLevel();
+            double d0 = 150;
+            AABB aabb = new AABB(-d0, -d0, -d0, d0 + 1.0D, d0 + 1.0D, d0 + 1.0D);
+            List<LivingEntity> entityList = serverLevel.getEntitiesOfClass(LivingEntity.class,aabb,living -> !(living instanceof Player));
+            entityList.forEach(Entity::discard);
+            return entityList.size();
+        });
+        entityPath2.executes(context -> {
+            ServerLevel serverLevel=context.getSource().getLevel();
+            double d0 = 150;
+            EntityType<?> entityType= BuiltInRegistries.ENTITY_TYPE.get(ResourceLocation.fromNamespaceAndPath(context.getArgument("mod",String.class),context.getArgument("entity",String.class)));
+            AABB aabb = new AABB(-d0, -d0, -d0, d0 + 1.0D, d0 + 1.0D, d0 + 1.0D);
+            List<? extends Entity> entityList = serverLevel.getEntities(entityType, aabb, entity -> true);
+            entityList.forEach(Entity::discard);
+            if (entityList.size() == 1) {
+                context.getSource().sendSuccess(() -> Component.translatable("satako.discard.success.single", entityList.iterator().next().getDisplayName()), true);
+            } else {
+                context.getSource().sendSuccess(() -> Component.translatable("satako.discard.success.multiple", entityList.size()), true);
+            }
+            return entityList.size();
+        });
+
+        LiteralCommandNode<CommandSourceStack> discardNode=discard.build();
+        ArgumentCommandNode<CommandSourceStack,String> modsNode2=entityMod2.build();
+        ArgumentCommandNode<CommandSourceStack,String> entitiesNode2=entityPath2.build();
+        discardNode.addChild(modsNode2);
+        modsNode2.addChild(entitiesNode2);
+        rootCommandNode.addChild(discardNode);
     }
 
     private static int giveItems(CommandContext<CommandSourceStack> context, int amount) throws CommandSyntaxException {
