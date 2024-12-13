@@ -104,7 +104,7 @@ public class TextField extends EditBox implements Scrollable, Positionable, Hide
     @Override
     public void setYPos(int Y)
     {
-        setYPos(Y);
+        super.setY(Y);
     }
 
     public int getElementWidth() {
