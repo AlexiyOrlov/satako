@@ -3,6 +3,7 @@ package dev.buildtool.satako.clientside.gui;
 import com.mojang.blaze3d.platform.GlStateManager;
 import dev.buildtool.satako.Constants;
 import dev.buildtool.satako.IntegerColor;
+import dev.buildtool.satako.clientside.ClientMethods;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -21,7 +22,7 @@ import java.util.*;
  * GUI borders and sends input events to elements
  */
 public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractContainerScreen<T> {
-
+    public static final int POPUP_SPACING=22;
     protected int centerX, centerY;
     protected ArrayList<Page> pages = new ArrayList<>(0);
     protected boolean drawBorders;
@@ -97,19 +98,13 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
             }
         });
 
-        int popupY = popupPositionY - (showTimes.keySet().size()-1) * 18;
+        int popupY = popupPositionY - (showTimes.keySet().size()-1) * POPUP_SPACING;
         for (Map.Entry<Component, Integer> entry : showTimes.entrySet()) {
             Component component = entry.getKey();
             Integer integer = entry.getValue();
             if (integer > 0) {
-                int textWidth = font.width(component);
-                int finalPopupY = popupY;
-                guiGraphics.pose().pushPose();
-                guiGraphics.pose().translate(0,0,399);
-                TooltipRenderUtil.renderTooltipBackground(guiGraphics,popupPositionX - textWidth / 2, finalPopupY -4, textWidth, 14, 0,Constants.GRAY.getIntColor(),Constants.GRAY.getIntColor(),Constants.WHITE.getIntColor(), Constants.WHITE.getIntColor());
-                guiGraphics.drawCenteredString(font, component, popupPositionX, popupY, new IntegerColor(0xffffffff).getIntColor());
-                guiGraphics.pose().popPose();
-                popupY+=23;
+                ClientMethods.drawTooltipLine(guiGraphics,component,popupPositionX,popupY);
+                popupY+=POPUP_SPACING;
                 integer--;
                 entry.setValue(integer);
             }

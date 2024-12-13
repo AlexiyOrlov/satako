@@ -178,7 +178,7 @@ public class ClientMethods {
         Font font = Minecraft.getInstance().font;
         int stringWidth = font.width(component);
         TooltipRenderUtil.renderTooltipBackground(guiGraphics,popupX - stringWidth / 2, popupY-4, stringWidth, 14, 0,backgroundColor.getIntColor(),backgroundColor.getIntColor(),borderColor.getIntColor(), borderColor.getIntColor());
-        guiGraphics.drawCenteredString(font, component, popupX, popupY, stringColor.getIntColor());
+        guiGraphics.drawCenteredString(font, component, popupX, popupY-1, stringColor.getIntColor());
         guiGraphics.pose().popPose();
     }
     public static void drawTooltipLine(GuiGraphics guiGraphics,Component component,int x,int y)
