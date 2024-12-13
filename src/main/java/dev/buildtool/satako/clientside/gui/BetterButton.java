@@ -1,12 +1,10 @@
-package dev.buildtool.satako.gui;
+package dev.buildtool.satako.clientside.gui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
 import net.neoforged.neoforge.client.gui.widget.ExtendedButton;
-
-import java.util.List;
 
 public class BetterButton extends ExtendedButton implements Scrollable, Positionable, Hideable
 {

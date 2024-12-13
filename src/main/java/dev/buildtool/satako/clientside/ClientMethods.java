@@ -1,11 +1,11 @@
-package dev.buildtool.satako;
+package dev.buildtool.satako.clientside;
 
 import com.mojang.blaze3d.vertex.*;
+import dev.buildtool.satako.IntegerColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;

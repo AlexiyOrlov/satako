@@ -1,5 +1,6 @@
-package dev.buildtool.satako;
+package dev.buildtool.satako.clientside;
 
+import dev.buildtool.satako.Satako;
 import dev.buildtool.satako.test.TestScreen;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;

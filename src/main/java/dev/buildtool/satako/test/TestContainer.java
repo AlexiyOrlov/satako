@@ -4,8 +4,8 @@ import dev.buildtool.satako.Menu2;
 import dev.buildtool.satako.IntegerColor;
 import dev.buildtool.satako.ItemHandler;
 import dev.buildtool.satako.Satako;
-import dev.buildtool.satako.gui.ItemHandlerDisplaySlot;
-import dev.buildtool.satako.gui.ItemHandlerSlot;
+import dev.buildtool.satako.clientside.gui.ItemHandlerDisplaySlot;
+import dev.buildtool.satako.clientside.gui.ItemHandlerSlot;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 

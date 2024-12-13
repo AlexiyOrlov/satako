@@ -1,7 +1,7 @@
 package dev.buildtool.satako;
 
-import dev.buildtool.satako.gui.ItemHandlerDisplaySlot;
-import dev.buildtool.satako.gui.ItemHandlerSlot;
+import dev.buildtool.satako.clientside.gui.ItemHandlerDisplaySlot;
+import dev.buildtool.satako.clientside.gui.ItemHandlerSlot;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;

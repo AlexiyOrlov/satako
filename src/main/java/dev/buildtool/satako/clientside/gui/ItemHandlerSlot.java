@@ -1,4 +1,4 @@
-package dev.buildtool.satako.gui;
+package dev.buildtool.satako.clientside.gui;
 
 import dev.buildtool.satako.Constants;
 import dev.buildtool.satako.IntegerColor;
@@ -9,7 +9,6 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.SlotItemHandler;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

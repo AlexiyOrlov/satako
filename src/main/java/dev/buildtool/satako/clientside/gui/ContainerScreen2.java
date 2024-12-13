@@ -1,4 +1,4 @@
-package dev.buildtool.satako.gui;
+package dev.buildtool.satako.clientside.gui;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import dev.buildtool.satako.Constants;

@@ -1,4 +1,4 @@
-package dev.buildtool.satako.gui;
+package dev.buildtool.satako.clientside.gui;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
