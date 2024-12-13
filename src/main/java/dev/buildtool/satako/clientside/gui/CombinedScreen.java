@@ -8,6 +8,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.inventory.tooltip.TooltipRenderUtil;
 import net.minecraft.network.chat.Component;
 
 import java.util.LinkedHashMap;
@@ -55,9 +56,13 @@ public class CombinedScreen extends ScreenWrapper {
             Integer integer = entry.getValue();
             if (integer > 0) {
                 int textWidth = font.width(component);
-                graphics.fill(popupPositionX - textWidth / 2-5, popupY-5, popupPositionX - textWidth / 2 + textWidth+5, popupY+13, new IntegerColor(0xff565656).getIntColor());
+                int finalPopupY = popupY;
+                graphics.pose().pushPose();
+                graphics.pose().translate(0,0,399);
+                TooltipRenderUtil.renderTooltipBackground(graphics,popupPositionX - textWidth / 2, finalPopupY -4, textWidth, 14, 0,Constants.GRAY.getIntColor(),Constants.GRAY.getIntColor(),Constants.WHITE.getIntColor(), Constants.WHITE.getIntColor());
                 graphics.drawCenteredString(font, component, popupPositionX, popupY, new IntegerColor(0xffffffff).getIntColor());
-                popupY+=18;
+                graphics.pose().popPose();
+                popupY+=23;
                 integer--;
                 entry.setValue(integer);
             }
