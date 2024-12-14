@@ -211,4 +211,86 @@ public class ClientMethods {
             stringY+=10;
         }
     }
+
+    public static void addBox(VertexConsumer vertexConsumer, Matrix4f matrix4f, float xOffset, float yOffset, float zOffset, float width, float height, float depth, float red, float green, float blue, float alpha, boolean addBackFaces, float extrusion) {
+
+        float x2=0.5f-width/2;
+        float x3=x2+width;
+        float y2=0.5f-height/2;
+        float y3=y2+height;
+        float z2=0.5f-depth/2;
+        float z3=z2+depth;
+
+        //Up
+        vertexConsumer.addVertex(matrix4f, xOffset+x2, yOffset+y3 + extrusion, zOffset+z2).setColor(red, green, blue, alpha);
+        vertexConsumer.addVertex(matrix4f, xOffset+x2, yOffset+y3 + extrusion, zOffset+z3).setColor(red, green, blue, alpha);
+        vertexConsumer.addVertex(matrix4f, xOffset+x3, yOffset+y3 + extrusion, zOffset+z3).setColor(red, green, blue, alpha);
+        vertexConsumer.addVertex(matrix4f, xOffset+x3, yOffset+y3 + extrusion, zOffset+z2).setColor(red, green, blue, alpha);
+        if (addBackFaces) {
+            vertexConsumer.addVertex(matrix4f, xOffset+x3, yOffset+y3 + extrusion,zOffset+ z2).setColor(red, green, blue, alpha);
+            vertexConsumer.addVertex(matrix4f,xOffset+ x3, yOffset+y3 + extrusion, zOffset+z3).setColor(red, green, blue, alpha);
+            vertexConsumer.addVertex(matrix4f, xOffset+x2, yOffset+y3 + extrusion,zOffset+ z3).setColor(red, green, blue, alpha);
+            vertexConsumer.addVertex(matrix4f, xOffset+x2, yOffset+y3 + extrusion,zOffset+ z2).setColor(red, green, blue, alpha);
+        }
+
+        //Down
+        vertexConsumer.addVertex(matrix4f, xOffset+x3, yOffset+y2 -extrusion,zOffset+ z2).setColor(red, green, blue, alpha);
+        vertexConsumer.addVertex(matrix4f, xOffset+x3, yOffset+y2 -extrusion,  zOffset+z3).setColor(red, green, blue, alpha);
+        vertexConsumer.addVertex(matrix4f, xOffset+x2, yOffset+y2 -extrusion, zOffset+z3).setColor(red, green, blue, alpha);
+        vertexConsumer.addVertex(matrix4f, xOffset+x2,yOffset+y2 -extrusion, zOffset+z2).setColor(red, green, blue, alpha);
+        if (addBackFaces) {
+            vertexConsumer.addVertex(matrix4f, xOffset+x2, yOffset+y2 -extrusion, zOffset+z2).setColor(red, green, blue, alpha);
+            vertexConsumer.addVertex(matrix4f,xOffset+ x2, yOffset+y2 -extrusion, zOffset+z3).setColor(red, green, blue, alpha);
+            vertexConsumer.addVertex(matrix4f, xOffset+x3, yOffset+y2 -extrusion, zOffset+z3).setColor(red, green, blue, alpha);
+            vertexConsumer.addVertex(matrix4f, xOffset+x3, yOffset+y2 -extrusion, zOffset+z2).setColor(red, green, blue, alpha);
+        }
+
+        //North
+        vertexConsumer.addVertex(matrix4f, xOffset+x2, yOffset+y2,zOffset+z2-extrusion).setColor(red, green, blue, alpha);
+        vertexConsumer.addVertex(matrix4f, xOffset+x2, yOffset+y3,zOffset+z2-extrusion).setColor(red, green, blue, alpha);
+        vertexConsumer.addVertex(matrix4f, xOffset+x3, yOffset+y3, zOffset+z2-extrusion).setColor(red, green, blue, alpha);
+        vertexConsumer.addVertex(matrix4f, xOffset+x3, yOffset+y2, zOffset+z2-extrusion).setColor(red, green, blue, alpha);
+        if (addBackFaces) {
+            vertexConsumer.addVertex(matrix4f,xOffset+ x3, yOffset+y2, zOffset+z2-extrusion).setColor(red, green, blue, alpha);
+            vertexConsumer.addVertex(matrix4f, xOffset+x3, yOffset+y3, zOffset+z2-extrusion).setColor(red, green, blue, alpha);
+            vertexConsumer.addVertex(matrix4f, xOffset+x2, yOffset+y3, zOffset+z2-extrusion).setColor(red, green, blue, alpha);
+            vertexConsumer.addVertex(matrix4f, xOffset+x2, yOffset+y2, zOffset+z2-extrusion).setColor(red, green, blue, alpha);
+        }
+
+        //South
+        vertexConsumer.addVertex(matrix4f, xOffset+x3, yOffset+y2, zOffset + z3+ extrusion).setColor(red, green, blue, alpha);
+        vertexConsumer.addVertex(matrix4f,xOffset+ x3, yOffset+y3, zOffset + z3 + extrusion).setColor(red, green, blue, alpha);
+        vertexConsumer.addVertex(matrix4f, xOffset+x2, yOffset+y3, zOffset + z3 + extrusion).setColor(red, green, blue, alpha);
+        vertexConsumer.addVertex(matrix4f, xOffset+x2,yOffset+ y2, zOffset + z3 + extrusion).setColor(red, green, blue, alpha);
+        if (addBackFaces) {
+            vertexConsumer.addVertex(matrix4f, xOffset+x2, yOffset+y2, zOffset + z3 + extrusion).setColor(red, green, blue, alpha);
+            vertexConsumer.addVertex(matrix4f, xOffset+x2, yOffset+y3, zOffset + z3+ extrusion).setColor(red, green, blue, alpha);
+            vertexConsumer.addVertex(matrix4f, xOffset + x3, yOffset+y3, zOffset +z3 + extrusion).setColor(red, green, blue, alpha);
+            vertexConsumer.addVertex(matrix4f, xOffset + x3,yOffset+ y2, zOffset + z3 + extrusion).setColor(red, green, blue, alpha);
+        }
+
+        //West
+        vertexConsumer.addVertex(matrix4f, xOffset+x2-extrusion, yOffset +y2, zOffset+z2).setColor(red, green, blue, alpha);
+        vertexConsumer.addVertex(matrix4f, xOffset+x2-extrusion, yOffset+y2, zOffset + z3).setColor(red, green, blue, alpha);
+        vertexConsumer.addVertex(matrix4f, xOffset+x2-extrusion, yOffset + height+ y2, zOffset + z3).setColor(red, green, blue, alpha);
+        vertexConsumer.addVertex(matrix4f, xOffset+x2-extrusion, yOffset + height+ y2, zOffset+z2).setColor(red, green, blue, alpha);
+        if (addBackFaces) {
+            vertexConsumer.addVertex(matrix4f, xOffset+x2-extrusion, yOffset + height+y2, zOffset+z2).setColor(red, green, blue, alpha);
+            vertexConsumer.addVertex(matrix4f, xOffset+x2-extrusion, yOffset + height+y2, zOffset + z3).setColor(red, green, blue, alpha);
+            vertexConsumer.addVertex(matrix4f, xOffset+x2-extrusion, yOffset+y2, zOffset + z3).setColor(red, green, blue, alpha);
+            vertexConsumer.addVertex(matrix4f, xOffset+x2-extrusion, yOffset+y2, zOffset+z2).setColor(red, green, blue, alpha);
+        }
+
+        //East
+        vertexConsumer.addVertex(matrix4f, xOffset + x3 + extrusion, yOffset + y3, zOffset+z2).setColor(red, green, blue, alpha);
+        vertexConsumer.addVertex(matrix4f, xOffset + x3 + extrusion, yOffset + y3, zOffset + z3).setColor(red, green, blue, alpha);
+        vertexConsumer.addVertex(matrix4f, xOffset + x3 + extrusion, yOffset+y2, zOffset + z3).setColor(red, green, blue, alpha);
+        vertexConsumer.addVertex(matrix4f, xOffset + x3 + extrusion, yOffset+y2, zOffset+z2).setColor(red, green, blue, alpha);
+        if (addBackFaces) {
+            vertexConsumer.addVertex(matrix4f, xOffset + x3 + extrusion, yOffset+y2,zOffset+ z2).setColor(red, green, blue, alpha);
+            vertexConsumer.addVertex(matrix4f, xOffset + x3 + extrusion,yOffset+ y2, zOffset + z3).setColor(red, green, blue, alpha);
+            vertexConsumer.addVertex(matrix4f, xOffset + x3 + extrusion, yOffset + y3, zOffset + z3).setColor(red, green, blue, alpha);
+            vertexConsumer.addVertex(matrix4f, xOffset + x3 + extrusion, yOffset + y3,zOffset+ z2).setColor(red, green, blue, alpha);
+        }
+    }
 }
