@@ -143,8 +143,7 @@ public final class Methods {
      * @param outputHandler to
      * @param byAmount      how many per operation
      */
-    @Promote
-    private static void transferItems(IItemHandler inputHandler, IItemHandler outputHandler, int byAmount) {
+    public static void transferItems(IItemHandler inputHandler, IItemHandler outputHandler, int byAmount) {
         both:
         for (int i = 0; i < inputHandler.getSlots(); i++) {
             ItemStack itemStack = inputHandler.getStackInSlot(i);
