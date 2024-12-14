@@ -1039,9 +1039,11 @@ public final class Functions {
         return ItemStack.EMPTY;
     }
 
-    public static void removeFluid(BlockPos target,Level level)
+    public static void removeFluid(BlockPos target,Level level,boolean sourceOnly)
     {
-        if(!level.getFluidState(target).isEmpty())
+        if(sourceOnly && level.getFluidState(target).isSource())
+            level.setBlock(target,Blocks.AIR.defaultBlockState(),2);
+        else if(!level.getFluidState(target).isEmpty())
             level.setBlock(target,Blocks.AIR.defaultBlockState(),2);
     }
 }
