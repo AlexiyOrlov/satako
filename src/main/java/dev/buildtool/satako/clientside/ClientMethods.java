@@ -32,7 +32,7 @@ public class ClientMethods {
      * @param addBackFaces whether to add back faces for the sides
      * @param extruder     offsets faces
      */
-    public static void addRectangle(VertexConsumer vertexConsumer, Matrix4f matrix4f, int x, int y, int z, float red, float green, float blue, float alpha, boolean addBackFaces, float extruder) {
+    public static void addCube(VertexConsumer vertexConsumer, Matrix4f matrix4f, int x, int y, int z, float red, float green, float blue, float alpha, boolean addBackFaces, float extruder) {
         //Up
         vertexConsumer.addVertex(matrix4f, 0, y + 1 + extruder, 0).setColor(red, green, blue, alpha);
         vertexConsumer.addVertex(matrix4f, 0, y + 1 + extruder, z + 1).setColor(red, green, blue, alpha);
