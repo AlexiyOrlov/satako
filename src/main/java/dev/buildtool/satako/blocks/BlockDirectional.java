@@ -20,15 +20,10 @@ import net.neoforged.neoforge.items.IItemHandler;
 /**
  * Created on 5/29/18.
  */
-public class BlockDirectional extends DirectionalBlock {
+public abstract class BlockDirectional extends DirectionalBlock {
 
     public BlockDirectional(BlockBehaviour.Properties properties) {
         super(properties);
-    }
-
-    @Override
-    protected MapCodec<? extends DirectionalBlock> codec() {
-        return null;
     }
 
     @Override
