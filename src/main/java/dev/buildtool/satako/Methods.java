@@ -149,21 +149,23 @@ public final class Methods {
             ItemStack itemStack = inputHandler.getStackInSlot(i);
             if (!itemStack.isEmpty()) {
                 for (int i1 = 0; i1 < outputHandler.getSlots(); i1++) {
-                    if (outputHandler.isItemValid(i1, itemStack)) {
-                        ItemStack stack2 = outputHandler.getStackInSlot(i1);
-                        int min = Math.min(byAmount, itemStack.getCount());
-                        if (Functions.areItemTypesEqual(itemStack, stack2) && stack2.getCount() + min <= itemStack.getMaxStackSize()) {
-                            itemStack.shrink(min);
-                            stack2.grow(min);
+                    ItemStack present=outputHandler.getStackInSlot(i1);
+                    if(!present.isEmpty()) {
+                        ItemStack tryExtract = inputHandler.extractItem(i, byAmount, true);
+                        ItemStack tryInsert = outputHandler.insertItem(i1, tryExtract, true);
+                        if (tryInsert.isEmpty()) {
+                            tryExtract = inputHandler.extractItem(i, tryExtract.getCount(), false);
+                            outputHandler.insertItem(i1, tryExtract, false);
                             break both;
                         }
                     }
                 }
                 for (int i1 = 0; i1 < outputHandler.getSlots(); i1++) {
-                    if (outputHandler.isItemValid(i1, itemStack) && outputHandler.getStackInSlot(i1).isEmpty()) {
-                        int min = Math.min(byAmount, itemStack.getCount());
-                        outputHandler.insertItem(i1, new ItemStack(itemStack.getItem(), min), false);
-                        itemStack.shrink(min);
+                    ItemStack tryExtract = inputHandler.extractItem(i, byAmount, true);
+                    ItemStack tryInsert = outputHandler.insertItem(i1, tryExtract, true);
+                    if (tryInsert.isEmpty()) {
+                        tryExtract = inputHandler.extractItem(i, tryExtract.getCount(), false);
+                        outputHandler.insertItem(i1, tryExtract, false);
                         break both;
                     }
                 }
