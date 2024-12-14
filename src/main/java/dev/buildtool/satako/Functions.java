@@ -675,7 +675,7 @@ public final class Functions {
     public static boolean isObfuscatedEnvironment()
     {
         return false;
-        return (Boolean) Launcher.INSTANCE.blackboard().get(TypesafeMap.Key).get();
+        //return (Boolean) Launcher.INSTANCE.blackboard().get(TypesafeMap.Key).get();
     }
 
     /**
