@@ -2,6 +2,7 @@ package dev.buildtool.satako.test;
 
 import com.mojang.blaze3d.vertex.Tesselator;
 import dev.buildtool.satako.Constants;
+import dev.buildtool.satako.Functions;
 import dev.buildtool.satako.clientside.ClientMethods;
 import dev.buildtool.satako.clientside.gui.*;
 import net.minecraft.client.gui.GuiGraphics;
@@ -9,6 +10,8 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.level.material.Fluids;
+import net.neoforged.neoforge.fluids.FluidStack;
 
 import java.util.LinkedHashMap;
 
@@ -54,6 +57,8 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
         Rectangle rectangle = new Rectangle(20, getGuiTop(), 50, getYSize(), Constants.ORANGE, () -> 0.33f);
         addRenderableWidget(rectangle);
         addTooltip(rectangle,() -> Component.literal("Tooltip"));
+        Rectangle textured=new Rectangle(getGuiLeft()-22,getGuiTop(),20,getYSize(), Functions.getFluidTexture(new FluidStack(Fluids.LAVA,1000),true),null);
+        addRenderableWidget(textured);
     }
 
     @Override

@@ -4,11 +4,15 @@ import cpw.mods.modlauncher.Launcher;
 import cpw.mods.modlauncher.api.TypesafeMap;
 import dev.buildtool.satako.clientside.ClientFunctions;
 import io.netty.buffer.Unpooled;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
 import net.minecraft.world.InteractionHand;
@@ -33,9 +37,12 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
+import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemHandlerHelper;
 import org.apache.commons.lang3.ArrayUtils;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -1041,4 +1048,14 @@ public final class Functions {
         return ItemStack.EMPTY;
     }
 
+    public static TextureAtlasSprite getFluidTexture(@NotNull FluidStack fluidStack, boolean still) {
+        IClientFluidTypeExtensions properties = IClientFluidTypeExtensions.of(fluidStack.getFluid());
+        ResourceLocation spriteLocation;
+        if (still) {
+            spriteLocation = properties.getStillTexture(fluidStack);
+        } else {
+            spriteLocation = properties.getFlowingTexture(fluidStack);
+        }
+        return Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(spriteLocation);
+    }
 }
