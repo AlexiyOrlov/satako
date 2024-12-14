@@ -526,7 +526,7 @@ public final class Functions {
     /**
      * @return true if same items and durability
      */
-    public static boolean areItemsEqualIngoreNbt(ItemStack one, ItemStack two) {
+    public static boolean areItemsEqualIgnoreNbt(ItemStack one, ItemStack two) {
         if (!one.isEmpty() && !two.isEmpty()) {
             return ItemStack.isSameItem(one, two) && one.getDamageValue() == two.getDamageValue();
         }
