@@ -5,6 +5,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.resources.metadata.gui.GuiSpriteScaling;
 import net.minecraft.network.chat.Component;
 
 import javax.annotation.Nullable;
@@ -49,11 +50,18 @@ public class Rectangle extends AbstractWidget {
         guiGraphics.pose().translate(0,0,399);
         if(sprite!=null)
         {
+            int min=Math.min(width,height);
             color.getColor().ifPresent(color1 -> guiGraphics.setColor(color1.getRed(),color1.getGreen(),color1.getBlue(),color1.getAlpha()));
+            GuiSpriteScaling.NineSlice nineSlice = new GuiSpriteScaling.NineSlice(min, min, new GuiSpriteScaling.NineSlice.Border(0, 0, 0, 0));
             if(fillPercent!=null)
-                guiGraphics.blit(getX(), (int) (getY()+ height-height*fillPercent.getFillPercent()),-90,width,(int) (height*fillPercent.getFillPercent()),sprite);
+            {
+                guiGraphics.blitNineSlicedSprite(sprite, nineSlice,(int) (getY()+ height-height*fillPercent.getFillPercent()),-90,width,height,(int) (height*fillPercent.getFillPercent()));
+            }
             else
-                guiGraphics.blit(getX(),getY(),-90,width,height,sprite);
+            {
+                guiGraphics.blitNineSlicedSprite(sprite, nineSlice,getX(),getY(),-90,width,height);
+
+            }
         }
         else  {
             color.getColor().ifPresent(color1 -> {
