@@ -1,5 +1,7 @@
 package dev.buildtool.satako;
 
+import net.minecraft.util.FastColor;
+
 /**
  * For some reason color in minecraft is encoded in A-R-G-B order, not R-G-B-A.
  */
@@ -16,10 +18,10 @@ public class IntegerColor
     public IntegerColor(int color)
     {
         this.color = color;
-        red = (color >> 24 & 255) / 255f;
-        green = (color >> 16 & 255) / 255f;
-        blue = (color >> 8 & 255) / 255f;
-        alpha = (color & 255) / 255f;
+        red = (float) FastColor.ARGB32.red(color) /255;
+        green = (float) FastColor.ARGB32.green(color) /255;
+        blue = (float) FastColor.ARGB32.blue(color) /255;
+        alpha = (float) FastColor.ARGB32.alpha(color) /255;
     }
 
     /**
@@ -56,4 +58,8 @@ public class IntegerColor
         return alpha;
     }
 
+    @Override
+    public String toString() {
+        return "IntegerColor [red="+red+", green="+green+", blue="+blue+", alpha="+alpha;
+    }
 }
