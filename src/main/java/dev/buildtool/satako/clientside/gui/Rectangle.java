@@ -55,12 +55,11 @@ public class Rectangle extends AbstractWidget {
             GuiSpriteScaling.NineSlice nineSlice = new GuiSpriteScaling.NineSlice(min, min, new GuiSpriteScaling.NineSlice.Border(0, 0, 0, 0));
             if(fillPercent!=null)
             {
-                guiGraphics.blitNineSlicedSprite(sprite, nineSlice,(int) (getY()+ height-height*fillPercent.getFillPercent()),-90,width,height,(int) (height*fillPercent.getFillPercent()));
+                guiGraphics.blitNineSlicedSprite(sprite, nineSlice,getX(), (int) (getY()+ height-height*fillPercent.getFillPercent()),-90,width,(int) (height*fillPercent.getFillPercent()));
             }
             else
             {
                 guiGraphics.blitNineSlicedSprite(sprite, nineSlice,getX(),getY(),-90,width,height);
-
             }
         }
         else  {

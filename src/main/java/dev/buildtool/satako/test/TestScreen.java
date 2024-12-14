@@ -58,7 +58,7 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
         Rectangle rectangle = new Rectangle(20, getGuiTop(), 50, getYSize(), Constants.ORANGE, () ->0.33f);
         addRenderableWidget(rectangle);
         addTooltip(rectangle,() -> Component.literal("Tooltip"));
-        Rectangle textured=new Rectangle(getGuiLeft()-22,getGuiTop(),20,getYSize(),Constants.BLUE,Functions.getFluidTexture(new FluidStack(Fluids.WATER,1),true));
+        Rectangle textured=new Rectangle(getGuiLeft()-22,getGuiTop(),20,getYSize(),Constants.BLUE,Functions.getFluidTexture(new FluidStack(Fluids.WATER,1),true),() -> 0.33f);
         addRenderableWidget(textured);
     }
 
