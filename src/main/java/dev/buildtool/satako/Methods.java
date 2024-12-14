@@ -180,9 +180,9 @@ public final class Methods {
 
     public static void removeFluid(BlockPos target,Level level,boolean sourceOnly)
     {
-        if(sourceOnly && level.getFluidState(target).isSource())
+        if(sourceOnly && Functions.isLiquidSource(level,target))
             level.setBlock(target, Blocks.AIR.defaultBlockState(),2);
-        else if(!level.getFluidState(target).isEmpty())
+        else if(Functions.isLiquid(level,target))
             level.setBlock(target,Blocks.AIR.defaultBlockState(),2);
     }
 }
