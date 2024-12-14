@@ -1,6 +1,7 @@
 package dev.buildtool.satako.clientside.gui;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.platform.InputConstants;
 import dev.buildtool.satako.Constants;
 import dev.buildtool.satako.IntegerColor;
 import dev.buildtool.satako.clientside.ClientMethods;
@@ -14,6 +15,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.*;
 
@@ -176,6 +178,11 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        if(keyCode== GLFW.GLFW_KEY_ESCAPE)
+        {
+            onClose();
+            return true;
+        }
         if(getFocused()!=null)
             return true;
         return super.keyPressed(keyCode, scanCode, modifiers);
