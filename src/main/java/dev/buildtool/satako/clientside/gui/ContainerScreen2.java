@@ -154,12 +154,12 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
     }
 
     @Override
-    public boolean mouseDragged(double p_97752_, double p_97753_, int p_97754_, double p_97755_, double p_97756_) {
-        if(getFocused()!=null)
+    public boolean mouseDragged(double p_97752_, double p_97753_, int button, double p_97755_, double p_97756_) {
+        if(getFocused()!=null && button==0 && isDragging())
         {
-            return getFocused().mouseDragged(p_97752_, p_97753_, p_97754_, p_97755_, p_97756_);
+            return getFocused().mouseDragged(p_97752_, p_97753_, button, p_97755_, p_97756_);
         }
-        return super.mouseDragged(p_97752_, p_97753_, p_97754_, p_97755_, p_97756_);
+        return super.mouseDragged(p_97752_, p_97753_, button, p_97755_, p_97756_);
     }
 
     public void addPopup(Component message,int duration)
