@@ -46,7 +46,7 @@ public class Rectangle extends AbstractWidget {
             }
         } else if (sprite != null) {
             if(fillPercent!=null)
-                guiGraphics.blit(getX(), (int) (getY()+height-height*fillPercent.getFillPercent()),0,width,height,sprite);
+                guiGraphics.blit(getX(), (int) (getY()+ height-height*fillPercent.getFillPercent()),-90,width,(int) (height*fillPercent.getFillPercent()),sprite);
             else
                 guiGraphics.blit(getX(),getY(),-90,width,height,sprite);
         }
