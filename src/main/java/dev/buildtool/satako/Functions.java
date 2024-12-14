@@ -1,5 +1,7 @@
 package dev.buildtool.satako;
 
+import cpw.mods.modlauncher.Launcher;
+import cpw.mods.modlauncher.api.TypesafeMap;
 import dev.buildtool.satako.clientside.ClientFunctions;
 import io.netty.buffer.Unpooled;
 import net.minecraft.core.BlockPos;
@@ -673,7 +675,7 @@ public final class Functions {
     public static boolean isObfuscatedEnvironment()
     {
         return false;
-//        return !((Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment"));
+        return (Boolean) Launcher.INSTANCE.blackboard().get(TypesafeMap.Key).get();
     }
 
     /**
