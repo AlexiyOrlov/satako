@@ -156,7 +156,8 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
     @Override
     public boolean mouseDragged(double p_97752_, double p_97753_, int p_97754_, double p_97755_, double p_97756_) {
         for (GuiEventListener child : this.children()) {
-            child.mouseDragged(p_97752_, p_97753_, p_97754_, p_97755_, p_97756_);
+            if(child.isFocused())
+                child.mouseDragged(p_97752_, p_97753_, p_97754_, p_97755_, p_97756_);
         }
         return super.mouseDragged(p_97752_, p_97753_, p_97754_, p_97755_, p_97756_);
     }

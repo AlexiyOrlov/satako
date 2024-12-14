@@ -11,6 +11,7 @@ import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.level.material.Fluids;
+import net.neoforged.neoforge.client.gui.widget.ExtendedSlider;
 import net.neoforged.neoforge.fluids.FluidStack;
 
 import java.util.LinkedHashMap;
@@ -60,6 +61,8 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
         addTooltip(rectangle,() -> Component.literal("Tooltip"));
         Rectangle textured=new Rectangle(getGuiLeft()-22,getGuiTop(),20,getYSize(),Constants.BLUE,Functions.getFluidTexture(new FluidStack(Fluids.WATER,1),true),() -> 0.33f);
         addRenderableWidget(textured);
+
+        addRenderableWidget(new ExtendedSlider(getGuiLeft(),getGuiTop()+getYSize(),getXSize(),20,Component.literal(""),Component.literal(""),1,20,1,true));
     }
 
     @Override
