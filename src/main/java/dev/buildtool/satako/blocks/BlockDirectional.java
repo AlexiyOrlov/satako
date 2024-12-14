@@ -54,10 +54,12 @@ public abstract class BlockDirectional extends DirectionalBlock {
         if (!state.is(newState.getBlock()) && state.hasBlockEntity()) {
 
             IItemHandler iItemHandler= worldIn.getCapability(Capabilities.ItemHandler.BLOCK,pos,null);
-            for (int i = 0; i < iItemHandler.getSlots(); i++) {
-                ItemStack stack = iItemHandler.getStackInSlot(i);
-                if (!stack.isEmpty())
-                    Containers.dropItemStack(worldIn, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, stack);
+            if(iItemHandler!=null) {
+                for (int i = 0; i < iItemHandler.getSlots(); i++) {
+                    ItemStack stack = iItemHandler.getStackInSlot(i);
+                    if (!stack.isEmpty())
+                        Containers.dropItemStack(worldIn, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, stack);
+                }
             }
         }
         super.onRemove(state, worldIn, pos, newState, isMoving);
