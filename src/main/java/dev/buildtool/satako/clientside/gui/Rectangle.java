@@ -8,15 +8,15 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.network.chat.Component;
 
 import javax.annotation.Nullable;
+import java.util.Optional;
 
 public class Rectangle extends AbstractWidget {
-    @Nullable
-    private final IntegerColor color;
+    private final Color color;
     private final FillPercent fillPercent;
     private TextureAtlasSprite sprite;
     public Rectangle(int x, int y, int width, int height, @org.jetbrains.annotations.Nullable IntegerColor integerColor, @Nullable FillPercent fillPercent) {
         super(x, y, width, height, Component.literal(""));
-        color=integerColor;
+        color=() -> Optional.ofNullable(integerColor);
         this.fillPercent=fillPercent;
     }
 
@@ -33,7 +33,7 @@ public class Rectangle extends AbstractWidget {
 
     public Rectangle(int x, int y, int width, int height, @Nullable IntegerColor color, TextureAtlasSprite sprite, FillPercent fillPercent) {
         super(x, y, width, height, Component.literal(""));
-        this.color = color;
+        this.color = () -> Optional.ofNullable(color);
         this.fillPercent = fillPercent;
         this.sprite = sprite;
     }
@@ -49,23 +49,19 @@ public class Rectangle extends AbstractWidget {
         guiGraphics.pose().translate(0,0,399);
         if(sprite!=null)
         {
-            if(color!=null)
-                guiGraphics.setColor(color.getRed(),color.getGreen(),color.getBlue(),color.getAlpha());
+            color.getColor().ifPresent(color1 -> guiGraphics.setColor(color1.getRed(),color1.getGreen(),color1.getBlue(),color1.getAlpha()));
             if(fillPercent!=null)
-            {
                 guiGraphics.blit(getX(), (int) (getY()+ height-height*fillPercent.getFillPercent()),-90,width,(int) (height*fillPercent.getFillPercent()),sprite);
-            }
             else
-            {
                 guiGraphics.blit(getX(),getY(),-90,width,height,sprite);
-            }
         }
         else  {
-            if (fillPercent != null) {
-                guiGraphics.fill(getX(), (int) (getY() + height - height * fillPercent.getFillPercent()), getX() + width, getY() + height, color.getIntColor());
-            } else {
-                guiGraphics.fill(getX(), getY(), getX() + width, getY() + height, color.getIntColor());
-            }
+            color.getColor().ifPresent(color1 -> {
+                if(fillPercent!=null)
+                    guiGraphics.fill(getX(), (int) (getY() + height - height * fillPercent.getFillPercent()), getX() + width, getY() + height, color1.getIntColor());
+                else
+                    guiGraphics.fill(getX(), getY(), getX() + width, getY() + height, color1.getIntColor());
+            });
         }
     }
 
@@ -74,6 +70,7 @@ public class Rectangle extends AbstractWidget {
 
     }
 
+    @FunctionalInterface
     public interface FillPercent
     {
         float getFillPercent();
@@ -84,4 +81,9 @@ public class Rectangle extends AbstractWidget {
         return false;
     }
 
+    @FunctionalInterface
+    public interface Color
+    {
+        Optional<IntegerColor> getColor();
+    }
 }

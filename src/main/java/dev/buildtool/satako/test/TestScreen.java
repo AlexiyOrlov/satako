@@ -14,6 +14,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.fluids.FluidStack;
 
 import java.util.LinkedHashMap;
+import java.util.Optional;
 
 public class TestScreen extends ContainerScreen2<TestContainer> {
     public TestScreen(TestContainer container, Inventory playerInventory, Component name) {
@@ -54,7 +55,7 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
 
         addRenderableWidget(new SelectionButton(10, height - 20, Component.literal("Selection button")));
 
-        Rectangle rectangle = new Rectangle(20, getGuiTop(), 50, getYSize(), Constants.ORANGE, () -> 0.33f);
+        Rectangle rectangle = new Rectangle(20, getGuiTop(), 50, getYSize(), Constants.ORANGE, () ->0.33f);
         addRenderableWidget(rectangle);
         addTooltip(rectangle,() -> Component.literal("Tooltip"));
         Rectangle textured=new Rectangle(getGuiLeft()-22,getGuiTop(),20,getYSize(),Constants.BLUE,Functions.getFluidTexture(new FluidStack(Fluids.WATER,1),true));
