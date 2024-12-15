@@ -16,9 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BlockConnectable extends PipeBlock {
-    public BlockConnectable(float thickness, Properties properties) {
-        super(thickness, properties);
-        if(thickness>0.5)
+    public BlockConnectable(float apothem, Properties properties) {
+        super(apothem, properties);
+        if(apothem>0.5)
             throw new IllegalArgumentException("Block is too thick");
         registerDefaultState(defaultBlockState().setValue(NORTH, false).setValue(SOUTH, false).setValue(UP, false).setValue(DOWN, false).setValue(EAST, false).setValue(WEST, false));
     }
