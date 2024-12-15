@@ -4,14 +4,14 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 
 public class SoundWithDuration extends SoundEvent {
-    private final int duration;
+    private final int durationTicks;
     public SoundWithDuration(ResourceLocation sound, int duration) {
         super(sound, 16, false);
-        this.duration=duration;
+        this.durationTicks =duration;
     }
 
-    public int getDuration()
+    public int getDurationTicks()
     {
-        return duration;
+        return durationTicks;
     }
 }
