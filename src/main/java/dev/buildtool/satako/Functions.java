@@ -1064,6 +1064,6 @@ public final class Functions {
 
     public static DeferredHolder<Item,Item> registerStandardBlockItem(DeferredRegister<Item> register,DeferredHolder<Block,Block> block,String name)
     {
-        return register.register(name,() -> new BlockItem(block.get(),new Item.Properties()));
+        return register.register(block.getRegisteredName(),() -> new BlockItem(block.get(),new Item.Properties()));
     }
 }
