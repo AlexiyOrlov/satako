@@ -192,11 +192,24 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
         for (GuiEventListener child : children()) {
             if(child.mouseClicked(mouseX, mouseY, button))
             {
+                if(button==0)
+                    setDragging(true);
                 setFocused(child);
                 return true;
             }
         }
         setFocused(null);
         return super.mouseClicked(mouseX, mouseY, button);
+    }
+
+    @Override
+    public boolean mouseReleased(double mouseX, double mouseY, int button) {
+        if (button == 0 && this.isDragging()) {
+            this.setDragging(false);
+            if (this.getFocused() != null) {
+                return this.getFocused().mouseReleased(mouseX, mouseY, button);
+            }
+        }
+        return super.mouseReleased(mouseX, mouseY, button);
     }
 }
