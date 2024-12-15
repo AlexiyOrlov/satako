@@ -62,6 +62,8 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
         Rectangle textured=new Rectangle(getGuiLeft()-22,getGuiTop(),20,getYSize(),Constants.BLUE,Functions.getFluidTexture(new FluidStack(Fluids.WATER,1),true),() -> 0.33f);
         addRenderableWidget(textured);
 
+        Rectangle horizontal=new Rectangle(getGuiLeft(),getGuiTop()-20,getXSize(),18,Constants.PASTEL,Functions.getFluidTexture(new FluidStack(Fluids.WATER,1),false),() -> 0.33f,false);
+        addRenderableWidget(horizontal);
         addRenderableWidget(new ExtendedSlider(getGuiLeft(),getGuiTop()+getYSize(),getXSize(),20,Component.literal(""),Component.literal(""),1,20,1,true));
     }
 
