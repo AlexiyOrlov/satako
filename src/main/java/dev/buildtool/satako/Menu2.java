@@ -167,4 +167,9 @@ public class Menu2 extends AbstractContainerMenu {
     public boolean stillValid(Player playerIn) {
         return true;
     }
+
+    protected void addPlayerInventory(int y,Inventory inventory)
+    {
+        addPlayerInventory(0,y,inventory);
+    }
 }
