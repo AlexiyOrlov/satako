@@ -15,7 +15,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class CombinedScreen extends ScreenWrapper {
-    protected int showTime=200;
     protected int popupPositionX, popupPositionY;
     protected LinkedHashMap<Component,Integer> showTimes=new LinkedHashMap<>();
     protected InitCallback initCallback;
@@ -141,6 +140,6 @@ public class CombinedScreen extends ScreenWrapper {
 
     public void addPopup(Component message)
     {
-        addPopup(message,showTime);
+        addPopup(message,ContainerScreen2.defaultShowTime);
     }
 }

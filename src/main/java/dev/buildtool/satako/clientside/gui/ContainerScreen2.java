@@ -1,7 +1,6 @@
 package dev.buildtool.satako.clientside.gui;
 
 import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.platform.InputConstants;
 import dev.buildtool.satako.Constants;
 import dev.buildtool.satako.IntegerColor;
 import dev.buildtool.satako.clientside.ClientMethods;
@@ -10,7 +9,6 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.gui.screens.inventory.tooltip.TooltipRenderUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -28,7 +26,7 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
     protected int centerX, centerY;
     protected ArrayList<Page> pages = new ArrayList<>(0);
     protected boolean drawBorders;
-    protected int showTime=200;
+    public static final int defaultShowTime =200;
     protected int popupPositionX, popupPositionY;
     protected LinkedHashMap<Component,Integer> showTimes=new LinkedHashMap<>();
     protected HashMap<AbstractWidget,DynamicTooltip> tooltips=new HashMap<>();
@@ -169,7 +167,7 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
 
     public void addPopup(Component message)
     {
-        addPopup(message,showTime);
+        addPopup(message, defaultShowTime);
     }
 
     public void addTooltip(AbstractWidget target,DynamicTooltip tooltip)
