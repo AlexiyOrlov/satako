@@ -21,7 +21,7 @@ public class ItemHandlerSlot extends SlotItemHandler {
     protected boolean active = true;
     private IntegerColor color = Constants.BLUE;
     private ResourceLocation texture;
-    protected List<Component> tooltip;
+    private List<Component> tooltip;
 
     public ItemHandlerSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition) {
         super(itemHandler, index, xPosition, yPosition);
