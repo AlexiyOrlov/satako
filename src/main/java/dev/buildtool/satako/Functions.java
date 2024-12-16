@@ -43,6 +43,7 @@ import net.neoforged.neoforge.items.ItemHandlerHelper;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
@@ -161,7 +162,7 @@ public final class Functions {
         return false;
     }
 
-//    /**
+    //    /**
 //     * Not sure whether to use this function in {@link Block#neighborChanged(BlockState, Level, BlockPos, Block, BlockPos, boolean)} or {@link Block#tick(BlockState, ServerLevel, BlockPos, RandomSource)}
 //     */
     public static boolean isDirectionalBlockPowered(Direction blockDirection, BlockPos blockPosition, BlockPos pulsePosition, Level world) {
@@ -1092,4 +1093,21 @@ public final class Functions {
         }
         return sidedirections;
     }
+
+    public static String getFriendlyDirectionName(Direction direction)
+    {
+        switch (direction)
+        {
+            case UP -> {
+                return "Top";
+            }
+            case DOWN -> {
+                return "Bottom";
+            }
+            default -> {
+                return StringUtils.capitalize(direction.getName());
+            }
+        }
+    }
+}
 }
