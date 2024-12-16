@@ -14,6 +14,7 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -57,5 +58,10 @@ public class Satako {
         }).getRight());
 
         LOGGER.info("Satako loaded");
+    }
+
+    public void onConfigReload(ModConfigEvent.Reloading modConfigEvent)
+    {
+        System.out.println(modConfigEvent.getConfig());
     }
 }

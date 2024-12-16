@@ -22,4 +22,9 @@ public class ClientFunctions {
         }
         return 0;
     }
+
+    public static int calculateStringWidth(String string)
+    {
+        return Minecraft.getInstance().font.width(string);
+    }
 }

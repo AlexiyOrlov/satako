@@ -17,21 +17,18 @@ public class TextField extends EditBox implements Scrollable, Positionable, Hide
     /**
      * Creates a string field fitted to text
      */
-    public TextField(int X, int Y, Component text) {
-        super(Minecraft.getInstance().font, X, Y, ClientFunctions.calculateStringWidth(text) + 10, 15, text);
-        insertText(text.getString());
+    public TextField(int X, int Y, String text) {
+        super(Minecraft.getInstance().font, X, Y, ClientFunctions.calculateStringWidth(text) + 10, 20, Component.empty());
+        insertText(text);
     }
 
-    public TextField(int x, int y, Component string, int width) {
+    public TextField(int x, int y, String string, int width) {
         this(x, y, string);
         setWidth(width);
     }
 
-    /**
-     * Main constructor
-     */
     public TextField(int X, int Y, int width) {
-        super(Minecraft.getInstance().font, X, Y, width, 15, Component.literal(""));
+        super(Minecraft.getInstance().font, X, Y, width, 20, Component.empty());
     }
 
     {
