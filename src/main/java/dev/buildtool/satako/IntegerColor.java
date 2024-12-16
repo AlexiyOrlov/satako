@@ -30,7 +30,7 @@ public class IntegerColor
         this.green=greenByte/255f;
         this.blue=blueByte/255f;
         alpha=1;
-        color=FastColor.ARGB32.color(redByte,greenByte,blueByte,255);
+        color=FastColor.ARGB32.color(255,redByte,greenByte,blueByte);
     }
 
     /**
