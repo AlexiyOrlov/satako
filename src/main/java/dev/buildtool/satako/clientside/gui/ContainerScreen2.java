@@ -148,7 +148,10 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
 
     @Override
     protected void renderLabels(GuiGraphics guiGraphics, int p1, int p2) {
-        guiGraphics.drawString(font, title, imageWidth / 2 - font.width(title.getString()) / 2, -14, Constants.ORANGE.getIntColor());
+        if(menu.slots.isEmpty())
+            guiGraphics.drawString(font, title, imageWidth / 2 - font.width(title.getString()) / 2, 3, Constants.ORANGE.getIntColor());
+        else
+            guiGraphics.drawString(font, title, imageWidth / 2 - font.width(title.getString()) / 2, -14, Constants.ORANGE.getIntColor());
     }
 
     @Override
