@@ -24,9 +24,8 @@ public class Constants
     @Deprecated
     public static final UUID NULL_UUID = new UUID(0, 0);
     public static final IntegerColor BLUE = new IntegerColor(0xff008AE6);
-    public static final IntegerColor GREEN = new IntegerColor(0xff43CD80);
-    public static final IntegerColor PASTEL = new IntegerColor(0xffFF8E65);
-    public static final IntegerColor ORANGE = new IntegerColor(0xffE35F3B);
+    public static final IntegerColor GREEN = new IntegerColor(0xff07913c);
+    public static final IntegerColor ORANGE = new IntegerColor(0xffcc7a22);
     public static final IntegerColor BLACK=new IntegerColor(0xff000000);
     public static final IntegerColor WHITE=new IntegerColor(0xffffffff);
     public static final IntegerColor GRAY=new IntegerColor(0xff565656);
