@@ -1110,4 +1110,3 @@ public final class Functions {
         }
     }
 }
-}
