@@ -126,11 +126,4 @@ public class Label extends BetterButton implements Scrollable, Hideable {
             return super.getY()-5;
         return super.getY();
     }
-
-    @Override
-    public int getHeight() {
-        if(backgroundColor!=null)
-            return getElementHeight()+5;
-        return super.getHeight();
-    }
 }
