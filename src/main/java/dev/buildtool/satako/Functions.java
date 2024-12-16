@@ -1066,4 +1066,9 @@ public final class Functions {
     {
         return register.register(name,() -> new BlockItem(block.get(),new Item.Properties()));
     }
+
+    public FluidStack getCachedFluidStack(Fluid fluid)
+    {
+        return Constants.FLUID_STACK_CACHE.computeIfAbsent(fluid,fluid1 -> new FluidStack(fluid1,1));
+    }
 }

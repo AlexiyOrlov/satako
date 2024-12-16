@@ -2,8 +2,10 @@ package dev.buildtool.satako;
 
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.neoforge.common.NeoForgeMod;
+import net.minecraft.world.level.material.Fluid;
+import net.neoforged.neoforge.fluids.FluidStack;
 
+import java.util.HashMap;
 import java.util.UUID;
 
 /**
@@ -45,4 +47,5 @@ public class Constants
     public final static int DAY_HALF = DAY_LENGTH / 2;
     public static final ResourceLocation GREY_SLOT_TEXTURE = ResourceLocation.fromNamespaceAndPath(Satako.ID, "textures/grey_slot.png");
     public static final Direction[] HORIZONTALS = new Direction[]{Direction.WEST, Direction.SOUTH, Direction.NORTH, Direction.EAST};
+    public static HashMap<Fluid, FluidStack> FLUID_STACK_CACHE=new HashMap<>();
 }
