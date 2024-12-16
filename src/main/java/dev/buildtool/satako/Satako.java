@@ -59,9 +59,4 @@ public class Satako {
 
         LOGGER.info("Satako loaded");
     }
-
-    public void onConfigReload(ModConfigEvent.Reloading modConfigEvent)
-    {
-        System.out.println(modConfigEvent.getConfig());
-    }
 }
