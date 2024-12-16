@@ -2,6 +2,8 @@ package dev.buildtool.satako;
 
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.neoforge.fluids.FluidStack;
 
@@ -49,4 +51,5 @@ public class Constants
     public static final Direction[] HORIZONTALS = new Direction[]{Direction.WEST, Direction.SOUTH, Direction.NORTH, Direction.EAST};
     public static HashMap<Fluid, FluidStack> FLUID_STACK_CACHE=new HashMap<>();
     public static HashMap<Integer,IntegerColor> COLOR_CACHE=new HashMap<>();
+    public static HashMap<Item, ItemStack> ITEM_CACHE=new HashMap<>();
 }

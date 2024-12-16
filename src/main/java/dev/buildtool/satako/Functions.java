@@ -1076,4 +1076,9 @@ public final class Functions {
     {
         return Constants.COLOR_CACHE.computeIfAbsent(ofColor, IntegerColor::new);
     }
+
+    public static ItemStack getCachedStack(Item item)
+    {
+        return Constants.ITEM_CACHE.computeIfAbsent(item,ItemStack::new);
+    }
 }
