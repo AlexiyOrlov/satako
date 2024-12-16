@@ -4,6 +4,7 @@ import dev.buildtool.satako.Constants;
 import dev.buildtool.satako.IntegerColor;
 import dev.ftb.mods.ftblibrary.ui.BaseScreen;
 import dev.ftb.mods.ftblibrary.ui.ScreenWrapper;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.events.GuiEventListener;
@@ -152,5 +153,9 @@ public class CombinedScreen extends ScreenWrapper {
 
     public int getCenterY() {
         return centerY;
+    }
+
+    public Font getFont(){
+        return font;
     }
 }
