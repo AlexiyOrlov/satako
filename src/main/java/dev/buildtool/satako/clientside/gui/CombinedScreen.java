@@ -26,6 +26,9 @@ public class CombinedScreen extends ScreenWrapper {
         super(g);
     }
 
+    /**
+     * @param callback method where you add widgets to the combined screen from the base screen
+     */
     public CombinedScreen(BaseScreen bs,InitCallback callback)
     {
         this(bs);
