@@ -85,7 +85,7 @@ public class Rectangle extends AbstractWidget {
             if(fillPercent!=null)
             {
                 if(vertical)
-                    guiGraphics.blitNineSlicedSprite(sprite, nineSlice,getX(), (int) (getY()+ height-height*fillPercent.getFillPercent()),-90,width,(int) (height*fillPercent.getFillPercent()));
+                    guiGraphics.blitNineSlicedSprite(sprite, nineSlice,getX(), (int) (getY()+ height-height*fillPercent.getFillPercent())-min,-90,width,(int) (height*fillPercent.getFillPercent()));
                 else
                     guiGraphics.blitNineSlicedSprite(sprite,nineSlice,getX(),getY(),-90,(int)(width*fillPercent.getFillPercent()),height);
             }
