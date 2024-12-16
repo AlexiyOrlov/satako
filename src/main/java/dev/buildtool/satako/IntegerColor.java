@@ -60,6 +60,6 @@ public class IntegerColor
 
     @Override
     public String toString() {
-        return "IntegerColor [red="+red+", green="+green+", blue="+blue+", alpha="+alpha;
+        return "IntegerColor [red="+red+", green="+green+", blue="+blue+", alpha="+alpha+"]";
     }
 }
