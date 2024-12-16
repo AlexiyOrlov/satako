@@ -51,22 +51,22 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
         linkedHashMap.put(Component.literal("Third choice"), p_93751_ -> addPopup(Component.literal("Clicked 3d choice")));
         dropDownButton.setChoices(linkedHashMap, 1);
         addRenderableWidget(dropDownButton);
-        addRenderableWidget(new Label(getGuiLeft() + imageWidth, getGuiTop() + 20 * 3, Component.literal("Overlapping label"), this, p_93751_ -> minecraft.player.displayClientMessage(Component.literal("Clicked the label"), false), null));
+        addRenderableWidget(new Label(getGuiLeft() + imageWidth, getGuiTop() + 20 * 3, Component.literal("Overlapping label"), this, p_93751_ -> addPopup(Component.literal("Clicked the label")), null));
         addRenderableWidget(new Button.Builder(Component.literal("Button"), p_93751_ -> addPopup(Component.literal("Clicked the button"))).pos(getGuiLeft() + imageWidth, getGuiTop() + 20 * 4).size(40, 20).build());
 
         addRenderableWidget(new SelectionButton(10, height - 20, Component.literal("Selection button")));
 
         Rectangle rectangle = new Rectangle(20, getGuiTop(), 50, getYSize(), Constants.ORANGE, () ->0.33f);
-        addRenderableWidget(rectangle);
+        addRenderableOnly(rectangle);
         addTooltip(rectangle,() -> Component.literal("Tooltip"));
         Rectangle water=Rectangle.withColoredSprite(getGuiLeft()-22,getGuiTop(),20,getYSize(),Constants.BLUE,Functions.getFluidTexture(new FluidStack(Fluids.WATER,1),true),() -> 0.66f);
-        addRenderableWidget(water);
+        addRenderableOnly(water);
 
         Rectangle horizontal=new Rectangle(getGuiLeft(),getGuiTop()-20,getXSize(),18,Constants.PURPLE,Functions.getFluidTexture(new FluidStack(Fluids.WATER,1),false),() -> 0.33f,false);
-        addRenderableWidget(horizontal);
+        addRenderableOnly(horizontal);
         addRenderableWidget(new ExtendedSlider(getGuiLeft(),getGuiTop()+getYSize(),getXSize(),20,Component.literal(""),Component.literal(""),1,20,1,true));
         Rectangle horizontalColored=Rectangle.horizontal(getGuiLeft(),getGuiTop()-40,getXSize(),18,Constants.GRAY,null,() -> 0.6f);
-        addRenderableWidget(horizontalColored);
+        addRenderableOnly(horizontalColored);
     }
 
     @Override
