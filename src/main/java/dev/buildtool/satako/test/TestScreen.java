@@ -3,6 +3,7 @@ package dev.buildtool.satako.test;
 import com.mojang.blaze3d.vertex.Tesselator;
 import dev.buildtool.satako.Constants;
 import dev.buildtool.satako.Functions;
+import dev.buildtool.satako.IntegerColor;
 import dev.buildtool.satako.clientside.ClientMethods;
 import dev.buildtool.satako.clientside.gui.*;
 import net.minecraft.client.Minecraft;
@@ -67,7 +68,7 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
         Rectangle water=Rectangle.withColoredSprite(getGuiLeft()-22,getGuiTop(),20,getYSize(),Constants.BLUE,Functions.getFluidTexture(new FluidStack(Fluids.WATER,1),true),() -> 0.66f);
         addRenderableOnly(water);
 
-        Rectangle horizontal=new Rectangle(getGuiLeft(),getGuiTop()-20,getXSize(),18,Constants.PURPLE,Functions.getFluidTexture(new FluidStack(Fluids.WATER,1),false),() -> 0.33f,false);
+        Rectangle horizontal=new Rectangle(getGuiLeft(),getGuiTop()-20,getXSize(),18, new IntegerColor( 0, 128, 255),Functions.getFluidTexture(new FluidStack(Fluids.WATER,1),false),() -> 0.33f,false);
         addRenderableOnly(horizontal);
         addRenderableWidget(new ExtendedSlider(getGuiLeft(),getGuiTop()+getYSize(),getXSize(),20,Component.literal(""),Component.literal(""),1,20,1,true));
         Rectangle horizontalColored=Rectangle.horizontal(getGuiLeft(),getGuiTop()-40,getXSize(),18,Constants.GRAY,null,() -> 0.6f);

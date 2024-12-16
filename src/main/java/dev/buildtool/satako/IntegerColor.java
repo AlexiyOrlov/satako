@@ -7,7 +7,7 @@ import net.minecraft.util.FastColor;
  */
 public class IntegerColor
 {
-    private final int color;
+    private int color;
     private final float red;
     private final float green;
     private final float blue;
@@ -22,6 +22,15 @@ public class IntegerColor
         green = (float) FastColor.ARGB32.green(color) /255;
         blue = (float) FastColor.ARGB32.blue(color) /255;
         alpha = (float) FastColor.ARGB32.alpha(color) /255;
+    }
+
+    public IntegerColor(int redByte,int greenByte,int blueByte)
+    {
+        this.red=redByte/255f;
+        this.green=greenByte/255f;
+        this.blue=blueByte/255f;
+        alpha=1;
+        color=FastColor.ARGB32.color(redByte,greenByte,blueByte,255);
     }
 
     /**
