@@ -1,7 +1,5 @@
 package dev.buildtool.satako;
 
-import cpw.mods.modlauncher.Launcher;
-import cpw.mods.modlauncher.api.TypesafeMap;
 import dev.buildtool.satako.clientside.ClientFunctions;
 import io.netty.buffer.Unpooled;
 import net.minecraft.client.Minecraft;
@@ -748,7 +746,7 @@ public final class Functions {
      *
      * @return extracted ItemStack
      */
-    public static ItemStack tryExtractItems(IItemHandler itemHandler, ItemStack itemStack, boolean simulate)
+    public static ItemStack extractItems(IItemHandler itemHandler, ItemStack itemStack, boolean simulate)
     {
         for (int slot = 0; slot < itemHandler.getSlots(); slot++)
         {
@@ -790,7 +788,7 @@ public final class Functions {
      * @param itemStack will be copied
      * @return true if fully inserted, false if not
      */
-    public static boolean tryInsertItem(IItemHandler iItemHandler, ItemStack itemStack)
+    public static boolean insertItem(IItemHandler iItemHandler, ItemStack itemStack)
     {
         ItemStack out = ItemHandlerHelper.insertItemStacked(iItemHandler, itemStack.copy(), false);
         itemStack.setCount(out.getCount());
