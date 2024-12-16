@@ -502,7 +502,7 @@ public final class Functions {
         return blockPos;
     }
 
-    public static ArrayList<Direction> getSideDirections(Direction of) {
+    public static ArrayList<Direction> getOtherDirections(Direction of) {
         ArrayList<Direction> sidedirections = new ArrayList<>(5);
         switch (of) {
             case DOWN ->
@@ -1078,5 +1078,18 @@ public final class Functions {
     public static ItemStack getCachedStack(Item item)
     {
         return Constants.ITEM_CACHE.computeIfAbsent(item,ItemStack::new);
+    }
+
+    public static ArrayList<Direction> getSideDirections(Direction of) {
+        ArrayList<Direction> sidedirections = new ArrayList<>(5);
+        switch (of) {
+            case DOWN, UP ->
+                    Collections.addAll(sidedirections,  Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH);
+            case EAST,WEST ->
+                    Collections.addAll(sidedirections,  Direction.DOWN, Direction.UP, Direction.SOUTH, Direction.NORTH);
+            case SOUTH,NORTH ->
+                    Collections.addAll(sidedirections, Direction.UP, Direction.DOWN, Direction.EAST, Direction.WEST);
+        }
+        return sidedirections;
     }
 }
