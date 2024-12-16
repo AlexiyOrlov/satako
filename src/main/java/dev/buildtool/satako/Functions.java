@@ -1071,4 +1071,9 @@ public final class Functions {
     {
         return Constants.FLUID_STACK_CACHE.computeIfAbsent(fluid,fluid1 -> new FluidStack(fluid1,1));
     }
+
+    public static IntegerColor getCachedColor(int ofColor)
+    {
+        return Constants.COLOR_CACHE.computeIfAbsent(ofColor, IntegerColor::new);
+    }
 }

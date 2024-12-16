@@ -48,4 +48,5 @@ public class Constants
     public static final ResourceLocation GREY_SLOT_TEXTURE = ResourceLocation.fromNamespaceAndPath(Satako.ID, "textures/grey_slot.png");
     public static final Direction[] HORIZONTALS = new Direction[]{Direction.WEST, Direction.SOUTH, Direction.NORTH, Direction.EAST};
     public static HashMap<Fluid, FluidStack> FLUID_STACK_CACHE=new HashMap<>();
+    public static HashMap<Integer,IntegerColor> COLOR_CACHE=new HashMap<>();
 }
