@@ -36,4 +36,29 @@ public class EnergyStorage2 extends EnergyStorage {
         compoundTag.putInt("Energy",energy);
         return compoundTag;
     }
+
+    public void setEnergy(int energy)
+    {
+        this.energy=energy;
+        onEnergyChanged();
+    }
+
+    @Override
+    public int receiveEnergy(int toReceive, boolean simulate) {
+        if(!simulate)
+            onEnergyChanged();
+        return super.receiveEnergy(toReceive, simulate);
+    }
+
+    @Override
+    public int extractEnergy(int toExtract, boolean simulate) {
+        if(!simulate)
+            onEnergyChanged();
+        return super.extractEnergy(toExtract, simulate);
+    }
+
+    public void onEnergyChanged()
+    {
+
+    }
 }
