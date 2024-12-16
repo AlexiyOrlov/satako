@@ -93,6 +93,7 @@ public class Rectangle extends AbstractWidget {
             {
                 guiGraphics.blitNineSlicedSprite(sprite, nineSlice,getX(),getY(),-90,width,height);
             }
+            color.getColor().ifPresent(color1 -> guiGraphics.setColor(1,1,1,1));
         }
         else  {
             color.getColor().ifPresent(color1 -> {
