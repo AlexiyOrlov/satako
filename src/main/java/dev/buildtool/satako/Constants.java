@@ -52,4 +52,5 @@ public class Constants
     public static HashMap<Fluid, FluidStack> FLUID_STACK_CACHE=new HashMap<>();
     public static HashMap<Integer,IntegerColor> COLOR_CACHE=new HashMap<>();
     public static HashMap<Item, ItemStack> ITEM_CACHE=new HashMap<>();
+    public static int MAX_DISTANCE_AT_WHICH_TEXT_IS_DISTINGUISHABLE=23;
 }
