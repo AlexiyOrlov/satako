@@ -16,8 +16,8 @@ public class DropDownButton extends BetterButton {
     private boolean open;
     private final List<GuiEventListener> overlappingElements = new ArrayList<>();
 
-    public DropDownButton(int x, int y, Screen parent, Component text) {
-        super(x, y, text);
+    public DropDownButton(int x, int y, Screen parent) {
+        super(x, y, Component.empty());
         this.parent = parent;
     }
 

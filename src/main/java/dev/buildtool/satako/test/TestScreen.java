@@ -42,7 +42,7 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
         addRenderableWidget(new Label(getGuiLeft() + imageWidth, getGuiTop(), Component.literal("Clickable"), this, p_93751_ -> addPopup(Component.literal("Clicked first label")), null));
         addRenderableWidget(new Label(getGuiLeft() + imageWidth, getGuiTop() + 20, Component.literal("Clickable with background"),60, p_93751_ -> addPopup(Component.literal("Clicked second label")), Constants.ORANGE));
         LinkedHashMap<Component, Button.OnPress> linkedHashMap = new LinkedHashMap<>();
-        DropDownButton dropDownButton = new DropDownButton(getGuiLeft() + imageWidth, getGuiTop() + 40, this, Component.literal("First choice"));
+        DropDownButton dropDownButton = new DropDownButton(getGuiLeft() + imageWidth, getGuiTop() + 40, this);
         linkedHashMap.put(Component.literal("First choice"), p_93751_ -> {
             addPopup(Component.literal("Clicked 1st choice"));
             addPopup(Component.literal("Notification"));
@@ -51,6 +51,7 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
         linkedHashMap.put(Component.literal("Third choice"), p_93751_ -> addPopup(Component.literal("Clicked 3d choice")));
         dropDownButton.setChoices(linkedHashMap, 1);
         addRenderableWidget(dropDownButton);
+
         Label label = new Label(getGuiLeft() + imageWidth, getGuiTop() + 20 * 3, Component.literal("Overlapping label"), this, p_93751_ -> addPopup(Component.literal("Clicked the label")), Constants.ORANGE);
         addRenderableWidget(label);
         addRenderableWidget(new Button.Builder(Component.literal("Button"), p_93751_ -> addPopup(Component.literal("Clicked the button"))).pos(label.getX()+label.getWidth(), label.getY()).size(40, 20).build());
