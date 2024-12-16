@@ -2,7 +2,9 @@ package dev.buildtool.satako.clientside.gui;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import dev.buildtool.satako.Constants;
+import dev.buildtool.satako.Functions;
 import dev.buildtool.satako.IntegerColor;
+import dev.buildtool.satako.clientside.ClientMethods;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -50,6 +52,7 @@ public class Screen2 extends Screen
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float tick) {
         renderBackground(guiGraphics,mouseX,mouseY,tick);
         super.render(guiGraphics, mouseX, mouseY, tick);
+        guiGraphics.drawCenteredString(font,getTitle(),centerX,3,Constants.WHITE.getIntColor());
         tooltips.forEach((widget, tooltip) -> {
             if(widget.getX()<mouseX && widget.getX()+widget.getWidth()>mouseX && mouseY>widget.getY() && mouseY<widget.getY()+widget.getHeight())
             {

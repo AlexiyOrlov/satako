@@ -5,6 +5,7 @@ import dev.buildtool.satako.Constants;
 import dev.buildtool.satako.Functions;
 import dev.buildtool.satako.clientside.ClientMethods;
 import dev.buildtool.satako.clientside.gui.*;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
@@ -32,7 +33,9 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
         addRenderableWidget(radioButton2);
         new ButtonGroup(radioButton, radioButton2);
 
-        Button button = new Button.Builder(Component.literal("Vanilla button 1"), p_93751_ -> {}).pos(0, 120).size(100, 20).build();
+        Button button = new Button.Builder(Component.literal("Open client screen"), p_93751_ -> {
+            Minecraft.getInstance().setScreen(new TestClientScreen(Component.literal("Name")));
+        }).pos(0, 120).size(100, 20).build();
         button.setTooltip(Tooltip.create(Component.literal("Veeeeeeeeeeeeeryyyyyyyyyyyyyyyy looooooooooooooooooooooooooong tooooooooltiiiiiiiip")));
         addRenderableWidget(button);
         TextField textField=new TextField(button.getX()+button.getWidth(),button.getY(),150);
