@@ -28,7 +28,7 @@ public class Rectangle extends AbstractWidget {
         this.fillPercent=fillPercent;
     }
 
-    public Rectangle(int x, int y, int width, int height, TextureAtlasSprite atlasSprite, @Nullable FillPercent fillPercent)
+    private Rectangle(int x, int y, int width, int height, TextureAtlasSprite atlasSprite, @Nullable FillPercent fillPercent)
     {
         this(x,y,width,height, (IntegerColor) null,fillPercent);
         sprite=atlasSprite;
@@ -39,7 +39,7 @@ public class Rectangle extends AbstractWidget {
         this(x,y,width,height,atlasSprite,null);
     }
 
-    public Rectangle(int x, int y, int width, int height, @Nullable IntegerColor color, TextureAtlasSprite sprite, FillPercent fillPercent) {
+    private Rectangle(int x, int y, int width, int height, @Nullable IntegerColor color, TextureAtlasSprite sprite, FillPercent fillPercent) {
         super(x, y, width, height, Component.literal(""));
         this.color = () -> Optional.ofNullable(color);
         this.fillPercent = fillPercent;
@@ -67,6 +67,11 @@ public class Rectangle extends AbstractWidget {
     public static Rectangle colored(int x,int y,int width,int height,IntegerColor color,FillPercent fillPercent)
     {
         return new Rectangle(x,y,width,height,color,fillPercent);
+    }
+
+    public static Rectangle withColoredSprite(int x,int y,int width,int height,IntegerColor color,TextureAtlasSprite atlasSprite,FillPercent fillPercent)
+    {
+        return new Rectangle(x,height,width,height,color,atlasSprite,fillPercent);
     }
 
     @Override
