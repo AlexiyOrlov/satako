@@ -142,4 +142,12 @@ public class CombinedScreen extends ScreenWrapper {
     {
         addPopup(message,ContainerScreen2.defaultShowTime);
     }
+
+    public int getCenterX() {
+        return centerX;
+    }
+
+    public int getCenterY() {
+        return centerY;
+    }
 }
