@@ -1,5 +1,6 @@
 package dev.buildtool.satako.clientside.gui;
 
+import dev.buildtool.satako.Constants;
 import dev.buildtool.satako.IntegerColor;
 import dev.buildtool.satako.clientside.ClientMethods;
 import net.minecraft.client.Minecraft;
@@ -60,6 +61,7 @@ public class Label extends BetterButton implements Scrollable, Hideable {
                 ClientMethods.drawBackground(guiGraphics,getX(),getYPos(),399,width,height,backgroundColor);
             }
             guiGraphics.pose().translate(0,0,400);
+//            renderScrollingString(guiGraphics,fontRenderer,getMessage(),getXPos(),getYPos(),getX()+getWidth(),getYPos()+getHeight(), Constants.WHITE.getIntColor());
             guiGraphics.drawString(Minecraft.getInstance().font, getMessage(), getXPos(), getYPos()+1, 16777215 | Mth.ceil(this.alpha * 255.0F) << 24);
         }
     }
