@@ -1,6 +1,7 @@
 package dev.buildtool.satako.clientside.gui;
 
 import dev.buildtool.satako.IntegerColor;
+import dev.buildtool.satako.clientside.ClientMethods;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
@@ -11,7 +12,7 @@ import net.minecraft.util.Mth;
 import javax.annotation.Nullable;
 
 /**
- * Label is a string for use in GUIs
+ * Label is a string with optional background for use in GUIs
  */
 public class Label extends BetterButton implements Scrollable, Hideable {
     protected boolean enabled, verticalScroll, horizontalScroll, hidden;
@@ -24,6 +25,11 @@ public class Label extends BetterButton implements Scrollable, Hideable {
         super(x, y, Minecraft.getInstance().font.width(text.getString()), 10, text, null);
         scrollAmount = 20;
         this.backgroundColor=backgroundColor;
+        if(backgroundColor!=null)
+        {
+            setX(x+5);
+            setY(y+5);
+        }
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -32,8 +38,14 @@ public class Label extends BetterButton implements Scrollable, Hideable {
         scrollAmount = 20;
         this.parent = parent;
         this.backgroundColor=backgroundColor;
+        if(backgroundColor!=null)
+        {
+            setX(x+5);
+            setY(y+5);
+        }
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public void onPress() {
         if (onPress != null)
@@ -45,10 +57,10 @@ public class Label extends BetterButton implements Scrollable, Hideable {
         if (!hidden) {
             if(backgroundColor!=null)
             {
-                TooltipRenderUtil.renderTooltipBackground(guiGraphics,getX(),getY(),width,height,399,backgroundColor.getIntColor(),backgroundColor.getIntColor(),backgroundColor.getIntColor(),backgroundColor.getIntColor());
+                ClientMethods.drawBackground(guiGraphics,getX(),getYPos(),399,width,height,backgroundColor);
             }
             guiGraphics.pose().translate(0,0,400);
-            guiGraphics.drawString(Minecraft.getInstance().font, getMessage(), getXPos(), getYPos() + (height - 8) / 2, 16777215 | Mth.ceil(this.alpha * 255.0F) << 24);
+            guiGraphics.drawString(Minecraft.getInstance().font, getMessage(), getXPos(), getYPos()+1, 16777215 | Mth.ceil(this.alpha * 255.0F) << 24);
         }
     }
 
@@ -87,5 +99,19 @@ public class Label extends BetterButton implements Scrollable, Hideable {
     @Override
     public void setHidden(boolean hidden) {
         this.hidden = hidden;
+    }
+
+    @Override
+    public int getWidth() {
+        if(backgroundColor!=null)
+            return getElementWidth()+5;
+        return super.getWidth();
+    }
+
+    @Override
+    public int getY() {
+        if(backgroundColor!=null)
+            return super.getY()-5;
+        return super.getY();
     }
 }

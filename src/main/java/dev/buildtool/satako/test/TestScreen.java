@@ -51,8 +51,9 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
         linkedHashMap.put(Component.literal("Third choice"), p_93751_ -> addPopup(Component.literal("Clicked 3d choice")));
         dropDownButton.setChoices(linkedHashMap, 1);
         addRenderableWidget(dropDownButton);
-        addRenderableWidget(new Label(getGuiLeft() + imageWidth, getGuiTop() + 20 * 3, Component.literal("Overlapping label"), this, p_93751_ -> addPopup(Component.literal("Clicked the label")), null));
-        addRenderableWidget(new Button.Builder(Component.literal("Button"), p_93751_ -> addPopup(Component.literal("Clicked the button"))).pos(getGuiLeft() + imageWidth, getGuiTop() + 20 * 4).size(40, 20).build());
+        Label label = new Label(getGuiLeft() + imageWidth, getGuiTop() + 20 * 3, Component.literal("Overlapping label"), this, p_93751_ -> addPopup(Component.literal("Clicked the label")), Constants.ORANGE);
+        addRenderableWidget(label);
+        addRenderableWidget(new Button.Builder(Component.literal("Button"), p_93751_ -> addPopup(Component.literal("Clicked the button"))).pos(label.getX()+label.getWidth(), label.getY()).size(40, 20).build());
 
         addRenderableWidget(new SelectionButton(10, height - 20, Component.literal("Selection button")));
 

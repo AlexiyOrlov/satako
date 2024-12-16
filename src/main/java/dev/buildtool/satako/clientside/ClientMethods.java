@@ -293,4 +293,9 @@ public class ClientMethods {
             vertexConsumer.addVertex(matrix4f, xOffset + x3 + extrusion, yOffset + y3,zOffset+ z2).setColor(red, green, blue, alpha);
         }
     }
+
+    public static void drawBackground(GuiGraphics graphics,int x,int y,int z,int width,int height,IntegerColor color)
+    {
+        TooltipRenderUtil.renderTooltipBackground(graphics,x,y,width,height,z,color.getIntColor(),color.getIntColor(),color.getIntColor(),color.getIntColor());
+    }
 }
