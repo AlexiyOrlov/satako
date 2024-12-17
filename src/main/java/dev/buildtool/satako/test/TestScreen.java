@@ -1,27 +1,21 @@
 package dev.buildtool.satako.test;
 
-import com.mojang.blaze3d.vertex.Tesselator;
 import dev.buildtool.satako.Constants;
 import dev.buildtool.satako.Functions;
 import dev.buildtool.satako.IntegerColor;
-import dev.buildtool.satako.clientside.ClientMethods;
 import dev.buildtool.satako.clientside.gui.*;
 import dev.ftb.mods.ftblibrary.ui.ScreenWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
-import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.neoforge.client.gui.widget.ExtendedSlider;
 import net.neoforged.neoforge.fluids.FluidStack;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Optional;
 
 public class TestScreen extends ContainerScreen2<TestContainer> {
     public TestScreen(TestContainer container, Inventory playerInventory, Component name) {
@@ -39,8 +33,7 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
         new ButtonGroup(radioButton, radioButton2);
 
         Button button = new Button.Builder(Component.literal("Open client screen"), p_93751_ -> {
-            ScreenWrapper wrapper=new ScreenWrapper(new TestClientScreen());
-            Minecraft.getInstance().setScreen(wrapper);
+            Minecraft.getInstance().setScreen(new TestClientScreen(Component.literal("Client screen")));
         }).pos(0, 120).size(100, 20).build();
         button.setTooltip(Tooltip.create(Component.literal("Veeeeeeeeeeeeeryyyyyyyyyyyyyyyy looooooooooooooooooooooooooong tooooooooltiiiiiiiip")));
         addRenderableWidget(button);
