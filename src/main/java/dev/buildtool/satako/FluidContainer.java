@@ -6,7 +6,7 @@ import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import java.util.function.Predicate;
 
 public class FluidContainer extends FluidTank {
-    private boolean canExtract;
+    private final boolean canExtract;
     public FluidContainer(int capacity,boolean canExtract) {
         this(capacity,fluidStack -> true,canExtract);
     }
