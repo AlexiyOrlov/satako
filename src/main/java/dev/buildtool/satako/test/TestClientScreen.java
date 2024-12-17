@@ -1,10 +1,9 @@
 package dev.buildtool.satako.test;
 
 import dev.buildtool.satako.Constants;
-import dev.buildtool.satako.clientside.gui.BetterButton;
-import dev.buildtool.satako.clientside.gui.Label;
-import dev.buildtool.satako.clientside.gui.Screen2;
-import dev.buildtool.satako.clientside.gui.ScrollPane;
+import dev.buildtool.satako.clientside.gui.*;
+import dev.ftb.mods.ftblibrary.icon.Icons;
+import dev.ftb.mods.ftblibrary.ui.BaseScreen;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.network.chat.Component;
@@ -12,20 +11,22 @@ import net.minecraft.network.chat.Component;
 import java.util.AbstractList;
 import java.util.ArrayList;
 
-public class TestClientScreen extends Screen2 {
-    public TestClientScreen(Component title) {
-        super(title);
+public class TestClientScreen extends FTBScreen {
+    private LabelWidget label;
+    private ToggleButtonWidget toggleButtonWidget;
+
+    @Override
+    public void addWidgets() {
+        label = new LabelWidget(this, Constants.BLACK, Component.literal("Label"));
+        add(label);
+        toggleButtonWidget = new ToggleButtonWidget(this, Component.literal("true"), Component.literal("false"), true);
+        add(toggleButtonWidget);
     }
 
     @Override
-    public void init() {
-        super.init();
-        ArrayList<AbstractWidget> labels=new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            Label label1=new Label(3,3+20*i,Component.literal(""+i), Constants.DARK);
-            labels.add(label1);
-        }
-        ScrollPane scrollPane=new ScrollPane(3,3,300,height/2,Component.literal("Scroll area"),labels,this);
-        addRenderableWidget(scrollPane);
+    public void alignWidgets() {
+        super.alignWidgets();
+        label.setPos(centerX/2,centerY);
+        toggleButtonWidget.setPos(centerX/2,centerY+20);
     }
 }

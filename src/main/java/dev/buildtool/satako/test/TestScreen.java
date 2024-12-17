@@ -6,6 +6,7 @@ import dev.buildtool.satako.Functions;
 import dev.buildtool.satako.IntegerColor;
 import dev.buildtool.satako.clientside.ClientMethods;
 import dev.buildtool.satako.clientside.gui.*;
+import dev.ftb.mods.ftblibrary.ui.ScreenWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -38,7 +39,8 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
         new ButtonGroup(radioButton, radioButton2);
 
         Button button = new Button.Builder(Component.literal("Open client screen"), p_93751_ -> {
-            Minecraft.getInstance().setScreen(new TestClientScreen(Component.literal("Name")));
+            ScreenWrapper wrapper=new ScreenWrapper(new TestClientScreen());
+            Minecraft.getInstance().setScreen(wrapper);
         }).pos(0, 120).size(100, 20).build();
         button.setTooltip(Tooltip.create(Component.literal("Veeeeeeeeeeeeeryyyyyyyyyyyyyyyy looooooooooooooooooooooooooong tooooooooltiiiiiiiip")));
         addRenderableWidget(button);
