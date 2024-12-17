@@ -1,5 +1,7 @@
 package dev.buildtool.satako.clientside.gui;
 
+import dev.buildtool.satako.Constants;
+import dev.buildtool.satako.clientside.ClientMethods;
 import dev.ftb.mods.ftblibrary.math.MathUtils;
 import dev.ftb.mods.ftblibrary.ui.Theme;
 import dev.ftb.mods.ftblibrary.ui.WidgetType;
@@ -123,7 +125,7 @@ public class ScrollBar extends AbstractWidget {
     }
 
     public void drawBackground(GuiGraphics graphics, int x, int y, int w, int h) {
-
+        ClientMethods.drawBackground(graphics,x,y,1,w,h, Constants.ORANGE);
     }
 
     public void drawScrollBar(GuiGraphics graphics, int x, int y, int w, int h) {

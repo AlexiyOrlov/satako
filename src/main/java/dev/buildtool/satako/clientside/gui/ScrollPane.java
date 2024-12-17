@@ -1,5 +1,7 @@
 package dev.buildtool.satako.clientside.gui;
 
+import dev.buildtool.satako.Constants;
+import dev.buildtool.satako.clientside.ClientMethods;
 import dev.ftb.mods.ftblibrary.ui.Widget;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -14,26 +16,25 @@ import java.util.List;
 
 import static dev.ftb.mods.ftblibrary.ui.Widget.isShiftKeyDown;
 
-@Deprecated
 public class ScrollPane extends AbstractWidget {
     private double scrollX = 0.0;
     private double scrollY = 0.0;
     private int contentWidth = -1;
     private int contentHeight = -1;
-    private int contentWidthExtra;
-    private int contentHeightExtra;
-    private int offsetX = 0;
-    private int offsetY = 0;
     private List<GuiEventListener> widgets=new ArrayList<>();
     private ScrollBar attachedScrollbar;
     private int scrollStep=20;
-    public ScrollPane(int x, int y, int width, int height, Component message) {
+    public ScrollPane(int x, int y, int width, int height, Component message,List<GuiEventListener> list) {
         super(x, y, width, height, message);
+        widgets=list;
+        attachedScrollbar=new ScrollBar(getX()+width,getY(),16,height,Component.literal("Bar"), 80,ScrollBar.Plane.VERTICAL);
     }
 
     @Override
     protected void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-
+        ClientMethods.drawBackground(guiGraphics,getX(),getY(),0,width,height, Constants.GRAY);
+        if(attachedScrollbar!=null)
+            attachedScrollbar.renderWidget(guiGraphics,mouseX,mouseY,partialTick);
     }
 
     @Override
@@ -74,7 +75,7 @@ public class ScrollPane extends AbstractWidget {
                 }
             }
 
-            this.contentWidth = maxX - minX + this.contentWidthExtra;
+            this.contentWidth = maxX - minX;
         }
 
         return this.contentWidth;
@@ -96,19 +97,13 @@ public class ScrollPane extends AbstractWidget {
                 }
             }
 
-            this.contentHeight = maxY - minY + this.contentHeightExtra;
+            this.contentHeight = maxY - minY ;
         }
 
         return this.contentHeight;
     }
 
     public void setOffset(boolean flag) {
-        if (flag) {
-            this.offsetX = (int)(-this.scrollX);
-            this.offsetY = (int)(-this.scrollY);
-        } else {
-            this.offsetX = this.offsetY = 0;
-        }
 
     }
 
