@@ -86,12 +86,12 @@ public class Commands {
 
 
         //give 2
-        SuggestionProvider<CommandSourceStack> mods = (context, builder) -> SharedSuggestionProvider.suggest(() -> BuiltInRegistries.ITEM.keySet().stream().map(ResourceLocation::getNamespace).collect(Collectors.toSet()).iterator(), builder);
+//        SuggestionProvider<CommandSourceStack> mods = (context, builder) -> SharedSuggestionProvider.suggest(() -> BuiltInRegistries.ITEM.keySet().stream().map(ResourceLocation::getNamespace).collect(Collectors.toSet()).iterator(), builder);
         SuggestionProvider<CommandSourceStack> items = (context, builder) -> SharedSuggestionProvider.suggest(() -> BuiltInRegistries.ITEM.keySet().stream().filter(resourceLocation -> resourceLocation.getNamespace().equals(context.getArgument("mod", String.class))).map(ResourceLocation::getPath).collect(Collectors.toSet()).iterator(), builder);
 
         LiteralArgumentBuilder<CommandSourceStack> give2 = literal("give2").requires(commandSource -> commandSource.hasPermission(2));
         RequiredArgumentBuilder<CommandSourceStack, EntitySelector> targets = argument("targets", EntityArgument.players());
-        RequiredArgumentBuilder<CommandSourceStack, String> itemmod = argument("mod", StringArgumentType.string()).suggests(mods);
+        RequiredArgumentBuilder<CommandSourceStack, String> itemmod = argument("mod", StringArgumentType.string()).suggests(namespaces);
         RequiredArgumentBuilder<CommandSourceStack, String> itemPath = argument("item", StringArgumentType.string()).suggests(items);
         itemPath.executes(context -> giveItems(context, 1));
         RequiredArgumentBuilder<CommandSourceStack, Integer> count = argument("count", IntegerArgumentType.integer(1));
@@ -109,10 +109,10 @@ public class Commands {
         rootCommandNode.addChild(giveNode);
 
         //kill 2
-        SuggestionProvider<CommandSourceStack> mods2=(context, builder) -> SharedSuggestionProvider.suggest(BuiltInRegistries.ENTITY_TYPE.keySet().stream().map(ResourceLocation::getNamespace).collect(Collectors.toSet()), builder);
+//        SuggestionProvider<CommandSourceStack> mods2=(context, builder) -> SharedSuggestionProvider.suggest(BuiltInRegistries.ENTITY_TYPE.keySet().stream().map(ResourceLocation::getNamespace).collect(Collectors.toSet()), builder);
         SuggestionProvider<CommandSourceStack> entities2=(context, builder) -> SharedSuggestionProvider.suggest(BuiltInRegistries.ENTITY_TYPE.keySet().stream().filter(resourceLocation -> resourceLocation.getNamespace().equals(context.getArgument("mod",String.class))).map(ResourceLocation::getPath).collect(Collectors.toSet()),builder);
         LiteralArgumentBuilder<CommandSourceStack> kill2=literal("killall").requires(commandSourceStack -> commandSourceStack.hasPermission(2));
-        RequiredArgumentBuilder<CommandSourceStack,String> entityMod=argument("mod",StringArgumentType.string()).suggests(mods2);
+        RequiredArgumentBuilder<CommandSourceStack,String> entityMod=argument("mod",StringArgumentType.string()).suggests(namespaces);
         RequiredArgumentBuilder<CommandSourceStack,String> entityPath=argument("entity",StringArgumentType.string()).suggests(entities2);
         kill2.executes(commandContext -> {
             ServerLevel serverLevel=commandContext.getSource().getLevel();
@@ -143,10 +143,10 @@ public class Commands {
         modsNode.addChild(entitiesNode);
         rootCommandNode.addChild(killNode);
 
-        SuggestionProvider<CommandSourceStack> mods3=(context, builder) -> SharedSuggestionProvider.suggest(BuiltInRegistries.ENTITY_TYPE.keySet().stream().map(ResourceLocation::getNamespace).collect(Collectors.toSet()), builder);
+//        SuggestionProvider<CommandSourceStack> mods3=(context, builder) -> SharedSuggestionProvider.suggest(BuiltInRegistries.ENTITY_TYPE.keySet().stream().map(ResourceLocation::getNamespace).collect(Collectors.toSet()), builder);
         SuggestionProvider<CommandSourceStack> entities3=(context, builder) -> SharedSuggestionProvider.suggest(BuiltInRegistries.ENTITY_TYPE.keySet().stream().filter(resourceLocation -> resourceLocation.getNamespace().equals(context.getArgument("mod",String.class))).map(ResourceLocation::getPath).collect(Collectors.toSet()),builder);
         LiteralArgumentBuilder<CommandSourceStack> discard=literal("removeall").requires(commandSourceStack -> commandSourceStack.hasPermission(2));
-        RequiredArgumentBuilder<CommandSourceStack,String> entityMod2=argument("mod",StringArgumentType.string()).suggests(mods3);
+        RequiredArgumentBuilder<CommandSourceStack,String> entityMod2=argument("mod",StringArgumentType.string()).suggests(namespaces);
         RequiredArgumentBuilder<CommandSourceStack,String> entityPath2=argument("entity",StringArgumentType.string()).suggests(entities3);
         discard.executes(commandContext -> {
             ServerLevel serverLevel=commandContext.getSource().getLevel();
