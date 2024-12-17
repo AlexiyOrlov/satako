@@ -1,20 +1,12 @@
 package dev.buildtool.satako.clientside.gui;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import dev.buildtool.satako.Constants;
-import dev.buildtool.satako.IntegerColor;
 import dev.ftb.mods.ftblibrary.ui.Widget;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -69,7 +61,7 @@ public class ScrollPane extends AbstractWidget {
         if (this.contentWidth == -1) {
             int minX = Integer.MAX_VALUE;
             int maxX = Integer.MIN_VALUE;
-            Iterator var3 = this.widgets.iterator();
+            Iterator<GuiEventListener> var3 = this.widgets.iterator();
 
             while(var3.hasNext()) {
                 Widget widget = (Widget)var3.next();
@@ -92,10 +84,9 @@ public class ScrollPane extends AbstractWidget {
         if (this.contentHeight == -1) {
             int minY = Integer.MAX_VALUE;
             int maxY = Integer.MIN_VALUE;
-            Iterator var3 = this.widgets.iterator();
 
-            while(var3.hasNext()) {
-                Widget widget = (Widget)var3.next();
+            for (GuiEventListener guiEventListener : this.widgets) {
+                Widget widget = (Widget) guiEventListener;
                 if (widget.posY < minY) {
                     minY = widget.posY;
                 }
