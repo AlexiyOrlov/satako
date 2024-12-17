@@ -1,5 +1,7 @@
 package dev.buildtool.satako;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
@@ -7,6 +9,8 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import com.mojang.brigadier.exceptions.Dynamic2CommandExceptionType;
+import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import com.mojang.brigadier.tree.ArgumentCommandNode;
 import com.mojang.brigadier.tree.LiteralCommandNode;
@@ -15,22 +19,35 @@ import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.commands.arguments.EntityArgument;
+import net.minecraft.commands.arguments.blocks.BlockInput;
+import net.minecraft.commands.arguments.blocks.BlockStateArgument;
+import net.minecraft.commands.arguments.coordinates.BlockPosArgument;
 import net.minecraft.commands.arguments.coordinates.Coordinates;
 import net.minecraft.commands.arguments.coordinates.Vec3Argument;
 import net.minecraft.commands.arguments.selector.EntitySelector;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.commands.FillCommand;
+import net.minecraft.server.commands.SetBlockCommand;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.Clearable;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.pattern.BlockInWorld;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -38,9 +55,13 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.NeoForgeConfig;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
+import org.codehaus.plexus.util.cli.Arg;
 
+import javax.annotation.Nullable;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static net.minecraft.commands.Commands.argument;
@@ -49,6 +70,11 @@ import static net.minecraft.commands.Commands.literal;
 
 @EventBusSubscriber
 public class Commands {
+
+    private static final SimpleCommandExceptionType ERROR_FAILED = new SimpleCommandExceptionType(Component.translatable("commands.fill.failed"));
+    private static final Dynamic2CommandExceptionType ERROR_AREA_TOO_LARGE = new Dynamic2CommandExceptionType((p_304218_, p_304219_) -> Component.translatableEscape("commands.fill.toobig", p_304218_, p_304219_));
+    static final BlockInput HOLLOW_CORE = new BlockInput(Blocks.AIR.defaultBlockState(), Collections.emptySet(), null);
+
 
     @SubscribeEvent
     public static void registerCommands(RegisterCommandsEvent registerCommandsEvent) {
@@ -86,12 +112,12 @@ public class Commands {
 
 
         //give 2
-//        SuggestionProvider<CommandSourceStack> mods = (context, builder) -> SharedSuggestionProvider.suggest(() -> BuiltInRegistries.ITEM.keySet().stream().map(ResourceLocation::getNamespace).collect(Collectors.toSet()).iterator(), builder);
+        SuggestionProvider<CommandSourceStack> mods = (context, builder) -> SharedSuggestionProvider.suggest(() -> BuiltInRegistries.ITEM.keySet().stream().map(ResourceLocation::getNamespace).collect(Collectors.toSet()).iterator(), builder);
         SuggestionProvider<CommandSourceStack> items = (context, builder) -> SharedSuggestionProvider.suggest(() -> BuiltInRegistries.ITEM.keySet().stream().filter(resourceLocation -> resourceLocation.getNamespace().equals(context.getArgument("mod", String.class))).map(ResourceLocation::getPath).collect(Collectors.toSet()).iterator(), builder);
 
         LiteralArgumentBuilder<CommandSourceStack> give2 = literal("give2").requires(commandSource -> commandSource.hasPermission(2));
         RequiredArgumentBuilder<CommandSourceStack, EntitySelector> targets = argument("targets", EntityArgument.players());
-        RequiredArgumentBuilder<CommandSourceStack, String> itemmod = argument("mod", StringArgumentType.string()).suggests(namespaces);
+        RequiredArgumentBuilder<CommandSourceStack, String> itemmod = argument("mod", StringArgumentType.string()).suggests(mods);
         RequiredArgumentBuilder<CommandSourceStack, String> itemPath = argument("item", StringArgumentType.string()).suggests(items);
         itemPath.executes(context -> giveItems(context, 1));
         RequiredArgumentBuilder<CommandSourceStack, Integer> count = argument("count", IntegerArgumentType.integer(1));
@@ -109,10 +135,10 @@ public class Commands {
         rootCommandNode.addChild(giveNode);
 
         //kill 2
-//        SuggestionProvider<CommandSourceStack> mods2=(context, builder) -> SharedSuggestionProvider.suggest(BuiltInRegistries.ENTITY_TYPE.keySet().stream().map(ResourceLocation::getNamespace).collect(Collectors.toSet()), builder);
+        SuggestionProvider<CommandSourceStack> mods2=(context, builder) -> SharedSuggestionProvider.suggest(BuiltInRegistries.ENTITY_TYPE.keySet().stream().map(ResourceLocation::getNamespace).collect(Collectors.toSet()), builder);
         SuggestionProvider<CommandSourceStack> entities2=(context, builder) -> SharedSuggestionProvider.suggest(BuiltInRegistries.ENTITY_TYPE.keySet().stream().filter(resourceLocation -> resourceLocation.getNamespace().equals(context.getArgument("mod",String.class))).map(ResourceLocation::getPath).collect(Collectors.toSet()),builder);
         LiteralArgumentBuilder<CommandSourceStack> kill2=literal("killall").requires(commandSourceStack -> commandSourceStack.hasPermission(2));
-        RequiredArgumentBuilder<CommandSourceStack,String> entityMod=argument("mod",StringArgumentType.string()).suggests(namespaces);
+        RequiredArgumentBuilder<CommandSourceStack,String> entityMod=argument("mod",StringArgumentType.string()).suggests(mods2);
         RequiredArgumentBuilder<CommandSourceStack,String> entityPath=argument("entity",StringArgumentType.string()).suggests(entities2);
         kill2.executes(commandContext -> {
             ServerLevel serverLevel=commandContext.getSource().getLevel();
@@ -143,10 +169,10 @@ public class Commands {
         modsNode.addChild(entitiesNode);
         rootCommandNode.addChild(killNode);
 
-//        SuggestionProvider<CommandSourceStack> mods3=(context, builder) -> SharedSuggestionProvider.suggest(BuiltInRegistries.ENTITY_TYPE.keySet().stream().map(ResourceLocation::getNamespace).collect(Collectors.toSet()), builder);
+        SuggestionProvider<CommandSourceStack> mods3=(context, builder) -> SharedSuggestionProvider.suggest(BuiltInRegistries.ENTITY_TYPE.keySet().stream().map(ResourceLocation::getNamespace).collect(Collectors.toSet()), builder);
         SuggestionProvider<CommandSourceStack> entities3=(context, builder) -> SharedSuggestionProvider.suggest(BuiltInRegistries.ENTITY_TYPE.keySet().stream().filter(resourceLocation -> resourceLocation.getNamespace().equals(context.getArgument("mod",String.class))).map(ResourceLocation::getPath).collect(Collectors.toSet()),builder);
         LiteralArgumentBuilder<CommandSourceStack> discard=literal("removeall").requires(commandSourceStack -> commandSourceStack.hasPermission(2));
-        RequiredArgumentBuilder<CommandSourceStack,String> entityMod2=argument("mod",StringArgumentType.string()).suggests(namespaces);
+        RequiredArgumentBuilder<CommandSourceStack,String> entityMod2=argument("mod",StringArgumentType.string()).suggests(mods3);
         RequiredArgumentBuilder<CommandSourceStack,String> entityPath2=argument("entity",StringArgumentType.string()).suggests(entities3);
         discard.executes(commandContext -> {
             ServerLevel serverLevel=commandContext.getSource().getLevel();
@@ -177,6 +203,30 @@ public class Commands {
         discardNode.addChild(modsNode2);
         modsNode2.addChild(entitiesNode2);
         rootCommandNode.addChild(discardNode);
+
+        SuggestionProvider<CommandSourceStack> mods4=(context, builder) -> SharedSuggestionProvider.suggest(BuiltInRegistries.BLOCK.keySet().stream().map(ResourceLocation::getNamespace).collect(Collectors.toSet()), builder);
+        SuggestionProvider<CommandSourceStack> blocks=(context, builder) -> SharedSuggestionProvider.suggest(BuiltInRegistries.BLOCK.keySet().stream().filter(resourceLocation -> resourceLocation.getNamespace().equals(context.getArgument("mod",String.class))).map(ResourceLocation::getPath).collect(Collectors.toSet()),builder);
+        LiteralArgumentBuilder<CommandSourceStack> command=literal("fill2").requires(commandSourceStack -> commandSourceStack.hasPermission(2));
+        RequiredArgumentBuilder<CommandSourceStack, Coordinates> from=argument("from", BlockPosArgument.blockPos());
+        RequiredArgumentBuilder<CommandSourceStack, Coordinates> to=argument("to", BlockPosArgument.blockPos());
+        RequiredArgumentBuilder<CommandSourceStack,String> argMod=argument("mod",StringArgumentType.string()).suggests(mods4);
+        RequiredArgumentBuilder<CommandSourceStack,String> argBlock=argument("block", StringArgumentType.string()).suggests(blocks);
+        argBlock.executes(context -> fillBlocks(context.getSource(),BoundingBox.fromCorners(
+                BlockPosArgument.getLoadedBlockPos(context, "from"),
+                BlockPosArgument.getLoadedBlockPos(context, "to")
+        ),new BlockInput(BuiltInRegistries.BLOCK.get(ResourceLocation.parse(context.getArgument("block",String.class))).defaultBlockState(), Collections.emptySet(),null), FillCommand.Mode.REPLACE,null));
+
+        LiteralCommandNode<CommandSourceStack> fillNode=command.build();
+        ArgumentCommandNode<CommandSourceStack, Coordinates> fromNode=from.build();
+        ArgumentCommandNode<CommandSourceStack, Coordinates> toNode=to.build();
+        ArgumentCommandNode<CommandSourceStack,String> modsNode3=argMod.build();
+        ArgumentCommandNode<CommandSourceStack,String> blockNode=argBlock.build();
+        fillNode.addChild(fromNode);
+        fromNode.addChild(toNode);
+        toNode.addChild(modsNode3);
+        modsNode3.addChild(blockNode);
+        rootCommandNode.addChild(fillNode);
+
     }
 
     private static int giveItems(CommandContext<CommandSourceStack> context, int amount) throws CommandSyntaxException {
@@ -229,4 +279,46 @@ public class Commands {
         return 1;
     }
 
+    private static int fillBlocks(
+            CommandSourceStack source, BoundingBox area, BlockInput newBlock, FillCommand.Mode mode, @Nullable Predicate<BlockInWorld> replacingPredicate
+    ) throws CommandSyntaxException {
+        int i = area.getXSpan() * area.getYSpan() * area.getZSpan();
+        int j = source.getLevel().getGameRules().getInt(GameRules.RULE_COMMAND_MODIFICATION_BLOCK_LIMIT);
+        if (i > j) {
+            throw ERROR_AREA_TOO_LARGE.create(j, i);
+        } else {
+            List<BlockPos> list = Lists.newArrayList();
+            ServerLevel serverlevel = source.getLevel();
+            int k = 0;
+
+            for (BlockPos blockpos : BlockPos.betweenClosed(
+                    area.minX(), area.minY(), area.minZ(), area.maxX(), area.maxY(), area.maxZ()
+            )) {
+                if (replacingPredicate == null || replacingPredicate.test(new BlockInWorld(serverlevel, blockpos, true))) {
+                    BlockInput blockinput = mode.filter.filter(area, blockpos, newBlock, serverlevel);
+                    if (blockinput != null) {
+                        BlockEntity blockentity = serverlevel.getBlockEntity(blockpos);
+                        Clearable.tryClear(blockentity);
+                        if (blockinput.place(serverlevel, blockpos, 2)) {
+                            list.add(blockpos.immutable());
+                            k++;
+                        }
+                    }
+                }
+            }
+
+            for (BlockPos blockpos1 : list) {
+                Block block = serverlevel.getBlockState(blockpos1).getBlock();
+                serverlevel.blockUpdated(blockpos1, block);
+            }
+
+            if (k == 0) {
+                throw ERROR_FAILED.create();
+            } else {
+                int l = k;
+                source.sendSuccess(() -> Component.translatable("commands.fill.success", l), true);
+                return k;
+            }
+        }
+    }
 }
