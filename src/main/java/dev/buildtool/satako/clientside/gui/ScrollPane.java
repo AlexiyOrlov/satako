@@ -2,11 +2,16 @@ package dev.buildtool.satako.clientside.gui;
 
 import dev.buildtool.satako.Constants;
 import dev.buildtool.satako.clientside.ClientMethods;
+import dev.ftb.mods.ftblibrary.icon.Color4I;
+import dev.ftb.mods.ftblibrary.ui.GuiHelper;
+import dev.ftb.mods.ftblibrary.ui.Theme;
 import dev.ftb.mods.ftblibrary.ui.Widget;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 
@@ -21,20 +26,31 @@ public class ScrollPane extends AbstractWidget {
     private double scrollY = 0.0;
     private int contentWidth = -1;
     private int contentHeight = -1;
-    private List<GuiEventListener> widgets=new ArrayList<>();
+    private int offsetX = 0;
+    private int offsetY = 0;
+    private List<AbstractWidget> widgets=new ArrayList<>();
     private ScrollBar attachedScrollbar;
     private int scrollStep=20;
-    public ScrollPane(int x, int y, int width, int height, Component message,List<GuiEventListener> list) {
+    private Screen parent;
+    public ScrollPane(int x, int y, int width, int height, Component message,List<AbstractWidget> list,Screen parent) {
         super(x, y, width, height, message);
         widgets=list;
-        attachedScrollbar=new ScrollBar(getX()+width,getY(),16,height,Component.literal("Bar"), 80,ScrollBar.Plane.VERTICAL);
+        this.parent=parent;
+        attachedScrollbar=new ScrollBar(getX()+width,getY(),16,height,Component.literal("Bar"), 80,ScrollBar.Plane.VERTICAL,this);
     }
 
     @Override
     protected void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         ClientMethods.drawBackground(guiGraphics,getX(),getY(),0,width,height, Constants.GRAY);
-        if(attachedScrollbar!=null)
-            attachedScrollbar.renderWidget(guiGraphics,mouseX,mouseY,partialTick);
+        this.setOffset(true);
+        this.widgets.forEach((widget) -> {
+            this.drawWidget(guiGraphics, widget, widget.getX()+offsetX,widget.getY()+offsetY,partialTick);
+        });
+        this.widgets.stream().forEach((widget) -> {
+            this.drawWidget(guiGraphics, widget, widget.getX() + this.offsetX, widget.getY() + this.offsetY,partialTick);
+        });
+        this.setOffset(false);
+        attachedScrollbar.renderWidget(guiGraphics,mouseX,mouseY,partialTick);
     }
 
     @Override
@@ -58,20 +74,34 @@ public class ScrollPane extends AbstractWidget {
         this.scrollY = scrollY;
     }
 
+    @Override
+    public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY) {
+        this.setOffset(true);
+
+        for(int i = this.widgets.size() - 1; i >= 0; --i) {
+            AbstractWidget widget = this.widgets.get(i);
+            if (widget.isActive() && widget.mouseDragged(mouseX,mouseY,button, dragX, dragY)) {
+                this.setOffset(false);
+                return true;
+            }
+        }
+
+        this.setOffset(false);
+        return false;
+    }
+
     public int getContentWidth() {
         if (this.contentWidth == -1) {
             int minX = Integer.MAX_VALUE;
             int maxX = Integer.MIN_VALUE;
-            Iterator<GuiEventListener> var3 = this.widgets.iterator();
 
-            while(var3.hasNext()) {
-                Widget widget = (Widget)var3.next();
-                if (widget.posX < minX) {
-                    minX = widget.posX;
+            for (AbstractWidget widget : this.widgets) {
+                if (widget.getX() < minX) {
+                    minX = widget.getX();
                 }
 
-                if (widget.posX + widget.width > maxX) {
-                    maxX = widget.posX + widget.width;
+                if (widget.getX() + widget.getWidth() > maxX) {
+                    maxX = widget.getX() + widget.getWidth();
                 }
             }
 
@@ -103,17 +133,13 @@ public class ScrollPane extends AbstractWidget {
         return this.contentHeight;
     }
 
-    public void setOffset(boolean flag) {
-
-    }
-
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
         this.setOffset(true);
 
         for(int i = this.widgets.size() - 1; i >= 0; --i) {
-            Widget widget = (Widget)this.widgets.get(i);
-            if (widget.isEnabled() && widget.mouseScrolled(scrollY)) {
+            AbstractWidget widget = this.widgets.get(i);
+            if (widget.isActive() && widget.mouseScrolled(mouseX,mouseY,scrollX,scrollY)) {
                 this.setOffset(false);
                 return true;
             }
@@ -164,5 +190,34 @@ public class ScrollPane extends AbstractWidget {
 
             return this.getScrollX() != sx || this.getScrollY() != sy;
         }
+    }
+
+    @Override
+    public void playDownSound(SoundManager handler) {
+
+    }
+
+    public void setOffset(boolean flag) {
+        if (flag) {
+            this.offsetX = (int)(-this.scrollX);
+            this.offsetY = (int)(-this.scrollY);
+        } else {
+            this.offsetX = this.offsetY = 0;
+        }
+
+    }
+
+    public void drawWidget(GuiGraphics graphics, AbstractWidget widget, int x, int y, float tick) {
+        int wx = widget.getX();
+        int wy = widget.getY();
+        int ww = widget.getWidth();
+        int wh = widget.getHeight();
+        widget.render(graphics, x,y,tick);
+        if (Theme.renderDebugBoxes) {
+            Color4I col = Color4I.rgb(Color4I.HSBtoRGB((float)(widget.hashCode() & 255) / 255.0F, 1.0F, 1.0F));
+            GuiHelper.drawHollowRect(graphics, wx, wy, ww, wh, col.withAlpha(150), false);
+            col.withAlpha(30).draw(graphics, wx + 1, wy + 1, ww - 2, wh - 2);
+        }
+
     }
 }

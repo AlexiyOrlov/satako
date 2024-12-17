@@ -4,12 +4,14 @@ import dev.buildtool.satako.Constants;
 import dev.buildtool.satako.clientside.ClientMethods;
 import dev.ftb.mods.ftblibrary.math.MathUtils;
 import dev.ftb.mods.ftblibrary.ui.Theme;
+import dev.ftb.mods.ftblibrary.ui.Widget;
 import dev.ftb.mods.ftblibrary.ui.WidgetType;
 import dev.ftb.mods.ftblibrary.ui.input.MouseButton;
 import dev.ftb.mods.ftblibrary.util.TooltipList;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.contents.PlainTextContents;
@@ -28,11 +30,12 @@ public class ScrollBar extends AbstractWidget {
     private boolean canAlwaysScroll = false;
     private boolean canAlwaysScrollPlane = true;
     protected final Plane plane;
-
-    public ScrollBar(int x, int y, int width, int height, Component message,int size,Plane plane) {
+    protected ScrollPane panel;
+    public ScrollBar(int x, int y, int width, int height, Component message,int size,Plane plane,ScrollPane scrollPane) {
         super(x, y, width, height, message);
         scrollBarSize=size;
         this.plane=plane;
+        this.panel=scrollPane;
     }
 
     @Override
@@ -134,7 +137,16 @@ public class ScrollBar extends AbstractWidget {
     }
 
     public void onMoved() {
+        double value = this.getMaxValue() <= 0.0 ? 0.0 : this.getValue();
+        if (this.plane.isVertical) {
+            this.panel.setScrollY(value);
+        } else {
+            this.panel.setScrollX(value);
+        }
+
     }
+
+
 
     public boolean canMouseScrollPlane() {
         return this.canAlwaysScrollPlane || isShiftKeyDown() != this.plane.isVertical;
@@ -182,8 +194,8 @@ public class ScrollBar extends AbstractWidget {
 
     public  static class PanelScrollBar extends ScrollBar{
 
-        public PanelScrollBar(int x, int y, int width, int height, Component message, int size, Plane plane) {
-            super(x, y, width, height, message, size, plane);
+        public PanelScrollBar(int x, int y, int width, int height, Component message, int size, Plane plane,ScrollPane scrollPane) {
+            super(x, y, width, height, message, size, plane,scrollPane);
         }
     }
 }
