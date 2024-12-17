@@ -81,6 +81,7 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float p_render_3_) {
         renderBackground(guiGraphics,mouseX,mouseY,p_render_3_);
         super.render(guiGraphics, mouseX, mouseY, p_render_3_);
+        //pose stack is translated to 'leftPos' and 'topPos'
         renderTooltip(guiGraphics, mouseX, mouseY);
 
         List<Slot> slots=getSlots();
