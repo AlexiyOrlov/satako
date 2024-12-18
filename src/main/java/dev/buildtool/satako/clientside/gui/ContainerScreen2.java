@@ -27,7 +27,7 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
     protected int centerX, centerY;
     protected ArrayList<Page> pages = new ArrayList<>(0);
     protected boolean drawBorders;
-    protected int showTime=200;
+    public static int DEFAULT_POPUP_SHOW_TIME=200;
     protected int popupPositionX, popupPositionY;
     protected LinkedHashMap<Component,Integer> showTimes=new LinkedHashMap<>();
     protected HashMap<AbstractWidget,DynamicTooltip> tooltips=new HashMap<>();
@@ -160,7 +160,7 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
 
     public void addPopup(Component message)
     {
-        addPopup(message,showTime);
+        addPopup(message,DEFAULT_POPUP_SHOW_TIME);
     }
 
     @Override

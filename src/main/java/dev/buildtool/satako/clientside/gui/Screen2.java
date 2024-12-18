@@ -18,7 +18,6 @@ import java.util.Map;
  */
 public class Screen2 extends Screen
 {
-    protected int showTime=200;
     protected int popupPositionX, popupPositionY;
     protected LinkedHashMap<Component,Integer> showTimes=new LinkedHashMap<>();
     protected HashMap<AbstractWidget,DynamicTooltip> tooltips=new HashMap<>();
@@ -127,6 +126,6 @@ public class Screen2 extends Screen
 
     public void addPopup(Component message)
     {
-        addPopup(message,showTime);
+        addPopup(message,ContainerScreen2.DEFAULT_POPUP_SHOW_TIME);
     }
 }
