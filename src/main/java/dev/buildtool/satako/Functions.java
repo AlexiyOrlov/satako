@@ -2,6 +2,7 @@ package dev.buildtool.satako;
 
 import dev.buildtool.satako.clientside.ClientFunctions;
 import io.netty.buffer.Unpooled;
+import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -340,7 +341,7 @@ public final class Functions {
      * @return whether UUID was valid
      */
     public static boolean writeUUID(CompoundTag nbtTagCompound, String key, UUID uuid) {
-        if (uuid != null && !uuid.equals(Constants.NULL_UUID)) {
+        if (uuid != null && !uuid.equals(Util.NIL_UUID)) {
             nbtTagCompound.putUUID(key, uuid);
             return true;
         }
@@ -349,7 +350,7 @@ public final class Functions {
 
     public static UUID readUUID(CompoundTag nbtTagCompound, String key) {
         UUID uuid = nbtTagCompound.getUUID(key);
-        return uuid.equals(Constants.NULL_UUID) ? null : uuid;
+        return uuid.equals(Util.NIL_UUID) ? null : uuid;
     }
 
     /**

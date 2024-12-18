@@ -23,8 +23,6 @@ public class Constants
      * Around the player
      */
     public static final int LOADED_CHUNK_DEFAULT_RADIUS = 10;
-    @Deprecated
-    public static final UUID NULL_UUID = new UUID(0, 0);
     public static final IntegerColor BLUE = new IntegerColor(0xff008AE6);
     public static final IntegerColor GREEN = new IntegerColor(0xff07913c);
     public static final IntegerColor ORANGE = new IntegerColor(0xffcc7a22);
