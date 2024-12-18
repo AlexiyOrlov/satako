@@ -40,8 +40,8 @@ public class SelectionButton extends BetterButton {
         if (this.visible) {
             Minecraft mc = Minecraft.getInstance();
             int k = !this.active ? 0 : (this.isHoveredOrFocused() ? 2 : 1);
-            this.isHovered = mouseX >= this.getX() && mouseY >= this.getY() && mouseX < this.getX() + this.width && mouseY < this.getY() + this.height;
-            ScreenUtils.blitWithBorder(mStack, WIDGETS_LOCATION, this.getX(), this.getY(), 0, 46 + k * 20, this.width, this.height, 200, 20, 2, 3, 2, 2, 0);
+            this.isHovered = mouseX >= this.getXPos() && mouseY >= this.getYPos() && mouseX < this.getXPos() + this.width && mouseY < this.getYPos() + this.height;
+            ScreenUtils.blitWithBorder(mStack, WIDGETS_LOCATION, this.getXPos(), this.getYPos(), 0, 46 + k * 20, this.width, this.height, 200, 20, 2, 3, 2, 2, 0);
 
             Component buttonText = this.getMessage();
             int strWidth = mc.font.width(buttonText);
@@ -51,7 +51,7 @@ public class SelectionButton extends BetterButton {
                 buttonText = Component.literal(mc.font.substrByWidth(buttonText, width - 6 - ellipsisWidth).getString() + "...");
             }
             int color=getFGColor();
-            drawCenteredString(mStack, mc.font, buttonText, this.getX() + this.width / 2, this.getY() + (this.height - 8) / 2, color);
+            drawCenteredString(mStack, mc.font, buttonText, this.getXPos() + this.width / 2, this.getYPos() + (this.height - 8) / 2, color);
         }
     }
 }

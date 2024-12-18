@@ -45,7 +45,7 @@ public class RadioButton extends BetterButton
             this.isHovered = selected;
             int k = !this.active ? 0 : (this.isHoveredOrFocused() ? 2 : 1);
 
-            ScreenUtils.blitWithBorder(matrixStack, WIDGETS_LOCATION, this.getX(), this.getY(), 0, 46 + k * 20, this.width, this.height, 200, 20, 2, 3, 2, 2, 0);
+            ScreenUtils.blitWithBorder(matrixStack, WIDGETS_LOCATION, this.getXPos(), this.getYPos(), 0, 46 + k * 20, this.width, this.height, 200, 20, 2, 3, 2, 2, 0);
             int color = getFGColor();
 
             if (this.isHovered && this.packedFGColor == AbstractWidget.UNSET_FG_COLOR)
@@ -53,7 +53,7 @@ public class RadioButton extends BetterButton
 
             Component buttonText = this.getMessage();
 
-            drawCenteredString(matrixStack, mc.font, buttonText, this.getX() + this.width / 2, this.getY() + (this.height - 8) / 2, color);
+            drawCenteredString(matrixStack, mc.font, buttonText, this.getXPos() + this.width / 2, this.getYPos() + (this.height - 8) / 2, color);
         }
     }
 

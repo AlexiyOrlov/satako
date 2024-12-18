@@ -5,7 +5,7 @@ plugins {
     id 'net.minecraftforge.gradle' version '[6.0,6.2)'
 }
 
-project.version = '6.2.0-1.19.4'
+project.version = '6.2.1-1.19.4'
 group = project.property('maven_group')
 archivesBaseName = 'Satako'
 

@@ -22,6 +22,15 @@ public class IntegerColor
         alpha = color & 255;
     }
 
+    /**
+     *
+     * @param color without alpha
+     */
+    public IntegerColor(String color)
+    {
+        this(0xff000000+Integer.parseInt(color,16));
+    }
+
     public int getIntColor()
     {
         return color;

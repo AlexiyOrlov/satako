@@ -46,12 +46,12 @@ public class Label extends BetterButton implements Scrollable, Positionable, Hid
         if (!hidden) {
             if (onPress != null) {
                 if (parent != null)
-                    parent.renderTooltip(matrixStack, getMessage(), getX() - 8, getY() + 18);
+                    parent.renderTooltip(matrixStack, getMessage(), getXPos() - 8, getYPos() + 18);
                 else
-                    drawString(matrixStack, Minecraft.getInstance().font, this.getMessage(), this.getX(), this.getY() + (this.height - 8) / 2, 16777215 | Mth.ceil(this.alpha * 255.0F) << 24);
+                    drawString(matrixStack, Minecraft.getInstance().font, this.getMessage(), this.getXPos(), this.getYPos() + (this.height - 8) / 2, 16777215 | Mth.ceil(this.alpha * 255.0F) << 24);
 
             } else
-                drawString(matrixStack, Minecraft.getInstance().font, this.getMessage(), this.getX(), this.getY() + (this.height - 8) / 2, 16777215 | Mth.ceil(this.alpha * 255.0F) << 24);
+                drawString(matrixStack, Minecraft.getInstance().font, this.getMessage(), this.getXPos(), this.getYPos() + (this.height - 8) / 2, 16777215 | Mth.ceil(this.alpha * 255.0F) << 24);
 
         }
     }
@@ -59,9 +59,9 @@ public class Label extends BetterButton implements Scrollable, Positionable, Hid
     @Override
     public void scroll(int amount, boolean vertical) {
         if (vertical && verticalScroll) {
-            setY((int) (getY() + Math.signum(amount) * scrollAmount));
+            setYPos((int) (getYPos() + Math.signum(amount) * scrollAmount));
         } else if (!vertical && horizontalScroll) {
-            setX(getX() + amount);
+            setXPos(getXPos() + amount);
         }
     }
 
