@@ -46,6 +46,7 @@ public class Screen2 extends Screen
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float tick) {
         renderBackground(guiGraphics);
         super.render(guiGraphics, mouseX, mouseY, tick);
+        guiGraphics.drawCenteredString(font,getTitle(),centerX,3,Constants.WHITE.getIntColor());
         int popupY = popupPositionY - (showTimes.keySet().size()-1) * ContainerScreen2.POPUP_SPACING;
         for (Map.Entry<Component, Integer> entry : showTimes.entrySet()) {
             Component component = entry.getKey();
