@@ -38,5 +38,6 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
         addRenderableWidget(button1);
         addRenderableWidget(new Label(getGuiLeft() + imageWidth, getGuiTop(), Component.literal("Clickable 1"), this, p_93751_ -> minecraft.player.displayClientMessage(Component.literal("Clicked first label"), false)));
         addRenderableWidget(new Label(getGuiLeft() + imageWidth, getGuiTop() + 20, Component.literal("Clickable 2"), this, p_93751_ -> minecraft.player.displayClientMessage(Component.literal("Clicked second label"), false)));
+        addRenderableWidget(new SelectionButton(getGuiLeft(),getGuiTop()+getYSize(),Component.literal("Selection button")));
     }
 }

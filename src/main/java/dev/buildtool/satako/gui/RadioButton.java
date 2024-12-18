@@ -43,7 +43,8 @@ public class RadioButton extends BetterButton
         if (this.visible) {
             Minecraft mc = Minecraft.getInstance();
             this.isHovered = selected;
-            int k=getFGColor();
+            int k = !this.active ? 0 : (this.isHoveredOrFocused() ? 2 : 1);
+
             ScreenUtils.blitWithBorder(matrixStack, WIDGETS_LOCATION, this.getX(), this.getY(), 0, 46 + k * 20, this.width, this.height, 200, 20, 2, 3, 2, 2, 0);
             int color = getFGColor();
 
