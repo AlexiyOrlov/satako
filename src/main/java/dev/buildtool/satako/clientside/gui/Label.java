@@ -2,6 +2,7 @@ package dev.buildtool.satako.clientside.gui;
 
 import dev.buildtool.satako.Constants;
 import dev.buildtool.satako.IntegerColor;
+import dev.buildtool.satako.clientside.ClientMethods;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
@@ -56,7 +57,7 @@ public class Label extends BetterButton implements Scrollable, Hideable {
         if (!hidden) {
             if(backgroundColor!=null)
             {
-                TooltipRenderUtil.renderTooltipBackground(guiGraphics,getXPos(),getYPos(),width,height,399,backgroundColor.getIntColor(),backgroundColor.getIntColor(),backgroundColor.getIntColor(),backgroundColor.getIntColor());
+                ClientMethods.drawBackground(guiGraphics,getX(),getYPos(),width,height,backgroundColor);
             }
             guiGraphics.pose().translate(0,0,400);
             renderScrollingString(guiGraphics,fontRenderer,getMessage(),getXPos(),getYPos(),getX()+getWidth()-4,getYPos()+getHeight(), Constants.WHITE.getIntColor());        }
