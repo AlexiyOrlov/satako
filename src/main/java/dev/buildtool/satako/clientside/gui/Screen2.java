@@ -4,10 +4,12 @@ import dev.buildtool.satako.clientside.ClientMethods;
 import dev.buildtool.satako.Constants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -19,6 +21,7 @@ public class Screen2 extends Screen
     protected int showTime=200;
     protected int popupPositionX, popupPositionY;
     protected LinkedHashMap<Component,Integer> showTimes=new LinkedHashMap<>();
+    protected HashMap<AbstractWidget,DynamicTooltip> tooltips=new HashMap<>();
 
     /**
      * GUI's center coordinates
@@ -47,6 +50,12 @@ public class Screen2 extends Screen
         renderBackground(guiGraphics);
         super.render(guiGraphics, mouseX, mouseY, tick);
         guiGraphics.drawCenteredString(font,getTitle(),centerX,3,Constants.WHITE.getIntColor());
+        tooltips.forEach((widget, tooltip) -> {
+            if(widget.getX()<mouseX && widget.getX()+widget.getWidth()>mouseX && mouseY>widget.getY() && mouseY<widget.getY()+widget.getHeight())
+            {
+                guiGraphics.renderTooltip(font,tooltip.getTooltip(),mouseX,mouseY);
+            }
+        });
         int popupY = popupPositionY - (showTimes.keySet().size()-1) * ContainerScreen2.POPUP_SPACING;
         for (Map.Entry<Component, Integer> entry : showTimes.entrySet()) {
             Component component = entry.getKey();
