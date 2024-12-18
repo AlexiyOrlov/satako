@@ -9,9 +9,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.level.material.Fluids;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.client.gui.widget.ExtendedSlider;
 import net.neoforged.neoforge.fluids.FluidStack;
 
@@ -57,7 +60,7 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
         Label label = new Label(getGuiLeft() + imageWidth, getGuiTop() + 20 * 3, Component.literal("Overlapping label"), this, p_93751_ -> addPopup(Component.literal("Clicked the label")), Constants.ORANGE);
         addRenderableWidget(label);
         addRenderableWidget(new Button.Builder(Component.literal("Button"), p_93751_ -> addPopup(Component.literal("Clicked the button"))).pos(label.getX()+label.getWidth(), label.getY()).size(40, 20).build());
-
+        addRenderableOnly(new Button.Builder(Component.literal("Below label"),button1 -> {}).pos(label.getX(),label.getY()+label.getHeight()).build());
         addRenderableWidget(new SelectionButton(10, height - 20, Component.literal("Selection button")));
 
         Rectangle rectangle = new Rectangle(20, getGuiTop(), 50, getYSize(), Constants.ORANGE, () ->0.33f);

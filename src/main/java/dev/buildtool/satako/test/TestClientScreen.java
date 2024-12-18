@@ -1,6 +1,7 @@
 package dev.buildtool.satako.test;
 
 import dev.buildtool.satako.Constants;
+import dev.buildtool.satako.clientside.gui.BetterButton;
 import dev.buildtool.satako.clientside.gui.Label;
 import dev.buildtool.satako.clientside.gui.Screen2;
 import net.minecraft.client.Minecraft;
@@ -10,14 +11,32 @@ import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.ObjectSelectionList;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class TestClientScreen extends Screen2 {
+    public TestClientScreen(Component title, Screen modlist) {
+        super(title);
+        this.modlist = modlist;
+    }
+
+    public static class Factory implements IConfigScreenFactory {
+
+        @Override
+        public Screen createScreen(ModContainer modContainer, Screen screen) {
+            TestClientScreen testClientScreen=new TestClientScreen(Component.literal("Test"),screen);
+            return testClientScreen;
+        }
+    }
+
+    private Screen modlist;
     private static class WidgetList extends AbstractSelectionList<Entry>{
         int rowWidth;
         public WidgetList(Minecraft minecraft, int width, int height,int x, int y, int itemHeight, List<? extends AbstractWidget> entries) {
@@ -66,11 +85,11 @@ public class TestClientScreen extends Screen2 {
     @Override
     public void init() {
         super.init();
-        List<Label> list=new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            list.add(new Label(0,20*i,Component.literal("Label "+i), Constants.DARK));
-        }
-        addRenderableWidget(new WidgetList(minecraft, width / 2, height / 2, 3, 20, 20, list));
+        Label label=new Label(3,3,Component.literal("Label"),Constants.DARK);
+        addRenderableOnly(label);
+        addRenderableOnly(new BetterButton(3,label.getY()+label.getHeight(),Component.literal("Button")));
+
+        addRenderableWidget(new BetterButton(centerX,height-20,Component.literal("Exit"),button -> onClose()));
     }
 
     static class Entry extends ObjectSelectionList.Entry<Entry>
@@ -91,5 +110,11 @@ public class TestClientScreen extends Screen2 {
         public void render(GuiGraphics guiGraphics, int index, int top, int left, int width, int height, int mouseX, int mouseY, boolean hovering, float partialTick) {
             widget.render(guiGraphics,mouseX,mouseY,partialTick);
         }
+    }
+
+    @Override
+    public void onClose() {
+        super.onClose();
+        Minecraft.getInstance().setScreen(modlist);
     }
 }

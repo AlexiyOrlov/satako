@@ -72,7 +72,10 @@ public class Label extends BetterButton implements Scrollable, Hideable {
                 ClientMethods.drawBackground(guiGraphics,getX(),getYPos(),399,width,height,backgroundColor);
             }
             guiGraphics.pose().translate(0,0,400);
-            renderScrollingString(guiGraphics,fontRenderer,getMessage(),getXPos(),getYPos(),getX()+getWidth()-4,getYPos()+getHeight(), Constants.WHITE.getIntColor());
+            if(backgroundColor!=null)
+                renderScrollingString(guiGraphics,fontRenderer,getMessage(),getXPos(),getY(),getX()+getWidth()-4,getY()+getHeight(),Constants.WHITE.getIntColor());
+            else
+                renderScrollingString(guiGraphics,fontRenderer,getMessage(),getXPos(),getY(),getX()+getWidth()-4,getYPos()+getHeight(), Constants.WHITE.getIntColor());
         }
     }
 
@@ -125,5 +128,12 @@ public class Label extends BetterButton implements Scrollable, Hideable {
         if(backgroundColor!=null)
             return super.getY()-5;
         return super.getY();
+    }
+
+    @Override
+    public int getHeight() {
+        if(backgroundColor!=null)
+            return super.getHeight()+10;
+        return super.getHeight();
     }
 }
