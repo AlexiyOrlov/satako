@@ -1,5 +1,6 @@
 package dev.buildtool.satako.clientside.gui;
 
+import dev.buildtool.satako.Constants;
 import dev.buildtool.satako.IntegerColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -24,6 +25,11 @@ public class Label extends BetterButton implements Scrollable, Hideable {
         super(x, y, Minecraft.getInstance().font.width(text.getString()), 10, text, null);
         scrollAmount = 20;
         this.backgroundColor=backgroundColor;
+        if(backgroundColor!=null)
+        {
+            setX(x+5);
+            setY(y+5);
+        }
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -32,6 +38,11 @@ public class Label extends BetterButton implements Scrollable, Hideable {
         scrollAmount = 20;
         this.parent = parent;
         this.backgroundColor=backgroundColor;
+        if(backgroundColor!=null)
+        {
+            setX(x+5);
+            setY(y+5);
+        }
     }
 
     @Override
@@ -48,8 +59,7 @@ public class Label extends BetterButton implements Scrollable, Hideable {
                 TooltipRenderUtil.renderTooltipBackground(guiGraphics,getXPos(),getYPos(),width,height,399,backgroundColor.getIntColor(),backgroundColor.getIntColor(),backgroundColor.getIntColor(),backgroundColor.getIntColor());
             }
             guiGraphics.pose().translate(0,0,400);
-            guiGraphics.drawString(Minecraft.getInstance().font, getMessage(), getXPos(), getYPos() + (height - 8) / 2, 16777215 | Mth.ceil(this.alpha * 255.0F) << 24);
-        }
+            renderScrollingString(guiGraphics,fontRenderer,getMessage(),getXPos(),getYPos(),getX()+getWidth()-4,getYPos()+getHeight(), Constants.WHITE.getIntColor());        }
     }
 
     @Override
