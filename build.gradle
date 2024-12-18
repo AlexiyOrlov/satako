@@ -1,10 +1,11 @@
 plugins {
-    id 'net.minecraftforge.gradle' version '5.1.+'
     id 'eclipse'
+    id 'idea'
     id 'maven-publish'
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
 }
 
-project.version = '6.1.9-1.19.3'
+project.version = '6.2.0-1.19.4'
 group = project.property('maven_group')
 archivesBaseName = 'Satako'
 
@@ -12,7 +13,7 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
-    mappings channel: 'official', version: '1.19.3'
+    mappings channel: 'official', version: '1.19.4'
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')

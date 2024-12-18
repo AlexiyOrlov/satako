@@ -29,14 +29,19 @@ public class SelectionButton extends BetterButton {
         return pressed;
     }
 
+
     @Override
-    public void renderButton(PoseStack mStack, int mouseX, int mouseY, float partial) {
+    public int getFGColor() {
+        return isHovered ? 16777215 : 10526880;
+    }
+
+    @Override
+    public void renderWidget(PoseStack mStack, int mouseX, int mouseY, float partial) {
         if (this.visible) {
             Minecraft mc = Minecraft.getInstance();
             this.isHovered = mouseX >= this.getX() && mouseY >= this.getY() && mouseX < this.getX() + this.width && mouseY < this.getY() + this.height;
-            int k = this.getYImage(this.isHovered);
-            ScreenUtils.blitWithBorder(mStack, WIDGETS_LOCATION, this.getX(), this.getY(), 0, 46 + k * 20, this.width, this.height, 200, 20, 2, 3, 2, 2, this.getBlitOffset());
-            this.renderBg(mStack, mc, mouseX, mouseY);
+            int k = this.getFGColor();
+            ScreenUtils.blitWithBorder(mStack, WIDGETS_LOCATION, this.getX(), this.getY(), 0, 46 + k * 20, this.width, this.height, 200, 20, 2, 3, 2, 2, 0);
 
             Component buttonText = this.getMessage();
             int strWidth = mc.font.width(buttonText);

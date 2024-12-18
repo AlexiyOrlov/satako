@@ -39,13 +39,12 @@ public class RadioButton extends BetterButton
     }
 
     @Override
-    public void renderButton(PoseStack matrixStack, int mouseX, int mouseY, float partial) {
+    public void renderWidget(PoseStack matrixStack, int mouseX, int mouseY, float partial) {
         if (this.visible) {
             Minecraft mc = Minecraft.getInstance();
             this.isHovered = selected;
-            int k = this.getYImage(this.isHovered);
-            ScreenUtils.blitWithBorder(matrixStack, WIDGETS_LOCATION, this.getX(), this.getY(), 0, 46 + k * 20, this.width, this.height, 200, 20, 2, 3, 2, 2, this.getBlitOffset());
-            this.renderBg(matrixStack, mc, mouseX, mouseY);
+            int k=getFGColor();
+            ScreenUtils.blitWithBorder(matrixStack, WIDGETS_LOCATION, this.getX(), this.getY(), 0, 46 + k * 20, this.width, this.height, 200, 20, 2, 3, 2, 2, 0);
             int color = getFGColor();
 
             if (this.isHovered && this.packedFGColor == AbstractWidget.UNSET_FG_COLOR)
@@ -56,6 +55,7 @@ public class RadioButton extends BetterButton
             drawCenteredString(matrixStack, mc.font, buttonText, this.getX() + this.width / 2, this.getY() + (this.height - 8) / 2, color);
         }
     }
+
 
 
     @Override

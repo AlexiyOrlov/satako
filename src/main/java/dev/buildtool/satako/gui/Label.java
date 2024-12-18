@@ -42,7 +42,7 @@ public class Label extends BetterButton implements Scrollable, Positionable, Hid
     }
 
     @Override
-    public void renderButton(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
+    public void renderWidget(PoseStack matrixStack, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         if (!hidden) {
             if (onPress != null) {
                 if (parent != null)

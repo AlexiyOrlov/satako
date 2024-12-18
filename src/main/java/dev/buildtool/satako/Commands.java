@@ -133,7 +133,7 @@ public class Commands {
                         ItemEntity itementity = serverplayerentity.drop(itemstack, false);
                         if (itementity != null) {
                             itementity.setNoPickUpDelay();
-                            itementity.setOwner(serverplayerentity.getUUID());
+                            itementity.setThrower(serverplayerentity.getUUID());
                         }
                     }
                 }
