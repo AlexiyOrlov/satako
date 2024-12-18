@@ -7,6 +7,7 @@ import dev.buildtool.satako.IntegerColor;
 import dev.buildtool.satako.ItemHandlerSlot;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
@@ -29,6 +30,7 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
     protected int showTime=200;
     protected int popupPositionX, popupPositionY;
     protected LinkedHashMap<Component,Integer> showTimes=new LinkedHashMap<>();
+    protected HashMap<AbstractWidget,DynamicTooltip> tooltips=new HashMap<>();
 
     public ContainerScreen2(T container, Inventory playerInventory, Component name, boolean drawBorders_) {
         super(container, playerInventory, name);
@@ -84,7 +86,12 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
                 guiGraphics.renderComponentTooltip(font,((ItemHandlerSlot) slot).tooltip,mouseX,mouseY);
             }
         });
-
+        tooltips.forEach((widget, tooltip) -> {
+            if(widget.getX()<mouseX && widget.getX()+widget.getWidth()>mouseX && mouseY>widget.getY() && mouseY<widget.getY()+widget.getHeight())
+            {
+                guiGraphics.renderTooltip(font,tooltip.getTooltip(),mouseX,mouseY);
+            }
+        });
         int popupY = popupPositionY - (showTimes.keySet().size()-1) * POPUP_SPACING;
         for (Map.Entry<Component, Integer> entry : showTimes.entrySet()) {
             Component component = entry.getKey();
