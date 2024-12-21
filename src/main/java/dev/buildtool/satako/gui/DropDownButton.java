@@ -5,9 +5,11 @@ import dev.buildtool.satako.ClientMethods;
 import dev.buildtool.satako.Constants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.inventory.tooltip.TooltipRenderUtil;
 import net.minecraft.network.chat.Component;
 
 import java.util.*;
@@ -35,9 +37,9 @@ public class DropDownButton extends BetterButton{
                         if (!choices.containsValue(guiEventListener) && guiEventListener != this) {
                             if (guiEventListener instanceof Positionable positionable) {
                                 if (guiEventListener instanceof Hideable hideable) {
-                                    for (int i = 0; i < positionable.getElementWidth(); i++) {
-                                        for (int j = 0; j < positionable.getElementHeight(); j++) {
-                                            if (isInsideArea(positionable.getXPos() + i, positionable.getYPos() + j, radioButton.getXPos(), radioButton.getXPos() + radioButton.getElementWidth(), radioButton.getYPos(), radioButton.getYPos() + radioButton.getElementHeight())) {
+                                    for (int i = 0; i < positionable.getWidth(); i++) {
+                                        for (int j = 0; j < positionable.getWidth(); j++) {
+                                            if (isInsideArea(positionable.getX() + i, positionable.getY() + j, radioButton.getXPos(), radioButton.getXPos() + radioButton.getElementWidth(), radioButton.getYPos(), radioButton.getYPos() + radioButton.getElementHeight())) {
                                                 hideable.setHidden(true);
                                                 overlappingElements.add(guiEventListener);
                                                 break;
@@ -92,7 +94,6 @@ public class DropDownButton extends BetterButton{
         if (open)
         {
             int widest=choices.values().stream().reduce((radioButton, radioButton2) -> radioButton.getElementWidth()>radioButton2.getElementWidth() ? radioButton : radioButton2).get().getElementWidth();
-              (guiGraphics, getXPos(), getYPos()+20,widest,20*choices.size(), Constants.GRAY);
             font.draw(guiGraphics, " :", getXPos() + width, getYPos() + height / 2 - 4, 0xffffffff);
         }
         else

@@ -3,9 +3,11 @@ package dev.buildtool.satako.test;
 import dev.buildtool.satako.gui.*;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.player.Inventory;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public class TestScreen extends ContainerScreen2<TestContainer> {
@@ -38,5 +40,28 @@ public class TestScreen extends ContainerScreen2<TestContainer> {
         addRenderableWidget(new Label(getGuiLeft() + imageWidth, getGuiTop(), Component.literal("Clickable 1"), this, p_93751_ -> minecraft.player.displayClientMessage(Component.literal("Clicked first label"), false)));
         addRenderableWidget(new Label(getGuiLeft() + imageWidth, getGuiTop() + 20, Component.literal("Clickable 2"), this, p_93751_ -> minecraft.player.displayClientMessage(Component.literal("Clicked second label"), false)));
         addRenderableWidget(new SelectionButton(getGuiLeft(),getGuiTop()+getYSize(),Component.literal("Selection button")));
+        DropDownButton dropDownButton=new DropDownButton(getGuiLeft()+getXSize(),getGuiTop()+getYSize(),this,Component.empty());
+        LinkedHashMap<Component, Button.OnPress> choices=new LinkedHashMap<>();
+        MutableComponent first = Component.literal("First");
+        choices.put(first, p_93751_ -> {
+            System.out.println("First");
+            dropDownButton.setMessage(first);
+            dropDownButton.onPress();
+        });
+        MutableComponent second = Component.literal("Second");
+        choices.put(second, p_93751_ -> {
+            System.out.println("Second");
+            dropDownButton.onPress();
+            dropDownButton.setMessage(second);
+        });
+        MutableComponent third = Component.literal("Third");
+        choices.put(third, p_93751_ -> {
+            System.out.println("Third");
+            dropDownButton.onPress();
+            dropDownButton.setMessage(third);
+        });
+        dropDownButton.setChoices(choices,0);
+        addRenderableWidget(dropDownButton);
+
     }
 }
