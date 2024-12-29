@@ -21,6 +21,9 @@ public interface ItemContainer {
 
     boolean isEmpty();
 
+    /**
+     * @return remainder
+     */
     ItemStack insertItem(int slot, ItemStack stack, boolean simulate);
 
     ItemStack extractItem(int slot, int amount, boolean simulate);
