@@ -29,4 +29,8 @@ public interface ItemContainer {
     ItemStack extractItem(int slot, int amount, boolean simulate);
 
     boolean isItemValid(int slot, ItemStack stack);
+
+    default int getSizeLimit(int slot){
+        return 64;
+    }
 }
