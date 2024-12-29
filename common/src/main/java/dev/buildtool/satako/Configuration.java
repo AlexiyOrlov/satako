@@ -52,6 +52,11 @@ public class Configuration {
 
     public int getInt(String name,int defaultValue,int min,int max)
     {
-        return (int) options.compute(name,(s, objects) ->   objects ==null ? defaultValue:Math.clamp(defaultValue,min,max));
+        return (int) options.compute(name,(s, objects) ->   objects ==null ? defaultValue:Math.clamp((int) objects,min,max));
+    }
+
+    public boolean getBoolean(String name,int defaultValue)
+    {
+        return (boolean) options.compute(name,(s, o) -> o==null ?defaultValue :o);
     }
 }
