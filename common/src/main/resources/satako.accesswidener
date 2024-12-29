@@ -1,0 +1,19 @@
+accessWidener v2 named
+
+transitive-accessible method net/minecraft/client/gui/GuiGraphics blitNineSlicedSprite (Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;Lnet/minecraft/client/resources/metadata/gui/GuiSpriteScaling$NineSlice;IIIII)V
+transitive-accessible method net/minecraft/client/gui/screens/Screen addRenderableWidget (Lnet/minecraft/client/gui/components/events/GuiEventListener;)Lnet/minecraft/client/gui/components/events/GuiEventListener;
+transitive-accessible method net/minecraft/client/gui/components/AbstractWidget renderScrollingString (Lnet/minecraft/client/gui/GuiGraphics;Lnet/minecraft/client/gui/Font;Lnet/minecraft/network/chat/Component;IIIII)V
+transitive-accessible field net/minecraft/client/gui/screens/Screen renderables Ljava/util/List;
+transitive-accessible class net/minecraft/server/commands/FillCommand$Mode
+transitive-accessible field net/minecraft/world/level/block/FireBlock burnOdds Lit/unimi/dsi/fastutil/objects/Object2IntMap;
+transitive-accessible method net/minecraft/client/gui/components/AbstractSliderButton getSprite ()Lnet/minecraft/resources/ResourceLocation;
+transitive-accessible method net/minecraft/client/gui/components/AbstractSliderButton getHandleSprite ()Lnet/minecraft/resources/ResourceLocation;
+transitive-accessible method net/minecraft/sounds/SoundEvent <init> (Lnet/minecraft/resources/ResourceLocation;FZ)V
+transitive-accessible field net/minecraft/client/gui/screens/inventory/AbstractContainerScreen leftPos I
+transitive-accessible field net/minecraft/client/gui/screens/inventory/AbstractContainerScreen topPos I
+accessible field net/minecraft/client/gui/screens/inventory/AbstractContainerScreen hoveredSlot Lnet/minecraft/world/inventory/Slot;
+accessible method net/minecraft/sounds/SoundEvent <init> (Lnet/minecraft/resources/ResourceLocation;FZ)V
+accessible class net/minecraft/client/renderer/RenderStateShard$TransparencyStateShard
+accessible class net/minecraft/client/renderer/RenderType$CompositeState
+accessible method net/minecraft/client/renderer/RenderType create (Ljava/lang/String;Lcom/mojang/blaze3d/vertex/VertexFormat;Lcom/mojang/blaze3d/vertex/VertexFormat$Mode;IZZLnet/minecraft/client/renderer/RenderType$CompositeState;)Lnet/minecraft/client/renderer/RenderType$CompositeRenderType;
+accessible field net/minecraft/client/gui/screens/inventory/AbstractContainerScreen leftPos I
