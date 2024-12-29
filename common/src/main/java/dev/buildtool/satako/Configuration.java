@@ -20,21 +20,34 @@ public class Configuration {
     /**
      * @param fileName without extension
      */
-    public Configuration(String fileName) throws IOException {
+    public Configuration(String fileName) {
         Path config = Path.of("config");
         path = Path.of(config.toString(), fileName+".json");
-        if(!Files.exists(config))
-            Files.createDirectory(config);
+        if(!Files.exists(config)) {
+            try {
+                Files.createDirectory(config);
+            } catch (IOException e) {
+                throw new RuntimeException("Couldn't create config directory");
+            }
+        }
         if(!Files.exists(path)) {
-            Files.createFile(path);
+            try {
+                Files.createFile(path);
+            } catch (IOException e) {
+                throw new RuntimeException("Couldn't create "+path);
+            }
         }
     }
 
     /**
      * (Over)writes configuration file
      */
-    public void save() throws IOException {
-        Files.write(path, List.of(gson.toJson(options)));
+    public void save() {
+        try {
+            Files.write(path, List.of(gson.toJson(options)));
+        } catch (IOException e) {
+            throw new RuntimeException("Couldn't save configuration "+path);
+        }
     }
 
     public int getInt(String name,int defaultValue,int min,int max)
