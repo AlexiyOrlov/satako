@@ -21,7 +21,10 @@ public class Configuration {
      * @param fileName without extension
      */
     public Configuration(String fileName) throws IOException {
-        path = Path.of("config", fileName+".json");
+        Path config = Path.of("config");
+        path = Path.of(config.toString(), fileName+".json");
+        if(!Files.exists(config))
+            Files.createDirectory(config);
         if(!Files.exists(path)) {
             Files.createFile(path);
         }
