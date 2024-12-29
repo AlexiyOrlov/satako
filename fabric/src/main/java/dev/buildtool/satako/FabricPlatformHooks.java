@@ -17,11 +17,6 @@ import net.minecraft.world.level.material.Fluid;
 public class FabricPlatformHooks implements IPlatformHooks {
 
     @Override
-    public String getPlatformName() {
-        return "Fabric";
-    }
-
-    @Override
     public boolean isModLoaded(String modId) {
 
         return FabricLoader.getInstance().isModLoaded(modId);

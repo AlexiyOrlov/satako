@@ -27,12 +27,6 @@ import net.neoforged.neoforge.items.IItemHandler;
 public class NeoForgePlatformHooks implements IPlatformHooks {
 
     @Override
-    public String getPlatformName() {
-
-        return "NeoForge";
-    }
-
-    @Override
     public boolean isModLoaded(String modId) {
 
         return ModList.get().isLoaded(modId);
