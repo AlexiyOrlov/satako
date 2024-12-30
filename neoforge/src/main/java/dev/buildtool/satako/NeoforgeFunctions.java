@@ -90,4 +90,20 @@ public class NeoforgeFunctions {
 
         return ItemStack.EMPTY;
     }
+
+    /**
+     * @return slot number or -1 if not found
+     */
+    public static int findItemIn(IItemHandler itemHandler, ItemStack stack) {
+        int size = itemHandler.getSlots();
+        for (int slot = 0; slot < size; slot++)
+        {
+            ItemStack nextstack = itemHandler.getStackInSlot(slot);
+            if (Functions.areItemTypesEqual(nextstack, stack))
+            {
+                return slot;
+            }
+        }
+        return -1;
+    }
 }
