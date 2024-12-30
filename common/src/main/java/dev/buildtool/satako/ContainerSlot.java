@@ -21,6 +21,7 @@ public class ContainerSlot extends BetterSlot{
     @Override
     public void set(ItemStack stack) {
         itemContainer.setItem(getContainerSlot(),stack);
+        setChanged();
     }
 
     @Override
