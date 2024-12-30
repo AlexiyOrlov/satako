@@ -56,4 +56,14 @@ public class FabricPlatformHooks implements IPlatformHooks {
     public MenuType<?> getTestMenu() {
         return null;
     }
+
+    @Override
+    public boolean isFabric() {
+        return true;
+    }
+
+    @Override
+    public boolean isNeoforge() {
+        return false;
+    }
 }

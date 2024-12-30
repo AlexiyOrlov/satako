@@ -98,4 +98,14 @@ public class NeoForgePlatformHooks implements IPlatformHooks {
     public MenuType<?> getTestMenu() {
         return SatakoNeoforge.TEST_MENU.get();
     }
+
+    @Override
+    public boolean isFabric() {
+        return false;
+    }
+
+    @Override
+    public boolean isNeoforge() {
+        return true;
+    }
 }

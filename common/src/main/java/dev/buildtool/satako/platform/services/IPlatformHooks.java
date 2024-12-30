@@ -70,4 +70,7 @@ public interface IPlatformHooks {
     boolean isServer();
 
     MenuType<?> getTestMenu();
+
+    boolean isFabric();
+    boolean isNeoforge();
 }
