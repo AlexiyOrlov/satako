@@ -93,4 +93,10 @@ public class ItemList implements ItemContainer{
     public boolean isItemValid(int slot, ItemStack stack) {
         return true;
     }
+
+    @Override
+    public void setItem(int i, ItemStack stack) {
+        if(isItemValid(i,stack))
+            itemStacks.set(i,stack);
+    }
 }

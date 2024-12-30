@@ -164,6 +164,12 @@ public class ItemHandler extends ItemStackHandler implements ItemContainer {
     }
 
     @Override
+    public void setItem(int i, ItemStack stack) {
+        if(isItemValid(i,stack))
+            stacks.set(i,stack);
+    }
+
+    @Override
     protected void onContentsChanged(int slot) {
         if (owner != null) owner.setChanged();
     }

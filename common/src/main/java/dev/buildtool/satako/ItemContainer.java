@@ -33,4 +33,6 @@ public interface ItemContainer {
     default int getSizeLimit(int slot){
         return 64;
     }
+
+    void setItem(int i,ItemStack stack);
 }
