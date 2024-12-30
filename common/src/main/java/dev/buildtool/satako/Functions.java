@@ -1055,4 +1055,13 @@ public final class Functions {
         }
         return ItemStack.EMPTY;
     }
+
+    /**
+     * Method for casting objects when needed
+     */
+    @SuppressWarnings("unchecked")
+    public static <E>  E cast(Object o)
+    {
+        return (E) o;
+    }
 }
