@@ -21,6 +21,17 @@ public class ItemList implements ItemContainer{
         this.itemStacks.addAll(itemStacks);
     }
 
+    public ItemList(int capacity,List<ItemStack> itemStacks)
+    {
+        this.itemStacks=new ArrayList<>(capacity);
+        for (int i = 0; i < capacity; i++) {
+            if(i<itemStacks.size())
+                this.itemStacks.add(itemStacks.get(i));
+            else
+                this.itemStacks.add(ItemStack.EMPTY);
+        }
+    }
+
     @Override
     public CompoundTag serializeNBT(HolderLookup.Provider provider) {
         CompoundTag nbtCompound = new CompoundTag();
