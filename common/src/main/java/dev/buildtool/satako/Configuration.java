@@ -20,22 +20,14 @@ public class Configuration {
     /**
      * @param fileName without extension
      */
-    public Configuration(String fileName) {
+    public Configuration(String fileName) throws IOException {
         Path config = Path.of("config");
         path = Path.of(config.toString(), fileName+".json");
         if(!Files.exists(config)) {
-            try {
-                Files.createDirectory(config);
-            } catch (IOException e) {
-                throw new RuntimeException("Couldn't create config directory");
-            }
+            Files.createDirectory(config);
         }
         if(!Files.exists(path)) {
-            try {
-                Files.createFile(path);
-            } catch (IOException e) {
-                throw new RuntimeException("Couldn't create "+path);
-            }
+            Files.createFile(path);
         }
     }
 
@@ -55,7 +47,7 @@ public class Configuration {
         return (int) options.compute(name,(s, objects) ->   objects ==null ? defaultValue:Math.clamp((int) objects,min,max));
     }
 
-    public boolean getBoolean(String name,int defaultValue)
+    public boolean getBoolean(String name,boolean defaultValue)
     {
         return (boolean) options.compute(name,(s, o) -> o==null ?defaultValue :o);
     }
