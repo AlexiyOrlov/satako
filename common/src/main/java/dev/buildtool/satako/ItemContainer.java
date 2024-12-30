@@ -5,6 +5,8 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 
+import java.util.List;
+
 public interface ItemContainer {
 
     CompoundTag serializeNBT(HolderLookup.Provider provider);
@@ -15,7 +17,7 @@ public interface ItemContainer {
 
     ItemStack getStackInSlot(int slot);
 
-    NonNullList<ItemStack> getItems();
+    List<ItemStack> getItems();
 
     void setSize(int size);
 

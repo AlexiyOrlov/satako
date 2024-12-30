@@ -1,21 +1,24 @@
 package dev.buildtool.satako;
 
+import com.google.common.collect.Lists;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ItemList implements ItemContainer{
-    protected NonNullList<ItemStack> itemStacks;
+    protected ArrayList<ItemStack> itemStacks;
 
     public ItemList(int size) {
-        itemStacks = NonNullList.withSize(size,ItemStack.EMPTY);
+        itemStacks = new ArrayList<>(size);
     }
 
     public ItemList(NonNullList<ItemStack> itemStacks) {
-        this.itemStacks =itemStacks;
+        this.itemStacks =new ArrayList<>(itemStacks.size());
+        this.itemStacks.addAll(itemStacks);
     }
 
     @Override
@@ -52,15 +55,15 @@ public class ItemList implements ItemContainer{
     }
 
     @Override
-    public NonNullList<ItemStack> getItems() {
+    public List<ItemStack> getItems() {
         return itemStacks;
     }
 
     @Override
     public void setSize(int size) {
-        NonNullList<ItemStack> old = itemStacks;
-         itemStacks = NonNullList.withSize(size, ItemStack.EMPTY);
-        for (int i = 0; i < Math.min(itemStacks.size(), old.size()); i++) {
+        List<ItemStack> old = itemStacks;
+         itemStacks = new ArrayList<>(size);
+        for (int i = 0; i < Math.min(size, old.size()); i++) {
             itemStacks.set(i, old.get(i));
         }
     }
