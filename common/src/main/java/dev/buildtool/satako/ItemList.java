@@ -53,7 +53,9 @@ public class ItemList implements ItemContainer{
         if (count > 0) {
             for (int i = 0; i < count; i++) {
                 int finalI = i;
-                ItemStack.parse(provider,nbt.getCompound("Stack#" + i)).ifPresent(itemStack ->itemStacks.set(finalI,itemStack));
+                String key = "Stack#" + i;
+                if(nbt.contains(key))
+                    ItemStack.parse(provider,nbt.getCompound(key)).ifPresent(itemStack ->itemStacks.set(finalI,itemStack));
             }
         }
     }
