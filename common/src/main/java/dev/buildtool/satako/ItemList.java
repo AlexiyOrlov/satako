@@ -5,6 +5,8 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 
+import java.util.List;
+
 public class ItemList implements ItemContainer{
     protected NonNullList<ItemStack> itemStacks;
 
@@ -12,6 +14,9 @@ public class ItemList implements ItemContainer{
         itemStacks = NonNullList.withSize(size,ItemStack.EMPTY);
     }
 
+    public ItemList(NonNullList<ItemStack> itemStacks) {
+        this.itemStacks =itemStacks;
+    }
 
     @Override
     public CompoundTag serializeNBT(HolderLookup.Provider provider) {
