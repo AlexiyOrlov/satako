@@ -14,6 +14,9 @@ public class ItemList implements ItemContainer{
 
     public ItemList(int size) {
         itemStacks = new ArrayList<>(size);
+        for (int i = 0; i < size; i++) {
+            itemStacks.add(ItemStack.EMPTY);
+        }
     }
 
     public ItemList(List<ItemStack> itemStacks) {
