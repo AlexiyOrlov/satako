@@ -2,6 +2,7 @@ package dev.buildtool.satako;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import net.minecraft.util.Mth;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -55,5 +56,10 @@ public class Configuration {
     public List<String> getList(String name,List<String> defaultValue)
     {
         return (List<String>) options.compute(name,(s, l)->l==null ?defaultValue:l);
+    }
+
+    public float getFloat(String name,float defaultValue,float min,float max)
+    {
+        return (float) options.compute(name,(s, o) -> o==null ? defaultValue: Mth.clamp((float) o,min,max));
     }
 }
