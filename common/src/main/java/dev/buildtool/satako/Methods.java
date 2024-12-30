@@ -7,10 +7,12 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -96,5 +98,36 @@ public final class Methods {
             level.setBlock(target, Blocks.AIR.defaultBlockState(), 2);
         else if (Functions.isLiquid(level, target))
             level.setBlock(target, Blocks.AIR.defaultBlockState(), 2);
+    }
+
+    public static void transferItems(ItemContainer inputHandler, ItemContainer outputHandler, int byAmount) {
+        both:
+        for (int i = 0; i < inputHandler.getSlotCount(); i++) {
+            ItemStack itemStack = inputHandler.getStackInSlot(i);
+            if (!itemStack.isEmpty()) {
+                int clamped = Mth.clamp(byAmount, 1, 64);
+                for (int i1 = 0; i1 < outputHandler.getSlotCount(); i1++) {
+                    ItemStack present = outputHandler.getStackInSlot(i1);
+                    if (!present.isEmpty()) {
+                        ItemStack tryExtract = inputHandler.extractItem(i, clamped, true);
+                        ItemStack tryInsert = outputHandler.insertItem(i1, tryExtract, true);
+                        if (tryInsert.isEmpty()) {
+                            tryExtract = inputHandler.extractItem(i, tryExtract.getCount(), false);
+                            outputHandler.insertItem(i1, tryExtract, false);
+                            break both;
+                        }
+                    }
+                }
+                for (int i1 = 0; i1 < outputHandler.getSlotCount(); i1++) {
+                    ItemStack tryExtract = inputHandler.extractItem(i, clamped, true);
+                    ItemStack tryInsert = outputHandler.insertItem(i1, tryExtract, true);
+                    if (tryInsert.isEmpty()) {
+                        tryExtract = inputHandler.extractItem(i, tryExtract.getCount(), false);
+                        outputHandler.insertItem(i1, tryExtract, false);
+                        break both;
+                    }
+                }
+            }
+        }
     }
 }

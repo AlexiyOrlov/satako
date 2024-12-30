@@ -51,4 +51,9 @@ public class Configuration {
     {
         return (boolean) options.compute(name,(s, o) -> o==null ?defaultValue :o);
     }
+
+    public List<String> getList(String name,List<String> defaultValue)
+    {
+        return (List<String>) options.compute(name,(s, l)->l==null ?defaultValue:l);
+    }
 }
