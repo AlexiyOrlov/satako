@@ -92,13 +92,20 @@ public class ItemList implements ItemContainer{
     @Override
     public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
         ItemStack present=itemStacks.get(slot);
-        if((present.isEmpty() ||Functions.areItemTypesEqual(present,stack)) && isItemValid(slot,stack))
+        if(isItemValid(slot,stack))
         {
-            int newCount = present.getCount() + stack.getCount();
-            int remaining=present.getCount()+stack.getCount()-present.getMaxStackSize();
-            if(!simulate)
-                present.setCount(Math.min(present.getMaxStackSize(),newCount));
-            return new ItemStack(stack.getItem(),remaining);
+            if(present.isEmpty())
+            {
+                if(!simulate)
+                    setItem(slot,stack);
+                return ItemStack.EMPTY;
+            } else if (Functions.areItemTypesEqual(present, stack)) {
+                int newCount = present.getCount() + stack.getCount();
+                int remaining = present.getCount() + stack.getCount() - present.getMaxStackSize();
+                if (!simulate)
+                    present.setCount(Math.min(present.getMaxStackSize(), newCount));
+                return new ItemStack(stack.getItem(), remaining);
+            }
         }
         else {
             return stack;
