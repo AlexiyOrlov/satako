@@ -127,4 +127,9 @@ public class Screen2 extends Screen
     {
         addPopup(message, MenuScreen.defaultShowTime);
     }
+
+    public void addTooltip(AbstractWidget target,DynamicTooltip tooltip)
+    {
+        tooltips.put(target,tooltip);
+    }
 }
