@@ -8,6 +8,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
+import net.minecraft.world.Container;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
@@ -125,6 +126,43 @@ public final class Methods {
                         tryExtract = inputHandler.extractItem(i, tryExtract.getCount(), false);
                         outputHandler.insertItem(i1, tryExtract, false);
                         break both;
+                    }
+                }
+            }
+        }
+    }
+
+    public static void transferItems(Container inputContainer, ItemContainer outputContainer, int byAmount) {
+        both:
+        for (int i = 0; i < inputContainer.getContainerSize(); i++) {
+            ItemStack itemStack = inputContainer.getItem(i);
+            if (!itemStack.isEmpty()) {
+                int clamped = Mth.clamp(byAmount, 1, 64);
+                for (int i1 = 0; i1 < outputContainer.getSlotCount(); i1++) {
+                    ItemStack present = outputContainer.getStackInSlot(i1);
+                    if (!present.isEmpty()) {
+                        ItemStack extract = inputContainer.removeItem(i, clamped);
+                        ItemStack tryInsert = outputContainer.insertItem(i1, extract, true);
+                        if (tryInsert.isEmpty()) {
+                            outputContainer.insertItem(i1, extract, false);
+                            break both;
+                        }
+                        else
+                        {
+                           ItemStack  from=   inputContainer.getItem(i);
+                           from.setCount(from.getCount()+tryInsert.getCount());
+                        }
+                    }
+                }
+                for (int i1 = 0; i1 < outputContainer.getSlotCount(); i1++) {
+                    ItemStack tryExtract = inputContainer.removeItem(i, clamped);
+                    ItemStack tryInsert = outputContainer.insertItem(i1, tryExtract, true);
+                    if (tryInsert.isEmpty()) {
+                        outputContainer.insertItem(i1, tryExtract, false);
+                        break both;
+                    }else {
+                        ItemStack  from=   inputContainer.getItem(i);
+                        from.setCount(from.getCount()+tryInsert.getCount());
                     }
                 }
             }
