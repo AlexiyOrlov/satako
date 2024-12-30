@@ -16,7 +16,7 @@ public class ItemList implements ItemContainer{
         itemStacks = new ArrayList<>(size);
     }
 
-    public ItemList(NonNullList<ItemStack> itemStacks) {
+    public ItemList(List<ItemStack> itemStacks) {
         this.itemStacks =new ArrayList<>(itemStacks.size());
         this.itemStacks.addAll(itemStacks);
     }
