@@ -193,10 +193,4 @@ public abstract class MenuScreen<T extends AbstractContainerMenu> extends Abstra
         }
         return super.mouseReleased(mouseX, mouseY, button);
     }
-
-    public void originalRendering(GuiGraphics guiGraphics,int mouseX,int mouseY,float tick)
-    {
-        super.render(guiGraphics, mouseX, mouseY, tick);
-    }
-
 }
