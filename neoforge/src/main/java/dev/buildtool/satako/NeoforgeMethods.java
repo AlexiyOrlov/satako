@@ -12,6 +12,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.io.File;
 
 public class NeoforgeMethods {
+
     public static void transferItems(IItemHandler inputHandler, IItemHandler outputHandler, int byAmount) {
         both:
         for (int i = 0; i < inputHandler.getSlots(); i++) {
@@ -43,6 +44,7 @@ public class NeoforgeMethods {
         }
     }
 
+    @Deprecated
     public static void loadConfig(Pair<ModConfigSpec, ModConfigSpec> pair, String path) {
         String s = FMLPaths.CONFIGDIR.get().resolve(path).toString();
         final CommentedFileConfig file = CommentedFileConfig.builder(new File(s)).sync().autosave().writingMode(WritingMode.REPLACE).build();
