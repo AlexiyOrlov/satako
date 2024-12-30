@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * A preset GUI which automatically draws labels, slot textures,
+ * A GUI which automatically draws labels, slot textures,
  * GUI borders and sends input events to elements
  */
 public abstract class MenuScreen<T extends AbstractContainerMenu> extends AbstractContainerScreen<T> {
@@ -193,4 +193,10 @@ public abstract class MenuScreen<T extends AbstractContainerMenu> extends Abstra
         }
         return super.mouseReleased(mouseX, mouseY, button);
     }
+
+    public void originalRendering(GuiGraphics guiGraphics,int mouseX,int mouseY,float tick)
+    {
+        super.render(guiGraphics, mouseX, mouseY, tick);
+    }
+
 }
