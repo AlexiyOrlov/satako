@@ -42,4 +42,9 @@ public class ContainerSlot extends BetterSlot{
     public ItemStack getItem() {
         return itemContainer.getStackInSlot(getContainerSlot());
     }
+
+    @Override
+    public boolean mayPlace(ItemStack stack) {
+        return itemContainer.isItemValid(getContainerSlot(),stack);
+    }
 }
