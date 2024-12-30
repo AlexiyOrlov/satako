@@ -13,6 +13,9 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
+/**
+ * An element displaying color or sprite, can be partially filled
+ */
 public class Rectangle extends AbstractWidget {
     private Color color;
     private final FillPercent fillPercent;
@@ -85,14 +88,14 @@ public class Rectangle extends AbstractWidget {
             int min = Math.min(width, height);
             color.getColor().ifPresent(color1 -> guiGraphics.setColor(color1.getRed(), color1.getGreen(), color1.getBlue(), color1.getAlpha()));
             GuiSpriteScaling.NineSlice nineSlice = new GuiSpriteScaling.NineSlice(min, min, new GuiSpriteScaling.NineSlice.Border(0, 0, 0, 0));
-//            if (fillPercent != null) {
-//                if (vertical)
-//                    guiGraphics.blitNineSlicedSprite(sprite, nineSlice, getX(), (int) (getY() + height - height * fillPercent.getFillPercent()), -90, width, (int) (height * fillPercent.getFillPercent()));
-//                else
-//                    guiGraphics.blitNineSlicedSprite(sprite, nineSlice, getX(), getY(), -90, (int) (width * fillPercent.getFillPercent()), height);
-//            } else {
-//                guiGraphics.blitNineSlicedSprite(sprite, nineSlice, getX(), getY(), -90, width, height);
-//            }
+            if (fillPercent != null) {
+                if (vertical)
+                    guiGraphics.blitNineSlicedSprite(sprite, nineSlice, getX(), (int) (getY() + height - height * fillPercent.getFillPercent()), -90, width, (int) (height * fillPercent.getFillPercent()));
+                else
+                    guiGraphics.blitNineSlicedSprite(sprite, nineSlice, getX(), getY(), -90, (int) (width * fillPercent.getFillPercent()), height);
+            } else {
+                guiGraphics.blitNineSlicedSprite(sprite, nineSlice, getX(), getY(), -90, width, height);
+            }
             color.getColor().ifPresent(color1 -> guiGraphics.setColor(1, 1, 1, 1));
         } else if (texture != null) {
             if (fillPercent != null) {

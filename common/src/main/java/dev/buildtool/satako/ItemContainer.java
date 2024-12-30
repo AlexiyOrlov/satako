@@ -7,6 +7,9 @@ import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
 
+/**
+ * Can be implemented by item handlers
+ */
 public interface ItemContainer {
 
     CompoundTag serializeNBT(HolderLookup.Provider provider);

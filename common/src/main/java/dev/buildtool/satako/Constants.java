@@ -8,7 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import java.util.HashMap;
 
 /**
- * Holds miscellaneous constants
+ * Miscellaneous constants
  */
 public class Constants {
     public static final int ONE_SECOND = 20;
@@ -44,7 +44,6 @@ public class Constants {
     public final static int DAY_HALF = DAY_LENGTH / 2;
     public static final ResourceLocation GREY_SLOT_TEXTURE = ResourceLocation.fromNamespaceAndPath(Satako.ID, "textures/grey_slot.png");
     public static final Direction[] HORIZONTALS = new Direction[]{Direction.WEST, Direction.SOUTH, Direction.NORTH, Direction.EAST};
-    //    public static HashMap<Fluid, FluidStack> FLUID_STACK_CACHE=new HashMap<>();
     public static HashMap<Integer, IntegerColor> COLOR_CACHE = new HashMap<>();
     public static HashMap<Item, ItemStack> ITEM_CACHE = new HashMap<>();
     public static int MAX_DISTANCE_AT_WHICH_TEXT_IS_DISTINGUISHABLE = 23;

@@ -11,6 +11,7 @@ import net.minecraft.network.chat.Component;
 import java.util.*;
 
 /**
+ * A button that provides a dropdown choice selection.
  * Choice buttons must call onPress and change the message
  */
 public class DropDownButton extends BetterButton {

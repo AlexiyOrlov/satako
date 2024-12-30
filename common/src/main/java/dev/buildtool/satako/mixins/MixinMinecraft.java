@@ -12,6 +12,6 @@ public class MixinMinecraft {
     
     @Inject(at = @At("TAIL"), method = "<init>")
     private void init(CallbackInfo info) {
-        Satako.LOG.info("This line is printed by Satako common mixin!");
+
     }
 }

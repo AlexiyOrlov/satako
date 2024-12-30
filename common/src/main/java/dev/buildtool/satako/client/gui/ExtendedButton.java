@@ -10,6 +10,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.resources.ResourceLocation;
 
+/**
+ * Copied from Neoforge
+ */
 public class ExtendedButton extends Button {
     protected FormattedText ELLIPSIS = FormattedText.of("...");
     protected static final WidgetSprites SPRITES = new WidgetSprites(

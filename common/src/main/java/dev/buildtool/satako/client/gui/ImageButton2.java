@@ -6,6 +6,9 @@ import net.minecraft.resources.ResourceLocation;
 
 import java.util.List;
 
+/**
+ * Button that cycles through sprites when pressed
+ */
 public class ImageButton2 extends BetterButton {
     private final List<ResourceLocation> sprites;
     public int activeSprite;

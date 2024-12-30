@@ -3,7 +3,7 @@ package dev.buildtool.satako;
 import net.minecraft.util.FastColor;
 
 /**
- * For some reason color in minecraft is encoded in A-R-G-B order, not R-G-B-A.
+ * Color in minecraft is encoded in A-R-G-B order.
  */
 public class IntegerColor {
     private final int color;

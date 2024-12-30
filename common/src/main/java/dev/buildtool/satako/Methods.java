@@ -48,36 +48,6 @@ public final class Methods {
     public static void playSound(Level world, BlockPos blockPos, SoundEvent sound, float volume, float pitch) {
         world.playLocalSound(blockPos.getX(), blockPos.getY(), blockPos.getZ(), sound, null, volume, pitch, false);
     }
-    //FIXME
-//    public static void drawVerticalLine(int x, int startY, int endY, IntegerColor color, int thickness)
-//    {
-//        int red = color.getRed();
-//        int green = color.getGreen();
-//        int blue = color.getBlue();
-//        int alpha = color.getAlpha();
-//        Tesselator tessellator = Tesselator.getInstance();
-//        BufferBuilder bufferBuilder = tessellator.getBuilder();
-//        bufferBuilder.begin(VertexFormat.Mode.LINES, DefaultVertexFormat.POSITION_COLOR);
-//        GL11.glLineWidth(thickness);
-//        bufferBuilder.vertex(x, startY, 0).color(red, green, blue, alpha).endVertex();
-//        bufferBuilder.vertex(x, endY, 0).color(red, green, blue, alpha).endVertex();
-//        tessellator.end();
-//    }
-//    FIXME
-//    public static void drawHorizontalLine(int startX, int endX, int y, IntegerColor color, int thickness)
-//    {
-//        int red = color.getRed();
-//        int green = color.getGreen();
-//        int blue = color.getBlue();
-//        int alpha = color.getAlpha();
-//        Tesselator tessellator = Tesselator.getInstance();
-//        BufferBuilder bufferBuilder = tessellator.getBuilder();
-//        bufferBuilder.begin(VertexFormat.Mode.LINES, DefaultVertexFormat.POSITION_COLOR);
-//        GL11.glLineWidth(thickness);
-//        bufferBuilder.vertex(startX, y, 0).color(red, green, blue, alpha).endVertex();
-//        bufferBuilder.vertex(endX, y, 0).color(red, green, blue, alpha).endVertex();
-//        tessellator.end();
-//    }
 
     public static void sendMessageToPlayer(Player player, String message) {
         player.displayClientMessage(Component.literal(message), false);
@@ -160,7 +130,8 @@ public final class Methods {
                     if (tryInsert.isEmpty()) {
                         outputContainer.insertItem(i1, tryExtract, false);
                         break both;
-                    }else {
+                    }
+                    else {
                         ItemStack  from=   inputContainer.getItem(i);
                         from.setCount(from.getCount()+tryInsert.getCount());
                     }

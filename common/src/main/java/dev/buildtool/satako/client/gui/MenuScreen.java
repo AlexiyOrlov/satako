@@ -23,7 +23,7 @@ import java.util.Map;
 
 /**
  * A GUI which automatically draws labels, slot textures,
- * GUI borders and sends input events to elements
+ * GUI borders and sends input events to elements. Can show tooltips and popups
  */
 public abstract class MenuScreen<T extends AbstractContainerMenu> extends AbstractContainerScreen<T> {
     public static final int POPUP_SPACING = 22;

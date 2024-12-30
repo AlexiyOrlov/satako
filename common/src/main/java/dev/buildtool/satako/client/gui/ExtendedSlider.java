@@ -16,7 +16,7 @@ import org.lwjgl.glfw.GLFW;
 import java.text.DecimalFormat;
 
 /**
- * Slider widget implementation which allows inputting values in a certain range with optional step size.
+ * Copied from Neoforge
  */
 public class ExtendedSlider extends AbstractSliderButton {
     protected Component prefix;

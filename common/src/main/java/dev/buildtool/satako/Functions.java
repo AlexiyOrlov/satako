@@ -425,6 +425,9 @@ public final class Functions {
         return positions;
     }
 
+    /**
+     * @return block positions inside the bounding box
+     */
     public static List<BlockPos> bbToPositions(AABB axisAlignedBB) {
         List<BlockPos> positions = new ArrayList<>();
         for (double x = axisAlignedBB.minX; x < axisAlignedBB.maxX; x++) {
@@ -446,7 +449,7 @@ public final class Functions {
      */
     public static boolean canReplaceBlock(BlockPos blockPos, Level world) {
         BlockState iBlockState = world.getBlockState(blockPos);
-        if (world.getBlockEntity(blockPos) != null)
+        if (iBlockState.hasBlockEntity())
             return false;
         return iBlockState.getDestroySpeed(world, blockPos) != -1;
     }
@@ -506,7 +509,7 @@ public final class Functions {
     }
 
     /**
-     * @return true if same items and durability
+     * @return true if same items and durability and not empty
      */
     public static boolean areItemsEqualIgnoreNbt(ItemStack one, ItemStack two) {
         if (!one.isEmpty() && !two.isEmpty()) {
@@ -627,7 +630,7 @@ public final class Functions {
                 return getSecureField(owner.getSuperclass(), number);
             }
         }
-//		System.err.println("No such field - index exceeds field array size");
+        Satako.LOG.error("No such field - index exceeds field array size");
         return null;
     }
 
@@ -644,7 +647,7 @@ public final class Functions {
             if (owningClass.getSuperclass() != null) {
                 return getSecureField(owningClass.getSuperclass(), field);
             } else {
-                System.err.println("Searched all super classes - field " + field + " not found");
+                Satako.LOG.error("Searched all super classes - field " + field + " not found");
             }
         }
         return f;
@@ -669,14 +672,6 @@ public final class Functions {
             e.printStackTrace();
         }
         return f;
-    }
-
-    /**
-     * Use {@link LivingEntity#isHolding(Predicate)}
-     */
-    @Deprecated
-    public static boolean isHolding(Predicate<Item> itemPredicate, LivingEntity entity) {
-        return itemPredicate.test(entity.getMainHandItem().getItem()) || itemPredicate.test(entity.getOffhandItem().getItem());
     }
 
     public static int ticksToSeconds(int ticks) {
@@ -725,39 +720,6 @@ public final class Functions {
         return null;
     }
 
-//    /**
-//     * @return slot number or -1 if not found
-//     */
-//    public static int findItemIn(IItemHandler itemHandler, ItemStack stack) {
-//        int size = itemHandler.getSlots();
-//        for (int slot = 0; slot < size; slot++)
-//        {
-//            ItemStack nextstack = itemHandler.getStackInSlot(slot);
-//            if (areItemTypesEqual(nextstack, stack))
-//            {
-//                return slot;
-//            }
-//        }
-//        return -1;
-//    }
-//
-//    public static ItemStack searchItem(IItemHandler in, Item forItem)
-//    {
-//        for (int i = 0; i < in.getSlots(); i++)
-//        {
-//            ItemStack itemStack = in.getStackInSlot(i);
-//            if (itemStack.getItem() == forItem)
-//            {
-//                return itemStack;
-//            }
-//        }
-//        return null;
-//    }
-
-    public static boolean removeBlock(BlockPos position, LevelAccessor world) {
-        return world.removeBlock(position, false);
-    }
-
     public static Rotation directionToRotation(Direction direction) {
         switch (direction) {
             case NORTH:
@@ -803,52 +765,6 @@ public final class Functions {
         return true;
     }
 
-//    /**
-//     * Removes specified amount of item from item handler
-//     *
-//     * @param item        type
-//     * @param amount      to remove
-//     * @param itemHandler handler
-//     * @return false if the handler has fewer items than specified, true on success
-//     */
-//    public static boolean removeItems(Item item, int amount, IItemHandler itemHandler) {
-//        int present = 0;
-//        for (int slot = 0; slot < itemHandler.getSlots(); slot++) {
-//            ItemStack itemStack = itemHandler.getStackInSlot(slot);
-//            if (itemStack.getItem() == item) {
-//                present += itemStack.getCount();
-//            }
-//            if (present >= amount)
-//                break;
-//        }
-//
-//        if (present < amount)
-//            return false;
-//
-//        for (int slot = 0; slot < itemHandler.getSlots(); slot++) {
-//            ItemStack itemStack = itemHandler.getStackInSlot(slot);
-//            if (itemStack.getItem() == item) {
-//                while (amount > 0) {
-//                    itemStack.shrink(1);
-//                    amount--;
-//                    if (itemStack.isEmpty())
-//                        break;
-//                }
-//                if (amount == 0)
-//                    return true;
-//            }
-//        }
-//        return true;
-//    }
-
-    /**
-     * For usage in entity type registration
-     */
-    @SuppressWarnings("rawtypes")
-    public static EntityType cast(EntityType<Entity> entityType) {
-        return entityType;
-    }
-
     public static Direction getLookDirectionOf(LivingEntity livingEntity) {
         if (livingEntity.getXRot() > 45)
             return Direction.DOWN;
@@ -857,27 +773,6 @@ public final class Functions {
         }
         return livingEntity.getDirection();
     }
-
-//    public static boolean contains(Item item,IItemHandler handler)
-//    {
-//        for (int i = 0; i < handler.getSlots(); i++) {
-//            ItemStack next=handler.getStackInSlot(i);
-//            if(next.is(item))
-//                return true;
-//        }
-//        return false;
-//    }
-
-//    public static ItemStack findItem(Item item,IItemHandler handler)
-//    {
-//        for (int i = 0; i < handler.getSlots(); i++) {
-//            ItemStack next=handler.getStackInSlot(i);
-//            if(next.is(item))
-//                return next;
-//        }
-//        return ItemStack.EMPTY;
-//    }
-
 
     public static boolean contains(Item item, ItemContainer handler) {
         for (int i = 0; i < handler.getSlotCount(); ++i) {
@@ -925,6 +820,9 @@ public final class Functions {
         }
     }
 
+    /***
+     * @return rotated voxel shape
+     */
     public static VoxelShape rotateY(VoxelShape shape, int rotation) {
         List<VoxelShape> rotatedShapes = new ArrayList<>();
 
@@ -946,6 +844,9 @@ public final class Functions {
         return rotatedShapes.stream().reduce((v1, v2) -> Shapes.joinUnoptimized(v1, v2, BooleanOp.OR)).orElse(shape).optimize();
     }
 
+    /**
+     * @return rotated voxel shape
+     */
     public static VoxelShape rotateX(VoxelShape shape, int rotation) {
         List<VoxelShape> rotatedShapes = new ArrayList<>();
 

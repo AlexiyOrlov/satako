@@ -14,7 +14,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * A UI without slots
+ * A UI without slots. Can display popups and tooltips
  */
 public class Screen2 extends Screen
 {

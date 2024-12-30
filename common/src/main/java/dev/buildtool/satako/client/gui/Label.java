@@ -10,7 +10,7 @@ import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Label is a string with optional background for use in GUIs
+ * Label is a string with background
  */
 public class Label extends BetterButton implements Scrollable {
     protected boolean enabled, verticalScroll, horizontalScroll, hidden;

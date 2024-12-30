@@ -26,12 +26,14 @@ import java.util.stream.Collectors;
 
 public class ClientMethods {
     /**
+     * Use addBox
      * @param x
      * @param y
      * @param z
      * @param addBackFaces whether to add back faces for the sides
      * @param extruder     offsets faces
      */
+    @Deprecated
     public static void addCube(VertexConsumer vertexConsumer, Matrix4f matrix4f, int x, int y, int z, float red, float green, float blue, float alpha, boolean addBackFaces, float extruder) {
         //Up
         vertexConsumer.addVertex(matrix4f, 0, y + 1 + extruder, 0).setColor(red, green, blue, alpha);
@@ -210,6 +212,20 @@ public class ClientMethods {
         }
     }
 
+    /**
+     * @param xOffset
+     * @param yOffset
+     * @param zOffset
+     * @param width
+     * @param height
+     * @param depth
+     * @param red
+     * @param green
+     * @param blue
+     * @param alpha
+     * @param addBackFaces
+     * @param extrusion face offsets to prevent overlapping
+     */
     public static void addBox(VertexConsumer vertexConsumer, Matrix4f matrix4f, float xOffset, float yOffset, float zOffset, float width, float height, float depth, float red, float green, float blue, float alpha, boolean addBackFaces, float extrusion) {
 
         float x2 = 0.5f - width / 2;

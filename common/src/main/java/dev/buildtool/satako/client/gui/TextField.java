@@ -14,6 +14,10 @@ public class TextField extends EditBox implements Scrollable {
     private boolean enabled;
     protected int scrollAmount;
 
+    {
+        scrollAmount = height;
+    }
+
     /**
      * Creates a string field fitted to text
      */
@@ -29,17 +33,6 @@ public class TextField extends EditBox implements Scrollable {
 
     public TextField(int X, int Y, int width) {
         super(Minecraft.getInstance().font, X, Y, width, 20, Component.empty());
-    }
-
-    {
-        scrollAmount = height;
-    }
-
-    public static TextField createWithMaxStringLength(int x_, int y_, int width, int maxStringLength, String string) {
-        TextField textField = new TextField(x_, y_, width);
-        textField.setMaxLength(maxStringLength);
-        textField.insertText(string);
-        return textField;
     }
 
     @Override
@@ -71,9 +64,5 @@ public class TextField extends EditBox implements Scrollable {
     @Override
     public void setScrollAmount(int pixels) {
         scrollAmount = pixels;
-    }
-
-    public int getElementWidth() {
-        return width;
     }
 }
