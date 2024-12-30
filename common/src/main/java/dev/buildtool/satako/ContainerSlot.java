@@ -35,4 +35,9 @@ public class ContainerSlot extends BetterSlot{
     public ItemStack remove(int amount) {
         return itemContainer.extractItem(getContainerSlot(),amount,false);
     }
+
+    @Override
+    public ItemStack getItem() {
+        return itemContainer.getStackInSlot(getContainerSlot());
+    }
 }
