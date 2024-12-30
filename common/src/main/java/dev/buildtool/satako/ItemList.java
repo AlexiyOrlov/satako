@@ -106,6 +106,7 @@ public class ItemList implements ItemContainer{
                     present.setCount(Math.min(present.getMaxStackSize(), newCount));
                 return new ItemStack(stack.getItem(), remaining);
             }
+            return stack;
         }
         else {
             return stack;
