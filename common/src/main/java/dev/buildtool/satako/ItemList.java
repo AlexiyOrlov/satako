@@ -18,7 +18,8 @@ public class ItemList implements ItemContainer{
         CompoundTag nbtCompound = new CompoundTag();
         for (int i = 0; i < itemStacks.size(); i++) {
             ItemStack itemStack = itemStacks.get(i);
-            nbtCompound.put("Stack#" + i, itemStack.save(provider));
+            if(!itemStack.isEmpty())
+                nbtCompound.put("Stack#" + i, itemStack.save(provider));
         }
         nbtCompound.putInt("Size", itemStacks.size());
         return nbtCompound;
