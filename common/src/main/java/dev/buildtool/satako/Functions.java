@@ -1040,4 +1040,19 @@ public final class Functions {
 
         return stack;
     }
+
+    /**
+     * Extracts an itemstack
+     *
+     * @return extracted ItemStack
+     */
+    public static ItemStack extractItems(ItemContainer itemHandler, ItemStack itemStack, boolean simulate) {
+        for (int slot = 0; slot < itemHandler.getSlotCount(); slot++) {
+            ItemStack presentstack = itemHandler.getStackInSlot(slot);
+            if (Functions.areItemTypesEqual(itemStack, presentstack)) {
+                return itemHandler.extractItem(slot, itemStack.getCount(), simulate);
+            }
+        }
+        return ItemStack.EMPTY;
+    }
 }
