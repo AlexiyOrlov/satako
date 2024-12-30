@@ -78,7 +78,7 @@ public class ItemList implements ItemContainer{
         List<ItemStack> old = itemStacks;
          itemStacks = new ArrayList<>(size);
         for (int i = 0; i < Math.min(size, old.size()); i++) {
-            itemStacks.set(i, old.get(i));
+            itemStacks.add(i, old.get(i));
         }
     }
 
