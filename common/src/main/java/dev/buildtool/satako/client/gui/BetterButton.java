@@ -97,4 +97,9 @@ public class BetterButton extends ExtendedButton implements Scrollable {
         if (onPress != null)
             onPress.onPress(this);
     }
+
+    public void setPressHandler(OnPress pressHandler)
+    {
+        onPress=pressHandler;
+    }
 }
