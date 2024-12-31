@@ -44,7 +44,7 @@ public class Label extends BetterButton implements Scrollable {
         if (!hidden) {
             ClientMethods.drawBackground(guiGraphics, getX(), getY() + 4, 399, width, height + 2, backgroundColor);
             guiGraphics.pose().translate(0, 0, 400);
-            renderScrollingString(guiGraphics, fontRenderer, getMessage(), getX(), getY() + 3, getX() + getWidth(), getY() + getHeight() + 6, Constants.WHITE.getIntColor());
+            renderScrollingString(guiGraphics, fontRenderer, getMessage(), getX(), getY() + 3, getX() + getWidth(), getY() + getHeight()/2 + 6, Constants.WHITE.getIntColor());
         }
     }
 
@@ -84,5 +84,10 @@ public class Label extends BetterButton implements Scrollable {
     public void updateWidth() {
         setX(getX() + width / 2 - fontRenderer.width(getMessage()) / 2);
         width = fontRenderer.width(getMessage());
+    }
+
+    @Override
+    public int getHeight() {
+        return super.getHeight()+10;
     }
 }
