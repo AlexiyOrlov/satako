@@ -54,7 +54,7 @@ public class FabricPlatformHooks implements IPlatformHooks {
 
     @Override
     public MenuType<?> getTestMenu() {
-        return null;
+        return SatakoFabric.testMenu;
     }
 
     @Override
