@@ -74,7 +74,7 @@ public class NeoForgePlatformHooks implements IPlatformHooks {
     @Override
     public void drawSlot(Slot slot, int mouseX, int mouseY, GuiGraphics guiGraphics, AbstractContainerScreen<?> screen) {
         if (slot instanceof ItemHandlerSlot handlerSlot && slot.getItem().isEmpty() && mouseX > slot.x + screen.getGuiLeft() && mouseX < slot.x + screen.getGuiLeft() + 18 && mouseY > slot.y + screen.getGuiTop() && mouseY < slot.y + screen.getGuiTop() + 18 && handlerSlot.getTooltip() != null) {
-            guiGraphics.renderComponentTooltip(Minecraft.getInstance().font, handlerSlot.getTooltip(), mouseX, mouseY);
+            guiGraphics.renderTooltip(Minecraft.getInstance().font, handlerSlot.getTooltip(), mouseX, mouseY);
         }
     }
 
