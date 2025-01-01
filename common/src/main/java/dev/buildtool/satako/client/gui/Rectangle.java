@@ -39,7 +39,11 @@ public class Rectangle extends AbstractWidget {
         this.fillPercent = fillPercent;
     }
 
-    public Rectangle(int x,int y,int width,int height,DynamicColor color,@Nullable FillPercent fillPercent,boolean vertical)
+    public Rectangle(int x, int y, int width, int height, DynamicColor dynamicColor, FillPercent fillPercent) {
+        this(x, y, width, height,dynamicColor,fillPercent,true);
+    }
+
+    public Rectangle(int x, int y, int width, int height, DynamicColor color, @Nullable FillPercent fillPercent, boolean vertical)
     {
         super(x,y,width,height,Component.empty());
         dynamicColor=color;
@@ -64,7 +68,11 @@ public class Rectangle extends AbstractWidget {
         this.sprite = sprite;
     }
 
-    public Rectangle(int x, int y, int width, int height, @Nullable DynamicColor color, TextureAtlasSprite sprite, FillPercent fillPercent,boolean vertical) {
+    public Rectangle(int x, int y, int width, int height, FillPercent fillPercent, TextureAtlasSprite sprite, DynamicColor dynamicColor) {
+        this(x, y, width, height,dynamicColor,sprite,fillPercent,true);
+    }
+
+    public Rectangle(int x, int y, int width, int height, @Nullable DynamicColor color, TextureAtlasSprite sprite, FillPercent fillPercent, boolean vertical) {
         super(x, y, width, height, Component.empty());
         this.dynamicColor=color;
         this.fillPercent = fillPercent;
