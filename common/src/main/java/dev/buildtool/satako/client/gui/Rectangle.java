@@ -19,10 +19,10 @@ import java.util.Optional;
  */
 public class Rectangle extends AbstractWidget {
     private Color color;
-    private final FillPercent fillPercent;
-    private TextureAtlasSprite sprite;
-    private ResourceLocation texture;
-    private boolean vertical = true;
+    protected final FillPercent fillPercent;
+    protected TextureAtlasSprite sprite;
+    protected ResourceLocation texture;
+    protected boolean vertical = true;
     protected DynamicColor dynamicColor;
 
     @Deprecated
