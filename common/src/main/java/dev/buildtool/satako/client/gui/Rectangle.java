@@ -10,6 +10,7 @@ import net.minecraft.client.resources.metadata.gui.GuiSpriteScaling;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
+import org.w3c.dom.css.Rect;
 
 import java.util.Optional;
 
@@ -22,17 +23,27 @@ public class Rectangle extends AbstractWidget {
     private TextureAtlasSprite sprite;
     private ResourceLocation texture;
     private boolean vertical = true;
+    protected DynamicColor dynamicColor;
 
+    @Deprecated
     public Rectangle(int x, int y, int width, int height, @Nullable IntegerColor color, @Nullable TextureAtlasSprite atlasSprite, @Nullable FillPercent fillPercent, boolean vertical) {
         this(x, y, width, height, atlasSprite, fillPercent);
         this.color = () -> Optional.ofNullable(color);
         this.vertical = vertical;
     }
 
+    @Deprecated
     public Rectangle(int x, int y, int width, int height, @Nullable IntegerColor integerColor, @Nullable FillPercent fillPercent) {
         super(x, y, width, height, Component.empty());
         color = () -> Optional.ofNullable(integerColor);
         this.fillPercent = fillPercent;
+    }
+
+    public Rectangle(int x,int y,int width,int height,DynamicColor color,@Nullable FillPercent fillPercent)
+    {
+        super(x,y,width,height,Component.empty());
+        dynamicColor=color;
+        this.fillPercent=fillPercent;
     }
 
     private Rectangle(int x, int y, int width, int height, TextureAtlasSprite atlasSprite, @Nullable FillPercent fillPercent) {
@@ -44,6 +55,7 @@ public class Rectangle extends AbstractWidget {
         this(x, y, width, height, atlasSprite, null);
     }
 
+    @Deprecated
     private Rectangle(int x, int y, int width, int height, @Nullable IntegerColor color, TextureAtlasSprite sprite, FillPercent fillPercent) {
         super(x, y, width, height, Component.empty());
         this.color = () -> Optional.ofNullable(color);
@@ -51,11 +63,20 @@ public class Rectangle extends AbstractWidget {
         this.sprite = sprite;
     }
 
+    public Rectangle(int x, int y, int width, int height, @Nullable DynamicColor color, TextureAtlasSprite sprite, FillPercent fillPercent) {
+        super(x, y, width, height, Component.empty());
+        this.dynamicColor=color;
+        this.fillPercent = fillPercent;
+        this.sprite = sprite;
+    }
+
+    @Deprecated
     public Rectangle(int x, int y, int width, int height, @Nullable IntegerColor color, TextureAtlasSprite atlasSprite) {
         this(x, y, width, height, color, atlasSprite, null);
         this.sprite = atlasSprite;
     }
 
+    @Deprecated
     public static Rectangle horizontal(int x, int y, int width, int height, @Nullable IntegerColor color, @Nullable TextureAtlasSprite atlasSprite, FillPercent fillPercent) {
         Rectangle rectangle = new Rectangle(x, y, width, height, color, atlasSprite, fillPercent);
         rectangle.vertical = false;
@@ -73,10 +94,12 @@ public class Rectangle extends AbstractWidget {
         return new Rectangle(x, y, width, height, atlasSprite, fillPercent);
     }
 
+    @Deprecated
     public static Rectangle colored(int x, int y, int width, int height, IntegerColor color, FillPercent fillPercent) {
         return new Rectangle(x, y, width, height, color, fillPercent);
     }
 
+    @Deprecated
     public static Rectangle withColoredSprite(int x, int y, int width, int height, IntegerColor color, TextureAtlasSprite atlasSprite, FillPercent fillPercent) {
         return new Rectangle(x, y, width, height, color, atlasSprite, fillPercent);
     }
@@ -117,7 +140,7 @@ public class Rectangle extends AbstractWidget {
 //                }
                 ClientMethods.drawTiledSprite(texture, guiGraphics, getX(), getY(), width, height);
             }
-        } else {
+        } else if (color != null) {
             color.getColor().ifPresent(color1 -> {
                 if (fillPercent != null) {
                     if (vertical)
@@ -128,6 +151,15 @@ public class Rectangle extends AbstractWidget {
                     guiGraphics.fill(getX(), getY(), getX() + width, getY() + height, color1.getIntColor());
                 }
             });
+        } else if (dynamicColor != null) {
+            if (fillPercent != null) {
+                if (vertical)
+                    guiGraphics.fill(getX(), (int) (getY() + height - height * fillPercent.getFillPercent()), getX() + width, getY() + height, dynamicColor.getColor().getIntColor());
+                else
+                    guiGraphics.fill(getX(), getY(), (int) (getX() + width * fillPercent.getFillPercent()), getY() + height, dynamicColor.getColor().getIntColor());
+            } else {
+                guiGraphics.fill(getX(), getY(), getX() + width, getY() + height, dynamicColor.getColor().getIntColor());
+            }
         }
     }
 

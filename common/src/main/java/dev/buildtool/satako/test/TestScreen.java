@@ -4,6 +4,9 @@ import dev.buildtool.satako.Constants;
 import dev.buildtool.satako.IntegerColor;
 import dev.buildtool.satako.Satako;
 import dev.buildtool.satako.client.gui.*;
+import dev.buildtool.satako.client.gui.Label;
+import dev.buildtool.satako.client.gui.Rectangle;
+import dev.buildtool.satako.client.gui.TextField;
 import dev.buildtool.satako.platform.Services;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -13,10 +16,12 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.level.material.Fluids;
 
+import java.awt.*;
 import java.util.LinkedHashMap;
 import java.util.List;
 
 public class TestScreen extends MenuScreen<TestMenu> {
+    private float hue;
     public TestScreen(TestMenu container, Inventory playerInventory, Component name) {
         super(container, playerInventory, name, true);
     }
@@ -61,7 +66,7 @@ public class TestScreen extends MenuScreen<TestMenu> {
         }).pos(label.getX(), label.getY() + label.getHeight()).build());
 //        addRenderableWidget(new SelectionButton(10, height - 20, Component.literal("Selection button")));
 
-        Rectangle rectangle = new Rectangle(20, topPos, 50, imageHeight, Constants.ORANGE, () -> 0.5f);
+        Rectangle rectangle = new Rectangle(20, topPos, 50, imageHeight,() -> new IntegerColor(Color.getHSBColor(hue,1,1).getRGB()), () -> 0.5f);
         addRenderableOnly(rectangle);
         addTooltip(rectangle, () -> Component.literal("Tooltip"));
         Rectangle water = Rectangle.withColoredSprite(leftPos - 22, topPos, 20, imageHeight, Constants.BLUE, Services.PLATFORM.getFluidTexture(Fluids.WATER, true), () -> 0.66f);
@@ -82,9 +87,8 @@ public class TestScreen extends MenuScreen<TestMenu> {
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float p_render_3_) {
         super.render(guiGraphics, mouseX, mouseY, p_render_3_);
-//        guiGraphics.pose().pushPose();
-//        guiGraphics.pose().translate((float) width /2, (float) height /2,-399);
-//        ClientMethods.drawCircle(guiGraphics);
-//        guiGraphics.pose().popPose();
+        hue+=0.01f;
+        if(hue>=1)
+            hue=0;
     }
 }
