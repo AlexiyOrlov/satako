@@ -74,6 +74,8 @@ public class EnergyStorage2 extends EnergyStorage {
 
     public int forceExtract(int amount)
     {
-        return extractEnergy(amount,false);
+        int energyExtracted = Math.min(this.energy, Math.min(this.maxExtract, amount));
+        energy-=energyExtracted;
+        return energyExtracted;
     }
 }
