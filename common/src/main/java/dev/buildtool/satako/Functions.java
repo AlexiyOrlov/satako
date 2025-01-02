@@ -965,4 +965,10 @@ public final class Functions {
     {
         return (E) o;
     }
+
+    @Deprecated
+    public static EntityType cast(EntityType<?> e)
+    {
+        return e;
+    }
 }
