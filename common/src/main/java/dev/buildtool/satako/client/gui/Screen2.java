@@ -132,4 +132,14 @@ public class Screen2 extends Screen
     {
         tooltips.put(target,tooltip);
     }
+
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        if(minecraft.options.keyInventory.isDown() && getFocused()==null)
+        {
+            onClose();
+            return true;
+        }
+        return super.keyPressed(keyCode, scanCode, modifiers);
+    }
 }
