@@ -72,7 +72,7 @@ public class EnergyStorage2 extends EnergyStorage {
         void run(EnergyStorage2 thisStorage);
     }
 
-    public int forceExtract(int amount,boolean simulate)
+    public int selfExtract(int amount, boolean simulate)
     {
         int energyExtracted = Math.min(this.energy,  amount);
         if(!simulate)
