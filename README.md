@@ -39,5 +39,3 @@ implementation("dev.buildtool:satako-common:satako_version")
 implementation("dev.buildtool:satako-neoforge:satako_version")
 modApi("dev.buildtool:satako-fabric:satako_version")
 ```
-
-Versioning - Satako version format is [mod version]-[minecraft version].
