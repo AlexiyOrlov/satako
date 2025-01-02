@@ -71,4 +71,9 @@ public class EnergyStorage2 extends EnergyStorage {
     public interface OnChanged {
         void run(EnergyStorage2 thisStorage);
     }
+
+    public int forceExtract(int amount)
+    {
+        return extractEnergy(amount,false);
+    }
 }
