@@ -1,6 +1,7 @@
 package dev.buildtool.satako.blocks;
 
 
+import dev.buildtool.satako.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -82,7 +83,7 @@ public abstract class BlockConnectable extends PipeBlock {
     @Override
     public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         if (dropItems && !state.is(newState.getBlock()) && state.hasBlockEntity()) {
-//            PlatformService.platformSpecific.dropItemsIfAny(worldIn, pos);
+            Services.PLATFORM.dropItemsIfAny(worldIn, pos);
         }
         super.onRemove(state, worldIn, pos, newState, isMoving);
     }
