@@ -10,12 +10,15 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Containers;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.fml.ModList;
@@ -40,12 +43,16 @@ public class NeoForgePlatformHooks implements IPlatformHooks {
 
     @Override
     public void dropItemsIfAny(Level level, BlockPos pos) {
-        IItemHandler itemHandler= level.getCapability(Capabilities.ItemHandler.BLOCK,pos,null);
-        if(itemHandler!=null) {
-            for (int i = 0; i < itemHandler.getSlots(); i++) {
-                ItemStack stack = itemHandler.getStackInSlot(i);
-                if (!stack.isEmpty())
-                    Containers.dropItemStack(level, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, stack);
+        BlockEntity blockEntity=level.getBlockEntity(pos);
+        BlockState blockState=level.getBlockState(pos);
+        for (Direction direction : Direction.values()) {
+            IItemHandler itemHandler= level.getCapability(Capabilities.ItemHandler.BLOCK,pos,blockState,blockEntity,direction);
+            if(itemHandler!=null) {
+                for (int i = 0; i < itemHandler.getSlots(); i++) {
+                    ItemStack stack = itemHandler.getStackInSlot(i);
+                    if (!stack.isEmpty())
+                        Containers.dropItemStack(level, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, stack);
+                }
             }
         }
     }
