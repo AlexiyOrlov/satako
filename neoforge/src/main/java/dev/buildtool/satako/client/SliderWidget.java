@@ -18,6 +18,7 @@ import net.minecraft.util.Mth;
 
 import java.text.DecimalFormat;
 
+//FIXME is not focusable in scrolling panel
 public abstract class SliderWidget extends Widget implements IFocusableWidget {
     protected static final ResourceLocation SLIDER_SPRITE = ResourceLocation.withDefaultNamespace("widget/slider");
     protected static final ResourceLocation HIGHLIGHTED_SPRITE = ResourceLocation.withDefaultNamespace("widget/slider_highlighted");
