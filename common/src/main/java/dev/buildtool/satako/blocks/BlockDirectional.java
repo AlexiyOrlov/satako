@@ -43,7 +43,7 @@ public abstract class BlockDirectional extends DirectionalBlock {
     @Override
     public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         if (dropItems && !state.is(newState.getBlock()) && state.hasBlockEntity()) {
-            Services.PLATFORM.dropItemsIfAny(worldIn, pos);
+            Services.PLATFORM.dropItemsIfAny(worldIn, pos, state);
         }
         super.onRemove(state, worldIn, pos, newState, isMoving);
     }

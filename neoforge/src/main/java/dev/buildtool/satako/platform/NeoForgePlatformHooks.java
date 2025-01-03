@@ -42,9 +42,8 @@ public class NeoForgePlatformHooks implements IPlatformHooks {
     }
 
     @Override
-    public void dropItemsIfAny(Level level, BlockPos pos) {
+    public void dropItemsIfAny(Level level, BlockPos pos, BlockState blockState) {
         BlockEntity blockEntity=level.getBlockEntity(pos);
-        BlockState blockState=level.getBlockState(pos);
         for (Direction direction : Direction.values()) {
             IItemHandler itemHandler= level.getCapability(Capabilities.ItemHandler.BLOCK,pos,blockState,blockEntity,direction);
             if(itemHandler!=null) {

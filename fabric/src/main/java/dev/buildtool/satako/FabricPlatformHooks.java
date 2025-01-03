@@ -12,6 +12,7 @@ import net.minecraft.world.Containers;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 
 public class FabricPlatformHooks implements IPlatformHooks {
@@ -29,7 +30,7 @@ public class FabricPlatformHooks implements IPlatformHooks {
     }
 
     @Override
-    public void dropItemsIfAny(Level level, BlockPos pos) {
+    public void dropItemsIfAny(Level level, BlockPos pos, BlockState blockState) {
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity instanceof Container inventory) {
             Containers.dropContents(level, pos, inventory);
