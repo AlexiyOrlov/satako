@@ -99,7 +99,7 @@ public abstract class SliderWidget extends Widget implements IFocusableWidget {
         this.setValue((mouseX - (double)(this.getX() + 4)) / (double)(this.width - 8));
     }
 
-    private void setValue(double value) {
+    public void setValue(double value) {
         double d0 = this.value;
         this.value = snapToNearest(value);
         if (d0 != this.value) {
