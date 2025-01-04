@@ -69,7 +69,7 @@ public class TestScreen extends MenuScreen<TestMenu> {
         Rectangle rectangle = new Rectangle(20, topPos, 50, imageHeight,() -> new IntegerColor(Color.getHSBColor(hue,1,1).getRGB()), () -> 0.5f,true);
         addRenderableOnly(rectangle);
         addTooltip(rectangle, () -> Component.literal("Tooltip"));
-        Rectangle water = new Rectangle(leftPos - 22, topPos, 20, imageHeight,() -> Constants.BLUE, Services.PLATFORM.getFluidTexture(Fluids.WATER, true), () -> 0.9f,true);
+        Rectangle water = new Rectangle(leftPos - 22, topPos, 20, imageHeight,() -> 0.9f, Services.PLATFORM.getFluidTexture(Fluids.WATER, true), null);
         addRenderableOnly(water);
 
         Rectangle horizontal = new Rectangle(leftPos, topPos - 20, imageWidth, 18,() ->  new IntegerColor(0, 128, 255), Services.PLATFORM.getFluidTexture(Fluids.LAVA, true), () -> 0.7f, false);
