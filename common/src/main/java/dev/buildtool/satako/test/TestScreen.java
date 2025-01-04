@@ -69,10 +69,10 @@ public class TestScreen extends MenuScreen<TestMenu> {
         Rectangle rectangle = new Rectangle(20, topPos, 50, imageHeight,() -> new IntegerColor(Color.getHSBColor(hue,1,1).getRGB()), () -> 0.5f,true);
         addRenderableOnly(rectangle);
         addTooltip(rectangle, () -> Component.literal("Tooltip"));
-        Rectangle water = Rectangle.withColoredSprite(leftPos - 22, topPos, 20, imageHeight, Constants.BLUE, Services.PLATFORM.getFluidTexture(Fluids.WATER, true), () -> 0.66f);
+        Rectangle water = new Rectangle(leftPos - 22, topPos, 20, imageHeight,() -> Constants.BLUE, Services.PLATFORM.getFluidTexture(Fluids.WATER, true), () -> 0.9f,true);
         addRenderableOnly(water);
 
-        Rectangle horizontal = new Rectangle(leftPos, topPos - 20, imageWidth, 18, new IntegerColor(0, 128, 255), Services.PLATFORM.getFluidTexture(Fluids.WATER, false), () -> 0.33f, false);
+        Rectangle horizontal = new Rectangle(leftPos, topPos - 20, imageWidth, 18,() ->  new IntegerColor(0, 128, 255), Services.PLATFORM.getFluidTexture(Fluids.LAVA, true), () -> 0.7f, false);
         addRenderableOnly(horizontal);
         addRenderableWidget(new ExtendedSlider(leftPos, topPos + imageHeight, imageWidth, 20, Component.literal(""), Component.literal(""), 1, 20, 1, true));
         Rectangle horizontalColored = Rectangle.horizontal(leftPos, topPos - 40, imageWidth, 18, Constants.GRAY, null, () -> 0.6f);
