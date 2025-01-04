@@ -8,6 +8,7 @@ import dev.buildtool.satako.client.gui.Label;
 import dev.buildtool.satako.client.gui.Rectangle;
 import dev.buildtool.satako.client.gui.TextField;
 import dev.buildtool.satako.platform.Services;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
@@ -37,7 +38,7 @@ public class TestScreen extends MenuScreen<TestMenu> {
         new ButtonGroup(radioButton, radioButton2);
 
         Button button = new Button.Builder(Component.literal("Open client screen"), p_93751_ -> {
-//            Minecraft.getInstance().setScreen(new ConfigScreen2(Component.literal("Client screen"),this));
+            Minecraft.getInstance().setScreen(new TestSlotlessScreen(Component.literal("Client screen"),this));
         }).pos(0, 120).size(100, 20).build();
         button.setTooltip(Tooltip.create(Component.literal("Veeeeeeeeeeeeeryyyyyyyyyyyyyyyy looooooooooooooooooooooooooong tooooooooltiiiiiiiip")));
         addRenderableWidget(button);
