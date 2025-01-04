@@ -119,7 +119,11 @@ public class Rectangle extends AbstractWidget {
         guiGraphics.pose().translate(0, 0, 399);
         if (sprite != null) {
             int min = Math.min(width, height);
-            color.getColor().ifPresent(color1 -> guiGraphics.setColor(color1.getRed(), color1.getGreen(), color1.getBlue(), color1.getAlpha()));
+            if(dynamicColor!=null)
+            {
+                IntegerColor integerColor=dynamicColor.getColor();
+                guiGraphics.setColor(integerColor.getRed(), integerColor.getGreen(), integerColor.getBlue(), integerColor.getAlpha());
+            }
             GuiSpriteScaling.NineSlice nineSlice = new GuiSpriteScaling.NineSlice(min, min, new GuiSpriteScaling.NineSlice.Border(0, 0, 0, 0));
             if (fillPercent != null) {
                 if (vertical)
@@ -129,7 +133,8 @@ public class Rectangle extends AbstractWidget {
             } else {
                 guiGraphics.blitNineSlicedSprite(sprite, nineSlice, getX(), getY(), -90, width, height);
             }
-            color.getColor().ifPresent(color1 -> guiGraphics.setColor(1, 1, 1, 1));
+            if(dynamicColor!=null)
+                guiGraphics.setColor(1, 1, 1, 1);
         } else if (texture != null) {
             if (fillPercent != null) {
                 if (vertical) {
