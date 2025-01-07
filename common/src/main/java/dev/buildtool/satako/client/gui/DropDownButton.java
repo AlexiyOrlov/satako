@@ -15,10 +15,10 @@ import java.util.*;
  * Choice buttons must call onPress and change the message
  */
 public class DropDownButton extends BetterButton {
-    private HashMap<Component, RadioButton> choices;
-    private final Screen parent;
-    private boolean open;
-    private final List<GuiEventListener> overlappingElements = new ArrayList<>();
+    public HashMap<Component, RadioButton> choices;
+    protected final Screen parent;
+    protected boolean open;
+    protected final List<GuiEventListener> overlappingElements = new ArrayList<>();
 
     public DropDownButton(int x, int y, Screen parent) {
         super(x, y, Component.empty());
@@ -112,5 +112,20 @@ public class DropDownButton extends BetterButton {
                 this.width = radioButton.getWidth();
         }
         buttonGroup.connect();
+    }
+
+    public void setSelectedButton(int index)
+    {
+        int number=0;
+        for (RadioButton radioButton : choices.values()) {
+            if(index==number)
+            {
+                radioButton.selected=true;
+                setMessage(radioButton.getMessage());
+                break;
+            }
+            else
+                number++;
+        }
     }
 }
