@@ -24,7 +24,7 @@ public class TestSlotlessScreen extends Screen2 {
         addRenderableOnly(lava);
         Rectangle lava2=new Rectangle(lava.getX()-lava.getWidth(),centerY,60,60,() -> 0.5f,Services.PLATFORM.getFluidTexture(Fluids.LAVA,true),null);
         addRenderableOnly(lava2);
-        Label label=new Label(lava2.getX()+lava2.getWidth(),lava2.getY(),Component.literal("Label"), Constants.BLACK);
+        Label label=new Label(lava2.getX()+lava2.getWidth(),lava2.getY()-20,Component.literal("Label"), Constants.BLACK);
         addRenderableOnly(label);
         BetterButton press=new BetterButton(label.getX()+label.getWidth(),label.getY(),Component.literal("Press for popup"),button -> addPopup(Component.literal("Popup")));
         addRenderableWidget(press);
