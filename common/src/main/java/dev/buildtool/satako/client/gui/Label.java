@@ -20,14 +20,14 @@ public class Label extends BetterButton implements Scrollable {
 
     @SuppressWarnings("ConstantConditions")
     public Label(int x, int y, Component text, IntegerColor backgroundColor) {
-        super(x, y, Minecraft.getInstance().font.width(text.getString()), 10, text, null);
+        super(x, y, Minecraft.getInstance().font.width(text.getString())+8, 10, text, null);
         scrollAmount = 20;
         this.backgroundColor = backgroundColor;
     }
 
     @SuppressWarnings("ConstantConditions")
     public Label(int x, int y, Component text, @Nullable Screen parent, @Nullable OnPress pressHandler, IntegerColor backgroundColor) {
-        super(x, y, Minecraft.getInstance().font.width(text.getString()), 10, text, pressHandler);
+        super(x, y, Minecraft.getInstance().font.width(text.getString())+8, 10, text, pressHandler);
         scrollAmount = 20;
         this.parent = parent;
         this.backgroundColor = backgroundColor;
@@ -42,7 +42,7 @@ public class Label extends BetterButton implements Scrollable {
     @Override
     public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         if (!hidden) {
-            ClientMethods.drawBackground(guiGraphics, getX(), getY() + 4, 399, width, height + 2, backgroundColor);
+            ClientMethods.drawBackground(guiGraphics, getX(), getY() + 4, 399, width+8, height + 2, backgroundColor);
             guiGraphics.pose().translate(0, 0, 400);
             renderScrollingString(guiGraphics, fontRenderer, getMessage(), getX(), getY() + 3, getX() + getWidth(), getY() + getHeight()/2 + 6, Constants.WHITE.getIntColor());
         }
@@ -93,6 +93,6 @@ public class Label extends BetterButton implements Scrollable {
 
     @Override
     public int getWidth() {
-        return super.getWidth()+8;
+        return super.getWidth()+12;
     }
 }
