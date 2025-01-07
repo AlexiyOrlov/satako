@@ -83,6 +83,7 @@ public class DropDownButton extends BetterButton {
     }
 
     /**
+     * TODO remove 2nd argument
      * @param map            text to action pairs.
      * @param selectedButton initially selected button index
      */
