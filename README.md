@@ -39,3 +39,5 @@ implementation("dev.buildtool:satako-common:satako_version")
 implementation("dev.buildtool:satako-neoforge:satako_version")
 modApi("dev.buildtool:satako-fabric:satako_version")
 ```
+
+If you have any questions, ask them in the [discord](https://discord.com/invite/MYxxMfctWx)
