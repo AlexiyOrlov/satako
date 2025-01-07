@@ -4,12 +4,15 @@ import com.google.common.collect.Lists;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.Container;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemList implements ItemContainer{
+public class ItemList implements ItemContainer, Container {
     protected ArrayList<ItemStack> itemStacks;
 
     public ItemList(int size) {
@@ -85,8 +88,33 @@ public class ItemList implements ItemContainer{
     }
 
     @Override
+    public int getContainerSize() {
+        return itemStacks.size();
+    }
+
+    @Override
     public boolean isEmpty() {
         return Functions.isEmpty(itemStacks);
+    }
+
+    @Override
+    public ItemStack getItem(int slot) {
+        return itemStacks.get(slot);
+    }
+
+    @Override
+    public ItemStack removeItem(int slot, int amount) {
+        ItemStack itemstack = ContainerHelper.removeItem(this.getItems(), slot, amount);
+        if (!itemstack.isEmpty()) {
+            this.setChanged();
+        }
+
+        return itemstack;
+    }
+
+    @Override
+    public ItemStack removeItemNoUpdate(int slot) {
+        return ContainerHelper.takeItem(itemStacks,slot);
     }
 
     @Override
@@ -131,5 +159,20 @@ public class ItemList implements ItemContainer{
     public void setItem(int i, ItemStack stack) {
         if(isItemValid(i,stack))
             itemStacks.set(i,stack);
+    }
+
+    @Override
+    public void setChanged() {
+
+    }
+
+    @Override
+    public boolean stillValid(Player player) {
+        return true;
+    }
+
+    @Override
+    public void clearContent() {
+        itemStacks.clear();
     }
 }
