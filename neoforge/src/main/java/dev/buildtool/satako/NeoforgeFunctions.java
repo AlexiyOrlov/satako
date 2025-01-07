@@ -35,7 +35,6 @@ public class NeoforgeFunctions {
      */
     public static boolean insertItem(IItemHandler iItemHandler, ItemStack itemStack) {
         ItemStack out = ItemHandlerHelper.insertItemStacked(iItemHandler, itemStack.copy(), false);
-        itemStack.setCount(out.getCount());
         return out.isEmpty();
     }
 
