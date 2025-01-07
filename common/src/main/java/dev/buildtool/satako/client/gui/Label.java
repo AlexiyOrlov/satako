@@ -20,7 +20,7 @@ public class Label extends BetterButton implements Scrollable {
 
     @SuppressWarnings("ConstantConditions")
     public Label(int x, int y, Component text, IntegerColor backgroundColor) {
-        super(x, y, Minecraft.getInstance().font.width(text.getString())+4, 10, text, null);
+        super(x, y, Minecraft.getInstance().font.width(text.getString()), 10, text, null);
         scrollAmount = 20;
         this.backgroundColor = backgroundColor;
     }
