@@ -93,6 +93,6 @@ public class Label extends BetterButton implements Scrollable {
 
     @Override
     public int getWidth() {
-        return super.getWidth()+4;
+        return super.getWidth()+8;
     }
 }
