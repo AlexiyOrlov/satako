@@ -1,8 +1,7 @@
 package dev.buildtool.satako.mixins;
 
 import dev.buildtool.satako.SatakoClient;
-import dev.buildtool.satako.integrations.integration.JEI;
-import mezz.jei.api.ingredients.ITypedIngredient;
+import dev.buildtool.satako.SatakoClientFabric;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.world.inventory.Slot;
@@ -23,9 +22,10 @@ public class ContainerScreenMixin {
             SatakoClient.targetStack = slot.getItem();
             SatakoClient.handle(SatakoClient.targetStack,guiGraphics);
         }
-        if(SatakoClient.jei && JEI.ingredientListOverlay!=null)
+        if(SatakoClient.jei)
         {
-            JEI.ingredientListOverlay.getIngredientUnderMouse().flatMap(ITypedIngredient::getItemStack).ifPresent(itemStack -> SatakoClient.handle(itemStack, guiGraphics));
+            SatakoClientFabric.handleJeiScreen(guiGraphics);
         }
     }
+
 }
