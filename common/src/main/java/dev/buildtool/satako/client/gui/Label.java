@@ -20,18 +20,23 @@ public class Label extends BetterButton implements Scrollable {
 
     @SuppressWarnings("ConstantConditions")
     public Label(int x, int y, Component text, IntegerColor backgroundColor) {
-        super(x, y, Minecraft.getInstance().font.width(text.getString())+8, 10, text, null);
-        scrollAmount = 20;
+        this(x, y,text,backgroundColor,null);
         this.backgroundColor = backgroundColor;
     }
 
+    public Label(int x,int y,Component text,IntegerColor backgroundColor,OnPress pressHandler)
+    {
+        super(x,y,text,pressHandler);
+        this.backgroundColor=backgroundColor;
+    }
+
+    @Deprecated
     @SuppressWarnings("ConstantConditions")
     public Label(int x, int y, Component text, @Nullable Screen parent, @Nullable OnPress pressHandler, IntegerColor backgroundColor) {
         super(x, y, Minecraft.getInstance().font.width(text.getString())+8, 10, text, pressHandler);
         scrollAmount = 20;
         this.parent = parent;
         this.backgroundColor = backgroundColor;
-
     }
 
     public Label(int x, int y, Component text, int labelWidth, @Nullable OnPress onPress, IntegerColor color) {
