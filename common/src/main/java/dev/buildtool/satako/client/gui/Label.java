@@ -26,7 +26,7 @@ public class Label extends BetterButton implements Scrollable {
 
     public Label(int x,int y,Component text,IntegerColor backgroundColor,OnPress pressHandler)
     {
-        super(x,y,text,pressHandler);
+        super(x,y,Minecraft.getInstance().font.width(text.getString())+8, 10, text,pressHandler);
         this.backgroundColor=backgroundColor;
     }
 
@@ -49,7 +49,7 @@ public class Label extends BetterButton implements Scrollable {
         if (!hidden) {
             ClientMethods.drawBackground(guiGraphics, getX(), getY() + 4, 399, width+8, height + 2, backgroundColor);
             guiGraphics.pose().translate(0, 0, 400);
-            renderScrollingString(guiGraphics, fontRenderer, getMessage(), getX(), getY() + 3, getX() + getWidth(), getY() + getHeight()/2 + 6, Constants.WHITE.getIntColor());
+            renderScrollingString(guiGraphics, fontRenderer, getMessage(), getX(), getY() + 3, getX() + getWidth()-4, getY() + getHeight()/2 + 6, Constants.WHITE.getIntColor());
         }
     }
 
