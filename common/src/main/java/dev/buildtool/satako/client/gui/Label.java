@@ -88,7 +88,7 @@ public class Label extends BetterButton implements Scrollable {
     @Override
     public void updateWidth() {
         setX(getX() + width / 2 - fontRenderer.width(getMessage()) / 2);
-        width = fontRenderer.width(getMessage());
+        width = fontRenderer.width(getMessage())+8;
     }
 
     @Override
