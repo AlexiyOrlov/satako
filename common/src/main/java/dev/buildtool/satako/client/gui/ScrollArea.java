@@ -40,7 +40,7 @@ public class ScrollArea extends AbstractWidget{
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        if(button==0)
+        if(button==0  && totalContentHeight>height)
         {
             if(mouseX<getX()+width && mouseX>getX()+width-12 && mouseY>scroll && mouseY<scroll+15) {
                 scrolling = true;
@@ -81,7 +81,10 @@ public class ScrollArea extends AbstractWidget{
         for (AbstractWidget widget : widgets) {
             widget.render(guiGraphics,mouseX,mouseY,partialTick);
         }
-        guiGraphics.blitSprite(SCROLLER_SPRITE,width-2,scroll,12,15);
+        if(totalContentHeight>height)
+            guiGraphics.blitSprite(SCROLLER_SPRITE,width-2,scroll,12,15);
+        else
+            guiGraphics.blitSprite(SCROLLER_DISABLED_SPRITE,width-2,scroll,12,15);
         guiGraphics.drawCenteredString(Minecraft.getInstance().font, getMessage(),width/2,getY()-10,Constants.WHITE.getIntColor());
     }
 
