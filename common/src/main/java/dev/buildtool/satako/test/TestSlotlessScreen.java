@@ -1,14 +1,15 @@
 package dev.buildtool.satako.test;
 
 import dev.buildtool.satako.Constants;
-import dev.buildtool.satako.client.gui.BetterButton;
-import dev.buildtool.satako.client.gui.Label;
-import dev.buildtool.satako.client.gui.Rectangle;
-import dev.buildtool.satako.client.gui.Screen2;
+import dev.buildtool.satako.client.gui.*;
 import dev.buildtool.satako.platform.Services;
+import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.material.Fluids;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TestSlotlessScreen extends Screen2 {
     private Screen previous;
@@ -28,6 +29,14 @@ public class TestSlotlessScreen extends Screen2 {
         addRenderableOnly(label);
         BetterButton press=new BetterButton(label.getX()+label.getWidth(),label.getY(),Component.literal("Press for popup"),button -> addPopup(Component.literal("Popup")));
         addRenderableWidget(press);
+        List<AbstractWidget> abstractWidgets=new ArrayList<>();
+        for (int i = 0; i < 30; i++) {
+            BetterButton label1 = new BetterButton(0, 0, Component.literal("Label" + i));
+            label1.setHeight(40);
+            abstractWidgets.add(label1);
+        }
+        ScrollArea scrollArea=new ScrollArea(10,10,lava2.getX(),height-30,Component.literal("Scroll area"),abstractWidgets,this);
+        addRenderableWidget(scrollArea);
     }
 
     @Override
