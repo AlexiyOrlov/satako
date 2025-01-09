@@ -47,7 +47,7 @@ public class Label extends BetterButton implements Scrollable {
     @Override
     public void renderWidget(GuiGraphics guiGraphics, int p_renderButton_1_, int p_renderButton_2_, float p_renderButton_3_) {
         if (!hidden) {
-            ClientMethods.drawBackground(guiGraphics, getX(), getY() + 4, 399, width+8, height + 2, backgroundColor);
+            ClientMethods.drawBackground(guiGraphics, getX()+4, getY() + 4, 399, width+8, height + 2, backgroundColor);
             guiGraphics.pose().translate(0, 0, 400);
             renderScrollingString(guiGraphics, fontRenderer, getMessage(), getX(), getY() + 3, getX() + getWidth()-4, getY() + getHeight()/2 + 6, Constants.WHITE.getIntColor());
         }
