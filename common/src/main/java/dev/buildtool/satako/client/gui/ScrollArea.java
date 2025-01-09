@@ -54,13 +54,12 @@ public class ScrollArea extends AbstractWidget{
     public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY) {
         scroll= (int) Math.clamp(mouseY- (double) getY() /height,getY(),height);
         float div= (float) (totalContentHeight) /widgets.size();
-        float relative= (float) (Math.clamp(mouseY- (double) getY() /height,getY(),height)*(totalContentHeight-height+div)/height-div);
+        float relative= (float) (Math.clamp((mouseY- (double) getY() /height),getY(),height)*(totalContentHeight-height+div+getY())/height-div-getY());
         for (AbstractWidget widget : widgets) {
             Integer integer = widgetYOffsets.get(widget);
             widget.setY((int) (integer -relative));
             widget.visible=widget.getY()>=getY() && widget.getY()+widget.getHeight()<=height+div/2;
         }
-        System.out.println(widgets.getFirst().getY()+" "+getY());
         return super.mouseDragged(mouseX, mouseY, button, dragX, dragY);
     }
 
