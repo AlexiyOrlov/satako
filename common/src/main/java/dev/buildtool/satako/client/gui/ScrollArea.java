@@ -42,7 +42,7 @@ public class ScrollArea extends AbstractWidget{
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         if(button==0)
         {
-            if(mouseX<getX()+width && mouseX>getX()+width-15) {
+            if(mouseX<getX()+width && mouseX>getX()+width-12 && mouseY>scroll && mouseY<scroll+15) {
                 scrolling = true;
                 return true;
             }
