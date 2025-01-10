@@ -1,5 +1,7 @@
 package dev.buildtool.satako.test;
 
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.Table;
 import dev.buildtool.satako.Constants;
 import dev.buildtool.satako.client.gui.*;
 import dev.buildtool.satako.platform.Services;
@@ -29,18 +31,19 @@ public class TestSlotlessScreen extends Screen2 {
         addRenderableOnly(label);
         BetterButton press=new BetterButton(label.getX()+label.getWidth(),label.getY(),Component.literal("Press for popup"),button -> addPopup(Component.literal("Popup")));
         addRenderableWidget(press);
-        List<AbstractWidget> abstractWidgets=new ArrayList<>();
-        for (int i = 0; i < 30; i++) {
-            BetterButton label1 = new BetterButton(0, 0, Component.literal("Label" + i));
-            abstractWidgets.add(label1);
+        HashBasedTable<Integer,Integer,AbstractWidget> hashBasedTable=HashBasedTable.create();
+        int index=0;
+        for (int j = 0; j < 15; j++) {
+            for (int i = 0; i < 2; i++) {
+                AbstractWidget label1=new BetterButton(0,0,Component.literal("Button #"+index));//new Label(0,0,Component.literal("Label"+index),Constants.ORANGE);
+                hashBasedTable.put(j,i,label1);
+                index++;
+            }
         }
         ScrollArea scrollArea=new ScrollArea(10,height/2,lava2.getX(),height/2,Component.literal("Scroll area"), this);
         addRenderableWidget(scrollArea);
-        boolean b=false;
-        for (int i = 0; i < abstractWidgets.size(); i++) {
-            AbstractWidget widget = abstractWidgets.get(i);
-            scrollArea.addWidget(widget, b);
-            b=!b;
+        for (Table.Cell<Integer, Integer, AbstractWidget> integerIntegerAbstractWidgetCell : hashBasedTable.cellSet()) {
+            scrollArea.addWidget(integerIntegerAbstractWidgetCell.getValue(),integerIntegerAbstractWidgetCell.getRowKey(),integerIntegerAbstractWidgetCell.getColumnKey());
         }
         scrollArea.alignWidgets();
     }

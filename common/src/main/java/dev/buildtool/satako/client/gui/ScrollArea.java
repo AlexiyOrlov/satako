@@ -1,7 +1,10 @@
 package dev.buildtool.satako.client.gui;
 
+import com.google.common.collect.Table;
+import com.google.common.collect.TreeBasedTable;
 import dev.buildtool.satako.Constants;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
@@ -12,6 +15,7 @@ import net.minecraft.resources.ResourceLocation;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ScrollArea extends AbstractWidget{
     protected List<AbstractWidget> widgets;
@@ -22,7 +26,7 @@ public class ScrollArea extends AbstractWidget{
     protected int scrollForScrollBar;
     protected HashMap<AbstractWidget,Integer> widgetYOffsets=new HashMap<>();
     protected Screen parentScreen;
-    protected List<List<AbstractWidget>> widgetTable=new ArrayList<>();
+    protected TreeBasedTable<Integer,Integer,AbstractWidget> widgetTable=TreeBasedTable.create();
 
     public ScrollArea(int x, int y, int width, int height, Component message, Screen parentScreen) {
         super(x, y, width, height, message);
@@ -30,23 +34,9 @@ public class ScrollArea extends AbstractWidget{
         this.parentScreen=parentScreen;
     }
 
-    public void addWidget(AbstractWidget widget,boolean sameRow)
+    public void addWidget(AbstractWidget widget,int row,int column)
     {
-        if(!widgetTable.isEmpty()) {
-            List<AbstractWidget> columns = widgetTable.getLast();
-            if (sameRow) {
-                columns.add(widget);
-            } else {
-                List<AbstractWidget> newRow = new ArrayList<>();
-                newRow.add(widget);
-                widgetTable.add(newRow);
-            }
-        }
-        else {
-            List<AbstractWidget> newRow = new ArrayList<>();
-            newRow.add(widget);
-            widgetTable.add(newRow);
-        }
+        widgetTable.put(row,column,widget);
         widgets.add(widget);
     }
 
@@ -64,18 +54,33 @@ public class ScrollArea extends AbstractWidget{
             widgetYOffsets.put(widget,widget.getY());
         }
         scrollForScrollBar =getY();
-        for (int row = 0; row < widgetTable.size(); row++) {
-            List<AbstractWidget> rowList=widgetTable.get(row);
-            for (int column = 0; column < rowList.size(); column++) {
-                AbstractWidget widget=rowList.get(column);
-                int prevColumn=column-1;
-                if(prevColumn>=0)
+
+        HashMap<Integer,Integer> columnToWidest=new HashMap<>();
+
+        for (Integer column : widgetTable.columnKeySet()) {
+            Map<Integer,AbstractWidget> map= widgetTable.column(column);
+            for (Map.Entry<Integer, AbstractWidget> integerAbstractWidgetEntry : map.entrySet()) {
+                Integer row  = integerAbstractWidgetEntry.getKey();
+                AbstractWidget abstractWidget = integerAbstractWidgetEntry.getValue();
+                int widgetWidth = abstractWidget.getWidth();
+                if(columnToWidest.containsKey(column))
                 {
-                    AbstractWidget previousWidget=rowList.get(prevColumn);
-                    widget.setX(previousWidget.getX()+previousWidget.getWidth());
-                    widget.setY(previousWidget.getY());
-                    widgetYOffsets.put(widget,widget.getY());
+                    int widest=columnToWidest.get(column);
+                    if(widest< widgetWidth)
+                        columnToWidest.put(column, widgetWidth);
                 }
+                else {
+                    columnToWidest.put(column, widgetWidth);
+                }
+            }
+        }
+
+        for (Table.Cell<Integer, Integer, AbstractWidget> cell : widgetTable.cellSet()) {
+            Integer column = cell.getColumnKey();
+            if(column>0) {
+                AbstractWidget next = cell.getValue();
+                int widest = columnToWidest.get(column);
+                next.setX(getX() + widest);
             }
         }
     }
