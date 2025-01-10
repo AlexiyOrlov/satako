@@ -96,12 +96,11 @@ public class ScrollArea extends AbstractWidget{
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        if(button==0  && totalContentHeight>height)
+        boolean withinScrollBar=mouseX<getX()+width && mouseX>getX()+width-12 && mouseY> scrollForScrollBar && mouseY< scrollForScrollBar +15;
+        if(button==0  && totalContentHeight>height && withinScrollBar)
         {
-            if(mouseX<getX()+width && mouseX>getX()+width-12 && mouseY> scrollForScrollBar && mouseY< scrollForScrollBar +15) {
                 scrolling = true;
                 return true;
-            }
         }
         return super.mouseClicked(mouseX, mouseY, button);
     }
@@ -121,6 +120,7 @@ public class ScrollArea extends AbstractWidget{
                     widget.visible = widget.getY() >= getY() && widget.getY() + widget.getHeight() <=getY()+ height + div / 2;
                 });
             });
+            return true;
         }
         return super.mouseDragged(mouseX, mouseY, button, dragX, dragY);
     }
@@ -151,5 +151,10 @@ public class ScrollArea extends AbstractWidget{
     @Override
     protected void updateWidgetNarration(NarrationElementOutput narrationElementOutput) {
 
+    }
+
+    @Override
+    protected boolean isValidClickButton(int button) {
+        return false;
     }
 }
