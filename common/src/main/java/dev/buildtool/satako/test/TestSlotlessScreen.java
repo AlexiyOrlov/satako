@@ -36,7 +36,12 @@ public class TestSlotlessScreen extends Screen2 {
         }
         ScrollArea scrollArea=new ScrollArea(10,height/2,lava2.getX(),height/2,Component.literal("Scroll area"), this);
         addRenderableWidget(scrollArea);
-        abstractWidgets.forEach(widget -> scrollArea.addWidget(widget,false));
+        boolean b=false;
+        for (int i = 0; i < abstractWidgets.size(); i++) {
+            AbstractWidget widget = abstractWidgets.get(i);
+            scrollArea.addWidget(widget, b);
+            b=!b;
+        }
         scrollArea.alignWidgets();
     }
 

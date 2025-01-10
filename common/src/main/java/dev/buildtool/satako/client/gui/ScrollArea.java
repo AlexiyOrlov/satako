@@ -64,6 +64,18 @@ public class ScrollArea extends AbstractWidget{
             widgetYOffsets.put(widget,widget.getY());
         }
         scrollForScrollBar =getY();
+        for (int row = 0; row < widgetTable.size(); row++) {
+            List<AbstractWidget> rowList=widgetTable.get(row);
+            for (int column = 0; column < rowList.size(); column++) {
+                AbstractWidget widget=rowList.get(column);
+                int prevColumn=column-1;
+                if(prevColumn>=0)
+                {
+                    AbstractWidget previousWidget=rowList.get(prevColumn);
+                    widget.setX(previousWidget.getX()+previousWidget.getWidth());
+                }
+            }
+        }
     }
 
     @Override
