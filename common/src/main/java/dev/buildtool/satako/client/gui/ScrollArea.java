@@ -59,9 +59,8 @@ public class ScrollArea extends AbstractWidget{
 
         for (Integer column : widgetTable.columnKeySet()) {
             Map<Integer,AbstractWidget> map= widgetTable.column(column);
-            for (Map.Entry<Integer, AbstractWidget> integerAbstractWidgetEntry : map.entrySet()) {
-                Integer row  = integerAbstractWidgetEntry.getKey();
-                AbstractWidget abstractWidget = integerAbstractWidgetEntry.getValue();
+            for (Map.Entry<Integer, AbstractWidget> rowEntry : map.entrySet()) {
+                AbstractWidget abstractWidget = rowEntry.getValue();
                 int widgetWidth = abstractWidget.getWidth();
                 if(columnToWidest.containsKey(column))
                 {
@@ -75,12 +74,23 @@ public class ScrollArea extends AbstractWidget{
             }
         }
 
+        //align x and y
         for (Table.Cell<Integer, Integer, AbstractWidget> cell : widgetTable.cellSet()) {
             Integer column = cell.getColumnKey();
             if(column>0) {
                 AbstractWidget next = cell.getValue();
                 int widest = columnToWidest.get(column);
                 next.setX(getX() + widest);
+            }
+            int row=cell.getRowKey();
+            Map<Integer,AbstractWidget> map= widgetTable.row(row);
+            var list=new ArrayList<>(map.entrySet());
+            int firstY = list.getFirst().getValue().getY();
+            for (int i = 1; i < list.size(); i++) {
+                var rowEntry=list.get(i);
+                AbstractWidget abstractWidget = rowEntry.getValue();
+                abstractWidget.setY(firstY);
+                widgetYOffsets.put(abstractWidget,firstY);
             }
         }
     }
