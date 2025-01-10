@@ -39,6 +39,19 @@ loom {
     }
 }
 
-jar{
-    setArchiveClassifier('')
+publishing {
+    publications {
+        register('fabricVersion', MavenPublication) {
+            def name=base.archivesName.get()
+            artifactId name.substring(0,name.lastIndexOf('-'))
+            artifact remapJar
+            artifact sourcesJar
+        }
+    }
+    repositories {
+        maven {
+            name = 'MyMaven'
+            url property("myMavenUrl")
+        }
+    }
 }
