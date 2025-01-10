@@ -9,6 +9,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -20,22 +21,33 @@ public class ScrollArea extends AbstractWidget{
     private boolean scrolling;
     protected int scrollForScrollBar;
     protected HashMap<AbstractWidget,Integer> widgetYOffsets=new HashMap<>();
+    protected Screen parentScreen;
 
-    public ScrollArea(int x, int y, int width, int height, Component message, List<AbstractWidget> widgets, Screen parentScreen) {
+    public ScrollArea(int x, int y, int width, int height, Component message, Screen parentScreen) {
         super(x, y, width, height, message);
-        this.widgets=widgets;
+        this.widgets=new ArrayList<>();
+        this.parentScreen=parentScreen;
+    }
+
+    public void addWidget(AbstractWidget widget)
+    {
+        widgets.add(widget);
+    }
+
+    public void alignWidgets()
+    {
         int elementY=0;
         for (AbstractWidget widget : widgets) {
-            widget.setX(x);
-            widget.setY(y+elementY);
+            widget.setX(getX());
+            widget.setY(getY()+elementY);
             totalContentHeight+=widget.getHeight();
             elementY+=widget.getHeight();
             parentScreen.addRenderableWidget(widget);
-            if(widget.getY()+widget.getHeight()>y+height || widget.getY()<y)
+            if(widget.getY()+widget.getHeight()>getY()+height || widget.getY()<getY())
                 widget.visible=false;
             widgetYOffsets.put(widget,widget.getY());
         }
-        scrollForScrollBar =y;
+        scrollForScrollBar =getY();
     }
 
     @Override
