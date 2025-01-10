@@ -86,7 +86,7 @@ public class ScrollArea extends AbstractWidget{
             Integer column = cell.getColumnKey();
             AbstractWidget next = cell.getValue();
             if(column>0) {
-                int widest = columnToWidest.get(column);
+                int widest = columnToWidest.get(column-1);
                 next.setX(getX() + widest);
             }
             else
