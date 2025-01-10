@@ -22,6 +22,7 @@ public class ScrollArea extends AbstractWidget{
     protected int scrollForScrollBar;
     protected HashMap<AbstractWidget,Integer> widgetYOffsets=new HashMap<>();
     protected Screen parentScreen;
+    protected List<List<AbstractWidget>> widgetTable=new ArrayList<>();
 
     public ScrollArea(int x, int y, int width, int height, Component message, Screen parentScreen) {
         super(x, y, width, height, message);
@@ -29,8 +30,23 @@ public class ScrollArea extends AbstractWidget{
         this.parentScreen=parentScreen;
     }
 
-    public void addWidget(AbstractWidget widget)
+    public void addWidget(AbstractWidget widget,boolean sameRow)
     {
+        if(!widgetTable.isEmpty()) {
+            List<AbstractWidget> columns = widgetTable.getLast();
+            if (sameRow) {
+                columns.add(widget);
+            } else {
+                List<AbstractWidget> newRow = new ArrayList<>();
+                newRow.add(widget);
+                widgetTable.add(newRow);
+            }
+        }
+        else {
+            List<AbstractWidget> newRow = new ArrayList<>();
+            newRow.add(widget);
+            widgetTable.add(newRow);
+        }
         widgets.add(widget);
     }
 
