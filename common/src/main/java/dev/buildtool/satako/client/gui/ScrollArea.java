@@ -32,6 +32,7 @@ public class ScrollArea extends AbstractWidget{
         super(x, y, width, height, message);
         this.widgets=new ArrayList<>();
         this.parentScreen=parentScreen;
+        scrollForScrollBar =getY();
     }
 
     public void addWidget(AbstractWidget widget,int row,int column)
@@ -42,19 +43,23 @@ public class ScrollArea extends AbstractWidget{
 
     public void alignWidgets()
     {
+        //align y
         int elementY=0;
-        for (AbstractWidget widget : widgets) {
-            widget.setX(getX());
-            widget.setY(getY()+elementY);
-            totalContentHeight+=widget.getHeight();
-            elementY+=widget.getHeight();
-            parentScreen.addRenderableWidget(widget);
-            if(widget.getY()+widget.getHeight()>getY()+height || widget.getY()<getY())
-                widget.visible=false;
-            widgetYOffsets.put(widget,widget.getY());
+        for (Integer row : widgetTable.rowKeySet()) {
+           var map= widgetTable.row(row);
+           int highest=0;
+            for (Map.Entry<Integer, AbstractWidget> columnEntry : map.entrySet()) {
+                AbstractWidget abstractWidget = columnEntry.getValue();
+                abstractWidget.setY(getY()+elementY);
+                if(abstractWidget.getHeight()>highest)
+                    highest=abstractWidget.getHeight();
+                widgetYOffsets.put(abstractWidget,abstractWidget.getY());
+            }
+            elementY+=highest;
+            totalContentHeight+=highest;
         }
-        scrollForScrollBar =getY();
 
+        //calculate widest elements
         HashMap<Integer,Integer> columnToWidest=new HashMap<>();
 
         for (Integer column : widgetTable.columnKeySet()) {
@@ -74,23 +79,13 @@ public class ScrollArea extends AbstractWidget{
             }
         }
 
-        //align x and y
+        //align x
         for (Table.Cell<Integer, Integer, AbstractWidget> cell : widgetTable.cellSet()) {
             Integer column = cell.getColumnKey();
             if(column>0) {
                 AbstractWidget next = cell.getValue();
                 int widest = columnToWidest.get(column);
                 next.setX(getX() + widest);
-            }
-            int row=cell.getRowKey();
-            Map<Integer,AbstractWidget> map= widgetTable.row(row);
-            var list=new ArrayList<>(map.entrySet());
-            int firstY = list.getFirst().getValue().getY();
-            for (int i = 1; i < list.size(); i++) {
-                var rowEntry=list.get(i);
-                AbstractWidget abstractWidget = rowEntry.getValue();
-                abstractWidget.setY(firstY);
-                widgetYOffsets.put(abstractWidget,firstY);
             }
         }
     }
@@ -114,11 +109,14 @@ public class ScrollArea extends AbstractWidget{
             float relativeScroll= (float) Math.clamp(mouseY- (double) getY() /(getY()+height)-getY(),0,height);
             float div = (float) (totalContentHeight) / widgets.size();
             float relative = relativeScroll * (totalContentHeight - height) / height ;
-            for (AbstractWidget widget : widgets) {
-                Integer integer = widgetYOffsets.get(widget);
-                widget.setY((int) (integer - relative));
-                widget.visible = widget.getY() >= getY() && widget.getY() + widget.getHeight() <=getY()+ height + div / 2;
-            }
+            widgetTable.rowKeySet().forEach(integer -> {
+                var row=widgetTable.row(integer);
+                row.forEach((integer1, widget) -> {
+                    int offsetY=widgetYOffsets.get(widget);
+                    widget.setY((int) (offsetY-relative));
+                    widget.visible = widget.getY() >= getY() && widget.getY() + widget.getHeight() <=getY()+ height + div / 2;
+                });
+            });
         }
         return super.mouseDragged(mouseX, mouseY, button, dragX, dragY);
     }

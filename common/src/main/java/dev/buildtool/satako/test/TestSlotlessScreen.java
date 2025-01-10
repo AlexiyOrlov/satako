@@ -42,8 +42,8 @@ public class TestSlotlessScreen extends Screen2 {
         }
         ScrollArea scrollArea=new ScrollArea(10,height/2,lava2.getX(),height/2,Component.literal("Scroll area"), this);
         addRenderableWidget(scrollArea);
-        for (Table.Cell<Integer, Integer, AbstractWidget> integerIntegerAbstractWidgetCell : hashBasedTable.cellSet()) {
-            scrollArea.addWidget(integerIntegerAbstractWidgetCell.getValue(),integerIntegerAbstractWidgetCell.getRowKey(),integerIntegerAbstractWidgetCell.getColumnKey());
+        for (Table.Cell<Integer, Integer, AbstractWidget> cell : hashBasedTable.cellSet()) {
+            scrollArea.addWidget(cell.getValue(),cell.getRowKey(),cell.getColumnKey());
         }
         scrollArea.alignWidgets();
     }
