@@ -31,7 +31,7 @@ public class ScrollArea extends AbstractWidget{
             totalContentHeight+=widget.getHeight();
             elementY+=widget.getHeight();
             parentScreen.addRenderableWidget(widget);
-            if(widget.getY()+widget.getHeight()>height || widget.getY()<y)
+            if(widget.getY()+widget.getHeight()>y+height || widget.getY()<y)
                 widget.visible=false;
             widgetYOffsets.put(widget,widget.getY());
         }
@@ -60,7 +60,7 @@ public class ScrollArea extends AbstractWidget{
             for (AbstractWidget widget : widgets) {
                 Integer integer = widgetYOffsets.get(widget);
                 widget.setY((int) (integer - relative));
-                widget.visible = widget.getY() >= getY() && widget.getY() + widget.getHeight() <= height + div / 2;
+                widget.visible = widget.getY() >= getY() && widget.getY() + widget.getHeight() <=getY()+ height + div / 2;
             }
         }
         return super.mouseDragged(mouseX, mouseY, button, dragX, dragY);
