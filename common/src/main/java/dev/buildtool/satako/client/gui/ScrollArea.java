@@ -82,11 +82,13 @@ public class ScrollArea extends AbstractWidget{
         //align x
         for (Table.Cell<Integer, Integer, AbstractWidget> cell : widgetTable.cellSet()) {
             Integer column = cell.getColumnKey();
+            AbstractWidget next = cell.getValue();
             if(column>0) {
-                AbstractWidget next = cell.getValue();
                 int widest = columnToWidest.get(column);
                 next.setX(getX() + widest);
             }
+            else
+                next.setX(getX());
         }
     }
 

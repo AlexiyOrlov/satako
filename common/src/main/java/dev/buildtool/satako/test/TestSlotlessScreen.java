@@ -33,8 +33,8 @@ public class TestSlotlessScreen extends Screen2 {
         addRenderableWidget(press);
         HashBasedTable<Integer,Integer,AbstractWidget> hashBasedTable=HashBasedTable.create();
         int index=0;
-        for (int j = 0; j < 15; j++) {
-            for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 30; j++) {
+            for (int i = 0; i < 1; i++) {
                 AbstractWidget label1=new BetterButton(0,0,Component.literal("Button #"+index));//new Label(0,0,Component.literal("Label"+index),Constants.ORANGE);
                 hashBasedTable.put(j,i,label1);
                 index++;
