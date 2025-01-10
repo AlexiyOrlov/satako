@@ -53,7 +53,7 @@ public class ScrollArea extends AbstractWidget{
     @Override
     public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY) {
         if(scrolling) {
-            scrollForScrollBar = (int) Math.clamp(mouseY - (double) getY() / (getY()+height), getY(),getY()+ height);
+            scrollForScrollBar = (int) Math.clamp(mouseY - (double) getY() / (getY()+height), getY(),getY()+ height-15);
             float relativeScroll= (float) Math.clamp(mouseY- (double) getY() /(getY()+height)-getY(),0,height);
             float div = (float) (totalContentHeight) / widgets.size();
             float relative = relativeScroll * (totalContentHeight - height) / height ;
