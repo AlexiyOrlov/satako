@@ -30,12 +30,11 @@ public class TestSlotlessScreen extends Screen2 {
         BetterButton press=new BetterButton(label.getX()+label.getWidth(),label.getY(),Component.literal("Press for popup"),button -> addPopup(Component.literal("Popup")));
         addRenderableWidget(press);
         List<AbstractWidget> abstractWidgets=new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 30; i++) {
             BetterButton label1 = new BetterButton(0, 0, Component.literal("Label" + i));
-            label1.setHeight(40);
             abstractWidgets.add(label1);
         }
-        ScrollArea scrollArea=new ScrollArea(10,10,lava2.getX(),height-30,Component.literal("Scroll area"),abstractWidgets,this);
+        ScrollArea scrollArea=new ScrollArea(10,10,lava2.getX(),height/2,Component.literal("Scroll area"),abstractWidgets,this);
         addRenderableWidget(scrollArea);
     }
 
