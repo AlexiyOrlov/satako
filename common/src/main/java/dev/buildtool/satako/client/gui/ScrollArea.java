@@ -54,6 +54,8 @@ public class ScrollArea extends AbstractWidget{
                 if(abstractWidget.getHeight()>highest)
                     highest=abstractWidget.getHeight();
                 widgetYOffsets.put(abstractWidget,abstractWidget.getY());
+                if(abstractWidget.getY()+abstractWidget.getHeight()>getY()+height || abstractWidget.getY()<getY())
+                    abstractWidget.visible=false;
             }
             elementY+=highest;
             totalContentHeight+=highest;
