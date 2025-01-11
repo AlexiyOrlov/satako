@@ -39,6 +39,7 @@ public class ScrollArea extends AbstractWidget{
     {
         widgetTable.put(row,column,widget);
         widgets.add(widget);
+        parentScreen.addRenderableWidget(widget);
     }
 
     public void alignWidgets()
