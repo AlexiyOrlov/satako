@@ -27,6 +27,7 @@ public class ScrollArea extends AbstractWidget{
     protected HashMap<AbstractWidget,Integer> widgetYOffsets=new HashMap<>();
     protected Screen parentScreen;
     protected TreeBasedTable<Integer,Integer,AbstractWidget> widgetTable=TreeBasedTable.create();
+    protected List<AbstractWidget> widgetsThatSpanColumns=new ArrayList<>();
 
     public ScrollArea(int x, int y, int width, int height, Component message, Screen parentScreen) {
         super(x, y, width, height, message);
@@ -40,6 +41,12 @@ public class ScrollArea extends AbstractWidget{
         widgetTable.put(row,column,widget);
         widgets.add(widget);
         parentScreen.addRenderableWidget(widget);
+    }
+
+    public void addSpanningWidget(AbstractWidget widget,int row,int column)
+    {
+        addWidget(widget,row,column);
+        widgetsThatSpanColumns.add(widget);
     }
 
     public void alignWidgets()
@@ -69,15 +76,15 @@ public class ScrollArea extends AbstractWidget{
             Map<Integer,AbstractWidget> map= widgetTable.column(column);
             for (Map.Entry<Integer, AbstractWidget> rowEntry : map.entrySet()) {
                 AbstractWidget abstractWidget = rowEntry.getValue();
-                int widgetWidth = abstractWidget.getWidth();
-                if(columnToWidest.containsKey(column))
-                {
-                    int widest=columnToWidest.get(column);
-                    if(widest< widgetWidth)
+                if(!widgetsThatSpanColumns.contains(abstractWidget)) {
+                    int widgetWidth = abstractWidget.getWidth();
+                    if (columnToWidest.containsKey(column)) {
+                        int widest = columnToWidest.get(column);
+                        if (widest < widgetWidth)
+                            columnToWidest.put(column, widgetWidth);
+                    } else {
                         columnToWidest.put(column, widgetWidth);
-                }
-                else {
-                    columnToWidest.put(column, widgetWidth);
+                    }
                 }
             }
         }
