@@ -47,6 +47,7 @@ public class TestSlotlessScreen extends Screen2 {
         for (Table.Cell<Integer, Integer, AbstractWidget> cell : hashBasedTable.cellSet()) {
             scrollArea.addWidget(cell.getValue(),cell.getRowKey(),cell.getColumnKey());
         }
+        scrollArea.addSpanningWidget(new TextField(0,0,"Looooooooooooooong"),31,0);
         scrollArea.alignWidgets();
     }
 
