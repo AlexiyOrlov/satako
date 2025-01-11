@@ -36,9 +36,10 @@ public class TestSlotlessScreen extends Screen2 {
         for (int row = 0; row < 30; row++) {
             for (int column = 0; column < 1; column++) {
                 AbstractWidget l=new Label(0,0,Component.literal("Label #"+index),Constants.DARK);
-                AbstractWidget betterButton=new TextField(0,0,"Text field #"+index);//new Label(0,0,Component.literal("Label"+index),Constants.ORANGE);
+                AbstractWidget betterButton=new TextField(0,0,"Text field #"+index);
                 hashBasedTable.put(row,column,l);
                 hashBasedTable.put(row,column+1,betterButton);
+                hashBasedTable.put(row,column+2,new Label(0,0,Component.literal("Label #"+index),Constants.YELLOW));
                 index++;
             }
         }
