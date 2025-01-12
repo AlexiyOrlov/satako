@@ -100,21 +100,6 @@ public class Screen2 extends Screen
     }
 
     @Override
-    public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
-        int mousewheeld = (int) Math.signum(scrollY) * Constants.BUTTONHEIGHT;
-        boolean verticalscroll = Screen.hasAltDown();
-        if (mousewheeld != 0)
-        {
-            for (Renderable button : renderables) {
-                if (button instanceof Scrollable scrollable) {
-                    scrollable.scroll(mousewheeld, verticalscroll);
-                }
-            }
-        }
-        return false;
-    }
-
-    @Override
     public boolean isPauseScreen()
     {
         return Minecraft.getInstance().player.getHealth() < 10;
