@@ -40,6 +40,6 @@ neoForge {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
-    api("dev.ftb.mods:ftb-library-neoforge:${ftblibrary_version}")
+//    api("dev.ftb.mods:ftb-library-neoforge:${ftblibrary_version}")
     implementation("mezz.jei:jei-1.21.1-neoforge:${jei_version}")
 }

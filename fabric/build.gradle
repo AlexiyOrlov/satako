@@ -11,7 +11,7 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
 
-    modApi("dev.ftb.mods:ftb-library-fabric:${ftblibrary_version}")
+//    modApi("dev.ftb.mods:ftb-library-fabric:${ftblibrary_version}")
     modImplementation("mezz.jei:jei-1.21.1-fabric:${jei_version}")
 }
 
