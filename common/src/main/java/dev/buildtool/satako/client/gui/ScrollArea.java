@@ -28,6 +28,7 @@ public class ScrollArea extends AbstractWidget{
     protected Screen parentScreen;
     protected TreeBasedTable<Integer,Integer,AbstractWidget> widgetTable=TreeBasedTable.create();
     protected List<AbstractWidget> widgetsThatSpanColumns=new ArrayList<>();
+    private float relativeScroll;
 
     public ScrollArea(int x, int y, int width, int height, Component message, Screen parentScreen) {
         super(x, y, width, height, message);
@@ -120,7 +121,7 @@ public class ScrollArea extends AbstractWidget{
     public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY) {
         if(scrolling) {
             scrollForScrollBar = (int) Math.clamp(mouseY - (double) getY() / (getY()+height), getY(),getY()+ height-15);
-            float relativeScroll= (float) Math.clamp(mouseY- (double) getY() /(getY()+height)-getY(),0,height);
+            relativeScroll = (float) Math.clamp(mouseY- (double) getY() /(getY()+height)-getY(),0,height);
             float div = (float) (totalContentHeight) / widgets.size();
             float relative = relativeScroll * (totalContentHeight - height) / height ;
             widgetTable.rowKeySet().forEach(integer -> {
@@ -145,6 +146,24 @@ public class ScrollArea extends AbstractWidget{
         }
         return super.mouseReleased(mouseX, mouseY, button);
     }
+
+//    @Override
+//    public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
+//        scrollForScrollBar = (int) Math.clamp(scrollForScrollBar-scrollY*5 - (double) getY() / (getY()+height), getY(),getY()+ height-15);
+//        //TODO
+//        relativeScroll= (float) Math.clamp(relativeScroll -scrollY*5- (double) getY() /(getY()+height)-getY(),0,height);
+//        float div = (float) (totalContentHeight) / widgets.size();
+//        float relative = relativeScroll * (totalContentHeight - height) / height ;
+//        widgetTable.rowKeySet().forEach(integer -> {
+//            var row=widgetTable.row(integer);
+//            row.forEach((integer1, widget) -> {
+//                int offsetY=widgetYOffsets.get(widget);
+//                widget.setY((int) (offsetY-relative));
+//                widget.visible = widget.getY() >= getY() && widget.getY() + widget.getHeight() <=getY()+ height + div / 2;
+//            });
+//        });
+//        return true;
+//    }
 
     @Override
     protected void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
