@@ -39,11 +39,11 @@ public class TestSlotlessScreen extends Screen2 {
                 AbstractWidget betterButton=new TextField(0,0,"Text field #"+index);
                 hashBasedTable.put(row,column,l);
                 hashBasedTable.put(row,column+1,betterButton);
-                hashBasedTable.put(row,column+2,new Label(0,0,Component.literal("Label #"+index),Constants.YELLOW));
+//                hashBasedTable.put(row,column+2,new Label(0,0,Component.literal("Label #"+index),Constants.YELLOW));
                 index++;
             }
         }
-        ScrollArea scrollArea=new ScrollArea(10,10,lava2.getX(),height/2,Component.literal("Scroll area"), this);
+        ScrollArea scrollArea=new ScrollArea(0,10,width/2,label.getY(),Component.literal("Scroll area"), this);
         addRenderableWidget(scrollArea);
         for (Table.Cell<Integer, Integer, AbstractWidget> cell : hashBasedTable.cellSet()) {
             scrollArea.addWidget(cell.getValue(),cell.getRowKey(),cell.getColumnKey());

@@ -107,7 +107,7 @@ public class ScrollArea extends AbstractWidget{
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        boolean withinScrollBar=mouseX<getX()+width && mouseX>getX()+width-12 && mouseY> scrollForScrollBar && mouseY< scrollForScrollBar +15;
+        boolean withinScrollBar=mouseX<getX()+width+12 && mouseX>getX()+width-4 && mouseY> scrollForScrollBar && mouseY< scrollForScrollBar +15;
         if(button==0  && totalContentHeight>height && withinScrollBar)
         {
                 scrolling = true;
