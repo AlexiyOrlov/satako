@@ -164,7 +164,7 @@ public abstract class MenuScreen<T extends AbstractContainerMenu> extends Abstra
             onClose();
             return true;
         }
-        if (getFocused() != null)
+        if (getFocused() != null && keyCode==GLFW.GLFW_KEY_E)
             return true;
         return super.keyPressed(keyCode, scanCode, modifiers);
     }
