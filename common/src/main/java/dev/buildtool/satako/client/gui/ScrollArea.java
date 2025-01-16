@@ -24,7 +24,7 @@ public class ScrollArea extends AbstractWidget{
     protected static final ResourceLocation SCROLLER_DISABLED_SPRITE = ResourceLocation.withDefaultNamespace("container/creative_inventory/scroller_disabled");
     protected int totalContentHeight;
     private boolean scrolling;
-    protected int scrollForScrollBar;
+    protected float scrollForScrollBar;
     protected HashMap<AbstractWidget,Integer> widgetYOffsets=new HashMap<>();
     protected Screen parentScreen;
     protected TreeBasedTable<Integer,Integer,AbstractWidget> widgetTable=TreeBasedTable.create();
@@ -173,9 +173,9 @@ public class ScrollArea extends AbstractWidget{
             widget.render(guiGraphics,mouseX,mouseY,partialTick);
         }
         if(totalContentHeight>height)
-            guiGraphics.blitSprite(SCROLLER_SPRITE,width-2, scrollForScrollBar,12, 3);
+            guiGraphics.blitSprite(SCROLLER_SPRITE,width-2, (int) scrollForScrollBar,12, 3);
         else
-            guiGraphics.blitSprite(SCROLLER_DISABLED_SPRITE,width-2, scrollForScrollBar,12, SCROLLBAR_HEIGHT);
+            guiGraphics.blitSprite(SCROLLER_DISABLED_SPRITE,width-2, (int) scrollForScrollBar,12, SCROLLBAR_HEIGHT);
         guiGraphics.drawCenteredString(Minecraft.getInstance().font, getMessage(),width/2,getY()-10,Constants.WHITE.getIntColor());
     }
 
