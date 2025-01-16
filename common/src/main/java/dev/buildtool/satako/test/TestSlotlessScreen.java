@@ -43,7 +43,7 @@ public class TestSlotlessScreen extends Screen2 {
                 index++;
             }
         }
-        ScrollArea scrollArea=new ScrollArea(0,10,width/2,label.getY(),Component.literal("Scroll area"), this);
+        ScrollArea scrollArea=new ScrollArea(0,20,width/2,label.getY(),Component.literal("Scroll area"), this);
         addRenderableWidget(scrollArea);
         for (Table.Cell<Integer, Integer, AbstractWidget> cell : hashBasedTable.cellSet()) {
             scrollArea.addWidget(cell.getValue(),cell.getRowKey(),cell.getColumnKey());

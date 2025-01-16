@@ -121,10 +121,10 @@ public class ScrollArea extends AbstractWidget{
     @Override
     public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY) {
         if(scrolling) {
-            scrollForScrollBar = (int) Math.clamp(mouseY - (double) getY() / (getY()+height), getY(),getY()+ height- SCROLLBAR_HEIGHT);
-            relativeScroll = (float) Math.clamp(mouseY- (double) getY() /(getY()+height)-getY(),0,height);
+            scrollForScrollBar = (int) Math.clamp(mouseY - (double) getY() / (getY()+height), getY(),getY()+ height);
+            relativeScroll = (float) Math.clamp(mouseY- (double) (getY())/(getY()+height)-getY(),0,height);
             float div = (float) (totalContentHeight) / widgets.size();
-            float relative = relativeScroll * (totalContentHeight - height) / height ;
+            float relative = relativeScroll * (totalContentHeight - height) / (height);
             widgetTable.rowKeySet().forEach(integer -> {
                 var row=widgetTable.row(integer);
                 row.forEach((integer1, widget) -> {
@@ -173,7 +173,7 @@ public class ScrollArea extends AbstractWidget{
             widget.render(guiGraphics,mouseX,mouseY,partialTick);
         }
         if(totalContentHeight>height)
-            guiGraphics.blitSprite(SCROLLER_SPRITE,width-2, scrollForScrollBar,12, SCROLLBAR_HEIGHT);
+            guiGraphics.blitSprite(SCROLLER_SPRITE,width-2, scrollForScrollBar,12, 3);
         else
             guiGraphics.blitSprite(SCROLLER_DISABLED_SPRITE,width-2, scrollForScrollBar,12, SCROLLBAR_HEIGHT);
         guiGraphics.drawCenteredString(Minecraft.getInstance().font, getMessage(),width/2,getY()-10,Constants.WHITE.getIntColor());
