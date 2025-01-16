@@ -148,23 +148,22 @@ public class ScrollArea extends AbstractWidget{
         return super.mouseReleased(mouseX, mouseY, button);
     }
 
-//    @Override
-//    public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
-//        scrollForScrollBar = (int) Math.clamp(scrollForScrollBar-scrollY*5 - (double) getY() / (getY()+height), getY(),getY()+ height-15);
-//        //TODO
-//        relativeScroll= (float) Math.clamp(relativeScroll -scrollY*5- (double) getY() /(getY()+height)-getY(),0,height);
-//        float div = (float) (totalContentHeight) / widgets.size();
-//        float relative = relativeScroll * (totalContentHeight - height) / height ;
-//        widgetTable.rowKeySet().forEach(integer -> {
-//            var row=widgetTable.row(integer);
-//            row.forEach((integer1, widget) -> {
-//                int offsetY=widgetYOffsets.get(widget);
-//                widget.setY((int) (offsetY-relative));
-//                widget.visible = widget.getY() >= getY() && widget.getY() + widget.getHeight() <=getY()+ height + div / 2;
-//            });
-//        });
-//        return true;
-//    }
+    @Override
+    public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
+        scrollForScrollBar = (int) Math.clamp(scrollForScrollBar- scrollY*5, getY(),getY()+ height);
+        relativeScroll = (float) Math.clamp(relativeScroll-scrollY*5,0,height);
+        float div = (float) (totalContentHeight) / widgets.size();
+        float relative = relativeScroll * (totalContentHeight - height) / height ;
+        widgetTable.rowKeySet().forEach(integer -> {
+            var row=widgetTable.row(integer);
+            row.forEach((integer1, widget) -> {
+                int offsetY=widgetYOffsets.get(widget);
+                widget.setY((int) (offsetY-relative));
+                widget.visible = widget.getY() >= getY() && widget.getY() + widget.getHeight() <=getY()+ height + div / 2;
+            });
+        });
+        return true;
+    }
 
     @Override
     protected void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
