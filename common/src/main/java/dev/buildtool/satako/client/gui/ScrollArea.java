@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ScrollArea extends AbstractWidget{
+    public static final int SCROLLBAR_HEIGHT = 15;
     protected List<AbstractWidget> widgets;
     protected static final ResourceLocation SCROLLER_SPRITE = ResourceLocation.withDefaultNamespace("container/creative_inventory/scroller");
     protected static final ResourceLocation SCROLLER_DISABLED_SPRITE = ResourceLocation.withDefaultNamespace("container/creative_inventory/scroller_disabled");
@@ -108,7 +109,7 @@ public class ScrollArea extends AbstractWidget{
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        boolean withinScrollBar=mouseX<getX()+width+12 && mouseX>getX()+width-4 && mouseY> scrollForScrollBar && mouseY< scrollForScrollBar +15;
+        boolean withinScrollBar=mouseX<getX()+width+12 && mouseX>getX()+width-4 && mouseY> scrollForScrollBar && mouseY< scrollForScrollBar + SCROLLBAR_HEIGHT;
         if(button==0  && totalContentHeight>height && withinScrollBar)
         {
                 scrolling = true;
@@ -120,7 +121,7 @@ public class ScrollArea extends AbstractWidget{
     @Override
     public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY) {
         if(scrolling) {
-            scrollForScrollBar = (int) Math.clamp(mouseY - (double) getY() / (getY()+height), getY(),getY()+ height-15);
+            scrollForScrollBar = (int) Math.clamp(mouseY - (double) getY() / (getY()+height), getY(),getY()+ height- SCROLLBAR_HEIGHT);
             relativeScroll = (float) Math.clamp(mouseY- (double) getY() /(getY()+height)-getY(),0,height);
             float div = (float) (totalContentHeight) / widgets.size();
             float relative = relativeScroll * (totalContentHeight - height) / height ;
@@ -172,9 +173,9 @@ public class ScrollArea extends AbstractWidget{
             widget.render(guiGraphics,mouseX,mouseY,partialTick);
         }
         if(totalContentHeight>height)
-            guiGraphics.blitSprite(SCROLLER_SPRITE,width-2, scrollForScrollBar,12,15);
+            guiGraphics.blitSprite(SCROLLER_SPRITE,width-2, scrollForScrollBar,12, SCROLLBAR_HEIGHT);
         else
-            guiGraphics.blitSprite(SCROLLER_DISABLED_SPRITE,width-2, scrollForScrollBar,12,15);
+            guiGraphics.blitSprite(SCROLLER_DISABLED_SPRITE,width-2, scrollForScrollBar,12, SCROLLBAR_HEIGHT);
         guiGraphics.drawCenteredString(Minecraft.getInstance().font, getMessage(),width/2,getY()-10,Constants.WHITE.getIntColor());
     }
 
