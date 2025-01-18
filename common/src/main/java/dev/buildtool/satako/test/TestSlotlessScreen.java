@@ -50,8 +50,10 @@ public class TestSlotlessScreen extends Screen2 {
         }
         scrollArea.addSpanningWidget(new TextField(0,0,"Looooooooooooooong"),31,0);
         scrollArea.alignWidgets();
-        Component component=Component.literal("------------------");
-        addRenderableOnly(new Label(centerX,centerY,component,Constants.BLACK,true));
+        Label renderable = new Label(centerX, lava2.getY() + lava2.getHeight(), Component.literal("------------------"), Constants.BLACK, true);
+        addRenderableOnly(renderable);
+        BetterButton centered=new BetterButton(centerX,renderable.getY()+renderable.getHeight(),Component.literal("88888888"),null,true);
+        addRenderableOnly(centered);
     }
 
     @Override

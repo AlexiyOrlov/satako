@@ -35,7 +35,7 @@ public class BetterButton extends ExtendedButton implements Switchable {
     }
 
     public BetterButton(int x,int y,Component text,OnPress press,boolean centered) {
-        this(x-Minecraft.getInstance().font.width(text)/2,y,text,press);
+        this(x-Minecraft.getInstance().font.width(text)/2-4,y,text,press);
     }
 
     @Override
