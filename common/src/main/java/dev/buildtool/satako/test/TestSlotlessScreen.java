@@ -51,7 +51,7 @@ public class TestSlotlessScreen extends Screen2 {
         scrollArea.addSpanningWidget(new TextField(0,0,"Looooooooooooooong"),31,0);
         scrollArea.alignWidgets();
         Component component=Component.literal("------------------");
-        addRenderableOnly(new Label(centerX-font.width(component)/2-10,centerY,component,Constants.BLACK));
+        addRenderableOnly(new Label(centerX,centerY,component,Constants.BLACK,true));
     }
 
     @Override
