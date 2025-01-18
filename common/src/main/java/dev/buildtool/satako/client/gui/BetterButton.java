@@ -33,9 +33,7 @@ public class BetterButton extends ExtendedButton implements Scrollable {
      * Construct a button with optimal height and width fitted to label
      */
     public BetterButton(int x, int y, Component text) {
-        this(x, y, Minecraft.getInstance().font.width(text.getString()) + 8, 20, text,
-                p_onPress_1_ -> {
-                });
+        this(x, y, Minecraft.getInstance().font.width(text.getString()) + 8, 20, text,null);
         string = text.getString();
     }
 
