@@ -9,15 +9,11 @@ import net.minecraft.network.chat.Component;
  */
 public class BetterButton extends ExtendedButton implements Switchable {
     public boolean verticalScroll, horizontalScroll;
-    /**
-     * By how much the button will be able to scroll
-     */
-    public int scrollingAmount;
+
     protected Font fontRenderer;
 
     {
         fontRenderer = Minecraft.getInstance().font;
-        scrollingAmount = height;
     }
 
     /**
@@ -38,18 +34,8 @@ public class BetterButton extends ExtendedButton implements Switchable {
         this(x, y, Minecraft.getInstance().font.width(text.getString()) + 8, 20, text, onPress);
     }
 
-    public BetterButton(int x, int y, Component text, boolean verticalScroll_, boolean horizontalScroll_) {
-        this(x, y, text);
-        verticalScroll = verticalScroll_;
-        horizontalScroll = horizontalScroll_;
-    }
-
-    public void scroll(int amount, boolean vertical) {
-
-        if (vertical && verticalScroll) {
-            setY((int) (getY() + Math.signum(amount) * scrollingAmount));
-        } else if (!vertical && horizontalScroll)
-            setX(getX() + amount);
+    public BetterButton(int x,int y,Component text,OnPress press,boolean centered) {
+        this(x-Minecraft.getInstance().font.width(text)/2,y,text,press);
     }
 
     @Override
