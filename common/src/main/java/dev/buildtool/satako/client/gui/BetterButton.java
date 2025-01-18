@@ -7,8 +7,7 @@ import net.minecraft.network.chat.Component;
 /**
  * Base control for other controls
  */
-public class BetterButton extends ExtendedButton implements Scrollable {
-    public String string;
+public class BetterButton extends ExtendedButton implements Switchable {
     public boolean verticalScroll, horizontalScroll;
     /**
      * By how much the button will be able to scroll
@@ -26,7 +25,6 @@ public class BetterButton extends ExtendedButton implements Scrollable {
      */
     public BetterButton(int x, int y, int width, int height, Component text, OnPress pressable) {
         super(x, y, width, height, text, pressable);
-        string = text.getString();
     }
 
     /**
@@ -34,7 +32,6 @@ public class BetterButton extends ExtendedButton implements Scrollable {
      */
     public BetterButton(int x, int y, Component text) {
         this(x, y, Minecraft.getInstance().font.width(text.getString()) + 8, 20, text,null);
-        string = text.getString();
     }
 
     public BetterButton(int x, int y, Component text, OnPress onPress) {
@@ -56,23 +53,6 @@ public class BetterButton extends ExtendedButton implements Scrollable {
     }
 
     @Override
-    public void setScrollable(boolean vertical, boolean b) {
-        if (b) {
-            if (vertical) {
-                verticalScroll = true;
-            } else {
-                horizontalScroll = true;
-            }
-        } else {
-            if (vertical) {
-                verticalScroll = false;
-            } else {
-                horizontalScroll = false;
-            }
-        }
-    }
-
-    @Override
     public void setEnabled() {
         active = true;
     }
@@ -80,11 +60,6 @@ public class BetterButton extends ExtendedButton implements Scrollable {
     @Override
     public void setDisabled() {
         active = false;
-    }
-
-    @Override
-    public void setScrollAmount(int pixels) {
-        scrollingAmount = pixels;
     }
 
     public void updateWidth() {

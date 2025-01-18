@@ -8,7 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.function.Predicate;
 
-public class TextField extends EditBox implements Scrollable {
+public class TextField extends EditBox implements Switchable {
     public static final Predicate<String> POSITIVE_NUMBER = s -> s.isEmpty() || StringUtils.isNumeric(s);
     public boolean scrollable;
     private boolean enabled;
@@ -36,22 +36,6 @@ public class TextField extends EditBox implements Scrollable {
     }
 
     @Override
-    public void scroll(int amount, boolean vertical) {
-        if (scrollable) {
-            if (vertical) {
-                setX(getX() + amount);
-            } else {
-                setY(getY() + amount);
-            }
-        }
-    }
-
-    @Override
-    public void setScrollable(boolean vertical, boolean b) {
-        scrollable = b;
-    }
-
-    @Override
     public void setEnabled() {
         enabled = true;
     }
@@ -59,10 +43,5 @@ public class TextField extends EditBox implements Scrollable {
     @Override
     public void setDisabled() {
         enabled = false;
-    }
-
-    @Override
-    public void setScrollAmount(int pixels) {
-        scrollAmount = pixels;
     }
 }

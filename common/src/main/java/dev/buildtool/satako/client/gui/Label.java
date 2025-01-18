@@ -12,7 +12,7 @@ import org.jetbrains.annotations.Nullable;
 /**
  * Label is a string with background
  */
-public class Label extends BetterButton implements Scrollable {
+public class Label extends BetterButton implements Switchable {
     protected boolean enabled, verticalScroll, horizontalScroll, hidden;
     protected int scrollAmount;
     protected Screen parent;
@@ -59,23 +59,6 @@ public class Label extends BetterButton implements Scrollable {
     }
 
     @Override
-    public void scroll(int amount, boolean vertical) {
-        if (vertical && verticalScroll) {
-            setY((int) (getY() + Math.signum(amount) * scrollAmount));
-        } else if (!vertical && horizontalScroll) {
-            setX(getX() + amount);
-        }
-    }
-
-    @Override
-    public void setScrollable(boolean vertical, boolean b) {
-        if (vertical)
-            verticalScroll = b;
-        else
-            horizontalScroll = b;
-    }
-
-    @Override
     public void setEnabled() {
         enabled = true;
     }
@@ -83,11 +66,6 @@ public class Label extends BetterButton implements Scrollable {
     @Override
     public void setDisabled() {
         enabled = false;
-    }
-
-    @Override
-    public void setScrollAmount(int pixels) {
-        this.scrollAmount = pixels;
     }
 
     @Override
