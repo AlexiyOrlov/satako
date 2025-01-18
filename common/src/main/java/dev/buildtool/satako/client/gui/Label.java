@@ -30,9 +30,9 @@ public class Label extends BetterButton implements Switchable {
         this.backgroundColor=backgroundColor;
     }
 
-    public Label(int x,int y,Component text,IntegerColor backgroundColor,boolean center)
+    public static Label centered(int x,int y,Component text,IntegerColor backgroundColor)
     {
-        this(center? x-Minecraft.getInstance().font.width(text)/2-10:x,y,text,backgroundColor);
+        return new Label(x-Minecraft.getInstance().font.width(text)/2-10,y,text,backgroundColor);
     }
 
     @Deprecated
