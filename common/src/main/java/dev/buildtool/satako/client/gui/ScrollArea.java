@@ -18,6 +18,7 @@ import java.util.Map;
 
 public class ScrollArea extends AbstractWidget{
     public static final int SCROLLBAR_HEIGHT = 15;
+    public static final int SCROLLBAR_WIDTH = 12;
     protected List<AbstractWidget> widgets;
     protected static final ResourceLocation SCROLLER_SPRITE = ResourceLocation.withDefaultNamespace("container/creative_inventory/scroller");
     protected static final ResourceLocation SCROLLER_DISABLED_SPRITE = ResourceLocation.withDefaultNamespace("container/creative_inventory/scroller_disabled");
@@ -108,7 +109,7 @@ public class ScrollArea extends AbstractWidget{
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        boolean withinScrollBar=mouseX<getX()+width+12 && mouseX>getX()+width-4 && mouseY> scrollForScrollBar && mouseY< scrollForScrollBar + SCROLLBAR_HEIGHT;
+        boolean withinScrollBar=mouseX<getX()+width+ SCROLLBAR_WIDTH && mouseX>getX()+width-4 && mouseY> scrollForScrollBar && mouseY< scrollForScrollBar + SCROLLBAR_HEIGHT;
         if(button==0  && totalContentHeight>height && withinScrollBar)
         {
                 dragging = true;
@@ -171,9 +172,9 @@ public class ScrollArea extends AbstractWidget{
             widget.render(guiGraphics,mouseX,mouseY,partialTick);
         }
         if(totalContentHeight>height)
-            guiGraphics.blitSprite(SCROLLER_SPRITE,width-2, (int) scrollForScrollBar,12, 3);
+            guiGraphics.blitSprite(SCROLLER_SPRITE,width-2, (int) scrollForScrollBar, SCROLLBAR_WIDTH, 3);
         else
-            guiGraphics.blitSprite(SCROLLER_DISABLED_SPRITE,width-2, (int) scrollForScrollBar,12, SCROLLBAR_HEIGHT);
+            guiGraphics.blitSprite(SCROLLER_DISABLED_SPRITE,width-2, (int) scrollForScrollBar, SCROLLBAR_WIDTH, SCROLLBAR_HEIGHT);
         guiGraphics.drawCenteredString(Minecraft.getInstance().font, getMessage(),width/2,getY()-10,Constants.WHITE.getIntColor());
     }
 
