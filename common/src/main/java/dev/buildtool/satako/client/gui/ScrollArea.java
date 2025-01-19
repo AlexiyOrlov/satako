@@ -4,7 +4,6 @@ import com.google.common.collect.Table;
 import com.google.common.collect.TreeBasedTable;
 import dev.buildtool.satako.Constants;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
@@ -23,7 +22,7 @@ public class ScrollArea extends AbstractWidget{
     protected static final ResourceLocation SCROLLER_SPRITE = ResourceLocation.withDefaultNamespace("container/creative_inventory/scroller");
     protected static final ResourceLocation SCROLLER_DISABLED_SPRITE = ResourceLocation.withDefaultNamespace("container/creative_inventory/scroller_disabled");
     protected int totalContentHeight;
-    private boolean scrolling;
+    private boolean dragging;
     protected float scrollForScrollBar;
     protected HashMap<AbstractWidget,Integer> widgetYOffsets=new HashMap<>();
     protected Screen parentScreen;
@@ -112,7 +111,7 @@ public class ScrollArea extends AbstractWidget{
         boolean withinScrollBar=mouseX<getX()+width+12 && mouseX>getX()+width-4 && mouseY> scrollForScrollBar && mouseY< scrollForScrollBar + SCROLLBAR_HEIGHT;
         if(button==0  && totalContentHeight>height && withinScrollBar)
         {
-                scrolling = true;
+                dragging = true;
                 return true;
         }
         return super.mouseClicked(mouseX, mouseY, button);
@@ -120,7 +119,7 @@ public class ScrollArea extends AbstractWidget{
 
     @Override
     public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY) {
-        if(scrolling) {
+        if(dragging) {
             scrollForScrollBar = (int) Math.clamp(mouseY - (double) getY() / (getY()+height), getY(),getY()+ height);
             relativeScroll = (float) Math.clamp(mouseY- (double) (getY())/(getY()+height)-getY(),0,height);
             float div = (float) (totalContentHeight) / widgets.size();
@@ -140,9 +139,9 @@ public class ScrollArea extends AbstractWidget{
 
     @Override
     public boolean mouseReleased(double mouseX, double mouseY, int button) {
-        if(scrolling)
+        if(dragging)
         {
-            scrolling=false;
+            dragging =false;
             return true;
         }
         return super.mouseReleased(mouseX, mouseY, button);
