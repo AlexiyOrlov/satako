@@ -112,8 +112,8 @@ public class ScrollArea extends AbstractWidget{
         boolean withinScrollBar=mouseX<getX()+width+ SCROLLBAR_WIDTH && mouseX>getX()+width-4 && mouseY> scrollForScrollBar && mouseY< scrollForScrollBar + SCROLLBAR_HEIGHT;
         if(button==0  && totalContentHeight>height && withinScrollBar)
         {
-                dragging = true;
-                return true;
+            dragging = true;
+            return true;
         }
         return super.mouseClicked(mouseX, mouseY, button);
     }
