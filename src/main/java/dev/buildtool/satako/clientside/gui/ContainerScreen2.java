@@ -83,7 +83,7 @@ public class ContainerScreen2<T extends AbstractContainerMenu> extends AbstractC
         slots.stream().filter(Slot::isActive).forEach(slot -> {
             if(slot instanceof ItemHandlerSlot handlerSlot && slot.getItem().isEmpty() && mouseX>slot.x+leftPos&& mouseX<slot.x+leftPos+18 && mouseY>slot.y+topPos && mouseY<slot.y+topPos+18 && handlerSlot.tooltip!=null)
             {
-                guiGraphics.renderComponentTooltip(font,((ItemHandlerSlot) slot).tooltip,mouseX,mouseY);
+                guiGraphics.renderComponentTooltip(font,List.of(handlerSlot.tooltip),mouseX,mouseY);
             }
         });
         tooltips.forEach((widget, tooltip) -> {

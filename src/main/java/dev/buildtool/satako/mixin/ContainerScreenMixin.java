@@ -1,10 +1,7 @@
 package dev.buildtool.satako.mixin;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import dev.buildtool.satako.TooltipHandler;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

@@ -12,7 +12,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import org.joml.Matrix4f;
 
 @OnlyIn(Dist.CLIENT)
-public class ClientMethods {
+public class ClientMethodsOld {
     /**
      * @param x
      * @param y
@@ -142,14 +142,14 @@ public class ClientMethods {
      * @param X position to be centered on
      */
     public static void drawCenteredString(GuiGraphics matrixStack, net.minecraft.network.chat.Component o, int X, int Y, IntegerColor color) {
-        drawString(matrixStack, o, X - ClientFunctions.calculateStringWidth(o) / 2, Y, color);
+        drawString(matrixStack, o, X - ClientFunctionsOld.calculateStringWidth(o) / 2, Y, color);
     }
 
     /**
      * @param X position to be centered on
      */
     public static void drawCenteredStringWithShadow(GuiGraphics matrixStack, Component o, int X, int Y, IntegerColor color) {
-        drawStringWithShadow(matrixStack, o, X - ClientFunctions.calculateStringWidth(o) / 2, Y, color);
+        drawStringWithShadow(matrixStack, o, X - ClientFunctionsOld.calculateStringWidth(o) / 2, Y, color);
     }
 
     /**

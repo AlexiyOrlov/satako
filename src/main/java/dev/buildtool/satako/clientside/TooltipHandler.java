@@ -413,7 +413,8 @@ public class TooltipHandler {
             }
             if(Satako.jei)
             {
-                JEI.ingredientListOverlay.getIngredientUnderMouse().flatMap(ITypedIngredient::getItemStack).ifPresent(itemStack -> handle(itemStack, containerScreenEvent.getGuiGraphics()));
+                if(JEI.ingredientListOverlay!=null)
+                    JEI.ingredientListOverlay.getIngredientUnderMouse().flatMap(ITypedIngredient::getItemStack).ifPresent(itemStack -> handle(itemStack, containerScreenEvent.getGuiGraphics()));
             }
         }
     }

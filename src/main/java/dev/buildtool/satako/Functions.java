@@ -21,7 +21,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.AirItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -592,7 +591,7 @@ public final class Functions {
     public static int calculateLongestStringWidth(Collection<Component> objects) {
         int width = 0;
         for (Component s : objects) {
-            int nextwidth = ClientFunctions.calculateStringWidth(s);
+            int nextwidth = ClientFunctionsOld.calculateStringWidth(s);
             if (nextwidth > width) width = nextwidth;
         }
         return width;
