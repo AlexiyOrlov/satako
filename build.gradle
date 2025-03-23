@@ -140,7 +140,7 @@ jar.finalizedBy('reobfJar')
 // However if you are in a multi-project build, dev time needs unobfed jar files, so you can delay the obfuscation until publishing by doing
 //publish.dependsOn('reobfJar')
 
-task("sourceJar", type: Jar, group: "build") {
+tasks.register('sourceJar', Jar) {
     getArchiveClassifier().set("sources")
     from sourceSets.main.allSource
 }
