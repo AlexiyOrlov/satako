@@ -1,5 +1,6 @@
 package dev.buildtool.satako;
 
+import dev.buildtool.satako.clientside.ClientFunctions;
 import io.netty.buffer.Unpooled;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
