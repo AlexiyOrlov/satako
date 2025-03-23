@@ -83,10 +83,10 @@ minecraft {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 //tricky task to update mod version
-task('updateVersion'){
+tasks.register('updateVersion') {
     def mods = file('src/main/resources/META-INF/mods.toml')
     String text = mods.getText("UTF-8")
-    text = text.replaceFirst('version.*=.+', 'version = "'+project.version+'"')
+    text = text.replaceFirst('version.*=.+', 'version = "' + project.version + '"')
     mods.setText(text)
 }
 
