@@ -1,4 +1,5 @@
 7.0.33:
+fixed REI crash;
 
 7.0.21:
 added optional background to label;
