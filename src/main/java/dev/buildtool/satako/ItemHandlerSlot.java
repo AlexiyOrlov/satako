@@ -1,7 +1,5 @@
-package dev.buildtool.satako.gui;
+package dev.buildtool.satako;
 
-import dev.buildtool.satako.Constants;
-import dev.buildtool.satako.IntegerColor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
@@ -9,11 +7,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
-import java.util.List;
-
-/**
- * Default item handler slot
- */
 public class ItemHandlerSlot extends SlotItemHandler {
     /**
      * Visible
@@ -21,7 +14,7 @@ public class ItemHandlerSlot extends SlotItemHandler {
     protected boolean active = true;
     private IntegerColor color = Constants.BLUE;
     private ResourceLocation texture;
-    protected List<Component> tooltip;
+    private Component tooltip;
 
     public ItemHandlerSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition) {
         super(itemHandler, index, xPosition, yPosition);
@@ -64,14 +57,12 @@ public class ItemHandlerSlot extends SlotItemHandler {
         this.active = active;
     }
 
-    public ItemHandlerSlot setTooltip(List<Component> tooltip)
-    {
-        this.tooltip=tooltip;
+    public ItemHandlerSlot setTooltip(Component tooltip) {
+        this.tooltip = tooltip;
         return this;
     }
 
-    public List<Component> getTooltip()
-    {
-        return  tooltip;
+    public Component getTooltip() {
+        return tooltip;
     }
 }

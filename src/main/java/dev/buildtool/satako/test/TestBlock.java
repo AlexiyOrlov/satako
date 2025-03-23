@@ -23,7 +23,7 @@ import net.minecraftforge.network.NetworkHooks;
 import javax.annotation.Nullable;
 
 public class TestBlock extends Block2 implements MenuProvider {
-    public TestBlock(BlockBehaviour.Properties properties) {
+    public TestBlock(Properties properties) {
         super(properties, false);
     }
 

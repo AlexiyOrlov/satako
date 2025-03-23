@@ -1,4 +1,4 @@
-package dev.buildtool.satako;
+package dev.buildtool.satako.clientside;
 
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

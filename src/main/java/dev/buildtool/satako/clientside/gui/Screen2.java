@@ -1,13 +1,15 @@
-package dev.buildtool.satako.gui;
+package dev.buildtool.satako.clientside.gui;
 
+import dev.buildtool.satako.clientside.ClientMethods;
 import dev.buildtool.satako.Constants;
-import dev.buildtool.satako.IntegerColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -16,9 +18,9 @@ import java.util.Map;
  */
 public class Screen2 extends Screen
 {
-    protected int showTime=200;
     protected int popupPositionX, popupPositionY;
     protected LinkedHashMap<Component,Integer> showTimes=new LinkedHashMap<>();
+    protected HashMap<AbstractWidget,DynamicTooltip> tooltips=new HashMap<>();
 
     /**
      * GUI's center coordinates
@@ -43,18 +45,23 @@ public class Screen2 extends Screen
      * This should be called first
      */
     @Override
-    public void render(GuiGraphics matrixStack, int mouseX, int mouseY, float tick) {
-        renderBackground(matrixStack);
-        super.render(matrixStack, mouseX, mouseY, tick);
-        int popupY = popupPositionY - (showTimes.keySet().size()-1) * 18;
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float tick) {
+        renderBackground(guiGraphics);
+        super.render(guiGraphics, mouseX, mouseY, tick);
+        guiGraphics.drawCenteredString(font,getTitle(),centerX,3,Constants.WHITE.getIntColor());
+        tooltips.forEach((widget, tooltip) -> {
+            if(widget.getX()<mouseX && widget.getX()+widget.getWidth()>mouseX && mouseY>widget.getY() && mouseY<widget.getY()+widget.getHeight())
+            {
+                guiGraphics.renderTooltip(font,tooltip.getTooltip(),mouseX,mouseY);
+            }
+        });
+        int popupY = popupPositionY - (showTimes.keySet().size()-1) * ContainerScreen2.POPUP_SPACING;
         for (Map.Entry<Component, Integer> entry : showTimes.entrySet()) {
             Component component = entry.getKey();
             Integer integer = entry.getValue();
             if (integer > 0) {
-                int textWidth = font.width(component);
-                matrixStack.fill(popupPositionX - textWidth / 2-5, popupY-5, popupPositionX - textWidth / 2 + textWidth+5, popupY+13, new IntegerColor(0xff565656).getIntColor());
-                matrixStack.drawCenteredString(font, component, popupPositionX, popupY, new IntegerColor(0xffffffff).getIntColor());
-                popupY+=18;
+                ClientMethods.drawTooltipLine(guiGraphics, component,popupPositionX, popupY);
+                popupY+= ContainerScreen2.POPUP_SPACING;
                 integer--;
                 entry.setValue(integer);
             }
@@ -119,6 +126,6 @@ public class Screen2 extends Screen
 
     public void addPopup(Component message)
     {
-        addPopup(message,showTime);
+        addPopup(message,ContainerScreen2.DEFAULT_POPUP_SHOW_TIME);
     }
 }
