@@ -143,11 +143,12 @@ public class ItemList implements ItemContainer, Container {
 
     @Override
     public ItemStack extractItem(int slot, int amount, boolean simulate) {
-        ItemStack out=itemStacks.get(slot);
-        int toExtract = Math.min(amount, out.getCount());
+        ItemStack present=itemStacks.get(slot);
+        int toExtract = Math.min(amount, present.getCount());
+        ItemStack out=present.copyWithCount(toExtract);
         if(!simulate)
-            out.setCount(out.getCount()-toExtract);
-        return new ItemStack(out.getItem(), toExtract);
+            present.setCount(present.getCount()-toExtract);
+        return out;
     }
 
     @Override
