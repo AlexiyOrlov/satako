@@ -1,2 +1,2 @@
 
-removed dependency on FTB library
+fixed item deletion;
