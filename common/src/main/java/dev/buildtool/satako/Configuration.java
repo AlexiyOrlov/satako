@@ -14,7 +14,7 @@ import java.util.List;
  * Json-based configuration
  */
 public class Configuration {
-    private final HashMap<String, Object> options=new HashMap<>();
+    private HashMap<String, Object> options=new HashMap<>();
     private final Gson gson=new GsonBuilder().setPrettyPrinting().create();
     private final Path path;
 
@@ -29,6 +29,10 @@ public class Configuration {
         }
         if(!Files.exists(path)) {
             Files.createFile(path);
+        }
+        else {
+            String s=Files.readString(path);
+            options=gson.fromJson(s,HashMap.class);
         }
     }
 
