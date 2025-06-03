@@ -49,7 +49,8 @@ public class Configuration {
 
     public int getInt(String name,int defaultValue,int min,int max)
     {
-        return (int) options.compute(name,(s, objects) ->   objects ==null ? defaultValue:Math.clamp((int) objects,min,max));
+        Double compute = (Double) options.compute(name, (s, objects) -> objects == null ? defaultValue : Math.clamp((double) objects, min, max));
+        return compute.intValue();
     }
 
     public boolean getBoolean(String name,boolean defaultValue)
@@ -64,6 +65,7 @@ public class Configuration {
 
     public float getFloat(String name,float defaultValue,float min,float max)
     {
-        return (float) options.compute(name,(s, o) -> o==null ? defaultValue: Mth.clamp((float) o,min,max));
+        Double compute = (Double) options.compute(name, (s, o) -> o == null ? defaultValue : Mth.clamp((double) o, min, max));
+        return compute.intValue();
     }
 }
