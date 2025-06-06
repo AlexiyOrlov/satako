@@ -158,7 +158,7 @@ public class ItemList implements ItemContainer, Container {
 
     @Override
     public void setItem(int i, ItemStack stack) {
-        if(isItemValid(i,stack))
+        if(isItemValid(i,stack) || stack.isEmpty())
             itemStacks.set(i,stack);
     }
 
