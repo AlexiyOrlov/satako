@@ -66,6 +66,6 @@ public class Configuration {
     public float getFloat(String name,float defaultValue,float min,float max)
     {
         Double compute = (Double) options.compute(name, (s, o) -> o == null ? defaultValue : Mth.clamp((double) o, min, max));
-        return compute.intValue();
+        return compute.floatValue();
     }
 }
