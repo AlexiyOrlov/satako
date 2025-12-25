@@ -1,2 +1,3 @@
+fixed configuration returning integer instead of float from "getFloat"
 
 fixed item deletion;
