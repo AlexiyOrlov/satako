@@ -51,16 +51,18 @@ public class EnergyStorage2 extends EnergyStorage {
 
     @Override
     public int receiveEnergy(int toReceive, boolean simulate) {
+        int received = super.receiveEnergy(toReceive, simulate);
         if (!simulate)
             onEnergyChanged();
-        return super.receiveEnergy(toReceive, simulate);
+        return received;
     }
 
     @Override
     public int extractEnergy(int toExtract, boolean simulate) {
+        int extracted = super.extractEnergy(toExtract, simulate);
         if (!simulate)
             onEnergyChanged();
-        return super.extractEnergy(toExtract, simulate);
+        return extracted;
     }
 
     public void onEnergyChanged() {
