@@ -76,7 +76,10 @@ public class EnergyStorage2 extends EnergyStorage {
     {
         int energyExtracted = Math.min(this.energy,  amount);
         if(!simulate)
+        {
             energy-=energyExtracted;
+            onEnergyChanged();
+        }
         return energyExtracted;
     }
 }
