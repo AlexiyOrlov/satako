@@ -172,9 +172,9 @@ public class ScrollArea extends AbstractWidget{
             widget.render(guiGraphics,mouseX,mouseY,partialTick);
         }
         if(totalContentHeight>height)
-            guiGraphics.blitSprite(SCROLLER_SPRITE,width-2, (int) scrollForScrollBar, SCROLLBAR_WIDTH, 3);
+            guiGraphics.blitSprite(SCROLLER_SPRITE,width-2+getX(), (int) scrollForScrollBar, SCROLLBAR_WIDTH, 3);
         else
-            guiGraphics.blitSprite(SCROLLER_DISABLED_SPRITE,width-2, (int) scrollForScrollBar, SCROLLBAR_WIDTH, SCROLLBAR_HEIGHT);
+            guiGraphics.blitSprite(SCROLLER_DISABLED_SPRITE,width-2+getX(), (int) scrollForScrollBar, SCROLLBAR_WIDTH, SCROLLBAR_HEIGHT);
         guiGraphics.drawCenteredString(Minecraft.getInstance().font, getMessage(),width/2,getY()-10,Constants.WHITE.getIntColor());
     }
 
