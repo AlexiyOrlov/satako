@@ -2,6 +2,7 @@ package dev.buildtool.satako.mixins;
 
 import dev.buildtool.satako.SatakoClient;
 import dev.buildtool.satako.SatakoClientFabric;
+import dev.buildtool.satako.integrations.integration.JEI;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.world.inventory.Slot;
@@ -22,7 +23,7 @@ public class ContainerScreenMixin {
             SatakoClient.targetStack = slot.getItem();
             SatakoClient.handle(SatakoClient.targetStack,guiGraphics);
         }
-        if(SatakoClient.jei)
+        if(SatakoClient.jei && JEI.ingredientListOverlay!=null)
         {
             SatakoClientFabric.handleJeiScreen(guiGraphics);
         }

@@ -29,7 +29,7 @@ public class ClientEvents {
                 SatakoClient.targetStack = slot.getItem();
                 SatakoClient.handle(SatakoClient.targetStack,event.getGuiGraphics());
             }
-            if(SatakoClient.jei)
+            if(SatakoClient.jei && JEI.ingredientListOverlay!=null)
             {
                 JEI.ingredientListOverlay.getIngredientUnderMouse().flatMap(ITypedIngredient::getItemStack).ifPresent(itemStack -> SatakoClient.handle(itemStack, event.getGuiGraphics()));
             }
