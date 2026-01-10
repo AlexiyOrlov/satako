@@ -36,6 +36,8 @@ public class ScrollArea extends AbstractWidget{
         this.widgets=new ArrayList<>();
         this.parentScreen=parentScreen;
         scrollForScrollBar =getY();
+        if(!getMessage().getString().isEmpty())
+            scrollForScrollBar+=10;
     }
 
     public void addWidget(AbstractWidget widget,int row,int column)
@@ -53,6 +55,9 @@ public class ScrollArea extends AbstractWidget{
 
     public void alignWidgets()
     {
+        int startY = getY();
+        if(!getMessage().getString().isEmpty())
+            startY+=10;
         //align y
         int elementY=0;
         for (Integer row : widgetTable.rowKeySet()) {
@@ -60,11 +65,11 @@ public class ScrollArea extends AbstractWidget{
            int highest=0;
             for (Map.Entry<Integer, AbstractWidget> columnEntry : map.entrySet()) {
                 AbstractWidget abstractWidget = columnEntry.getValue();
-                abstractWidget.setY(getY()+elementY);
+                abstractWidget.setY(startY +elementY);
                 if(abstractWidget.getHeight()>highest)
                     highest=abstractWidget.getHeight();
                 widgetYOffsets.put(abstractWidget,abstractWidget.getY());
-                if(abstractWidget.getY()+abstractWidget.getHeight()>getY()+height || abstractWidget.getY()<getY())
+                if(abstractWidget.getY()+abstractWidget.getHeight()> startY +height || abstractWidget.getY()< startY)
                     abstractWidget.visible=false;
             }
             elementY+=highest;
@@ -121,16 +126,22 @@ public class ScrollArea extends AbstractWidget{
     @Override
     public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY) {
         if(dragging) {
-            scrollForScrollBar = (int) Math.clamp(mouseY - (double) getY() / (getY()+height), getY(),getY()+ height);
-            relativeScroll = (float) Math.clamp(mouseY- (double) (getY())/(getY()+height)-getY(),0,height);
+            int startY = getY();
+            if(!getMessage().getString().isEmpty())
+            {
+                startY+=10;
+            }
+            scrollForScrollBar = (int) Math.clamp(mouseY - (double) startY / (startY +height), startY, startY + height);
+            relativeScroll = (float) Math.clamp(mouseY- (double) startY /(startY +height)- startY,0,height);
             float div = (float) (totalContentHeight) / widgets.size();
             float relative = relativeScroll * (totalContentHeight - height) / (height);
+            int finalStartY = startY;
             widgetTable.rowKeySet().forEach(integer -> {
                 var row=widgetTable.row(integer);
                 row.forEach((integer1, widget) -> {
                     int offsetY=widgetYOffsets.get(widget);
                     widget.setY((int) (offsetY-relative));
-                    widget.visible = widget.getY() >= getY() && widget.getY() + widget.getHeight() <=getY()+ height + div / 2;
+                    widget.visible = widget.getY() >= finalStartY && widget.getY() + widget.getHeight() <= finalStartY + height + div / 2;
                 });
             });
             return true;
@@ -150,16 +161,22 @@ public class ScrollArea extends AbstractWidget{
 
     @Override
     public boolean mouseScrolled(double mouseX, double mouseY, double scrollX, double scrollY) {
-        scrollForScrollBar = (int) Math.clamp(scrollForScrollBar- scrollY*5, getY(),getY()+ height);
+        int startY=getY();
+        if(!getMessage().getString().isEmpty())
+        {
+            startY+=10;
+        }
+        scrollForScrollBar = (int) Math.clamp(scrollForScrollBar- scrollY*5, startY,startY+ height);
         relativeScroll = (float) Math.clamp(relativeScroll-scrollY*5,0,height);
         float div = (float) (totalContentHeight) / widgets.size();
         float relative = relativeScroll * (totalContentHeight - height) / height ;
+        int finalStartY = startY;
         widgetTable.rowKeySet().forEach(integer -> {
             var row=widgetTable.row(integer);
             row.forEach((integer1, widget) -> {
                 int offsetY=widgetYOffsets.get(widget);
                 widget.setY((int) (offsetY-relative));
-                widget.visible = widget.getY() >= getY() && widget.getY() + widget.getHeight() <=getY()+ height + div / 2;
+                widget.visible = widget.getY() >= finalStartY && widget.getY() + widget.getHeight() <=finalStartY+ height + div / 2;
             });
         });
         return true;
@@ -167,7 +184,14 @@ public class ScrollArea extends AbstractWidget{
 
     @Override
     protected void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-        guiGraphics.fill(getX(),getY(),getX()+width,getY()+height, Constants.DARK.getIntColor());
+        Component message = getMessage();
+        int startY=getY();
+        if(!message.getString().isEmpty())
+        {
+            startY+=10;
+            guiGraphics.drawCenteredString(Minecraft.getInstance().font, message,width/2+getX(),getY(),Constants.WHITE.getIntColor());
+        }
+        guiGraphics.fill(getX(),startY,getX()+width,startY+height, Constants.DARK.getIntColor());
         for (AbstractWidget widget : widgets) {
             widget.render(guiGraphics,mouseX,mouseY,partialTick);
         }
@@ -175,7 +199,7 @@ public class ScrollArea extends AbstractWidget{
             guiGraphics.blitSprite(SCROLLER_SPRITE,width-2+getX(), (int) scrollForScrollBar, SCROLLBAR_WIDTH, 3);
         else
             guiGraphics.blitSprite(SCROLLER_DISABLED_SPRITE,width-2+getX(), (int) scrollForScrollBar, SCROLLBAR_WIDTH, SCROLLBAR_HEIGHT);
-        guiGraphics.drawCenteredString(Minecraft.getInstance().font, getMessage(),width/2,getY()-10,Constants.WHITE.getIntColor());
+
     }
 
     @Override
