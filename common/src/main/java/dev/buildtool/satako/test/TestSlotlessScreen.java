@@ -54,6 +54,14 @@ public class TestSlotlessScreen extends Screen2 {
         addRenderableOnly(renderable);
         BetterButton centered=BetterButton.centered(centerX,renderable.getY()+renderable.getHeight(),Component.literal("88888888"),null);
         addRenderableOnly(centered);
+
+//        ScrollArea scrollArea2=new ScrollArea(80,scrollArea.getY()+scrollArea.getHeight(),width/2,label.getY(),Component.empty(), this);
+//        addRenderableWidget(scrollArea2);
+//        for (Table.Cell<Integer, Integer, AbstractWidget> cell : hashBasedTable.cellSet()) {
+//            scrollArea2.addWidget(cell.getValue(),cell.getRowKey(),cell.getColumnKey());
+//        }
+//        scrollArea2.addSpanningWidget(new TextField(0,0,"Looooooooooooooong"),31,0);
+//        scrollArea2.alignWidgets();
     }
 
     @Override
