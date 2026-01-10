@@ -1,3 +1,5 @@
+fixed scroll area's title;
+
 fixed configuration returning integer instead of float from "getFloat"
 fixed scroll area's scrollbar's horizontal position;
 
