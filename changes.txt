@@ -1,4 +1,4 @@
-Neoforge: added block rendering method;
+added block rendering method;
 
 fixed scroll area's title;
 
