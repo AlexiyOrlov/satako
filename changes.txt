@@ -1,3 +1,5 @@
+Neoforge: added block rendering method;
+
 fixed scroll area's title;
 
 fixed configuration returning integer instead of float from "getFloat"
