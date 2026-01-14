@@ -156,7 +156,7 @@ public class Satako {
             List<? extends Entity> entityList = serverLevel.getEntities(entityType, aabb, entity -> true);
             entityList.forEach(Entity::kill);
             if (entityList.size() == 1) {
-                context.getSource().sendSuccess(() -> Component.translatable("commands.kill.success.single", entityList.iterator().next().getDisplayName()), true);
+                context.getSource().sendSuccess(() -> Component.translatable("commands.kill.success.single", entityList.getFirst().getDisplayName()), true);
             } else {
                 context.getSource().sendSuccess(() -> Component.translatable("commands.kill.success.multiple", entityList.size()), true);
             }
@@ -190,7 +190,7 @@ public class Satako {
             List<? extends Entity> entityList = serverLevel.getEntities(entityType, aabb, entity -> true);
             entityList.forEach(Entity::discard);
             if (entityList.size() == 1) {
-                context.getSource().sendSuccess(() -> Component.translatable("satako.discard.success.single", entityList.iterator().next().getDisplayName()), true);
+                context.getSource().sendSuccess(() -> Component.translatable("satako.discard.success.single", entityList.getFirst().getDisplayName()), true);
             } else {
                 context.getSource().sendSuccess(() -> Component.translatable("satako.discard.success.multiple", entityList.size()), true);
             }
