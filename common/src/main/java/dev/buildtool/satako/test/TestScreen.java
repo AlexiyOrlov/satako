@@ -67,7 +67,7 @@ public class TestScreen extends MenuScreen<TestMenu> {
 //        }).pos(label.getX(), label.getY() + label.getHeight()).build());
 //        addRenderableWidget(new SelectionButton(10, height - 20, Component.literal("Selection button")));
 
-        Rectangle rectangle = new Rectangle(20, topPos, 50, imageHeight,() -> new IntegerColor(Color.getHSBColor(hue,1,1).getRGB()), () -> 0.5f,true);
+        Rectangle rectangle = new Rectangle(leftPos, topPos, imageWidth, imageHeight,() -> new IntegerColor(Color.getHSBColor(hue,1,1).getRGB()), () -> 1f,true);
         addRenderableOnly(rectangle);
         addTooltip(rectangle, () -> Component.literal("Tooltip"));
         Rectangle water = new Rectangle(leftPos - 22, topPos, 20, imageHeight,() -> 0.9f, Services.PLATFORM.getFluidTexture(Fluids.WATER, true), null);
