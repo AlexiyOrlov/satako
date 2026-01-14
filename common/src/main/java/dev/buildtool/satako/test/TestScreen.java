@@ -67,17 +67,13 @@ public class TestScreen extends MenuScreen<TestMenu> {
 //        }).pos(label.getX(), label.getY() + label.getHeight()).build());
 //        addRenderableWidget(new SelectionButton(10, height - 20, Component.literal("Selection button")));
 
-        Rectangle rectangle = new Rectangle(leftPos, topPos, imageWidth, imageHeight,() -> new IntegerColor(Color.getHSBColor(hue,1,1).getRGB()), () -> 1f,true);
-        addRenderableOnly(rectangle);
-        addTooltip(rectangle, () -> Component.literal("Tooltip"));
         Rectangle water = new Rectangle(leftPos - 22, topPos, 20, imageHeight,() -> 0.9f, Services.PLATFORM.getFluidTexture(Fluids.WATER, true), null);
         addRenderableOnly(water);
 
         Rectangle horizontal = new Rectangle(leftPos, topPos - 20, imageWidth, 18,() ->  new IntegerColor(0, 128, 255), Services.PLATFORM.getFluidTexture(Fluids.LAVA, true), () -> 0.7f, false);
         addRenderableOnly(horizontal);
         addRenderableWidget(new ExtendedSlider(leftPos, topPos + imageHeight, imageWidth, 20, Component.literal(""), Component.literal(""), 1, 20, 1, true));
-        Rectangle horizontalColored = Rectangle.horizontal(leftPos, topPos - 40, imageWidth, 18, Constants.GRAY, null, () -> 0.6f);
-        addRenderableOnly(horizontalColored);
+
         Rectangle textured = new Rectangle(20, 20, 30, 30, () -> 1f, ResourceLocation.withDefaultNamespace("container/anvil/error"), true);
         addRenderableOnly(textured);
 

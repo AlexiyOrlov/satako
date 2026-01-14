@@ -10,7 +10,6 @@ import net.minecraft.client.resources.metadata.gui.GuiSpriteScaling;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
-import org.w3c.dom.css.Rect;
 
 import java.util.Optional;
 
@@ -25,49 +24,6 @@ public class Rectangle extends AbstractWidget {
     protected boolean vertical = true;
     protected DynamicColor dynamicColor;
 
-    @Deprecated
-    public Rectangle(int x, int y, int width, int height, @Nullable IntegerColor color, @Nullable TextureAtlasSprite atlasSprite, @Nullable FillPercent fillPercent, boolean vertical) {
-        this(x, y, width, height, atlasSprite, fillPercent);
-        this.color = () -> Optional.ofNullable(color);
-        this.vertical = vertical;
-    }
-
-    @Deprecated
-    public Rectangle(int x, int y, int width, int height, @Nullable IntegerColor integerColor, @Nullable FillPercent fillPercent) {
-        super(x, y, width, height, Component.empty());
-        color = () -> Optional.ofNullable(integerColor);
-        this.fillPercent = fillPercent;
-    }
-
-    public Rectangle(int x, int y, int width, int height, DynamicColor dynamicColor, FillPercent fillPercent) {
-        this(x, y, width, height,dynamicColor,fillPercent,true);
-    }
-
-    public Rectangle(int x, int y, int width, int height, DynamicColor color, @Nullable FillPercent fillPercent, boolean vertical)
-    {
-        super(x,y,width-2,height-2,Component.empty());
-        dynamicColor=color;
-        this.fillPercent=fillPercent;
-        this.vertical=vertical;
-    }
-
-    private Rectangle(int x, int y, int width, int height, TextureAtlasSprite atlasSprite, @Nullable FillPercent fillPercent) {
-        this(x, y, width, height, (IntegerColor) null, fillPercent);
-        sprite = atlasSprite;
-    }
-
-    public Rectangle(int x, int y, int width, int height, TextureAtlasSprite atlasSprite) {
-        this(x, y, width, height, atlasSprite, null);
-    }
-
-    @Deprecated
-    private Rectangle(int x, int y, int width, int height, @Nullable IntegerColor color, TextureAtlasSprite sprite, FillPercent fillPercent) {
-        super(x, y, width, height, Component.empty());
-        this.color = () -> Optional.ofNullable(color);
-        this.fillPercent = fillPercent;
-        this.sprite = sprite;
-    }
-
     public Rectangle(int x, int y, int width, int height, FillPercent fillPercent, TextureAtlasSprite sprite, DynamicColor dynamicColor) {
         this(x, y, width, height,dynamicColor,sprite,fillPercent,true);
     }
@@ -80,38 +36,12 @@ public class Rectangle extends AbstractWidget {
         this.vertical=vertical;
     }
 
-    @Deprecated
-    public Rectangle(int x, int y, int width, int height, @Nullable IntegerColor color, TextureAtlasSprite atlasSprite) {
-        this(x, y, width, height, color, atlasSprite, null);
-        this.sprite = atlasSprite;
-    }
-
-    @Deprecated
-    public static Rectangle horizontal(int x, int y, int width, int height, @Nullable IntegerColor color, @Nullable TextureAtlasSprite atlasSprite, FillPercent fillPercent) {
-        Rectangle rectangle = new Rectangle(x, y, width, height, color, atlasSprite, fillPercent);
-        rectangle.vertical = false;
-        return rectangle;
-    }
 
     public Rectangle(int x, int y, int width, int height, FillPercent fillPercent, ResourceLocation texture, boolean vertical) {
         super(x, y, width, height, Component.empty());
         this.fillPercent = fillPercent;
         this.texture = texture;
         this.vertical = vertical;
-    }
-
-    public static Rectangle withSprite(int x, int y, int width, int height, TextureAtlasSprite atlasSprite, FillPercent fillPercent) {
-        return new Rectangle(x, y, width, height, atlasSprite, fillPercent);
-    }
-
-    @Deprecated
-    public static Rectangle colored(int x, int y, int width, int height, IntegerColor color, FillPercent fillPercent) {
-        return new Rectangle(x, y, width, height, color, fillPercent);
-    }
-
-    @Deprecated
-    public static Rectangle withColoredSprite(int x, int y, int width, int height, IntegerColor color, TextureAtlasSprite atlasSprite, FillPercent fillPercent) {
-        return new Rectangle(x, y, width, height, color, atlasSprite, fillPercent);
     }
 
     @Override

@@ -53,14 +53,6 @@ public class BetterButton extends ExtendedButton implements Switchable {
         width = fontRenderer.width(getMessage()) + 8;
     }
 
-    @Deprecated
-    @SuppressWarnings("ConstantValue")
-    @Override
-    public void onPress() {
-        if (onPress != null)
-            onPress.onPress(this);
-    }
-
     public void setPressHandler(OnPress pressHandler)
     {
         onPress=pressHandler;
