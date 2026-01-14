@@ -16,12 +16,10 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.AirItem;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
@@ -39,10 +37,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.*;
-import java.util.function.Predicate;
 
 /**
  * Functions return an object
@@ -615,44 +611,6 @@ public final class Functions {
         return ds;
     }
 
-    /**
-     * Retrieves specified field from class. Searches superclasses if not found.
-     */
-    public static Field getSecureField(Class<?> owner, int number) {
-        Field f;
-        Field[] fields = owner.getDeclaredFields();
-        if (number < fields.length) {
-            f = fields[number];
-            if (f.getType() != owner.getEnclosingClass()) {
-                f.setAccessible(true);
-                return f;
-            } else {
-                return getSecureField(owner.getSuperclass(), number);
-            }
-        }
-        Satako.LOG.error("No such field - index exceeds field array size");
-        return null;
-    }
-
-    /**
-     * Gets any field. Searches superclasses if not found
-     */
-    public static Field getSecureField(Class<?> owningClass, String field) {
-        Field f = null;
-
-        try {
-            f = owningClass.getDeclaredField(field);
-            f.setAccessible(true);
-        } catch (NoSuchFieldException e) {
-            if (owningClass.getSuperclass() != null) {
-                return getSecureField(owningClass.getSuperclass(), field);
-            } else {
-                Satako.LOG.error("Searched all super classes - field " + field + " not found");
-            }
-        }
-        return f;
-    }
-
     public static Method getAnyMethod(Class<?> owner, String name, Class<?>... parameterTypes) {
         Method m = null;
         try {
@@ -662,16 +620,6 @@ public final class Functions {
             e.printStackTrace();
         }
         return m;
-    }
-
-    public static Field getPublicField(Class<?> owner, String fieldName) {
-        Field f = null;
-        try {
-            f = owner.getField(fieldName);
-        } catch (NoSuchFieldException | SecurityException e) {
-            e.printStackTrace();
-        }
-        return f;
     }
 
     public static int ticksToSeconds(int ticks) {
