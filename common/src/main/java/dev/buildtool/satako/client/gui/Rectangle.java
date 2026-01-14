@@ -21,7 +21,7 @@ public class Rectangle extends AbstractWidget {
     protected final FillPercent fillPercent;
     protected TextureAtlasSprite sprite;
     protected ResourceLocation texture;
-    protected boolean vertical = true;
+    protected boolean vertical;
     protected DynamicColor dynamicColor;
 
     public Rectangle(int x, int y, int width, int height, FillPercent fillPercent, TextureAtlasSprite sprite, DynamicColor dynamicColor) {
