@@ -1,4 +1,5 @@
 added block rendering method;
+right clicking image button will cycle sprites backwards;
 
 fixed scroll area's title;
 
