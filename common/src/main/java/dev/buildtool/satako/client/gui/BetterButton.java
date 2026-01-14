@@ -53,6 +53,7 @@ public class BetterButton extends ExtendedButton implements Switchable {
         width = fontRenderer.width(getMessage()) + 8;
     }
 
+    @Deprecated
     @SuppressWarnings("ConstantValue")
     @Override
     public void onPress() {
@@ -63,5 +64,26 @@ public class BetterButton extends ExtendedButton implements Switchable {
     public void setPressHandler(OnPress pressHandler)
     {
         onPress=pressHandler;
+    }
+
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if (this.active && this.visible) {
+            if (this.isValidClickButton(button)) {
+                boolean flag = this.clicked(mouseX, mouseY);
+                if (flag) {
+                    this.playDownSound(Minecraft.getInstance().getSoundManager());
+                    click(mouseX, mouseY, button);
+                    return true;
+                }
+            }
+
+        }
+        return false;
+    }
+
+    protected void click(double mouseX,double mouseY,int button)
+    {
+
     }
 }

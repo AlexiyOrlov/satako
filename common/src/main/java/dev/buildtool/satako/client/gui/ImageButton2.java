@@ -25,10 +25,19 @@ public class ImageButton2 extends BetterButton {
     }
 
     @Override
-    public void onPress() {
-        activeSprite++;
+    protected void click(double mouseX, double mouseY, int button) {
+        if(button==0)
+            activeSprite++;
+        else if(button==1)
+            activeSprite--;
         if (activeSprite == sprites.size())
             activeSprite = 0;
-        super.onPress();
+        if(activeSprite<0)
+            activeSprite=sprites.size()-1;
+    }
+
+    @Override
+    protected boolean isValidClickButton(int button) {
+        return true;
     }
 }
