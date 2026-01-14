@@ -25,9 +25,8 @@ public class DropDownButton extends BetterButton {
         this.parent = parent;
     }
 
-    @SuppressWarnings("SuspiciousMethodCalls")
     @Override
-    public void onPress() {
+    protected void click(double mouseX, double mouseY, int button) {
         open = !open;
         if (open) {
             if (overlappingElements.isEmpty()) {
@@ -96,10 +95,8 @@ public class DropDownButton extends BetterButton {
             OnPress onPress1 = entry.getValue();
             RadioButton radioButton = new RadioButton(getX(), getY() + 20 * offset++, component, onPress1) {
                 @Override
-                public void onPress() {
-                    super.onPress();
+                protected void click(double mouseX, double mouseY, int button) {
                     DropDownButton.this.setMessage(getMessage());
-                    DropDownButton.this.onPress();
                 }
             };
             radioButton.visible = false;

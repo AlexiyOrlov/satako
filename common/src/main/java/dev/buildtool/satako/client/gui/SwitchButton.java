@@ -33,9 +33,8 @@ public class SwitchButton extends BetterButton {
     }
 
     @Override
-    public void onPress() {
+    protected void click(double mouseX, double mouseY, int button) {
         state = !state;
-        super.onPress();
     }
 
     @Override

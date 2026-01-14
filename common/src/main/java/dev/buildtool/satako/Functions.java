@@ -965,4 +965,10 @@ public final class Functions {
     {
         return (E) o;
     }
+
+    @SuppressWarnings("rawtypes")
+    public static EntityType cast(EntityType<?> e)
+    {
+        return e;
+    }
 }
