@@ -57,6 +57,11 @@ public class FabricPlatformHooks implements IPlatformHooks {
     }
 
     @Override
+    public IntegerColor getFluidColor(Fluid fluid) {
+        return new IntegerColor(FluidVariantRendering.getColor(FluidVariant.of(fluid)));
+    }
+
+    @Override
     public boolean isFabric() {
         return true;
     }

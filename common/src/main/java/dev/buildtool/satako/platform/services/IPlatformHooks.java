@@ -1,6 +1,7 @@
 package dev.buildtool.satako.platform.services;
 
 import dev.buildtool.satako.BetterSlot;
+import dev.buildtool.satako.IntegerColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -72,4 +73,6 @@ public interface IPlatformHooks {
     boolean isNeoforge();
 
     MenuType<?> getTestMenu();
+
+    IntegerColor getFluidColor(Fluid fluid);
 }

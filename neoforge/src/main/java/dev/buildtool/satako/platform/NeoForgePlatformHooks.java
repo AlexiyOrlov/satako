@@ -1,5 +1,6 @@
 package dev.buildtool.satako.platform;
 
+import dev.buildtool.satako.IntegerColor;
 import dev.buildtool.satako.ItemHandlerSlot;
 import dev.buildtool.satako.NeoforgeFunctions;
 import dev.buildtool.satako.SatakoNeoforge;
@@ -101,6 +102,13 @@ public class NeoForgePlatformHooks implements IPlatformHooks {
     @Override
     public MenuType<?> getTestMenu() {
         return SatakoNeoforge.TEST_MENU.get();
+    }
+
+    @Override
+    public IntegerColor getFluidColor(Fluid fluid) {
+        IClientFluidTypeExtensions fluidExtensions = IClientFluidTypeExtensions.of(fluid);
+        IntegerColor color = new IntegerColor(fluidExtensions.getTintColor());
+        return color;
     }
 
     @Override
