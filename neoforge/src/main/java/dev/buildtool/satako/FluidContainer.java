@@ -6,7 +6,7 @@ import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 import java.util.function.Predicate;
 
 public class FluidContainer extends FluidTank {
-    private Runnable onChangedAction;
+    private OnChange onChangedAction;
     private final boolean canExtract;
 
     public FluidContainer(int capacity, boolean canExtract) {
@@ -18,13 +18,13 @@ public class FluidContainer extends FluidTank {
         this.canExtract = canExtract;
     }
 
-    public FluidContainer(int capacity, boolean canExtract, Runnable onChangedAction) {
+    public FluidContainer(int capacity, boolean canExtract, OnChange onChangedAction) {
         super(capacity);
         this.canExtract = canExtract;
         this.onChangedAction = onChangedAction;
     }
 
-    public FluidContainer(int capacity, Predicate<FluidStack> validator, boolean canExtract, Runnable onChangedAction) {
+    public FluidContainer(int capacity, Predicate<FluidStack> validator, boolean canExtract, OnChange onChangedAction) {
         super(capacity, validator);
         this.canExtract = canExtract;
         this.onChangedAction = onChangedAction;
@@ -45,7 +45,12 @@ public class FluidContainer extends FluidTank {
     protected void onContentsChanged() {
         super.onContentsChanged();
         if (onChangedAction != null)
-            onChangedAction.run();
+            onChangedAction.run(this);
+    }
+
+    @FunctionalInterface
+    public interface OnChange {
+        void run(FluidContainer thisContainer);
     }
 
 }
