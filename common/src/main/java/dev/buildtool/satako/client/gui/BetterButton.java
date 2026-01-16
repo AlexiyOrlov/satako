@@ -78,4 +78,10 @@ public class BetterButton extends ExtendedButton implements Switchable {
     {
 
     }
+
+    @Override
+    public void onPress() {
+        if(onPress!=null)
+            onPress.onPress(this);
+    }
 }
