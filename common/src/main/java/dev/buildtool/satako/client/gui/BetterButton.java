@@ -65,8 +65,8 @@ public class BetterButton extends ExtendedButton implements Switchable {
                 boolean flag = this.clicked(mouseX, mouseY);
                 if (flag) {
                     this.playDownSound(Minecraft.getInstance().getSoundManager());
-                    onPress();
                     click(mouseX, mouseY, button);
+                    onPress();
                     return true;
                 }
             }
