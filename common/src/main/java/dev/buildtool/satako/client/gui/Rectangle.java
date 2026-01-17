@@ -29,6 +29,12 @@ public class Rectangle extends AbstractWidget {
         return new Rectangle(x,y,width,height,Component.empty(),fillPercent,color,true);
     }
 
+    public static Rectangle horizontal(int x,int y,int width, int height,DynamicColor color,FillPercent fillPercent)
+    {
+        return new Rectangle(x,y,width,height,Component.empty(),fillPercent,color,false);
+    }
+
+    @Deprecated
     public Rectangle(int x, int y, int width, int height, Component message, FillPercent fillPercent, DynamicColor dynamicColor, boolean vertical) {
         this(x, y, width, height, fillPercent,null,dynamicColor);
         this.vertical = vertical;
@@ -47,6 +53,21 @@ public class Rectangle extends AbstractWidget {
         this.vertical=vertical;
     }
 
+    @Deprecated
+    public Rectangle(int x, int y, int width, int height , DynamicColor dynamicColor, FillPercent fillPercent) {
+        super(x, y, width-2, height-2, Component.empty());
+        this.fillPercent = fillPercent;
+        this.dynamicColor = dynamicColor;
+    }
+
+    @Deprecated
+    public Rectangle(int x, int y, int width, int height , DynamicColor dynamicColor, FillPercent fillPercent,boolean vertical) {
+        super(x, y, width-2, height-2, Component.empty());
+        this.fillPercent = fillPercent;
+        this.dynamicColor = dynamicColor;
+
+        this.vertical=vertical;
+    }
 
     public Rectangle(int x, int y, int width, int height, FillPercent fillPercent, ResourceLocation texture, boolean vertical) {
         super(x, y, width-2, height-2, Component.empty());
