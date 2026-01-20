@@ -1,6 +1,6 @@
 package dev.buildtool.satako;
 
-public class EnergyProducer extends EnergyStorage2 {
+public class EnergyProducer extends EnergyContainer {
     public EnergyProducer(int capacity, int maxTransfer, OnChanged onEnergyChange) {
         super(capacity, maxTransfer, onEnergyChange);
     }

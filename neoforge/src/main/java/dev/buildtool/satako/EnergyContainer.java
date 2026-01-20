@@ -5,27 +5,27 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.neoforged.neoforge.energy.EnergyStorage;
 
-public class EnergyStorage2 extends EnergyStorage {
+public class EnergyContainer extends EnergyStorage {
     private OnChanged onEnergyChange;
 
-    public EnergyStorage2(int capacity) {
+    public EnergyContainer(int capacity) {
         super(capacity);
     }
 
-    public EnergyStorage2(int capacity, int maxTransfer) {
+    public EnergyContainer(int capacity, int maxTransfer) {
         super(capacity, maxTransfer);
     }
 
-    public EnergyStorage2(int capacity, int maxReceive, int maxExtract, OnChanged onEnergyChange) {
+    public EnergyContainer(int capacity, int maxReceive, int maxExtract, OnChanged onEnergyChange) {
         super(capacity, maxReceive, maxExtract);
         this.onEnergyChange = onEnergyChange;
     }
 
-    public EnergyStorage2(int capacity, int maxReceive, int maxExtract, int energy) {
+    public EnergyContainer(int capacity, int maxReceive, int maxExtract, int energy) {
         super(capacity, maxReceive, maxExtract, energy);
     }
 
-    public EnergyStorage2(int capacity, int maxTransfer, OnChanged onEnergyChange) {
+    public EnergyContainer(int capacity, int maxTransfer, OnChanged onEnergyChange) {
         super(capacity, maxTransfer);
         this.onEnergyChange = onEnergyChange;
     }
@@ -71,7 +71,7 @@ public class EnergyStorage2 extends EnergyStorage {
     }
 
     public interface OnChanged {
-        void run(EnergyStorage2 thisStorage);
+        void run(EnergyContainer thisStorage);
     }
 
     public int selfExtract(int amount, boolean simulate)
