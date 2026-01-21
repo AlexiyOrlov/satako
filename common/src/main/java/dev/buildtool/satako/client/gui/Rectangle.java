@@ -129,13 +129,16 @@ public class Rectangle extends AbstractWidget {
                 }
             });
         } else if (dynamicColor != null) {
-            if (fillPercent != null) {
-                if (vertical)
-                    guiGraphics.fill(getX(), (int) (getY() + height - height * fillPercent.getFillPercent()), getX() + width, getY() + height, dynamicColor.getColor().getIntColor());
-                else
-                    guiGraphics.fill(getX(), getY(), (int) (getX() + width * fillPercent.getFillPercent()), getY() + height, dynamicColor.getColor().getIntColor());
-            } else {
-                guiGraphics.fill(getX(), getY(), getX() + width, getY() + height, dynamicColor.getColor().getIntColor());
+            IntegerColor integerColor = dynamicColor.getColor();
+            if(integerColor!=null) {
+                if (fillPercent != null) {
+                    if (vertical)
+                        guiGraphics.fill(getX(), (int) (getY() + height - height * fillPercent.getFillPercent()), getX() + width, getY() + height, integerColor.getIntColor());
+                    else
+                        guiGraphics.fill(getX(), getY(), (int) (getX() + width * fillPercent.getFillPercent()), getY() + height, integerColor.getIntColor());
+                } else {
+                    guiGraphics.fill(getX(), getY(), getX() + width, getY() + height, integerColor.getIntColor());
+                }
             }
         }
     }
