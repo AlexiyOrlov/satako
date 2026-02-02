@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 public abstract class BlockHorizontal extends HorizontalDirectionalBlock {
     private boolean dropItems=true;
     public BlockHorizontal(Properties properties) {
-        super(properties);
+        this(properties,true);
     }
 
     public BlockHorizontal(Properties p_54120_, boolean dropItems) {
