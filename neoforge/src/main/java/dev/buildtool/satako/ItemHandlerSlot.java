@@ -20,14 +20,16 @@ public class ItemHandlerSlot extends SlotItemHandler {
     private IntegerColor color = Constants.BLUE;
     private ResourceLocation texture;
     private Component tooltip;
+    protected IItemHandler itemHandler;
 
     public ItemHandlerSlot(IItemHandler itemHandler, int index, int xPosition, int yPosition) {
         super(itemHandler, index, xPosition, yPosition);
+        this.itemHandler=itemHandler;
     }
 
     @Override
     public boolean mayPlace(ItemStack stack) {
-        return !stack.isEmpty();
+        return !stack.isEmpty() && itemHandler.isItemValid(index,stack);
     }
 
     @Override
