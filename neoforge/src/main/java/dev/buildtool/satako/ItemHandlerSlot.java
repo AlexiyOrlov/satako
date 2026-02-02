@@ -28,11 +28,6 @@ public class ItemHandlerSlot extends SlotItemHandler {
     }
 
     @Override
-    public boolean mayPlace(ItemStack stack) {
-        return !stack.isEmpty() && itemHandler.isItemValid(index,stack);
-    }
-
-    @Override
     public boolean mayPickup(Player playerIn) {
         return true;
     }
