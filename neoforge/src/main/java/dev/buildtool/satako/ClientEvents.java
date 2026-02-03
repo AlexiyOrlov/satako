@@ -9,6 +9,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.ScreenEvent;
+import net.neoforged.neoforge.client.event.sound.SoundEngineLoadEvent;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 
 @EventBusSubscriber(Dist.CLIENT)
@@ -34,5 +35,10 @@ public class ClientEvents {
                 JEI.ingredientListOverlay.getIngredientUnderMouse().flatMap(ITypedIngredient::getItemStack).ifPresent(itemStack -> SatakoClient.handle(itemStack, event.getGuiGraphics()));
             }
         }
+    }
+
+    @SubscribeEvent
+    private static void getSoundManager(SoundEngineLoadEvent event) {
+        SoundController.soundEngine = event.getEngine();
     }
 }
