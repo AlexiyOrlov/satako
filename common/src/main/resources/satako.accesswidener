@@ -20,3 +20,4 @@ transitive-accessible field net/minecraft/client/gui/screens/inventory/AbstractC
 transitive-mutable field net/minecraft/client/gui/components/Button onPress Lnet/minecraft/client/gui/components/Button$OnPress;
 transitive-accessible field net/minecraft/client/renderer/block/BlockRenderDispatcher blockEntityRenderer Lnet/minecraft/client/renderer/BlockEntityWithoutLevelRenderer;
 transitive-accessible field net/minecraft/client/renderer/block/BlockRenderDispatcher blockColors Lnet/minecraft/client/color/block/BlockColors;
+accessible field net/minecraft/client/sounds/SoundEngine soundManager Lnet/minecraft/client/sounds/SoundManager;
