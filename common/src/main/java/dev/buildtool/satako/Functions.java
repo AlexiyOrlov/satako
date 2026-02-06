@@ -653,17 +653,12 @@ public final class Functions {
     }
 
     public static Rotation directionToRotation(Direction direction) {
-        switch (direction) {
-            case NORTH:
-                break;
-            case SOUTH:
-                return Rotation.CLOCKWISE_180;
-            case EAST:
-                return Rotation.CLOCKWISE_90;
-            case WEST:
-                return Rotation.COUNTERCLOCKWISE_90;
-        }
-        return Rotation.NONE;
+        return switch (direction) {
+            case SOUTH -> Rotation.CLOCKWISE_180;
+            case EAST -> Rotation.CLOCKWISE_90;
+            case WEST -> Rotation.COUNTERCLOCKWISE_90;
+            default -> Rotation.NONE;
+        };
     }
 
     public static FriendlyByteBuf emptyBuffer() {
