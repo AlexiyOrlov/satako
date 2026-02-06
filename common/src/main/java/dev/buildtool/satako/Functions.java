@@ -406,22 +406,6 @@ public final class Functions {
     }
 
     /**
-     * @return list of block positions inside the box
-     */
-    @Deprecated
-    public static List<BlockPos> boundingBoxToPositions(AABB axisAlignedBB) {
-        List<BlockPos> positions = new ArrayList<>();
-        for (double X = axisAlignedBB.minX; X <= axisAlignedBB.maxX; X++) {
-            for (double Y = axisAlignedBB.minY; Y <= axisAlignedBB.maxY; Y++) {
-                for (double Z = axisAlignedBB.minZ; Z <= axisAlignedBB.maxZ; Z++) {
-                    positions.add(new BlockPos((int) X, (int) Y, (int) Z));
-                }
-            }
-        }
-        return positions;
-    }
-
-    /**
      * @return block positions inside the bounding box
      */
     public static List<BlockPos> bbToPositions(AABB axisAlignedBB) {
