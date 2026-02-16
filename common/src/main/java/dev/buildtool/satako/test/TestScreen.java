@@ -11,6 +11,7 @@ import dev.buildtool.satako.platform.Services;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -45,8 +46,9 @@ public class TestScreen extends MenuScreen<TestMenu> {
 
         ScrollArea scrollArea=new ScrollArea(button.getX()+button.getWidth(),10,width/2,height-40,Component.literal("Test scroll area"),this);
         for (int i = 0; i < 30; i++) {
-            scrollArea.addWidget(new Label(0,0,Component.literal("Label "+i),Constants.ORANGE),i,0);
+//            scrollArea.addWidget(new Label(0,0,Component.literal("Label "+i),Constants.ORANGE),i,0);
         }
+        scrollArea.addWidget(new EditBox(font,60,20,Component.empty()),30,0);
         scrollArea.alignWidgets();
         addRenderableWidget(scrollArea);
 

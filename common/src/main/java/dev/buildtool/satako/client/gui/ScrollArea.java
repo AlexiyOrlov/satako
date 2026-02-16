@@ -1,5 +1,6 @@
 package dev.buildtool.satako.client.gui;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Table;
 import com.google.common.collect.TreeBasedTable;
 import dev.buildtool.satako.Constants;
@@ -16,6 +17,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Don't add the widgets in the scroll area to the screen
+ */
 public class ScrollArea extends AbstractWidget{
     public static final int SCROLLBAR_HEIGHT = 15;
     public static final int SCROLLBAR_WIDTH = 12;
@@ -44,7 +48,6 @@ public class ScrollArea extends AbstractWidget{
     {
         widgetTable.put(row,column,widget);
         widgets.add(widget);
-        parentScreen.addRenderableWidget(widget);
     }
 
     public void addSpanningWidget(AbstractWidget widget,int row,int column)
@@ -69,8 +72,6 @@ public class ScrollArea extends AbstractWidget{
                 if(abstractWidget.getHeight()>highest)
                     highest=abstractWidget.getHeight();
                 widgetYOffsets.put(abstractWidget,abstractWidget.getY());
-                if(abstractWidget.getY()+abstractWidget.getHeight()> startY +height || abstractWidget.getY()< startY)
-                    abstractWidget.visible=false;
             }
             elementY+=highest;
             totalContentHeight+=highest;
@@ -120,6 +121,13 @@ public class ScrollArea extends AbstractWidget{
             dragging = true;
             return true;
         }
+        for (AbstractWidget widget : widgets) {
+            if(widget.mouseClicked(mouseX, mouseY, button))
+            {
+                widget.setFocused(true);
+                return true;
+            }
+        }
         return super.mouseClicked(mouseX, mouseY, button);
     }
 
@@ -133,15 +141,12 @@ public class ScrollArea extends AbstractWidget{
             }
             scrollForScrollBar = (int) Math.clamp(mouseY - (double) startY / (startY +height), startY, startY + height);
             relativeScroll = (float) Math.clamp(mouseY- (double) startY /(startY +height)- startY,0,height);
-            float div = (float) (totalContentHeight) / widgets.size();
             float relative = relativeScroll * (totalContentHeight - height) / (height);
-            int finalStartY = startY;
             widgetTable.rowKeySet().forEach(integer -> {
                 var row=widgetTable.row(integer);
                 row.forEach((integer1, widget) -> {
                     int offsetY=widgetYOffsets.get(widget);
                     widget.setY((int) (offsetY-relative));
-                    widget.visible = widget.getY() >= finalStartY && widget.getY() + widget.getHeight() <= finalStartY + height + div / 2;
                 });
             });
             return true;
@@ -168,15 +173,12 @@ public class ScrollArea extends AbstractWidget{
         }
         scrollForScrollBar = (int) Math.clamp(scrollForScrollBar- scrollY*5, startY,startY+ height);
         relativeScroll = (float) Math.clamp(relativeScroll-scrollY*5,0,height);
-        float div = (float) (totalContentHeight) / widgets.size();
         float relative = relativeScroll * (totalContentHeight - height) / height ;
-        int finalStartY = startY;
         widgetTable.rowKeySet().forEach(integer -> {
             var row=widgetTable.row(integer);
             row.forEach((integer1, widget) -> {
                 int offsetY=widgetYOffsets.get(widget);
                 widget.setY((int) (offsetY-relative));
-                widget.visible = widget.getY() >= finalStartY && widget.getY() + widget.getHeight() <=finalStartY+ height + div / 2;
             });
         });
         return true;
@@ -192,11 +194,13 @@ public class ScrollArea extends AbstractWidget{
             guiGraphics.drawCenteredString(Minecraft.getInstance().font, message,width/2+getX(),getY(),Constants.WHITE.getIntColor());
         }
         guiGraphics.fill(getX(),startY,getX()+width,startY+height, Constants.DARK.getIntColor());
+        guiGraphics.enableScissor(getX(),startY,getX()+width,startY+height);
         for (AbstractWidget widget : widgets) {
             widget.render(guiGraphics,mouseX,mouseY,partialTick);
         }
+        guiGraphics.disableScissor();
         if(totalContentHeight>height)
-            guiGraphics.blitSprite(SCROLLER_SPRITE,width-2+getX(), (int) scrollForScrollBar, SCROLLBAR_WIDTH, 3);
+            guiGraphics.blitSprite(SCROLLER_SPRITE,width+getX(), (int) scrollForScrollBar, SCROLLBAR_WIDTH, 3);
         else
             guiGraphics.blitSprite(SCROLLER_DISABLED_SPRITE,width-2+getX(), (int) scrollForScrollBar, SCROLLBAR_WIDTH, SCROLLBAR_HEIGHT);
 
@@ -209,6 +213,29 @@ public class ScrollArea extends AbstractWidget{
 
     @Override
     protected boolean isValidClickButton(int button) {
+        return true;
+    }
+
+    @Override
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        for (AbstractWidget widget : widgets) {
+            if(widget.keyPressed(keyCode, scanCode, modifiers))
+                return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean charTyped(char codePoint, int modifiers) {
+        for (AbstractWidget widget : widgets) {
+            if(widget.charTyped(codePoint,modifiers))
+                return true;
+        }
+        return false;
+    }
+
+    @Override
+    protected boolean clicked(double mouseX, double mouseY) {
         return false;
     }
 }
