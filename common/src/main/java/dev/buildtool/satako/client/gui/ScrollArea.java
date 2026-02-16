@@ -44,6 +44,7 @@ public class ScrollArea extends AbstractWidget{
             scrollForScrollBar+=10;
     }
 
+    /** When added to the scroll area, widget's X position becomes an offset from the widget on the left from it*/
     public void addWidget(AbstractWidget widget,int row,int column)
     {
         widgetTable.put(row,column,widget);
@@ -106,10 +107,10 @@ public class ScrollArea extends AbstractWidget{
                 for (int col = 0; col < column; col++) {
                     widest+=columnToWidest.get(col);
                 }
-                next.setX(getX() + widest);
+                next.setX(getX() + widest+next.getX());
             }
             else
-                next.setX(getX());
+                next.setX(getX()+next.getX());
         }
     }
 
