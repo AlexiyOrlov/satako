@@ -18,7 +18,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Don't add the widgets in the scroll area to the screen
+ * Don't add the widgets in the scroll area to the screen.
+ * Don't forget to align widgets
  */
 public class ScrollArea extends AbstractWidget{
     public static final int SCROLLBAR_HEIGHT = 15;
