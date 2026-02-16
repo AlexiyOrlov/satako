@@ -46,6 +46,10 @@ public interface IPlatformHooks {
     }
 
     default void drawSlotBackground(Slot slot, GuiGraphics guiGraphics, AbstractContainerScreen<?> screen) {
+        drawSlotBack(slot, guiGraphics, screen);
+    }
+
+    static void drawSlotBack(Slot slot, GuiGraphics guiGraphics, AbstractContainerScreen<?> screen) {
         int sx = slot.x;
         int sy = slot.y;
         if (slot instanceof BetterSlot betterSlot) {

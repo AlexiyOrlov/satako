@@ -95,7 +95,7 @@ public class NeoForgePlatformHooks implements IPlatformHooks {
                 guiGraphics.blitSprite(itemHandlerSlot.getTexture(), sx + screen.getGuiLeft(), sy + screen.getGuiTop(), sx + screen.getGuiLeft() + 16, sy + screen.getGuiTop() + 16);
             }
         } else {
-            guiGraphics.fill(sx + screen.getGuiLeft(), sy + screen.getGuiTop(), sx + screen.getGuiLeft() + 16, sy + screen.getGuiTop() + 16, 0xff666666);
+            IPlatformHooks.drawSlotBack(slot,guiGraphics,screen);
         }
     }
 
