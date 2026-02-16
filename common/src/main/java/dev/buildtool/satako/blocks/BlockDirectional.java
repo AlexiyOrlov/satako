@@ -1,5 +1,6 @@
 package dev.buildtool.satako.blocks;
 
+import com.mojang.serialization.MapCodec;
 import dev.buildtool.satako.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -13,8 +14,9 @@ import net.minecraft.world.level.block.state.StateDefinition;
 /**
  * Created on 5/29/18.
  */
-public abstract class BlockDirectional extends DirectionalBlock {
+public class BlockDirectional extends DirectionalBlock {
     private boolean dropItems=true;
+    private static final MapCodec<BlockDirectional> MAP_CODEC=simpleCodec(BlockDirectional::new);
 
     public BlockDirectional(Properties p_52591_, boolean dropItems) {
         super(p_52591_);
@@ -51,5 +53,10 @@ public abstract class BlockDirectional extends DirectionalBlock {
     @Override
     public boolean triggerEvent(BlockState state, Level worldIn, BlockPos pos, int id, int param) {
         return state.hasBlockEntity() && worldIn.getBlockEntity(pos).triggerEvent(id, param);
+    }
+
+    @Override
+    protected MapCodec<? extends DirectionalBlock> codec() {
+        return MAP_CODEC;
     }
 }
