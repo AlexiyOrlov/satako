@@ -37,35 +37,18 @@ public class TestScreen extends MenuScreen<TestMenu> {
 //        addRenderableWidget(radioButton2);
 //        new ButtonGroup(radioButton, radioButton2);
 //
-//        Button button = new Button.Builder(Component.literal("Open client screen"), p_93751_ -> {
-//            Minecraft.getInstance().setScreen(new TestSlotlessScreen(Component.literal("Client screen"),this));
-//        }).pos(0, 120).size(100, 20).build();
+        Button button = new Button.Builder(Component.literal("Open client screen"), p_93751_ -> {
+            Minecraft.getInstance().setScreen(new TestSlotlessScreen(Component.literal("Client screen"),this));
+        }).pos(0, 120).size(100, 20).build();
 //        button.setTooltip(Tooltip.create(Component.literal("Veeeeeeeeeeeeeryyyyyyyyyyyyyyyy looooooooooooooooooooooooooong tooooooooltiiiiiiiip")));
-//        addRenderableWidget(button);
-//        TextField textField = new TextField(button.getX() + button.getWidth(), button.getY(), 150);
-//        addRenderableWidget(textField);
-//        SwitchButton switchButton = new SwitchButton(0, 200, Component.literal("true"), Component.literal("false"), true, p_93751_ -> {
-//        });
-//        addRenderableWidget(switchButton);
-//        addRenderableWidget(new Label(leftPos + imageWidth, topPos, Component.literal("Clickable"),null, p_93751_ -> addPopup(Component.literal("Clicked first label"))));
-//        addRenderableWidget(new Label(leftPos + imageWidth, topPos + 20, Component.literal("Clickable with background"), 60, p_93751_ -> addPopup(Component.literal("Clicked second label")), Constants.ORANGE));
-//        LinkedHashMap<Component, Button.OnPress> linkedHashMap = new LinkedHashMap<>();
-//        DropDownButton dropDownButton = new DropDownButton(leftPos + imageWidth, topPos + 40, this);
-//        linkedHashMap.put(Component.literal("First choice"), p_93751_ -> {
-//            addPopup(Component.literal("Clicked 1st choice"));
-//            addPopup(Component.literal("Notification"));
-//        });
-//        linkedHashMap.put(Component.literal("Second choice"), p_93751_ -> addPopup(Component.literal("Clicked 2nd choice")));
-//        linkedHashMap.put(Component.literal("Third choice"), p_93751_ -> addPopup(Component.literal("Clicked 3d choice")));
-//        dropDownButton.setChoices(linkedHashMap, 1);
-//        addRenderableWidget(dropDownButton);
+        addRenderableWidget(button);
 
-//        Label label = new Label(leftPos + imageWidth, topPos + 20 * 3, Component.literal("Overlapping label"), Constants.ORANGE, p_93751_ -> addPopup(Component.literal("Clicked the label")));
-//        addRenderableWidget(label);
-//        addRenderableWidget(new Button.Builder(Component.literal("Button"), p_93751_ -> addPopup(Component.literal("Clicked the button"))).pos(label.getX() + label.getWidth(), label.getY()).size(40, 20).build());
-//        addRenderableOnly(new Button.Builder(Component.literal("Below label"), button1 -> {
-//        }).pos(label.getX(), label.getY() + label.getHeight()).build());
-//        addRenderableWidget(new SelectionButton(10, height - 20, Component.literal("Selection button")));
+        ScrollArea scrollArea=new ScrollArea(button.getX()+button.getWidth(),10,width/2,height-40,Component.literal("Test scroll area"),this);
+        for (int i = 0; i < 30; i++) {
+            scrollArea.addWidget(new Label(0,0,Component.literal("Label "+i),Constants.ORANGE),i,0);
+        }
+        scrollArea.alignWidgets();
+        addRenderableWidget(scrollArea);
 
         Rectangle water = new Rectangle(leftPos - 22, topPos, 20, imageHeight,() -> 0.9f, Services.PLATFORM.getFluidTexture(Fluids.WATER, true), null);
         addRenderableOnly(water);
