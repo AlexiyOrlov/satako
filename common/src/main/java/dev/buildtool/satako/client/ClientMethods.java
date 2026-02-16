@@ -310,7 +310,7 @@ public class ClientMethods {
     }
 
     public static void drawBackground(GuiGraphics graphics, int x, int y, int z, int width, int height, IntegerColor color) {
-        TooltipRenderUtil.renderTooltipBackground(graphics, x, y, width, height, z);
+        renderTooltipBackground(graphics, x, y, width, height, z,color);
     }
 
     public static void drawTiledSprite(ResourceLocation texture, GuiGraphics graphics, int x, int y, int width, int height) {
@@ -371,5 +371,41 @@ public class ClientMethods {
 
     private static void addVertexWithUV(VertexConsumer buffer, PoseStack matrixStack, float x, float y, float z, float u, float v, float red, float green, float blue, float alpha, int combinedLight) {
         buffer.addVertex(matrixStack.last().pose(), x, y, z).setColor(red, green, blue, alpha).setUv(u, v).setOverlay(OverlayTexture.NO_OVERLAY).setUv2(combinedLight, 240).setNormal(0, 1, 0);
+    }
+
+    public static void renderTooltipBackground(GuiGraphics guiGraphics, int x, int y, int width, int height, int z,IntegerColor color) {
+        int i = x - 3;
+        int j = y - 3;
+        int k = width + 3 + 3;
+        int l = height + 3 + 3;
+        renderHorizontalLine(guiGraphics, i, j - 1, k, z, -267386864);
+        renderHorizontalLine(guiGraphics, i, j + l, k, z, -267386864);
+        renderRectangle(guiGraphics, i, j, k, l, z, color.getIntColor());
+        renderVerticalLine(guiGraphics, i - 1, j, l, z, -267386864);
+        renderVerticalLine(guiGraphics, i + k, j, l, z, -267386864);
+        renderFrameGradient(guiGraphics, i, j + 1, k, l, z, 1347420415, 1344798847);
+    }
+
+    private static void renderFrameGradient(GuiGraphics guiGraphics, int x, int y, int width, int height, int z, int topColor, int bottomColor) {
+        renderVerticalLineGradient(guiGraphics, x, y, height - 2, z, topColor, bottomColor);
+        renderVerticalLineGradient(guiGraphics, x + width - 1, y, height - 2, z, topColor, bottomColor);
+        renderHorizontalLine(guiGraphics, x, y - 1, width, z, topColor);
+        renderHorizontalLine(guiGraphics, x, y - 1 + height - 1, width, z, bottomColor);
+    }
+
+    private static void renderVerticalLine(GuiGraphics guiGraphics, int x, int y, int length, int z, int color) {
+        guiGraphics.fill(x, y, x + 1, y + length, z, color);
+    }
+
+    private static void renderVerticalLineGradient(GuiGraphics guiGraphics, int x, int y, int length, int z, int topColor, int bottomColor) {
+        guiGraphics.fillGradient(x, y, x + 1, y + length, z, topColor, bottomColor);
+    }
+
+    private static void renderHorizontalLine(GuiGraphics guiGraphics, int x, int y, int length, int z, int color) {
+        guiGraphics.fill(x, y, x + length, y + 1, z, color);
+    }
+
+    private static void renderRectangle(GuiGraphics guiGraphics, int x, int y, int width, int height, int z, int color) {
+        guiGraphics.fill(x, y, x + width, y + height, z, color);
     }
 }
