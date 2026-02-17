@@ -1,5 +1,6 @@
 package dev.buildtool.satako.blocks;
 
+import com.mojang.serialization.MapCodec;
 import dev.buildtool.satako.platform.Services;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -9,10 +10,16 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-public abstract class BlockHorizontal extends HorizontalDirectionalBlock {
+public  class BlockHorizontal extends HorizontalDirectionalBlock {
+    private static final MapCodec<BlockHorizontal> MAP_CODEC=simpleCodec(BlockHorizontal::new);
     private boolean dropItems=true;
     public BlockHorizontal(Properties properties) {
         this(properties,true);
+    }
+
+    @Override
+    protected MapCodec<? extends HorizontalDirectionalBlock> codec() {
+        return MAP_CODEC;
     }
 
     public BlockHorizontal(Properties p_54120_, boolean dropItems) {
