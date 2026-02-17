@@ -26,12 +26,12 @@ public class Rectangle extends AbstractWidget {
 
     public static Rectangle vertical(int x,int y,int width, int height,DynamicColor color,FillPercent fillPercent)
     {
-        return new Rectangle(x,y,width,height,fillPercent,null,color,true);
+        return new Rectangle(x,y,width,height,color,null,fillPercent,true);
     }
 
     public static Rectangle horizontal(int x,int y,int width, int height,DynamicColor color,FillPercent fillPercent)
     {
-        return new Rectangle(x,y,width,height,fillPercent,null,color,false);
+        return new Rectangle(x,y,width,height,color,null,fillPercent,false);
     }
 
     public Rectangle(int x, int y, int width, int height, FillPercent fillPercent, TextureAtlasSprite sprite, DynamicColor dynamicColor, boolean isVertical) {
