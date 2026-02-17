@@ -63,8 +63,8 @@ public abstract class MenuScreen<T extends AbstractContainerMenu> extends Abstra
             if (y > maxY)
                 maxY = y;
         }
-        imageWidth = maxX + Constants.SLOTWITHBORDERSIZE;
-        imageHeight = maxY + Constants.SLOTWITHBORDERSIZE;
+        imageWidth = maxX + Constants.SLOT_SIZE;
+        imageHeight = maxY + Constants.SLOT_SIZE;
         super.init();
         centerX = width / 2;
         centerY = height / 2;
@@ -123,10 +123,10 @@ public abstract class MenuScreen<T extends AbstractContainerMenu> extends Abstra
         //lines have to be drawn after everything else
         if (drawBorders) {
             int intColor = color.getIntColor();
-            guiGraphics.hLine(this.leftPos - 1, imageWidth + leftPos - 2, this.topPos - 1, intColor);
-            guiGraphics.hLine(this.leftPos, this.imageWidth + leftPos - 2, this.imageHeight + topPos - 2, intColor);
-            guiGraphics.vLine(this.leftPos - 1, this.topPos - 1, imageHeight + this.topPos - 1, intColor);
-            guiGraphics.vLine(imageWidth + this.leftPos - 2, this.topPos - 1, imageHeight + this.topPos - 2, intColor);
+            guiGraphics.hLine(this.leftPos-1, imageWidth + leftPos, this.topPos-1, intColor);
+            guiGraphics.hLine(this.leftPos-1, this.imageWidth + leftPos, this.imageHeight + topPos, intColor);
+            guiGraphics.vLine(this.leftPos- 1, this.topPos-1 , imageHeight + this.topPos, intColor);
+            guiGraphics.vLine(imageWidth + this.leftPos, this.topPos-1 , imageHeight + this.topPos, intColor);
         }
     }
 

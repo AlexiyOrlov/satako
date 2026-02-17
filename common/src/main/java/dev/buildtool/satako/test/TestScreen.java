@@ -50,14 +50,14 @@ public class TestScreen extends MenuScreen<TestMenu> {
         }
         scrollArea.addWidget(new EditBox(font,60,20,Component.empty()),30,0);
         scrollArea.alignWidgets();
-        addRenderableWidget(scrollArea);
+//        addRenderableWidget(scrollArea);
 
         Rectangle water = new Rectangle(leftPos - 22, topPos, 20, imageHeight,() -> 0.9f, Services.PLATFORM.getFluidTexture(Fluids.WATER, true), null);
         addRenderableOnly(water);
 
         Rectangle horizontal = new Rectangle(leftPos, topPos - 20, imageWidth, 18,() ->  new IntegerColor(0, 128, 255), Services.PLATFORM.getFluidTexture(Fluids.LAVA, true), () -> 0.7f, false);
         addRenderableOnly(horizontal);
-        addRenderableWidget(new ExtendedSlider(leftPos, topPos + imageHeight, imageWidth, 20, Component.literal(""), Component.literal(""), 1, 20, 1, true));
+//        addRenderableWidget(new ExtendedSlider(leftPos, topPos + imageHeight, imageWidth, 20, Component.literal(""), Component.literal(""), 1, 20, 1, true));
 
         Rectangle textured = new Rectangle(20, 20, 30, 30, () -> 1f, ResourceLocation.withDefaultNamespace("container/anvil/error"), true);
         addRenderableOnly(textured);
