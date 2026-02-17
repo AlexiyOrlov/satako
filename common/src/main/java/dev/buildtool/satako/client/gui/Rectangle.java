@@ -46,7 +46,7 @@ public class Rectangle extends AbstractWidget {
     }
 
     public Rectangle(int x, int y, int width, int height, @Nullable DynamicColor color, @Nullable TextureAtlasSprite sprite, FillPercent fillPercent, boolean vertical) {
-        super(x, y, width, height-2, Component.empty());
+        super(x, y, width, height, Component.empty());
         this.dynamicColor=color;
         this.fillPercent = fillPercent;
         this.sprite = sprite;
