@@ -1,25 +1,19 @@
 package dev.buildtool.satako.test;
 
-import dev.buildtool.satako.Constants;
 import dev.buildtool.satako.IntegerColor;
 import dev.buildtool.satako.Satako;
 import dev.buildtool.satako.client.gui.*;
-import dev.buildtool.satako.client.gui.Label;
 import dev.buildtool.satako.client.gui.Rectangle;
-import dev.buildtool.satako.client.gui.TextField;
 import dev.buildtool.satako.platform.Services;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
-import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.level.material.Fluids;
 
-import java.awt.*;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 public class TestScreen extends MenuScreen<TestMenu> {
@@ -52,7 +46,7 @@ public class TestScreen extends MenuScreen<TestMenu> {
         scrollArea.alignWidgets();
 //        addRenderableWidget(scrollArea);
 
-        Rectangle water = new Rectangle(leftPos - 22, topPos, 20, imageHeight,() -> 0.9f, Services.PLATFORM.getFluidTexture(Fluids.WATER, true), null);
+        Rectangle water = new Rectangle(leftPos - 22, topPos, 20, imageHeight,() -> 0.9f, Services.PLATFORM.getFluidTexture(Fluids.WATER, true), null, false);
         addRenderableOnly(water);
 
         Rectangle horizontal = new Rectangle(leftPos, topPos - 20, imageWidth, 18,() ->  new IntegerColor(0, 128, 255), Services.PLATFORM.getFluidTexture(Fluids.LAVA, true), () -> 0.7f, false);

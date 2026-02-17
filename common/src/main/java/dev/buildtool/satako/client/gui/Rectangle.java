@@ -26,22 +26,15 @@ public class Rectangle extends AbstractWidget {
 
     public static Rectangle vertical(int x,int y,int width, int height,DynamicColor color,FillPercent fillPercent)
     {
-        return new Rectangle(x,y,width,height,Component.empty(),fillPercent,color,true);
+        return new Rectangle(x,y,width,height,fillPercent,null,color,true);
     }
 
     public static Rectangle horizontal(int x,int y,int width, int height,DynamicColor color,FillPercent fillPercent)
     {
-        return new Rectangle(x,y,width,height,Component.empty(),fillPercent,color,false);
+        return new Rectangle(x,y,width,height,fillPercent,null,color,false);
     }
 
-    @Deprecated
-    public Rectangle(int x, int y, int width, int height, Component message, FillPercent fillPercent, DynamicColor dynamicColor, boolean vertical) {
-        this(x, y, width, height, fillPercent,null,dynamicColor);
-        this.vertical = vertical;
-        this.dynamicColor = dynamicColor;
-    }
-
-    public Rectangle(int x, int y, int width, int height, FillPercent fillPercent, TextureAtlasSprite sprite, DynamicColor dynamicColor) {
+    public Rectangle(int x, int y, int width, int height, FillPercent fillPercent, TextureAtlasSprite sprite, DynamicColor dynamicColor, boolean isVertical) {
         this(x, y, width, height,dynamicColor,sprite,fillPercent,true);
     }
 
@@ -50,22 +43,6 @@ public class Rectangle extends AbstractWidget {
         this.dynamicColor=color;
         this.fillPercent = fillPercent;
         this.sprite = sprite;
-        this.vertical=vertical;
-    }
-
-    @Deprecated
-    public Rectangle(int x, int y, int width, int height , DynamicColor dynamicColor, FillPercent fillPercent) {
-        super(x, y, width, height-2, Component.empty());
-        this.fillPercent = fillPercent;
-        this.dynamicColor = dynamicColor;
-    }
-
-    @Deprecated
-    public Rectangle(int x, int y, int width, int height , DynamicColor dynamicColor, FillPercent fillPercent,boolean vertical) {
-        super(x, y, width, height-2, Component.empty());
-        this.fillPercent = fillPercent;
-        this.dynamicColor = dynamicColor;
-
         this.vertical=vertical;
     }
 
