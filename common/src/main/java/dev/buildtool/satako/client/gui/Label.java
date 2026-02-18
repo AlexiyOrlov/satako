@@ -54,7 +54,8 @@ public class Label extends BetterButton implements Switchable {
         if (!hidden) {
             ClientMethods.drawBackground(guiGraphics, getX()+4, getY() + 4, 399, width+4, height + 2, backgroundColor);
             guiGraphics.pose().pushPose();
-            guiGraphics.pose().translate(0, 0, 400);
+            //this is a minimum needed translation
+            guiGraphics.pose().translate(0, 0, 399);
             renderScrollingString(guiGraphics, fontRenderer, getMessage(), getX()+4, getY() + 3, getX() + getWidth()-4, getY() + getHeight()/2 + 6, Constants.WHITE.getIntColor());
             guiGraphics.pose().popPose();
         }
