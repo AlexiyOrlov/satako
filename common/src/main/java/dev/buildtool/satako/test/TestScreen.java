@@ -1,5 +1,6 @@
 package dev.buildtool.satako.test;
 
+import dev.buildtool.satako.Constants;
 import dev.buildtool.satako.IntegerColor;
 import dev.buildtool.satako.Satako;
 import dev.buildtool.satako.client.gui.*;
@@ -58,6 +59,9 @@ public class TestScreen extends MenuScreen<TestMenu> {
 
         ImageButton2 imageButton = new ImageButton2(23, 23, 16, 16, List.of(ResourceLocation.fromNamespaceAndPath(Satako.ID, "blue"),ResourceLocation.fromNamespaceAndPath(Satako.ID,"green")), 0, null);
         addRenderableWidget(imageButton);
+
+        Label testLabel=new Label(this.width/2,topPos-20,Component.literal("Test"), Constants.WHITE);
+        addRenderableOnly(testLabel);
     }
 
     @Override
