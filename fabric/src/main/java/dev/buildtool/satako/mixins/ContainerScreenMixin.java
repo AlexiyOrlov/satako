@@ -23,7 +23,7 @@ public class ContainerScreenMixin {
             SatakoClient.targetStack = slot.getItem();
             SatakoClient.handle(SatakoClient.targetStack,guiGraphics);
         }
-        if(SatakoClient.jei && JEI.ingredientListOverlay!=null)
+        if(SatakoClient.jei)
         {
             SatakoClientFabric.handleJeiScreen(guiGraphics);
         }

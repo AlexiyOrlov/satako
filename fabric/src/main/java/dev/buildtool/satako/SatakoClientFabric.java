@@ -11,7 +11,8 @@ import net.minecraft.client.gui.screens.MenuScreens;
 public class SatakoClientFabric implements ClientModInitializer {
 
     public static void handleJeiScreen(GuiGraphics guiGraphics) {
-        JEI.ingredientListOverlay.getIngredientUnderMouse().flatMap(ITypedIngredient::getItemStack).ifPresent(itemStack -> SatakoClient.handle(itemStack, guiGraphics));
+        if(JEI.ingredientListOverlay!=null)
+            JEI.ingredientListOverlay.getIngredientUnderMouse().flatMap(ITypedIngredient::getItemStack).ifPresent(itemStack -> SatakoClient.handle(itemStack, guiGraphics));
     }
 
     @Override
