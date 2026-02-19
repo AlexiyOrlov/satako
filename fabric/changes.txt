@@ -1,1 +1,3 @@
+fixed crash when JEI is absent
+
 fixed inability so set empty item in ItemList
