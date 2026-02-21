@@ -478,7 +478,7 @@ public final class Functions {
 
     /**
      * Tests whether one Itemstack is equal to another except size
-     *
+     *  TODO rename to 'non-empty'?
      * @return false if not equal or any is empty
      */
     public static boolean areItemTypesEqual(ItemStack one, ItemStack two) {
