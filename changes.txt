@@ -1,5 +1,6 @@
 added blocks with block entities templates;
 scroll area now crops elements that are out of bounds;
+rectangle now renders its bounds;
 
 added block rendering method;
 right clicking image button will cycle sprites backwards;
