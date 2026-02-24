@@ -122,7 +122,7 @@ public class Screen2 extends Screen
 
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
-        if(minecraft.options.keyInventory.isDown() && getFocused()==null)
+        if(minecraft.options.keyInventory.matches(keyCode,scanCode) && getFocused()==null)
         {
             onClose();
             return true;
