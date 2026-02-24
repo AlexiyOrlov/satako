@@ -47,14 +47,13 @@ public class TestScreen extends MenuScreen<TestMenu> {
         scrollArea.alignWidgets();
 //        addRenderableWidget(scrollArea);
 
-        Rectangle water = new Rectangle(leftPos - 22, topPos, 20, imageHeight,() -> 0.9f, Services.PLATFORM.getFluidTexture(Fluids.WATER, true), null, false);
+        Rectangle water = new Rectangle(leftPos - 22, topPos, 20, imageHeight,() -> 0.5f, Services.PLATFORM.getFluidTexture(Fluids.WATER, true), null, false);
         addRenderableOnly(water);
 
-        Rectangle horizontal = new Rectangle(leftPos, topPos - 20, imageWidth, 18,() ->  new IntegerColor(0, 128, 255), Services.PLATFORM.getFluidTexture(Fluids.LAVA, true), () -> 0.7f, false);
-        addRenderableOnly(horizontal);
+
 //        addRenderableWidget(new ExtendedSlider(leftPos, topPos + imageHeight, imageWidth, 20, Component.literal(""), Component.literal(""), 1, 20, 1, true));
 
-        Rectangle textured = new Rectangle(20, 20, 30, 30, () -> 1f, ResourceLocation.withDefaultNamespace("container/anvil/error"), true);
+        Rectangle textured = new Rectangle(20, 20, 30, 30, () -> 0.5f, ResourceLocation.withDefaultNamespace("container/anvil/error"), true);
         addRenderableOnly(textured);
 
         ImageButton2 imageButton = new ImageButton2(23, 23, 16, 16, List.of(ResourceLocation.fromNamespaceAndPath(Satako.ID, "blue"),ResourceLocation.fromNamespaceAndPath(Satako.ID,"green")), 0, null);
@@ -62,6 +61,12 @@ public class TestScreen extends MenuScreen<TestMenu> {
 
         Label testLabel=new Label(this.width/2,topPos-20,Component.literal("Test"), Constants.WHITE);
         addRenderableOnly(testLabel);
+
+        Rectangle vertical=new Rectangle(10,10,10,200,() -> 0f,null,()-> Constants.BLUE,true);
+        addRenderableOnly(vertical);
+
+        Rectangle horizontal = new Rectangle(vertical.getX()+vertical.getWidth()+10, topPos - 20, imageWidth, 18,() ->  new IntegerColor(0, 128, 255),null, () -> 0.5f, false);
+        addRenderableOnly(horizontal);
     }
 
     @Override
