@@ -76,7 +76,7 @@ public class Rectangle extends AbstractWidget {
             if(dynamicColor!=null)
                 guiGraphics.setColor(1, 1, 1, 1);
             guiGraphics.vLine(getX(),getY(),getY()+height, Constants.GRAY.getIntColor());
-            guiGraphics.vLine(getX()+width,getY(),getY()+height,Constants.GRAY.getIntColor());
+            guiGraphics.vLine(getX()+width-1,getY(),getY()+height,Constants.GRAY.getIntColor());
             guiGraphics.hLine(getX(),getX()+width,getY(),Constants.GRAY.getIntColor());
             guiGraphics.hLine(getX(),getX()+width,getY()+height,Constants.GRAY.getIntColor());
         } else if (texture != null) {
@@ -100,7 +100,7 @@ public class Rectangle extends AbstractWidget {
                 ClientMethods.drawTiledSprite(texture, guiGraphics, getX(), getY(), width, height);
             }
             guiGraphics.vLine(getX(),getY(),getY()+height, Constants.GRAY.getIntColor());
-            guiGraphics.vLine(getX()+width,getY(),getY()+height,Constants.GRAY.getIntColor());
+            guiGraphics.vLine(getX()+width-1,getY(),getY()+height,Constants.GRAY.getIntColor());
             guiGraphics.hLine(getX(),getX()+width,getY(),Constants.GRAY.getIntColor());
             guiGraphics.hLine(getX(),getX()+width,getY()+height,Constants.GRAY.getIntColor());
         } else if (color != null) {
@@ -128,7 +128,7 @@ public class Rectangle extends AbstractWidget {
                     guiGraphics.fill(getX(), getY(), getX() + width, getY() + height, integerColor.getIntColor());
                 }
                 guiGraphics.vLine(getX(),getY(),getY()+height,integerColor.getIntColor());
-                guiGraphics.vLine(getX()+width,getY(),getY()+height,integerColor.getIntColor());
+                guiGraphics.vLine(getX()+width-1,getY(),getY()+height,integerColor.getIntColor());
                 guiGraphics.hLine(getX(),getX()+width,getY(),integerColor.getIntColor());
                 guiGraphics.hLine(getX(),getX()+width,getY()+height,integerColor.getIntColor());
             }
