@@ -77,8 +77,8 @@ public class Rectangle extends AbstractWidget {
                 guiGraphics.setColor(1, 1, 1, 1);
             guiGraphics.vLine(getX(),getY(),getY()+height, Constants.GRAY.getIntColor());
             guiGraphics.vLine(getX()+width-1,getY(),getY()+height,Constants.GRAY.getIntColor());
-            guiGraphics.hLine(getX(),getX()+width,getY(),Constants.GRAY.getIntColor());
-            guiGraphics.hLine(getX(),getX()+width,getY()+height,Constants.GRAY.getIntColor());
+            guiGraphics.hLine(getX(),getX()+width-1,getY(),Constants.GRAY.getIntColor());
+            guiGraphics.hLine(getX(),getX()+width-1,getY()+height,Constants.GRAY.getIntColor());
         } else if (texture != null) {
             if (fillPercent != null) {
                 if (vertical) {
@@ -101,8 +101,8 @@ public class Rectangle extends AbstractWidget {
             }
             guiGraphics.vLine(getX(),getY(),getY()+height, Constants.GRAY.getIntColor());
             guiGraphics.vLine(getX()+width-1,getY(),getY()+height,Constants.GRAY.getIntColor());
-            guiGraphics.hLine(getX(),getX()+width,getY(),Constants.GRAY.getIntColor());
-            guiGraphics.hLine(getX(),getX()+width,getY()+height,Constants.GRAY.getIntColor());
+            guiGraphics.hLine(getX(),getX()+width-1,getY(),Constants.GRAY.getIntColor());
+            guiGraphics.hLine(getX(),getX()+width-1,getY()+height,Constants.GRAY.getIntColor());
         } else if (color != null) {
             color.getColor().ifPresent(color1 -> {
                 if (fillPercent != null) {
@@ -129,8 +129,8 @@ public class Rectangle extends AbstractWidget {
                 }
                 guiGraphics.vLine(getX(),getY(),getY()+height,integerColor.getIntColor());
                 guiGraphics.vLine(getX()+width-1,getY(),getY()+height,integerColor.getIntColor());
-                guiGraphics.hLine(getX(),getX()+width,getY(),integerColor.getIntColor());
-                guiGraphics.hLine(getX(),getX()+width,getY()+height,integerColor.getIntColor());
+                guiGraphics.hLine(getX(),getX()+width-1,getY(),integerColor.getIntColor());
+                guiGraphics.hLine(getX(),getX()+width-1,getY()+height,integerColor.getIntColor());
             }
         }
     }
