@@ -62,10 +62,8 @@ public class NeoforgeClientMethods {
         renderQuadList(pose, consumer, red, green, blue, alpha, model.getQuads(state, null, randomsource, modelData, renderType), packedLight, packedOverlay);
     }
 
-    private static void renderQuadList(
-            PoseStack.Pose pose, VertexConsumer consumer, float red, float green, float blue, float alpha,
-            List<BakedQuad> quads, int packedLight, int packedOverlay
-    ) {
+    private static void renderQuadList(PoseStack.Pose pose, VertexConsumer consumer, float red, float green, float blue,
+                                       float alpha, List<BakedQuad> quads, int packedLight, int packedOverlay) {
         for (BakedQuad bakedquad : quads) {
             float f;
             float f1;
