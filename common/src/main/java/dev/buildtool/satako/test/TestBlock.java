@@ -3,7 +3,6 @@ package dev.buildtool.satako.test;
 import dev.buildtool.satako.blocks.Block2;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;

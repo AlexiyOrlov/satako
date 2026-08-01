@@ -1,8 +1,6 @@
 package dev.buildtool.satako;
 
-import com.google.common.collect.Lists;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;

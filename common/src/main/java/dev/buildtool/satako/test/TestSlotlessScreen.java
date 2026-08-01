@@ -3,15 +3,13 @@ package dev.buildtool.satako.test;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import dev.buildtool.satako.Constants;
-import dev.buildtool.satako.client.gui.*;
-import dev.buildtool.satako.platform.Services;
+import dev.buildtool.satako.client.gui.Label;
+import dev.buildtool.satako.client.gui.Screen2;
+import dev.buildtool.satako.client.gui.ScrollArea;
+import dev.buildtool.satako.client.gui.TextField;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.level.material.Fluids;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class TestSlotlessScreen extends Screen2 {
     private Screen previous;

@@ -1,7 +1,6 @@
 package dev.buildtool.satako.test;
 
 import dev.buildtool.satako.Menu;
-import dev.buildtool.satako.Satako;
 import dev.buildtool.satako.platform.Services;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.Container;

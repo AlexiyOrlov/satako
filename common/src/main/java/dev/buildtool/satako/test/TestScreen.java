@@ -4,7 +4,6 @@ import dev.buildtool.satako.Constants;
 import dev.buildtool.satako.IntegerColor;
 import dev.buildtool.satako.Satako;
 import dev.buildtool.satako.client.gui.*;
-import dev.buildtool.satako.client.gui.Rectangle;
 import dev.buildtool.satako.platform.Services;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;

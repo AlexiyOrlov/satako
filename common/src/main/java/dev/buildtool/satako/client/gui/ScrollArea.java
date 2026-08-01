@@ -1,6 +1,5 @@
 package dev.buildtool.satako.client.gui;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Table;
 import com.google.common.collect.TreeBasedTable;
 import dev.buildtool.satako.Constants;
