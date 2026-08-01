@@ -111,13 +111,4 @@ public class NeoForgePlatformHooks implements IPlatformHooks {
         return color;
     }
 
-    @Override
-    public boolean isFabric() {
-        return false;
-    }
-
-    @Override
-    public boolean isNeoforge() {
-        return true;
-    }
 }

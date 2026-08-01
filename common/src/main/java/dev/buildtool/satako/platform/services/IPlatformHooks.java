@@ -72,10 +72,6 @@ public interface IPlatformHooks {
     boolean isServer();
 
 
-    boolean isFabric();
-
-    boolean isNeoforge();
-
     MenuType<?> getTestMenu();
 
     IntegerColor getFluidColor(Fluid fluid);

@@ -61,13 +61,4 @@ public class FabricPlatformHooks implements IPlatformHooks {
         return new IntegerColor(FluidVariantRendering.getColor(FluidVariant.of(fluid)));
     }
 
-    @Override
-    public boolean isFabric() {
-        return true;
-    }
-
-    @Override
-    public boolean isNeoforge() {
-        return false;
-    }
 }
