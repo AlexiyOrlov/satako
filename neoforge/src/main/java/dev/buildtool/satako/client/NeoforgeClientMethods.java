@@ -32,19 +32,10 @@ public class NeoforgeClientMethods {
                     float green = (float) (i >> 8 & 0xFF) / 255.0F;
                     float blue = (float) (i & 0xFF) / 255.0F;
                     for (net.minecraft.client.renderer.RenderType rt : bakedmodel.getRenderTypes(state, RandomSource.create(42), modelData))
-                        renderModel(
-                                poseStack.last(),
+                        renderModel(poseStack.last(),
                                 bufferSource.getBuffer(renderType != null ? renderType : net.neoforged.neoforge.client.RenderTypeHelper.getEntityRenderType(rt, false)),
-                                state,
-                                bakedmodel,
-                                red,
-                                green,
-                                blue,
-                                alpha,
-                                packedLight,
-                                packedOverlay,
-                                modelData,
-                                rt
+                                state, bakedmodel, red, green, blue, alpha, packedLight, packedOverlay,
+                                modelData, rt
                         );
                     break;
                 case ENTITYBLOCK_ANIMATED:
@@ -81,14 +72,8 @@ public class NeoforgeClientMethods {
     }
 
     private static void renderQuadList(
-            PoseStack.Pose pose,
-            VertexConsumer consumer,
-            float red,
-            float green,
-            float blue,
-            float alpha, List<BakedQuad> quads,
-            int packedLight,
-            int packedOverlay
+            PoseStack.Pose pose, VertexConsumer consumer, float red, float green, float blue, float alpha,
+            List<BakedQuad> quads, int packedLight, int packedOverlay
     ) {
         for (BakedQuad bakedquad : quads) {
             float f;
