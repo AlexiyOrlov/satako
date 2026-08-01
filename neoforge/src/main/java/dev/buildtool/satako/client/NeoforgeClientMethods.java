@@ -45,18 +45,9 @@ public class NeoforgeClientMethods {
         }
     }
 
-    private static void renderModel(
-            PoseStack.Pose pose,
-            VertexConsumer consumer,
-            @Nullable BlockState state,
-            BakedModel model,
-            float red,
-            float green,
-            float blue,
-            float alpha,
-            int packedLight,
-            int packedOverlay,
-            net.neoforged.neoforge.client.model.data.ModelData modelData,
+    private static void renderModel(PoseStack.Pose pose, VertexConsumer consumer, @Nullable BlockState state,
+            BakedModel model, float red, float green, float blue, float alpha, int packedLight,
+            int packedOverlay, net.neoforged.neoforge.client.model.data.ModelData modelData,
             net.minecraft.client.renderer.RenderType renderType
     ) {
         RandomSource randomsource = RandomSource.create();
